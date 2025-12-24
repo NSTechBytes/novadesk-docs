@@ -1,0 +1,83 @@
+---
+title: Mouse Monitor
+description: Track mouse position with Novadesk
+---
+
+# Mouse Monitor
+
+The mouse monitor tracks the current mouse cursor position.
+
+## Creating a Mouse Monitor
+
+```javascript
+var mouse = new novadesk.system.Mouse();
+```
+
+## Using the Mouse Monitor
+
+### Getting Mouse Position
+
+```javascript
+// Get current mouse position
+var pos = mouse.position();
+// Returns an object with:
+// - x: X coordinate
+// - y: Y coordinate
+
+novadesk.log("Mouse Position: X=" + pos.x + ", Y=" + pos.y);
+```
+
+### Complete Mouse Monitor Example
+
+```javascript
+// Create a mouse monitor
+var mouse = new novadesk.system.Mouse();
+
+// Create a widget to display mouse position
+var mouseWidget = new widgetWindow({
+    id: "mouseWidget",
+    width: 180,
+    height: 40,
+    backgroundcolor: "rgba(0,0,0,0.7)",
+    zpos: "ondesktop",
+    draggable: true
+});
+
+mouseWidget.addText({
+    id: "mouseText",
+    text: "Mouse: Calculating...",
+    fontsize: 14,
+    color: "rgb(255,255,255)"
+});
+
+// Update frequently since mouse position changes often
+setInterval(function() {
+    var pos = mouse.position();
+    mouseWidget.updateText("mouseText", "Mouse: " + pos.x + ", " + pos.y);
+}, 100);
+```
+
+## Mouse Monitor Methods
+
+### `position()`
+Get current mouse position.
+
+**Parameters:** None  
+**Returns:** Object with:
+- `x`: X coordinate
+- `y`: Y coordinate
+
+### `destroy()`
+Destroy the mouse monitor and free resources.
+
+**Parameters:** None  
+**Returns:** Nothing
+
+## Best Practices
+
+1. Create the mouse monitor once and reuse it rather than creating new instances repeatedly
+2. Use frequent update intervals (every 10-100ms) since mouse position changes rapidly
+3. Remember to destroy the monitor when it's no longer needed to free system resources
+4. Be mindful of performance when updating mouse position frequently
+
+The mouse monitor provides real-time tracking of cursor position, useful for creating mouse tracking widgets or interactive elements.

@@ -16,19 +16,32 @@ export default defineConfig({
 				{ label: 'Home', link: '/' },
 				{ label: 'Getting Started', link: '/getting-started/' },
 				{
-					label: 'Examples',
+					label: 'Widget Window',
 					items: [
-						{ label: 'Simple Example', link: '/simple/' },
-						{ label: 'Main Example', link: '/main/' },
-						{ label: 'Full Example', link: '/full-example/' },
+						{ label: 'Widget Options', link: '/widget-window/widget-options/' },
+					],
+				},
+				{
+					label: 'Elements',
+					items: [
+						{ label: 'General Options', link: '/elements/general-options/' },
+						{ label: 'Text Elements', link: '/elements/text/' },
+						{ label: 'Image Elements', link: '/elements/image/' },
+					],
+				},
+				{
+					label: 'System Monitor',
+					items: [
+						{ label: 'CPU Monitor', link: '/system-monitor/cpu/' },
+						{ label: 'Memory Monitor', link: '/system-monitor/memory/' },
+						{ label: 'Network Monitor', link: '/system-monitor/network/' },
+						{ label: 'Mouse Monitor', link: '/system-monitor/mouse/' },
+						{ label: 'Disk Monitor', link: '/system-monitor/disk/' },
 					],
 				},
 				{
 					label: 'Guides',
 					items: [
-						{ label: 'Widget Options', link: '/widget-options/' },
-						{ label: 'Content Elements', link: '/content-elements/' },
-						{ label: 'System Monitoring', link: '/system-monitoring/' },
 						{ label: 'Novadesk API', link: '/novadesk-api/' },
 						{ label: 'Configuration', link: '/configuration/' },
 						{ label: 'Troubleshooting', link: '/troubleshooting/' },

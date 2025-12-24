@@ -1,0 +1,55 @@
+---
+title: Widget General Options
+description: Configuration options for widget windows
+---
+
+# Element General Options
+
+Elements in Novadesk widgets can share common options for positioning, styling, and interaction. Both text and image elements support these general options.
+
+## Position Options
+
+### Positioning
+- `x` (number): X position of the element within the widget
+- `y` (number): Y position of the element within the widget
+
+### Sizing
+- `width` (number): Width of the element in pixels (0 for auto-size)
+- `height` (number): Height of the element in pixels (0 for auto-size)
+
+## Visual Options
+
+### Background
+- `solidcolor` (string): Solid color background in CSS format (e.g., "rgb(255,0,0)", "rgba(0,0,0,0.5)")
+- `solidcolorradius` (number): Radius for rounded corners on solid color backgrounds
+
+## Interaction Options
+
+### Mouse Actions
+Elements can respond to various mouse events:
+- `onleftmouseup` - Function to execute when left mouse button is released over the element
+- `onrightmouseup` - Function to execute when right mouse button is released over the element
+- `onmouseenter` - Function to execute when mouse enters the element area
+- `onmouseleave` - Function to execute when mouse leaves the element area
+- `onmousemove` - Function to execute when mouse moves over the element
+
+## Example Configuration
+
+```javascript
+// Example of using general options in a text element
+widget.addText({
+    id: "exampleText",
+    x: 10,
+    y: 10,
+    width: 200,
+    height: 30,
+    text: "Click me!",
+    solidcolor: "rgba(100,100,255,0.3)",
+    solidcolorradius: 5,
+    onleftmouseup: "novadesk.log('Text clicked!')",
+    onmouseenter: "this.setProperties({ color: 'rgb(255,100,100)' })",
+    onmouseleave: "this.setProperties({ color: 'rgb(255,255,255)' })"
+});
+```
+
+These general options provide common functionality that can be used across different types of elements.

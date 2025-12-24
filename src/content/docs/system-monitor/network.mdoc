@@ -1,0 +1,100 @@
+---
+title: Network Monitor
+description: Monitor network activity with Novadesk
+---
+
+# Network Monitor
+
+The network monitor tracks network activity across all network interfaces.
+
+## Creating a Network Monitor
+
+```javascript
+var network = new novadesk.system.Network();
+```
+
+## Using the Network Monitor
+
+### Getting Network Statistics
+
+```javascript
+// Get network statistics
+var stats = network.stats();
+// Returns an object with:
+// - netIn: Incoming bytes per second
+// - netOut: Outgoing bytes per second
+// - totalIn: Total incoming bytes
+// - totalOut: Total outgoing bytes
+
+novadesk.log("Network In: " + stats.netIn + " B/s, Out: " + stats.netOut + " B/s");
+```
+
+### Complete Network Monitor Example
+
+```javascript
+// Create a network monitor
+var network = new novadesk.system.Network();
+
+// Create a widget to display network activity
+var netWidget = new widgetWindow({
+    id: "netWidget",
+    width: 200,
+    height: 70,
+    backgroundcolor: "rgba(0,0,0,0.7)",
+    zpos: "ondesktop",
+    draggable: true
+});
+
+netWidget.addText({
+    id: "netInText",
+    text: "In: Calculating...",
+    x: 10,
+    y: 10,
+    fontsize: 12,
+    color: "rgb(100,255,100)"
+});
+
+netWidget.addText({
+    id: "netOutText",
+    text: "Out: Calculating...",
+    x: 10,
+    y: 30,
+    fontsize: 12,
+    color: "rgb(100,200,255)"
+});
+
+setInterval(function() {
+    var stats = network.stats();
+    var netInKB = (stats.netIn / 1024).toFixed(2);
+    var netOutKB = (stats.netOut / 1024).toFixed(2);
+    netWidget.updateText("netInText", "In: " + netInKB + " KB/s");
+    netWidget.updateText("netOutText", "Out: " + netOutKB + " KB/s");
+}, 1000);
+```
+
+## Network Monitor Methods
+
+### `stats()`
+Get current network statistics.
+
+**Parameters:** None  
+**Returns:** Object with network stats:
+- `netIn`: Incoming bytes per second
+- `netOut`: Outgoing bytes per second
+- `totalIn`: Total incoming bytes
+- `totalOut`: Total outgoing bytes
+
+### `destroy()`
+Destroy the network monitor and free resources.
+
+**Parameters:** None  
+**Returns:** Nothing
+
+## Best Practices
+
+1. Create the network monitor once and reuse it rather than creating new instances repeatedly
+2. Use appropriate update intervals (every 1-3 seconds is typically good for network monitoring)
+3. Remember to destroy the monitor when it's no longer needed to free system resources
+4. Network statistics can vary significantly, so consider averaging values over time for smoother displays
+
+The network monitor provides detailed information about network activity, allowing you to create real-time network monitoring widgets.
