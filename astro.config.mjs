@@ -16,6 +16,13 @@ export default defineConfig({
 				{ label: 'Home', link: '/' },
 				{ label: 'Getting Started', link: '/getting-started/' },
 				{
+					label: 'Novadesk',
+					items: [
+						{ label: 'CLI Arguments', link: '/novadesk-management/cli-arguments/' },
+						{ label: 'Configuration Directives', link: '/novadesk-management/configuration-directives/' },
+					],
+				},
+				{
 					label: 'Widget Window',
 					items: [
 						{ label: 'Widget Options', link: '/widget-window/widget-options/' },
