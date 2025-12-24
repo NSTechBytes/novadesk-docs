@@ -1,0 +1,241 @@
+---
+title: Widget Methods
+description: Methods available on widget objects in Novadesk
+---
+
+# Widget Methods
+
+Once you create a widget using the `widgetWindow()` constructor, the returned object has several methods for managing UI elements and properties.
+
+## UI Element Methods
+
+### addText(options)
+
+Add a text element to the widget.
+
+#### Parameters
+- **options** (Object): Configuration options for the text element
+
+#### Options
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `id` | string | Required | Unique identifier for the text element |
+| `text` | string | "" | Text content to display |
+| `x` | number | 0 | X-coordinate of the text element |
+| `y` | number | 0 | Y-coordinate of the text element |
+| `width` | number | Auto | Width of the text element |
+| `height` | number | Auto | Height of the text element |
+| `fontsize` | number | 12 | Font size in pixels |
+| `fontfamily` | string | "Arial" | Font family |
+| `color` | string | "rgb(0,0,0)" | Text color in CSS format |
+| `fontweight` | string | "normal" | Font weight ("normal", "bold") |
+| `fontstyle` | string | "normal" | Font style ("normal", "italic") |
+| `align` | string | "lefttop" | Text alignment ("lefttop", "centertop", "righttop", etc.) |
+| `clipstring` | number | 0 | Clip string behavior (0=none, 1=on, 2=ellipsis) |
+| `clipstringw` | number | -1 | Maximum width for clipping |
+| `clipstringh` | number | -1 | Maximum height for clipping |
+| `solidcolor` | string | "" | Background color for text area |
+| `solidcolorradius` | number | 0 | Corner radius for solid color background |
+| `rotate` | number | 0 | Rotation angle in degrees |
+
+#### Example
+```javascript
+widget.addText({
+    id: "myText",
+    text: "Hello, World!",
+    x: 10,
+    y: 10,
+    fontsize: 16,
+    color: "white",
+    fontfamily: "Segoe UI"
+});
+```
+
+### addImage(options)
+
+Add an image element to the widget.
+
+#### Parameters
+- **options** (Object): Configuration options for the image element
+
+#### Options
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `id` | string | Required | Unique identifier for the image element |
+| `path` | string | "" | Path to the image file |
+| `x` | number | 0 | X-coordinate of the image element |
+| `y` | number | 0 | Y-coordinate of the image element |
+| `width` | number | Auto | Width of the image element |
+| `height` | number | Auto | Height of the image element |
+| `solidcolor` | string | "" | Solid color background |
+| `solidcolorradius` | number | 0 | Corner radius for solid color background |
+| `preserveaspectratio` | number | 0 | Aspect ratio behavior (0=stretch, 1=fit, 2=crop) |
+| `imagealpha` | number | 255 | Image opacity (0-255) |
+| `grayscale` | boolean | false | Whether to apply grayscale filter |
+| `tile` | boolean | false | Whether to tile the image |
+| `rotate` | number | 0 | Rotation angle in degrees |
+| `imagetint` | string | "" | Tint color for the image |
+
+#### Example
+```javascript
+widget.addImage({
+    id: "myImage",
+    path: "assets/logo.png",
+    x: 20,
+    y: 20,
+    width: 100,
+    height: 50,
+    preserveaspectratio: 1  // Fit to dimensions maintaining aspect ratio
+});
+```
+
+### updateText(id, text)
+
+Update the text content of an existing text element.
+
+#### Parameters
+- **id** (string): ID of the text element to update
+- **text** (string): New text content
+
+#### Example
+```javascript
+widget.updateText("myText", "Updated text content");
+```
+
+### updateImage(id, path)
+
+Update the image source of an existing image element.
+
+#### Parameters
+- **id** (string): ID of the image element to update
+- **path** (string): New path to the image file
+
+#### Example
+```javascript
+widget.updateImage("myImage", "assets/new-logo.png");
+```
+
+### removeContent(id)
+
+Remove a UI element by its ID.
+
+#### Parameters
+- **id** (string): ID of the element to remove
+
+#### Example
+```javascript
+widget.removeContent("myText");
+```
+
+### clearContent()
+
+Remove all UI elements from the widget.
+
+#### Example
+```javascript
+widget.clearContent();
+```
+
+## Widget Management Methods
+
+### setProperties(options)
+
+Update widget properties after creation.
+
+#### Parameters
+- **options** (Object): Properties to update
+
+#### Options
+| Property | Type | Description |
+|----------|------|-------------|
+| `x` | number | New X-coordinate |
+| `y` | number | New Y-coordinate |
+| `width` | number | New width |
+| `height` | number | New height |
+| `backgroundcolor` | string | New background color |
+| `opacity` | number | New overall opacity (0.0-1.0 or 0-255) |
+| `zpos` | string | New z-order position |
+| `draggable` | boolean | Whether widget is draggable |
+| `clickthrough` | boolean | Whether widget is click-through |
+| `keeponscreen` | boolean | Whether to keep widget on screen |
+
+#### Example
+```javascript
+widget.setProperties({
+    x: 200,
+    y: 200,
+    width: 300,
+    height: 150,
+    backgroundcolor: "rgba(100,100,100,0.8)",
+    zpos: "ontop"
+});
+```
+
+### getProperties()
+
+Get current widget properties.
+
+#### Return Value
+An object containing the current widget properties.
+
+#### Example
+```javascript
+var props = widget.getProperties();
+novadesk.log("Widget position: " + props.x + ", " + props.y);
+```
+
+### close()
+
+Close and destroy the widget.
+
+#### Example
+```javascript
+widget.close();
+```
+
+### refresh()
+
+Refresh the widget (reload scripts and redraw).
+
+#### Example
+```javascript
+widget.refresh();
+```
+
+## Event Handling Properties
+
+UI elements can have event handlers assigned through their options. These are special properties that execute JavaScript when specific events occur:
+
+### Mouse Events
+- `onleftmouseup`: Executed when left mouse button is released
+- `onleftmousedown`: Executed when left mouse button is pressed
+- `onleftdoubleclick`: Executed when left mouse button is double-clicked
+- `onrightmouseup`: Executed when right mouse button is released
+- `onrightmousedown`: Executed when right mouse button is pressed
+- `onrightdoubleclick`: Executed when right mouse button is double-clicked
+- `onmiddlemouseup`: Executed when middle mouse button is released
+- `onmiddlemousedown`: Executed when middle mouse button is pressed
+- `onmiddledoubleclick`: Executed when middle mouse button is double-clicked
+- `onx1mouseup`, `onx1mousedown`, `onx1doubleclick`: Executed for X1 mouse button (back button)
+- `onx2mouseup`, `onx2mousedown`, `onx2doubleclick`: Executed for X2 mouse button (forward button)
+- `onmouseover`: Executed when mouse enters the element
+- `onmouseleave`: Executed when mouse leaves the element
+
+### Scroll Events
+- `onscrollup`: Executed when mouse wheel scrolls up
+- `onscrolldown`: Executed when mouse wheel scrolls down
+- `onscrollleft`: Executed when horizontal scroll moves left
+- `onscrollright`: Executed when horizontal scroll moves right
+
+#### Example with Event Handlers
+```javascript
+widget.addText({
+    id: "clickableText",
+    text: "Click me!",
+    x: 10,
+    y: 10,
+    fontsize: 16,
+    color: "blue",
+    onleftmouseup: "novadesk.log('Text was clicked!')"
+});
+```

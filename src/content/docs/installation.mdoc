@@ -1,0 +1,132 @@
+---
+title: Installation
+description: Learn how to install and set up Novadesk on your Windows system
+---
+
+# Installing Novadesk
+
+This guide will walk you through the installation process for Novadesk on Windows systems.
+
+## System Requirements
+
+- Windows 7 or later (Windows 10/11 recommended)
+- At least 50 MB of free disk space
+- .NET Framework 4.8 or later (for some features)
+- Administrator privileges (recommended for optimal functionality)
+
+## Download and Installation
+
+### Option 1: Pre-built Release (Recommended)
+
+1. Visit the [Novadesk GitHub releases page](https://github.com/Novadesk/Novadesk/releases)
+2. Download the latest release archive (`.zip` file)
+3. Extract the archive to a directory of your choice (e.g., `C:\Program Files\Novadesk\` or `C:\Users\YourName\Novadesk\`)
+4. Run `Novadesk.exe` to start the application
+
+### Option 2: Building from Source
+
+If you want to build Novadesk from source code:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Novadesk/Novadesk.git
+   cd Novadesk
+   ```
+
+2. Install Visual Studio 2019 or later with C++ development tools
+3. Open `Novadesk.sln` in Visual Studio
+4. Build the solution in Release mode
+5. The executable will be located in the `x64\Release\` directory
+
+## Initial Setup
+
+When you run Novadesk for the first time:
+
+1. The application will appear in your system tray (notification area)
+2. Right-click the Novadesk icon to access the context menu
+3. You'll see options like "Refresh all" and "Exit"
+
+## Directory Structure
+
+After installation, your Novadesk directory will contain:
+
+```
+Novadesk/
+├── Novadesk.exe          # Main executable
+├── Widgets/              # Widget scripts and assets
+│   ├── index.js          # Main entry point for widgets
+│   ├── assets/           # Widget assets (images, etc.)
+│   └── *.js              # Additional widget scripts
+├── Library/              # C++ source code and libraries
+└── settings.json         # Configuration file (if exists)
+```
+
+## Running Novadesk
+
+Novadesk can be run in several ways:
+
+### Standalone Mode
+Simply run `Novadesk.exe` to start with the default configuration.
+
+### With Custom Script
+You can specify a custom JavaScript file to run:
+
+```
+Novadesk.exe "path/to/your/script.js"
+```
+
+### Command Line Options
+- `/refresh` or `--refresh`: Refresh all widgets
+- `/exit` or `--exit`: Exit the application
+
+## First Widget
+
+After installation, create your first widget by modifying `Widgets/index.js`:
+
+```javascript
+// Create a simple text widget
+var myWidget = new widgetWindow({
+    id: "welcomeWidget",
+    x: 100,
+    y: 100,
+    width: 200,
+    height: 50,
+    backgroundcolor: "rgba(0,0,0,0.7)",
+    zpos: "ondesktop",
+    draggable: true
+});
+
+myWidget.addText({
+    id: "welcomeText",
+    text: "Welcome to Novadesk!",
+    x: 10,
+    y: 10,
+    fontsize: 16,
+    color: "white"
+});
+```
+
+Then refresh by right-clicking the system tray icon and selecting "Refresh all".
+
+## Troubleshooting
+
+### Application Won't Start
+- Ensure you're running on a supported Windows version
+- Check that you have the required system dependencies
+- Run as administrator if experiencing permission issues
+
+### Widgets Not Appearing
+- Verify that your widget script is in the `Widgets` directory
+- Check that your script is valid JavaScript
+- Refresh widgets using the system tray menu
+
+### High CPU Usage
+- Check your scripts for infinite loops or excessive updates
+- Use `setInterval` with appropriate intervals (not too frequent)
+- Consider using `novadesk.setImmediate` for one-time operations instead of frequent updates
+
+## Next Steps
+
+- Learn how to [create your first widget](/guides/first-widget/)
+- Explore the [widget window API](/api/widget-window/)
+- Check out [examples](/examples/clock/) for inspiration

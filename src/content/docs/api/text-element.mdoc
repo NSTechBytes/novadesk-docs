@@ -1,0 +1,194 @@
+---
+title: Text Element
+description: Text UI element in Novadesk with all options and methods
+---
+
+# Text Element
+
+The Text element allows you to display text content in your widgets with various styling options.
+
+## Adding a Text Element
+
+Use the `addText()` method on a widget object to add a text element:
+
+```javascript
+widget.addText(options);
+```
+
+## Text Element Options
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `id` | string | Required | Unique identifier for the text element |
+| `text` | string | "" | Text content to display |
+| `x` | number | 0 | X-coordinate of the text element |
+| `y` | number | 0 | Y-coordinate of the text element |
+| `width` | number | Auto | Width of the text element (auto-calculated if not specified) |
+| `height` | number | Auto | Height of the text element (auto-calculated if not specified) |
+| `fontsize` | number | 12 | Font size in pixels |
+| `fontfamily` | string | "Arial" | Font family name |
+| `color` | string | "rgb(0,0,0)" | Text color in CSS format (supports rgba, rgb, hex) |
+| `fontweight` | string | "normal" | Font weight ("normal", "bold") |
+| `fontstyle` | string | "normal" | Font style ("normal", "italic") |
+| `align` | string | "lefttop" | Text alignment (see alignment options below) |
+| `clipstring` | number | 0 | Clip string behavior (0=none, 1=on, 2=ellipsis) |
+| `clipstringw` | number | -1 | Maximum width for clipping when clipstring is enabled |
+| `clipstringh` | number | -1 | Maximum height for clipping when clipstring is enabled |
+| `solidcolor` | string | "" | Background color for the text area |
+| `solidcolorradius` | number | 0 | Corner radius for solid color background |
+| `rotate` | number | 0 | Rotation angle in degrees |
+| `paddingleft` | number | 0 | Left padding in pixels |
+| `paddingtop` | number | 0 | Top padding in pixels |
+| `paddingright` | number | 0 | Right padding in pixels |
+| `paddingbottom` | number | 0 | Bottom padding in pixels |
+
+### Alignment Options
+
+| Value | Description |
+|-------|-------------|
+| `"lefttop"` or `"left"` | Left aligned, top vertical |
+| `"centertop"` | Center aligned, top vertical |
+| `"righttop"` | Right aligned, top vertical |
+| `"leftcenter"` | Left aligned, center vertical |
+| `"centercenter"` | Center aligned, center vertical |
+| `"rightcenter"` | Right aligned, center vertical |
+| `"leftbottom"` | Left aligned, bottom vertical |
+| `"centerbottom"` | Center aligned, bottom vertical |
+| `"rightbottom"` | Right aligned, bottom vertical |
+
+## Text Element Event Options
+
+Text elements can respond to various mouse events:
+
+| Property | Description |
+|----------|-------------|
+| `onleftmouseup` | Executed when left mouse button is released |
+| `onleftmousedown` | Executed when left mouse button is pressed |
+| `onleftdoubleclick` | Executed when left mouse button is double-clicked |
+| `onrightmouseup` | Executed when right mouse button is released |
+| `onrightmousedown` | Executed when right mouse button is pressed |
+| `onrightdoubleclick` | Executed when right mouse button is double-clicked |
+| `onmiddlemouseup` | Executed when middle mouse button is released |
+| `onmiddlemousedown` | Executed when middle mouse button is pressed |
+| `onmiddledoubleclick` | Executed when middle mouse button is double-clicked |
+| `onx1mouseup` | Executed when X1 mouse button is released (back button) |
+| `onx1mousedown` | Executed when X1 mouse button is pressed |
+| `onx1doubleclick` | Executed when X1 mouse button is double-clicked |
+| `onx2mouseup` | Executed when X2 mouse button is released (forward button) |
+| `onx2mousedown` | Executed when X2 mouse button is pressed |
+| `onx2doubleclick` | Executed when X2 mouse button is double-clicked |
+| `onmouseover` | Executed when mouse enters the element |
+| `onmouseleave` | Executed when mouse leaves the element |
+| `onscrollup` | Executed when mouse wheel scrolls up |
+| `onscrolldown` | Executed when mouse wheel scrolls down |
+| `onscrollleft` | Executed when horizontal scroll moves left |
+| `onscrollright` | Executed when horizontal scroll moves right |
+
+## Examples
+
+### Basic Text Element
+
+```javascript
+widget.addText({
+    id: "basicText",
+    text: "Hello, World!",
+    x: 10,
+    y: 10,
+    fontsize: 16,
+    color: "white"
+});
+```
+
+### Styled Text Element
+
+```javascript
+widget.addText({
+    id: "styledText",
+    text: "Styled Text",
+    x: 20,
+    y: 20,
+    fontsize: 20,
+    fontfamily: "Segoe UI",
+    color: "rgba(255,255,255,0.9)",
+    fontweight: "bold",
+    fontstyle: "italic",
+    align: "centercenter",
+    solidcolor: "rgba(0,0,0,0.5)",
+    solidcolorradius: 5
+});
+```
+
+### Text with Event Handler
+
+```javascript
+widget.addText({
+    id: "clickableText",
+    text: "Click me!",
+    x: 30,
+    y: 30,
+    fontsize: 14,
+    color: "blue",
+    onleftmouseup: "novadesk.log('Text was clicked!')"
+});
+```
+
+### Text with Rotation and Padding
+
+```javascript
+widget.addText({
+    id: "rotatedText",
+    text: "Rotated Text",
+    x: 50,
+    y: 50,
+    fontsize: 16,
+    color: "red",
+    rotate: 45,  // Rotate 45 degrees
+    paddingleft: 10,
+    paddingtop: 5,
+    paddingright: 10,
+    paddingbottom: 5
+});
+```
+
+### Text with Clipping
+
+```javascript
+widget.addText({
+    id: "clippedText",
+    text: "This is a very long text that will be clipped",
+    x: 100,
+    y: 100,
+    width: 100,
+    height: 30,
+    fontsize: 12,
+    color: "white",
+    clipstring: 2,  // Ellipsis clipping
+    clipstringw: 100,
+    clipstringh: 30
+});
+```
+
+## Updating Text Content
+
+Use the `updateText()` method to change the text content of an existing element:
+
+```javascript
+// Update the text content
+widget.updateText("basicText", "New text content!");
+```
+
+## Best Practices
+
+1. **Use appropriate font sizes**: Ensure text is readable on different screen sizes and resolutions.
+
+2. **Consider text alignment**: Use appropriate alignment for better visual presentation.
+
+3. **Use padding for spacing**: Apply padding instead of adjusting coordinates for internal spacing.
+
+4. **Limit text width**: Use clipping options when dealing with variable-length text.
+
+5. **Test with different languages**: Consider text length variations when localizing your widgets.
+
+6. **Optimize for performance**: Avoid updating text content too frequently as it can impact performance.
+
+7. **Use contrasting colors**: Ensure text is readable against its background by using appropriate colors.

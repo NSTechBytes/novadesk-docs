@@ -16,34 +16,52 @@ export default defineConfig({
 				{ label: 'Home', link: '/' },
 				{ label: 'Getting Started', link: '/getting-started/' },
 				{
-					label: 'Novadesk',
+					label: 'Introduction',
 					items: [
-						{ label: 'CLI Arguments', link: '/novadesk-management/cli-arguments/' },
-						{ label: 'Configuration Directives', link: '/novadesk-management/configuration-directives/' },
+						{ label: 'Overview', link: '/' },
+						{ label: 'Getting Started', link: '/getting-started/' },
+						{ label: 'Installation', link: '/installation/' },
 					],
 				},
 				{
-					label: 'Widget Window',
+					label: 'API Reference',
 					items: [
-						{ label: 'Widget Options', link: '/widget-window/widget-options/' },
-					],
-				},
-				{
-					label: 'Elements',
-					items: [
-						{ label: 'General Options', link: '/elements/general-options/' },
-						{ label: 'Text Elements', link: '/elements/text/' },
-						{ label: 'Image Elements', link: '/elements/image/' },
-					],
-				},
-				{
-					label: 'System Monitor',
-					items: [
-						{ label: 'CPU Monitor', link: '/system-monitor/cpu/' },
-						{ label: 'Memory Monitor', link: '/system-monitor/memory/' },
-						{ label: 'Network Monitor', link: '/system-monitor/network/' },
-						{ label: 'Mouse Monitor', link: '/system-monitor/mouse/' },
-						{ label: 'Disk Monitor', link: '/system-monitor/disk/' },
+						{
+							label: 'Widget API',
+							items: [
+								{ label: 'widgetWindow()', link: '/api/widget-window/' },
+								{ label: 'Widget Methods', link: '/api/widget-methods/' },
+							],
+						},
+						{
+							label: 'Novadesk Object',
+							items: [
+								{ label: 'Logging', link: '/api/logging/' },
+								{ label: 'System Utilities', link: '/api/system-utilities/' },
+								{ label: 'Environment Variables', link: '/api/environment/' },
+								{ label: 'Path Utilities', link: '/api/paths/' },
+								{ label: 'Hotkey Management', link: '/api/hotkeys/' },
+								{ label: 'Timers', link: '/api/timers/' },
+								{ label: 'Configuration Directives', link: '/api/configuration/' },
+							],
+						},
+						{
+							label: 'UI Elements API',
+							items: [
+								{ label: 'Text Element', link: '/api/text-element/' },
+								{ label: 'Image Element', link: '/api/image-element/' },
+							],
+						},
+						{
+							label: 'System Monitors',
+							items: [
+								{ label: 'CPU Monitor', link: '/api/cpu-monitor/' },
+								{ label: 'Memory Monitor', link: '/api/memory-monitor/' },
+								{ label: 'Network Monitor', link: '/api/network-monitor/' },
+								{ label: 'Mouse Monitor', link: '/api/mouse-monitor/' },
+								{ label: 'Disk Monitor', link: '/api/disk-monitor/' },
+							],
+						},
 					],
 				},
 			],

@@ -1,0 +1,198 @@
+---
+title: System Utilities
+description: System utility functions in the Novadesk JavaScript API
+---
+
+# System Utilities
+
+The `novadesk` object provides various system utility functions for accessing system information, managing the application, and handling resources.
+
+## novadesk.getExePath()
+
+Get information about the Novadesk executable path.
+
+### Return Value
+An object with the following properties:
+- `fullPath`: Complete path to the executable
+- `directory`: Directory containing the executable
+- `filename`: Name of the executable file
+
+### Example
+```javascript
+var exeInfo = novadesk.getExePath();
+novadesk.log("Executable path: " + exeInfo.fullPath);
+novadesk.log("Directory: " + exeInfo.directory);
+novadesk.log("Filename: " + exeInfo.filename);
+```
+
+## novadesk.getEnv(name)
+
+Get the value of an environment variable.
+
+### Parameters
+- **name** (string): Name of the environment variable
+
+### Return Value
+The value of the environment variable, or `null` if it doesn't exist.
+
+### Example
+```javascript
+var username = novadesk.getEnv("USERNAME");
+novadesk.log("Current user: " + username);
+
+var tempPath = novadesk.getEnv("TEMP");
+novadesk.log("Temp directory: " + tempPath);
+```
+
+## novadesk.getAllEnv()
+
+Get all environment variables as an object.
+
+### Return Value
+An object containing all environment variables as key-value pairs.
+
+### Example
+```javascript
+var allEnv = novadesk.getAllEnv();
+novadesk.log("Total environment variables: " + Object.keys(allEnv).length);
+
+// Log all variables
+for (var key in allEnv) {
+    novadesk.log(key + " = " + allEnv[key]);
+}
+```
+
+## novadesk.system.getWorkspaceVariables()
+
+Get workspace variables related to screen dimensions and monitor information.
+
+### Return Value
+An object containing various screen and workspace dimensions:
+- `WORKAREAX`, `WORKAREAY`, `WORKAREAWIDTH`, `WORKAREAHEIGHT`: Work area of the primary monitor
+- `PWORKAREAX`, `PWORKAREAY`, `PWORKAREAWIDTH`, `PWORKAREAHEIGHT`: Work area of the primary monitor (with 'P' prefix)
+- `SCREENAREAX`, `SCREENAREAY`, `SCREENAREAWIDTH`, `SCREENAREAHEIGHT`: Screen area of the primary monitor
+- `PSCREENAREAX`, `PSCREENAREAY`, `PSCREENAREAWIDTH`, `PSCREENAREAHEIGHT`: Screen area of the primary monitor (with 'P' prefix)
+- `VSCREENAREAX`, `VSCREENAREAY`, `VSCREENAREAWIDTH`, `VSCREENAREAHEIGHT`: Virtual screen dimensions
+
+### Example
+```javascript
+var workspace = novadesk.system.getWorkspaceVariables();
+novadesk.log("Screen width: " + workspace.SCREENAREAWIDTH);
+novadesk.log("Screen height: " + workspace.SCREENAREAHEIGHT);
+novadesk.log("Work area X: " + workspace.WORKAREAX);
+novadesk.log("Work area Y: " + workspace.WORKAREAY);
+```
+
+## novadesk.refresh()
+
+Refresh all widgets by reloading the scripts.
+
+### Example
+```javascript
+// Refresh all widgets
+novadesk.refresh();
+```
+
+## novadesk.onReady(callback)
+
+Register a callback function that will be executed when the application is ready.
+
+### Parameters
+- **callback** (function): Function to execute when the application is ready
+
+### Example
+```javascript
+novadesk.onReady(function() {
+    novadesk.log("Novadesk is ready!");
+    // Initialize your widgets here
+    createMyWidgets();
+});
+```
+
+## Global Timer Functions
+
+Novadesk provides standard timer functions similar to Node.js and browsers:
+
+### setTimeout(callback, delay)
+
+Execute a function after a specified delay.
+
+#### Parameters
+- **callback** (function): Function to execute
+- **delay** (number): Delay in milliseconds
+
+#### Return Value
+A timer ID that can be used to clear the timer.
+
+#### Example
+```javascript
+var timerId = setTimeout(function() {
+    novadesk.log("This runs after 2 seconds");
+}, 2000);
+```
+
+### setInterval(callback, interval)
+
+Execute a function repeatedly at specified intervals.
+
+#### Parameters
+- **callback** (function): Function to execute repeatedly
+- **interval** (number): Interval in milliseconds
+
+#### Return Value
+A timer ID that can be used to clear the timer.
+
+#### Example
+```javascript
+var intervalId = setInterval(function() {
+    novadesk.log("This runs every second");
+}, 1000);
+```
+
+### clearTimeout(id) / clearInterval(id)
+
+Clear a timer created with `setTimeout` or `setInterval`.
+
+#### Parameters
+- **id** (number): Timer ID returned by `setTimeout` or `setInterval`
+
+#### Example
+```javascript
+var timerId = setTimeout(function() {
+    novadesk.log("This won't run");
+}, 5000);
+
+// Clear the timer before it executes
+clearTimeout(timerId);
+```
+
+### setImmediate(callback)
+
+Execute a function as soon as possible in the next event loop iteration.
+
+#### Parameters
+- **callback** (function): Function to execute
+
+#### Return Value
+An ID that can be used to clear the immediate callback.
+
+#### Example
+```javascript
+setImmediate(function() {
+    novadesk.log("This runs immediately after current execution");
+});
+```
+
+### process.nextTick(callback)
+
+Execute a function as soon as possible, similar to `setImmediate`.
+
+#### Parameters
+- **callback** (function): Function to execute
+
+#### Example
+```javascript
+process.nextTick(function() {
+    novadesk.log("This runs on next tick");
+});
+```
