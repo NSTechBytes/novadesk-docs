@@ -25,7 +25,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `string`
 * **Default**: `""`
 * **Description**:
-  Path to the image file.
+Path to the image file.
 
 ---
 
@@ -36,13 +36,13 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `0`
 * **Description**:
-  Controls how the image maintains its aspect ratio.
+Controls how the image maintains its aspect ratio.
 
-  **Valid values:**
+**Valid values:**
 
-  * **`0`** — Stretch image to fill specified dimensions
-  * **`1`** — Fit image within dimensions while maintaining aspect ratio
-  * **`2`** — Crop image to fill dimensions while maintaining aspect ratio
+* **`0`** — Stretch image to fill specified dimensions
+* **`1`** — Fit image within dimensions while maintaining aspect ratio
+* **`2`** — Crop image to fill dimensions while maintaining aspect ratio
 
 ---
 
@@ -53,7 +53,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `255`
 * **Description**:
-  Image opacity value in the range `0–255`.
+Image opacity value in the range `0–255`.
 
 
 ---
@@ -65,7 +65,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `boolean`
 * **Default**: `false`
 * **Description**:
-  Applies a grayscale filter to the image when enabled.
+Applies a grayscale filter to the image when enabled.
 
 ---
 
@@ -76,7 +76,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `boolean`
 * **Default**: `false`
 * **Description**:
-  Repeats (tiles) the image to fill the element area.
+Repeats (tiles) the image to fill the element area.
 
 ---
 
@@ -87,8 +87,8 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `string`
 * **Default**: `""`
 * **Description**:
-  Tint color applied to the image.
-  Accepts CSS color formats (`rgb`, `rgba`, hex).
+Tint color applied to the image.
+Accepts CSS color formats (`rgb`, `rgba`, hex).
 
 ---
 
@@ -99,7 +99,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `array`
 * **Default**: `[]`
 * **Description**:
-  25-element color transformation matrix used for advanced color effects.
+25-element color transformation matrix used for advanced color effects.
 
 ---
 
@@ -122,12 +122,12 @@ Crop the image to fill the dimensions while maintaining its aspect ratio.
 
 ```javascript
 widget.addImage({
-    id: "basicImage",
-    path: "assets/logo.png",
-    x: 10,
-    y: 10,
-    width: 100,
-    height: 50
+id: "basicImage",
+path: "assets/logo.png",
+x: 10,
+y: 10,
+width: 100,
+height: 50
 });
 ```
 
@@ -135,13 +135,13 @@ widget.addImage({
 
 ```javascript
 widget.addImage({
-    id: "fittedImage",
-    path: "assets/photo.jpg",
-    x: 120,
-    y: 10,
-    width: 150,
-    height: 100,
-    preserveaspectratio: 1  // Fit to dimensions maintaining aspect ratio
+id: "fittedImage",
+path: "assets/photo.jpg",
+x: 120,
+y: 10,
+width: 150,
+height: 100,
+preserveaspectratio: 1 // Fit to dimensions maintaining aspect ratio
 });
 ```
 
@@ -149,15 +149,15 @@ widget.addImage({
 
 ```javascript
 widget.addImage({
-    id: "styledImage",
-    path: "assets/icon.png",
-    x: 280,
-    y: 10,
-    width: 80,
-    height: 80,
-    solidcolor: "rgba(200,200,200,0.8)",
-    solidcolorradius: 10,
-    imagealpha: 200  // 78% opacity
+id: "styledImage",
+path: "assets/icon.png",
+x: 280,
+y: 10,
+width: 80,
+height: 80,
+solidcolor: "rgba(200,200,200,0.8)",
+solidcolorradius: 10,
+imagealpha: 200 // 78% opacity
 });
 ```
 
@@ -165,14 +165,14 @@ widget.addImage({
 
 ```javascript
 widget.addImage({
-    id: "rotatedImage",
-    path: "assets/image.png",
-    x: 10,
-    y: 70,
-    width: 100,
-    height: 100,
-    rotate: 45,      // Rotate 45 degrees
-    grayscale: true  // Apply grayscale filter
+id: "rotatedImage",
+path: "assets/image.png",
+x: 10,
+y: 70,
+width: 100,
+height: 100,
+rotate: 45, // Rotate 45 degrees
+grayscale: true // Apply grayscale filter
 });
 ```
 
@@ -180,17 +180,17 @@ widget.addImage({
 
 ```javascript
 widget.addImage({
-    id: "tintedImage",
-    path: "assets/button.png",
-    x: 120,
-    y: 120,
-    width: 60,
-    height: 60,
-    imagetint: "rgba(255,0,0,0.5)",  // Red tint
-    paddingleft: 5,
-    paddingtop: 5,
-    paddingright: 5,
-    paddingbottom: 5
+id: "tintedImage",
+path: "assets/button.png",
+x: 120,
+y: 120,
+width: 60,
+height: 60,
+imagetint: "rgba(255,0,0,0.5)", // Red tint
+paddingleft: 5,
+paddingtop: 5,
+paddingright: 5,
+paddingbottom: 5
 });
 ```
 
@@ -198,23 +198,26 @@ widget.addImage({
 
 ```javascript
 widget.addImage({
-    id: "clickableImage",
-    path: "assets/clickable.png",
-    x: 200,
-    y: 120,
-    width: 50,
-    height: 50,
-    onleftmouseup: "novadesk.log('Image was clicked!')"
+id: "clickableImage",
+path: "assets/clickable.png",
+x: 200,
+y: 120,
+width: 50,
+height: 50,
+onleftmouseup: "novadesk.log('Image was clicked!')"
 });
 ```
 
-## Updating Image Source
+## Updating Image Properties
 
-Use the `updateImage()` method to change the image source of an existing element:
+Use the `setElementProperties()` method to change properties of an existing image element:
 
 ```javascript
-// Update the image source
-widget.updateImage("basicImage", "assets/new-logo.png");
+// Update the image source and opacity
+widget.setElementProperties("basicImage", {
+path: "assets/new-logo.png",
+imagealpha: 128
+});
 ```
 
 ## Supported Image Formats

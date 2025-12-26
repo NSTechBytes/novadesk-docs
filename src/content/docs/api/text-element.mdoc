@@ -261,13 +261,16 @@ clipstringh: 30
 });
 ```
 
-## Updating Text Content
+## Updating Text Properties
 
-Use the `updateText()` method to change the text content of an existing element:
+Use the `setElementProperties()` method to change any properties of an existing text element:
 
 ```javascript
-// Update the text content
-widget.updateText("basicText", "New text content!");
+// Update the text content and color
+widget.setElementProperties("basicText", {
+text: "New text content!",
+fontcolor: "yellow"
+});
 ```
 
 ## Best Practices

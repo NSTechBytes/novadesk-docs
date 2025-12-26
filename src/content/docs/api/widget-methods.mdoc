@@ -4,7 +4,8 @@ description: Methods available on widget objects in Novadesk
 ---
 # Widget Methods
 
-Once you create a widget using the `widgetWindow()` constructor, the returned object has several methods for managing UI elements and properties.
+Once you create a widget using the `widgetWindow()` constructor, the returned object has several methods for managing UI
+elements and properties.
 
 ## UI Element Methods
 
@@ -24,13 +25,13 @@ See text UI element for options of text element [here](/api/text-element/).
 
 ```javascript
 widget.addText({
-    id: "myText",
-    text: "Hello, World!",
-    x: 10,
-    y: 10,
-    fontsize: 16,
-    color: "white",
-    fontfamily: "Segoe UI"
+id: "myText",
+text: "Hello, World!",
+x: 10,
+y: 10,
+fontsize: 16,
+fontcolor: "white",
+fontface: "Segoe UI"
 });
 ```
 
@@ -44,74 +45,88 @@ Add an image element to the widget.
 
 ### Options
 
-See image UI element for options of image element [here](/api/text-element/)
+See image UI element for options of image element [here](/api/image-element/)
 
 #### Example
 
 ```javascript
 widget.addImage({
-    id: "myImage",
-    path: "assets/logo.png",
-    x: 20,
-    y: 20,
-    width: 100,
-    height: 50,
-    preserveaspectratio: 1  // Fit to dimensions maintaining aspect ratio
+id: "myImage",
+path: "assets/logo.png",
+x: 20,
+y: 20,
+width: 100,
+height: 50,
+preserveaspectratio: 1 // Fit to dimensions maintaining aspect ratio
 });
 ```
 
-### updateText(id, text)
+### setElementProperties(id, props)
 
-Update the text content of an existing text element.
-
-#### Parameters
-
-- **id** (string): ID of the text element to update
-- **text** (string): New text content
-
-#### Example
-
-```javascript
-widget.updateText("myText", "Updated text content");
-```
-
-### updateImage(id, path)
-
-Update the image source of an existing image element.
+Update properties of an existing UI element. This is a general-purpose method that replaces specific update functions.
 
 #### Parameters
 
-- **id** (string): ID of the image element to update
-- **path** (string): New path to the image file
+- **id** (string): ID of the element to update
+- **props** (Object): Properties to change
 
 #### Example
 
 ```javascript
-widget.updateImage("myImage", "assets/new-logo.png");
+// Update text content and color
+widget.setElementProperties("myText", {
+text: "Updated text content",
+fontcolor: "rgba(255, 0, 0, 1.0)"
+});
+
+// Move an image and change its opacity
+widget.setElementProperties("myImage", {
+x: 100,
+imagealpha: 128
+});
 ```
 
-### removeContent(id)
+### removeElements(ids)
 
-Remove a UI element by its ID.
+Remove one or more UI elements from the widget.
 
 #### Parameters
 
-- **id** (string): ID of the element to remove
+- **ids** (string|Array|null): ID of a single element, an array of IDs, or `null`/`undefined` to remove all elements.
 
 #### Example
 
 ```javascript
-widget.removeContent("myText");
+// Remove a single element
+widget.removeElements("myText");
+
+// Remove multiple elements
+widget.removeElements(["img1", "img2", "text3"]);
+
+// Clear all content
+widget.removeElements();
 ```
 
-### clearContent()
+### getElementProperties(id)
 
-Remove all UI elements from the widget.
+Retrieve the current properties of a UI element.
+
+#### Parameters
+
+- **id** (string): ID of the element
+
+#### Return Value
+
+An object containing all current properties of the element, or `null` if the element is not found.
 
 #### Example
 
 ```javascript
-widget.clearContent();
+var props = widget.getElementProperties("myText");
+if (props) {
+novadesk.log("Text position: " + props.x + ", " + props.y);
+novadesk.log("Current text: " + props.text);
+}
 ```
 
 ## Widget Management Methods
@@ -180,12 +195,12 @@ Update widget properties after creation.
 
 ```javascript
 widget.setProperties({
-    x: 200,
-    y: 200,
-    width: 300,
-    height: 150,
-    backgroundcolor: "rgba(100,100,100,0.8)",
-    zpos: "ontop"
+x: 200,
+y: 200,
+width: 300,
+height: 150,
+backgroundcolor: "rgba(100,100,100,0.8)",
+zpos: "ontop"
 });
 ```
 
