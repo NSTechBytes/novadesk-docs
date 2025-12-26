@@ -31,7 +31,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `string`
 * **Default**: `""`
 * **Description**:
-  Text content to display.
+Text content to display.
 
 ---
 
@@ -40,26 +40,26 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `12`
 * **Description**:
-  Font size in pixels.
+Font size in pixels.
 
 ---
 
-#### **`fontfamily`**
+#### **`fontface`**
 
 * **Type**: `string`
 * **Default**: `"Arial"`
 * **Description**:
-  Font family name.
+Font face name.
 
 ---
 
-#### **`color`**
+#### **`fontcolor`**
 
 * **Type**: `string`
 * **Default**: `"rgb(0,0,0)"`
 * **Description**:
-  Text color in CSS format.
-  Supports `rgb()`, `rgba()`, and hex values.
+Text color in CSS format.
+Supports `rgb()`, `rgba()`, and hex values.
 
 ---
 
@@ -68,12 +68,12 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `string`
 * **Default**: `"normal"`
 * **Description**:
-  Font weight of the text.
+Font weight of the text.
 
-  **Valid values:**
+**Valid values:**
 
-  * `"normal"`
-  * `"bold"`
+* `"normal"`
+* `"bold"`
 
 ---
 
@@ -82,23 +82,23 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `string`
 * **Default**: `"normal"`
 * **Description**:
-  Font style of the text.
+Font style of the text.
 
-  **Valid values:**
+**Valid values:**
 
-  * `"normal"`
-  * `"italic"`
+* `"normal"`
+* `"italic"`
 
 ---
 
-#### **`align`**
+#### **`textalign`**
 
 * **Type**: `string`
 * **Default**: `"lefttop"`
 * **Description**:
-  Controls horizontal and vertical text alignment.
+Controls horizontal and vertical text alignment.
 
-  See **Alignment Options** below.
+See **Alignment Options** below.
 
 ---
 
@@ -107,13 +107,13 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `0`
 * **Description**:
-  Enables text clipping behavior.
+Enables text clipping behavior.
 
-  **Valid values:**
+**Valid values:**
 
-  * **`0`** — No clipping
-  * **`1`** — Clip text
-  * **`2`** — Clip text with ellipsis (`...`)
+* **`0`** — No clipping
+* **`1`** — Clip text
+* **`2`** — Clip text with ellipsis (`...`)
 
 ---
 
@@ -122,7 +122,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `-1`
 * **Description**:
-  Maximum width (in pixels) used for text clipping when `clipstring` is enabled.
+Maximum width (in pixels) used for text clipping when `clipstring` is enabled.
 
 ---
 
@@ -131,7 +131,7 @@ See general element options [here](/api/general-elements-options/):
 * **Type**: `number`
 * **Default**: `-1`
 * **Description**:
-  Maximum height (in pixels) used for text clipping when `clipstring` is enabled.
+Maximum height (in pixels) used for text clipping when `clipstring` is enabled.
 
 ---
 
@@ -142,39 +142,39 @@ See general element options [here](/api/general-elements-options/):
 #### **Left aligned**
 
 * **`"lefttop"`** or **`"left"`**
-  Left aligned, top vertical
+Left aligned, top vertical
 
 * **`"leftcenter"`**
-  Left aligned, center vertical
+Left aligned, center vertical
 
 * **`"leftbottom"`**
-  Left aligned, bottom vertical
+Left aligned, bottom vertical
 
 ---
 
 #### **Center aligned**
 
 * **`"centertop"`**
-  Center aligned, top vertical
+Center aligned, top vertical
 
 * **`"centercenter"`**
-  Center aligned, center vertical
+Center aligned, center vertical
 
 * **`"centerbottom"`**
-  Center aligned, bottom vertical
+Center aligned, bottom vertical
 
 ---
 
 #### **Right aligned**
 
 * **`"righttop"`**
-  Right aligned, top vertical
+Right aligned, top vertical
 
 * **`"rightcenter"`**
-  Right aligned, center vertical
+Right aligned, center vertical
 
 * **`"rightbottom"`**
-  Right aligned, bottom vertical
+Right aligned, bottom vertical
 
 
 ## Examples
@@ -183,12 +183,12 @@ See general element options [here](/api/general-elements-options/):
 
 ```javascript
 widget.addText({
-    id: "basicText",
-    text: "Hello, World!",
-    x: 10,
-    y: 10,
-    fontsize: 16,
-    color: "white"
+id: "basicText",
+text: "Hello, World!",
+x: 10,
+y: 10,
+fontsize: 16,
+color: "white"
 });
 ```
 
@@ -196,18 +196,18 @@ widget.addText({
 
 ```javascript
 widget.addText({
-    id: "styledText",
-    text: "Styled Text",
-    x: 20,
-    y: 20,
-    fontsize: 20,
-    fontfamily: "Segoe UI",
-    color: "rgba(255,255,255,0.9)",
-    fontweight: "bold",
-    fontstyle: "italic",
-    align: "centercenter",
-    solidcolor: "rgba(0,0,0,0.5)",
-    solidcolorradius: 5
+id: "styledText",
+text: "Styled Text",
+x: 20,
+y: 20,
+fontsize: 20,
+fontface: "Segoe UI",
+fontcolor: "rgba(255,255,255,0.9)",
+fontweight: "bold",
+fontstyle: "italic",
+textalign: "centercenter",
+solidcolor: "rgba(0,0,0,0.5)",
+solidcolorradius: 5
 });
 ```
 
@@ -215,13 +215,13 @@ widget.addText({
 
 ```javascript
 widget.addText({
-    id: "clickableText",
-    text: "Click me!",
-    x: 30,
-    y: 30,
-    fontsize: 14,
-    color: "blue",
-    onleftmouseup: "novadesk.log('Text was clicked!')"
+id: "clickableText",
+text: "Click me!",
+x: 30,
+y: 30,
+fontsize: 14,
+fontcolor: "blue",
+onleftmouseup: "novadesk.log('Text was clicked!')"
 });
 ```
 
@@ -229,17 +229,17 @@ widget.addText({
 
 ```javascript
 widget.addText({
-    id: "rotatedText",
-    text: "Rotated Text",
-    x: 50,
-    y: 50,
-    fontsize: 16,
-    color: "red",
-    rotate: 45,  // Rotate 45 degrees
-    paddingleft: 10,
-    paddingtop: 5,
-    paddingright: 10,
-    paddingbottom: 5
+id: "rotatedText",
+text: "Rotated Text",
+x: 50,
+y: 50,
+fontsize: 16,
+fontcolor: "red",
+rotate: 45, // Rotate 45 degrees
+paddingleft: 10,
+paddingtop: 5,
+paddingright: 10,
+paddingbottom: 5
 });
 ```
 
@@ -247,17 +247,17 @@ widget.addText({
 
 ```javascript
 widget.addText({
-    id: "clippedText",
-    text: "This is a very long text that will be clipped",
-    x: 100,
-    y: 100,
-    width: 100,
-    height: 30,
-    fontsize: 12,
-    color: "white",
-    clipstring: 2,  // Ellipsis clipping
-    clipstringw: 100,
-    clipstringh: 30
+id: "clippedText",
+text: "This is a very long text that will be clipped",
+x: 100,
+y: 100,
+width: 100,
+height: 30,
+fontsize: 12,
+fontcolor: "white",
+clipstring: 2, // Ellipsis clipping
+clipstringw: 100,
+clipstringh: 30
 });
 ```
 
