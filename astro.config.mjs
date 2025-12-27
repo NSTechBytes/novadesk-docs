@@ -42,8 +42,7 @@ export default defineConfig({
               label: "Novadesk Object",
               items: [
                 { label: "Logging", link: "/api/novadesk-object/logging/" },
-                { label: "System Utilities", link: "/api/system-utilities/" },
-                { label: "Path Utilities", link: "/api/paths/" },
+                { label: "Path Methods", link: "/api/novadesk-object/path-methods/" },
                 {
                   label: "Configuration Directives",
                   link: "/api/novadesk-object/configuration-directives/",

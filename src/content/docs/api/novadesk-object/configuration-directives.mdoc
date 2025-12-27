@@ -10,12 +10,12 @@ Configuration directives are placed at the top of your JavaScript files to contr
 Configuration directives are start with `!` followed by the directive name:
 
 ```javascript
-// !directiveName;
+!directiveName;
 ```
 
 ## Available Directives
 
-### enableDebugging
+### `enableDebugging`
 
 Enable debug logging to see detailed information about widget operations.
 
@@ -26,7 +26,7 @@ Enable debug logging to see detailed information about widget operations.
 novadesk.debug("This debug message will now appear");
 ```
 ---
-### logToFile
+### `logToFile`
 
 Enable logging to a file in addition to the console. The log file will be created in the same directory as the executable.
 
@@ -37,7 +37,7 @@ Enable logging to a file in addition to the console. The log file will be create
 novadesk.log("This message will be written to the log file");
 ```
 ---
-### disableLogging
+### `disableLogging`
 
 Disable all logging output, which can improve performance in production environments.
 
@@ -48,7 +48,7 @@ Disable all logging output, which can improve performance in production environm
 novadesk.log("This message will not appear anywhere");
 ```
 ---
-### hideTrayIcon
+### `hideTrayIcon`
 
 Hide the Novadesk tray icon in the system notification area.
 
