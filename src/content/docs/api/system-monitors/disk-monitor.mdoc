@@ -3,14 +3,12 @@ title: Disk Monitor
 description: Monitor disk usage in Novadesk
 ---
 
-# Disk Monitor
-
 The Disk monitor class allows you to monitor disk usage for specific drives or all drives on the system.
 
 ## Creating a Disk Monitor
 
 ```javascript
-var disk = new novadesk.system.Disk([options]);
+var disk = new system.Disk([options]);
 ```
 
 ### Parameters
@@ -20,19 +18,9 @@ var disk = new novadesk.system.Disk([options]);
 **`drive`** (string, default: All drives)  
 Drive letter to monitor (e.g., "C:", "D:")
 
-### Example
-
-```javascript
-// Monitor all drives
-var allDisks = new novadesk.system.Disk();
-
-// Monitor specific drive
-var cDrive = new novadesk.system.Disk({ drive: "C:" });
-```
-
 ## Methods
 
-### stats()
+### `stats()`
 
 Get current disk statistics.
 
@@ -57,104 +45,43 @@ Disk usage percentage (0-100)
 
 For an all-drives monitor:
 An array of objects, each containing disk statistics for each drive.
-
-#### Example
-```javascript
-// Single drive monitor
-var cDrive = new novadesk.system.Disk({ drive: "C:" });
-
-var stats = cDrive.stats();
-novadesk.log("Drive: " + stats.drive);
-novadesk.log("Total: " + stats.total + " bytes");
-novadesk.log("Free: " + stats.free + " bytes");
-novadesk.log("Used: " + stats.used + " bytes");
-novadesk.log("Usage: " + stats.percent + "%");
-
-// All drives monitor
-var allDisks = new novadesk.system.Disk();
-
-var allStats = allDisks.stats();
-for (var i = 0; i < allStats.length; i++) {
-    var drive = allStats[i];
-    novadesk.log("Drive " + drive.drive + ": " + drive.percent + "% used");
-}
-```
-
-### destroy()
+---
+### `destroy()`
 
 Destroy the disk monitor and free its resources.
-
-#### Example
-```javascript
-var disk = new novadesk.system.Disk({ drive: "C:" });
-// ... use the monitor ...
-
-// Clean up when done
-disk.destroy();
-```
 
 ## Complete Example
 
 ```javascript
-// Create disk monitors
-var cDrive = new novadesk.system.Disk({ drive: "C:" });
-var allDisks = new novadesk.system.Disk();  // Monitor all drives
+var cDrive = new system.disk({ drive: "C:" });
+var allDisks = new system.disk();  // Monitor all drives
 
-// Function to update disk information display
-function updateDiskInfo() {
-    // Update single drive info
+// Update every 5 seconds (disk info doesn't change as frequently)
+var intervalId = setInterval(function () {
     var cStats = cDrive.stats();
-    
+
     // Convert bytes to GB for display
     var cTotalGB = (cStats.total / (1024 * 1024 * 1024)).toFixed(2);
     var cUsedGB = (cStats.used / (1024 * 1024 * 1024)).toFixed(2);
     var cFreeGB = (cStats.free / (1024 * 1024 * 1024)).toFixed(2);
-    
+
     novadesk.log("C: Drive - Total: " + cTotalGB + "GB, Used: " + cUsedGB + "GB, Free: " + cFreeGB + "GB (" + cStats.percent + "%)");
-    
-    // Update all drives info
+
     var allStats = allDisks.stats();
     for (var i = 0; i < allStats.length; i++) {
         var drive = allStats[i];
         var totalGB = (drive.total / (1024 * 1024 * 1024)).toFixed(2);
         var usedGB = (drive.used / (1024 * 1024 * 1024)).toFixed(2);
         var freeGB = (drive.free / (1024 * 1024 * 1024)).toFixed(2);
-        
+
         novadesk.log(drive.drive + " Drive - Total: " + totalGB + "GB, Used: " + usedGB + "GB, Free: " + freeGB + "GB (" + drive.percent + "%)");
     }
-    
-    // Update widget text if you have one
-    if (typeof diskWidget !== 'undefined') {
-        diskWidget.updateText("cDrive", "C: " + cUsedGB + "GB/" + cTotalGB + "GB (" + cStats.percent + "%)");
-        
-        // Update all drives display (simplified example)
-        var driveText = "";
-        for (var i = 0; i < allStats.length; i++) {
-            var drive = allStats[i];
-            driveText += drive.drive + ": " + drive.percent + "% ";
-        }
-        diskWidget.updateText("allDrives", driveText);
-    }
-}
+}, 5000);
 
-// Update every 5 seconds (disk info doesn't change as frequently)
-setInterval(updateDiskInfo, 5000);
+setTimeout(function () {
+    clearInterval(intervalId);
+    cDrive.destroy();
+    allDisks.destroy();
+    novadesk.log("Disk Monitor Destroyed");
+}, 30000);
 ```
-
-## Best Practices
-
-1. **Convert units for display**: Disk space values are returned in bytes; convert to GB or TB for better readability.
-
-2. **Choose appropriate update frequency**: Disk usage doesn't change as frequently as CPU or memory, so updates every 5-30 seconds are typically sufficient.
-
-3. **Monitor specific drives**: Use the `drive` option to monitor specific drives if you don't need information about all drives.
-
-4. **Handle multiple drives**: When monitoring all drives, be prepared to handle an array of drive statistics.
-
-5. **Reuse monitors**: Create disk monitors once and reuse them rather than creating new ones repeatedly.
-
-6. **Clean up resources**: Call `destroy()` on disk monitors when they're no longer needed to prevent memory leaks.
-
-7. **Consider drive availability**: Network drives or removable drives may not always be available.
-
-8. **Monitor free space**: Pay attention to free space to detect potential storage issues.

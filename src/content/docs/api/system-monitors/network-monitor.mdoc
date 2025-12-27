@@ -3,20 +3,18 @@ title: Network Monitor
 description: Monitor network activity in Novadesk
 ---
 
-# Network Monitor
-
 The Network monitor class allows you to monitor network activity including incoming and outgoing data transfer rates and
 totals.
 
 ## Creating a Network Monitor
 
 ```javascript
-var network = new novadesk.system.Network();
+var network = new system.network();
 ```
 
 ## Methods
 
-### stats()
+### `stats()`
 
 Get current network statistics.
 
@@ -34,87 +32,35 @@ Total incoming bytes since monitor creation
 
 **`totalOut`** (number)
 Total outgoing bytes since monitor creation
+---
 
-#### Example
-```javascript
-var net = new system.network();
-
-var intervalId = setInterval(function () {
-var stats = net.stats();
-novadesk.log("In: " + stats.netIn + " B/s");
-}, 1000);
-
-// Clean up
-setTimeout(function () {
-clearInterval(intervalId);
-net.destroy();
-}, 5000);
-novadesk.log("Network Out: " + stats.netOut + " bytes/sec");
-novadesk.log("Total In: " + stats.totalIn + " bytes");
-novadesk.log("Total Out: " + stats.totalOut + " bytes");
-```
-
-### destroy()
+### `destroy()`
 
 Destroy the network monitor and free its resources.
-
-#### Example
-```javascript
-var network = new novadesk.system.Network();
-// ... use the monitor ...
-
-// Clean up when done
-network.destroy();
-```
 
 ## Complete Example
 
 ```javascript
-// Create network monitor
-var network = new novadesk.system.Network();
+var network = new system.network();
 
-// Function to update network information display
-function updateNetworkInfo() {
-var stats = network.stats();
+var intervalId = setInterval(function () {
+    var stats = network.stats();
 
-// Convert bytes to KB/s for display
-var netInKB = (stats.netIn / 1024).toFixed(2);
-var netOutKB = (stats.netOut / 1024).toFixed(2);
+    // Convert bytes to KB/s for display
+    var netInKB = (stats.netIn / 1024).toFixed(2);
+    var netOutKB = (stats.netOut / 1024).toFixed(2);
 
-// Convert total bytes to MB for display
-var totalInMB = (stats.totalIn / (1024 * 1024)).toFixed(2);
-var totalOutMB = (stats.totalOut / (1024 * 1024)).toFixed(2);
+    // Convert total bytes to MB for display
+    var totalInMB = (stats.totalIn / (1024 * 1024)).toFixed(2);
+    var totalOutMB = (stats.totalOut / (1024 * 1024)).toFixed(2);
 
-novadesk.log("Network - In: " + netInKB + " KB/s, Out: " + netOutKB + " KB/s");
-novadesk.log("Total - In: " + totalInMB + " MB, Out: " + totalOutMB + " MB");
+    novadesk.log("Network - In: " + netInKB + " KB/s, Out: " + netOutKB + " KB/s");
+    novadesk.log("Total - In: " + totalInMB + " MB, Out: " + totalOutMB + " MB");
+}, 1000);
 
-// Update widget text if you have one
-if (typeof networkWidget !== 'undefined') {
-networkWidget.updateText("netIn", "In: " + netInKB + " KB/s");
-networkWidget.updateText("netOut", "Out: " + netOutKB + " KB/s");
-networkWidget.updateText("totalIn", "Total In: " + totalInMB + " MB");
-networkWidget.updateText("totalOut", "Total Out: " + totalOutMB + " MB");
-}
-}
-
-// Update every 1 second
-setInterval(updateNetworkInfo, 1000);
+setTimeout(function () {
+    clearInterval(intervalId);
+    network.destroy();
+    novadesk.log("Network Monitor Destroyed");
+}, 5000);
 ```
-
-## Best Practices
-
-1. **Convert units for display**: Network values are returned in bytes; convert to KB/s or MB/s for better readability.
-
-2. **Monitor trends**: Network activity can be bursty, so consider averaging values over time for more stable displays.
-
-3. **Reuse monitors**: Create network monitors once and reuse them rather than creating new ones repeatedly.
-
-4. **Clean up resources**: Call `destroy()` on network monitors when they're no longer needed to prevent memory leaks.
-
-5. **Update frequency**: Network information changes frequently, so updates every 500ms to 1 second provide good
-responsiveness.
-
-6. **Handle zero values**: Network activity may be zero during idle periods, handle this appropriately in your UI.
-
-7. **Consider cumulative data**: The `totalIn` and `totalOut` values reset when the monitor is created, so they
-represent data since the monitor started.
