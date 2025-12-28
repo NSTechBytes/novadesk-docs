@@ -1,0 +1,65 @@
+---
+title: CLI Commands
+description: Learn how to use the Novadesk CLI commands to manage your widgets
+---
+
+Novadesk supports several command-line arguments that allow you to control the application remotely or customize its behavior. These commands are particularly useful for automation, scripting, or integration with other tools.
+
+## Available Commands
+
+### `Refresh Command`
+
+Refreshes all active widgets, reloading their JavaScript and updating their display.
+
+**Syntax:**
+```bash
+Novadesk.exe /refresh
+Novadesk.exe -refresh  
+Novadesk.exe --refresh
+```
+
+**Description:**
+- Forces all widgets to refresh their content and re-execute their JavaScript code
+- Useful when you've made changes to widget files and want to see updates immediately
+- If Novadesk is already running, the command will be sent to the existing instance
+---
+### `Exit Command`
+
+Gracefully shuts down the Novadesk application.
+
+**Syntax:**
+```bash
+Novadesk.exe /exit
+Novadesk.exe -exit
+Novadesk.exe --exit
+```
+
+**Description:**
+- Cleanly terminates the Novadesk application
+- Removes the system tray icon and releases all resources
+- If Novadesk is already running, the command will be sent to the existing instance
+---
+### `Custom Script Path`
+
+Launch Novadesk with a custom JavaScript file instead of the default script.
+
+**Syntax:**
+```bash
+Novadesk.exe "path/to/custom/script.js"
+Novadesk.exe path/to/custom/script.js
+```
+
+**Description:**
+- Allows you to specify a custom JavaScript file to load on startup
+- Path can be absolute or relative to the Novadesk executable
+- Quotes are optional but recommended for paths containing spaces
+- Only works when starting a new instance of Novadesk
+
+{% aside %}
+Novadesk enforces single-instance execution using a global mutex. When you run a command:
+
+1. **If Novadesk is not running:** A new instance starts and processes the command
+2. **If Novadesk is already running:** The command is sent to the existing instance via Windows messages
+
+This ensures that commands like `--refresh` and `--exit` work reliably regardless of whether the application is already running.
+{% /aside %}

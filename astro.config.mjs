@@ -77,6 +77,12 @@ export default defineConfig({
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
               ],
             },
+            {
+              label: "Guides",
+              items: [
+                { label: "CLI Commands", link: "/guides/cli-commands/" },
+              ],
+            },
           ],
         },
       ],
