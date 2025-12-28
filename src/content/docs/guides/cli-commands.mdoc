@@ -7,22 +7,6 @@ Novadesk supports several command-line arguments that allow you to control the a
 
 ## Available Commands
 
-### `Refresh Command`
-
-Refreshes all active widgets, reloading their JavaScript and updating their display.
-
-**Syntax:**
-```bash
-Novadesk.exe /refresh
-Novadesk.exe -refresh  
-Novadesk.exe --refresh
-```
-
-**Description:**
-- Forces all widgets to refresh their content and re-execute their JavaScript code
-- Useful when you've made changes to widget files and want to see updates immediately
-- If Novadesk is already running, the command will be sent to the existing instance
----
 ### `Exit Command`
 
 Gracefully shuts down the Novadesk application.
@@ -58,8 +42,6 @@ Novadesk.exe path/to/custom/script.js
 {% aside %}
 Novadesk enforces single-instance execution using a global mutex. When you run a command:
 
-1. **If Novadesk is not running:** A new instance starts and processes the command
-2. **If Novadesk is already running:** The command is sent to the existing instance via Windows messages
-
-This ensures that commands like `--refresh` and `--exit` work reliably regardless of whether the application is already running.
+- **If Novadesk is not running:** A new instance starts and processes the command
+- **If Novadesk is already running:** The command is sent to the existing instance via Windows messages
 {% /aside %}
