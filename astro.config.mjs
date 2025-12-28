@@ -81,6 +81,7 @@ export default defineConfig({
               label: "Guides",
               items: [
                 { label: "CLI Commands", link: "/guides/cli-commands/" },
+                { label: "Colors", link: "/guides/colors/" }
               ],
             },
           ],
