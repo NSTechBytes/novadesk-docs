@@ -1,0 +1,59 @@
+---
+title: Configuration Methods
+description: Programmatically control Novadesk configuration via JavaScript
+---
+
+Novadesk provides several methods to control global application behavior programmatically.These methods can be called at any time and their values are
+persisted to `settings.json`.
+
+## `novadesk.saveLogToFile(bool)`
+
+Enables or disables logging to a file (`novadesk.log`) in the application directory.
+
+### Parameters
+- **bool** (boolean): `true` to enable file logging, `false` to disable.
+
+### Example
+```javascript
+// Enable logging to file
+novadesk.saveLogToFile(true);
+```
+---
+## `novadesk.enableDebugging(bool)`
+
+Sets the global log level. When enabled, debug-level messages will be visible in the console and log file.
+
+### Parameters
+- **bool** (boolean): `true` to enable debug logging, `false` to use standard informational logging.
+
+### Example
+```javascript
+novadesk.enableDebugging(true);
+novadesk.debug("Detailed diagnostic information");
+```
+---
+## `novadesk.disableLogging(bool)`
+
+Completely disables or enables all logging output (both console and file).
+
+### Parameters
+- **bool** (boolean): `true` to silence all logs, `false` to resume logging based on other settings.
+
+### Example
+```javascript
+// Silence all output for production
+novadesk.disableLogging(true);
+```
+---
+## `novadesk.hideTrayIcon(bool)`
+
+Dynamically shows or hides the Novadesk icon in the system tray.
+
+### Parameters
+- **bool** (boolean): `true` to hide the icon, `false` to show it.
+
+### Example
+```javascript
+// Run in "stealth" mode
+novadesk.hideTrayIcon(true);
+```

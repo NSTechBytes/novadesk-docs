@@ -33,13 +33,15 @@ novadesk.error("Error code:", 404, "Message:", "File not found");
 ---
 ## `novadesk.debug(...args)`
 
-Log a debug message to the console and log file. Debug messages are only shown when debug logging is enabled. See how to enable debug logging using [configuration directives](/api/novadesk-object/configuration-directives/#enabledebugging).
+Log a debug message to the console and log file. Debug messages are only shown when debug logging is enabled. See how to
+enable debug logging using [Configuration Methods](/api/novadesk-object/settings).
 
 ### Parameters
 - **...args** (any): Values to log as debug information.
 
 {% aside type="caution" %}
-Debugging messages are only shown when debug logging is enabled. See how to enable debug logging using [configuration directives](/api/novadesk-object/configuration-directives/#enabledebugging).
+Debugging messages are only shown when debug logging is enabled. See how to enable debug logging using [Configuration
+Methods](/api/novadesk-object/settings).
 {% /aside %}
 
 ### Example
@@ -47,3 +49,10 @@ Debugging messages are only shown when debug logging is enabled. See how to enab
 novadesk.debug("Debug: Entering function calculatePosition");
 novadesk.debug("Debug: Current widget position:", x, y);
 ```
+
+---
+
+## Global Configuration
+
+You can also control global logging behavior (such as saving to a file or disabling logging entirely) using the
+[Configuration Methods](/api/novadesk-object/settings).

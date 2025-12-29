@@ -42,9 +42,9 @@ export default defineConfig({
                 { label: "Logging", link: "/api/novadesk-object/logging/" },
                 { label: "Path Methods", link: "/api/novadesk-object/path-methods/" },
                 {
-                  label: "Configuration Directives",
-                  link: "/api/novadesk-object/configuration-directives/",
-                },
+                  label: "Settings",
+                  link: "/api/novadesk-object/settings/",
+                }
               ],
             },
             {
