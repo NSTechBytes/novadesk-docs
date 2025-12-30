@@ -78,7 +78,6 @@ export default defineConfig({
             },
             { label: "App API", link: "/api/app-api/" },
             { label: "Path API", link: "/api/path-api/" },
-            { label: "Process API", link: "/api/process-api/" },
           ],
         },
         {
