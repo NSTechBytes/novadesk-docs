@@ -43,7 +43,8 @@ export default defineConfig({
                 {
                   label: "Settings",
                   link: "/api/novadesk-object/settings/",
-                }
+                },
+                { label: "Utility Methods", link: "/api/novadesk-object/utility-methods/" }
               ],
             },
             {
