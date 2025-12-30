@@ -1,0 +1,21 @@
+---
+title: Process API
+description: Environment and process-level information
+---
+
+The `process` object provides information about the current process and environment. It is available globally in both Main and UI scripts.
+
+## `process.cwd()`
+
+Returns the current working directory of the application.
+
+### Example
+```javascript
+novadesk.log("Working directory: " + process.cwd());
+```
+
+---
+
+## `process.platform`
+
+Returns a string identifying the operating system platform. For Novadesk, this is always `"win32"`.

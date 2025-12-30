@@ -40,7 +40,6 @@ export default defineConfig({
               label: "Novadesk Object",
               items: [
                 { label: "Logging", link: "/api/novadesk-object/logging/" },
-                { label: "Path Methods", link: "/api/novadesk-object/path-methods/" },
                 {
                   label: "Settings",
                   link: "/api/novadesk-object/settings/",
@@ -77,6 +76,9 @@ export default defineConfig({
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
               ],
             },
+            { label: "App API", link: "/api/app-api/" },
+            { label: "Path API", link: "/api/path-api/" },
+            { label: "Process API", link: "/api/process-api/" },
           ],
         },
         {
@@ -85,6 +87,7 @@ export default defineConfig({
             { label: "CLI Commands", link: "/guides/cli-commands/" },
             { label: "Colors", link: "/guides/colors/" },
             { label: "Script Types", link: "/guides/script-types/" },
+            { label: "Script Environment", link: "/guides/script-environment/" },
           ],
         },
       ],
