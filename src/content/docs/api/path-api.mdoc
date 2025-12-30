@@ -95,14 +95,32 @@ var parts = path.parse('C:\\path\\to\\file.txt');
 
 Determines if a path is an absolute path.
 
+### Example
+```javascript
+path.isAbsolute("C:\\Users\\Desktop"); // Returns: true
+path.isAbsolute("../images/logo.png"); // Returns: false
+```
+
 ---
 
 ## `path.normalize(path)`
 
-Normalizes the given path, resolving `..` and `.` segments.
+Normalizes the given path, resolving `..` and `.` segments and correcting slashes.
+
+### Example
+```javascript
+var normalized = path.normalize("C:\\Users\\Documents\\..\\Desktop\\.\\widget.js");
+// Returns: "C:\Users\Desktop\widget.js"
+```
 
 ---
 
 ## `path.relative(from, to)`
 
-Returns the relative path from `from` to `to`.
+Returns the relative path from `from` to `to` based on the current working directory.
+
+### Example
+```javascript
+var rel = path.relative("C:\\data\\orandea\\test\\aaa", "C:\\data\\orandea\\impl\\bbb");
+// Returns: "..\\..\\impl\\bbb"
+```

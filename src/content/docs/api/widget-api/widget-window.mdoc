@@ -125,7 +125,7 @@ When no background color is specified, the widget will be transparent.
 - **type**: `string`
 - **Default**: `None`
 - **Description**: Path to a dedicated JavaScript file that manages the widget's UI elements.
-{% aside type="important" %}
+{% aside type="caution" %}
 Novadesk uses a **Strict Separation of Concerns**:
 - **UI Elements** (text, images, etc.) can **only** be created and modified within the dedicated UI script using the global `win` object.
 - **Window Management** (position, opacity, etc.) can **only** be controlled from the main script via the widget object instance.
@@ -174,9 +174,8 @@ Methods](/api/widget-api/widget-methods/).
 
 ## Example
 
-{% tabs %}
-{% tabitem label="index.js" %}
 ```javascript
+// index.js
 var widget = new widgetWindow({
   id: "myWidget",
   width: 300,
@@ -184,8 +183,6 @@ var widget = new widgetWindow({
   backgroundcolor: "rgba(30, 30, 40, 0.9)",
 });
 ```
-{% /tabitem %}
-{% /tabs %}
 
 ## Preview
 
