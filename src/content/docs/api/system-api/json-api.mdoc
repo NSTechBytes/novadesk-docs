@@ -1,0 +1,90 @@
+---
+title: JSON API
+description: JSON file operations in the Novadesk JavaScript API
+---
+
+## `system.readJson(path)`
+
+Reads and parses a JSON file.
+
+### Parameters
+- **path** (string): The path to the JSON file. Can be absolute or relative to the widget script.
+
+### Return Value
+The parsed JavaScript object if successful, or `null` if the file could not be read or parsed.
+
+### Example
+
+**config.json**
+```json
+{
+"background": "dark_blue",
+"opacity": 0.8,
+"debug": true
+}
+```
+
+**Script**
+```javascript
+var config = system.readJson("config.json");
+if (config) {
+novadesk.log("Loaded configuration");
+novadesk.log("Background: " + config.background);
+novadesk.log("Opacity: " + config.opacity);
+} else {
+novadesk.log("Failed to load configuration");
+}
+```
+
+**Output**
+```text
+[LOG] Loaded configuration
+[LOG] Background: dark_blue
+[LOG] Opacity: 0.8
+```
+
+## `system.writeJson(path, data)`
+
+Writes a JavaScript object to a JSON file.
+
+### Parameters
+- **path** (string): The path to the JSON file. Can be absolute or relative.
+- **data** (object): The JavaScript object to serialize and write.
+
+### Return Value
+`true` if the file was written successfully, `false` otherwise.
+
+### Example: Writing a New File
+
+```javascript
+var settings = {
+theme: "dark",
+volume: 80,
+lastRun: new Date().toString()
+};
+
+if (system.writeJson("settings.json", settings)) {
+novadesk.log("Settings saved successfully");
+} else {
+novadesk.log("Failed to save settings");
+}
+```
+
+### Example: Updating a Single Value
+
+To update a single value, you must first read the file, modify the object, and then write it back.
+
+```javascript
+// 1. Read existing config
+var config = system.readJson("config.json");
+
+if (config) {
+// 2. Modify the value
+config.opacity = 0.5;
+
+// 3. Write it back
+if (system.writeJson("config.json", config)) {
+novadesk.log("Config updated successfully");
+}
+}
+```

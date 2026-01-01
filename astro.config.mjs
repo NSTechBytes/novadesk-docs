@@ -82,6 +82,7 @@ export default defineConfig({
                 { label: "Hotkey Management", link: "/api/system-api/hotkey-management/" },
                 { label: "Timers", link: "/api/system-api/timers/" },
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
+                { label: "JSON API", link: "/api/system-api/json-api/" },
               ],
             },
             { label: "App API", link: "/api/app-api/" },
