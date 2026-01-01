@@ -45,6 +45,7 @@ export default defineConfig({
                   link: "/api/novadesk-object/settings/",
                 },
                 { label: "Utility Methods", link: "/api/novadesk-object/utility-methods/" },
+                { label: "Tray API", link: "/api/novadesk-object/tray-api/" },
               ],
             },
             {
