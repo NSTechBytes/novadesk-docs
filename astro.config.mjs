@@ -45,7 +45,6 @@ export default defineConfig({
                   link: "/api/novadesk-object/settings/",
                 },
                 { label: "Utility Methods", link: "/api/novadesk-object/utility-methods/" },
-                { label: "Unit Conversion", link: "/api/novadesk-object/unit-conversion/" },
               ],
             },
             {
