@@ -84,10 +84,6 @@ When no background color is specified, the widget will be transparent.
 - **Description**: Overall window opacity (0-1)
 ---
 
-Here’s an improved, **cleaner and more documentation-friendly** version, matching a professional docs style (good for Starlight / Markdown):
-
----
-
 #### **`zpos`**
 
 Controls the widget’s **Z-order (stacking order)** relative to other windows and widgets.
@@ -97,15 +93,15 @@ Controls the widget’s **Z-order (stacking order)** relative to other windows a
 
 **Allowed values:**
 
-* **`"normal"`**
+* **[`normal`](/api/widget-api/widget-window/#normal)**
 
-* **`"onbottom"`**
+* **[`onbottom`](/api/widget-api/widget-window/#onbottom)**
 
-* **`"ondesktop"`**
+* **[`ondesktop`](/api/widget-api/widget-window/#ondesktop)**
 
-* **`"ontop"`**
+* **[`ontop`](/api/widget-api/widget-window/#ontop)**
 
-* **`"ontopmost"`**
+* **[`ontopmost`](/api/widget-api/widget-window/#ontopmost)**
 
 ---
 
@@ -150,7 +146,7 @@ Novadesk uses a **Strict Separation of Concerns**:
 global `win` object.
 - **Window Management** (position, opacity, etc.) can **only** be controlled from the main script via the widget object
 instance.
-- Both scripts use the global `ipc` object for communication.
+- Both scripts use the global [ipc](/api/widget-api/widget-methods/#inter-process-communication-ipc) object for communication.
 {% /aside %}
 
 
@@ -158,32 +154,32 @@ instance.
 
 Widgets can be positioned at different levels in the window stack:
 
-#### **`staytopmost`**
+#### **`ontopmost`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
 - It actively stays above all other windows.
 
-#### **`topmost`**
+#### **`ontop`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- It stays above normal application windows, but not above Stay Topmost widgets.
+- It stays above normal application windows, but not above Topmost widgets.
 - When multiple widgets use this setting, clicking one will bring it above the others.
 
 #### **`normal`**
 
-- The widget does not remain visible when showing the desktop `(Win + D)`.
-- Clicking the widget brings it to the front of all normal windows, including other widget.
+- The widget remains visible when showing the desktop `(Win + D)`.
+- Clicking the widget does not bring it to the front of all normal windows, including other widget.
 
-#### **`bottom`**
+#### **`onbottom`**
 
 - The widget is hidden when showing the desktop `(Win + D)`.
-- It stays behind normal application windows.
+- It stays behind allapplication windows.
 - Clicking does not change the stacking order between widget using this setting.
 
 #### **`ondesktop`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- Clicking the widget brings it to the front of all normal windows, including other widget.
+- Clicking the widget does not bring it to the front of all normal windows, including other widget.
 
 
 ---
