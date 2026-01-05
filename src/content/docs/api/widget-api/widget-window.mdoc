@@ -6,7 +6,7 @@ description: Create and manage desktop widget windows in Novadesk
 The `widgetWindow` class is the primary interface for creating and managing desktop widgets.
 
 {% aside type="caution" %}
-The `widgetWindow` constructor is **only available in the Main script**. UI scripts run within an existing window and
+The `widgetWindow` constructor is **only available in the [Main script](/guides/script-types/#main-script-the-brain)**. UI scripts run within an existing window and
 cannot create new ones.
 {% /aside %}
 A `widgetWindow` creates a new desktop window that can display UI elements like text and images.
@@ -70,7 +70,7 @@ An object containing configuration options for the widget window.
 
 - **type**: `Color string`
 - **Default**: `"rgba(0,0,0,0)"`
-- **Description**: Background color in CSS format.
+- **Description**: [Color](/guides/colors/) of the background of the widget window.
 
 {% aside %}
 When no background color is specified, the widget will be transparent.
@@ -84,11 +84,29 @@ When no background color is specified, the widget will be transparent.
 - **Description**: Overall window opacity (0-1)
 ---
 
+Here’s an improved, **cleaner and more documentation-friendly** version, matching a professional docs style (good for Starlight / Markdown):
+
+---
+
 #### **`zpos`**
 
-- **type**: `string`
-- **Default**: `"ondesktop"`
-- **Description**: Z-order position: "normal", "onbottom", "ondesktop", "ontop", "ontopmost"
+Controls the widget’s **Z-order (stacking order)** relative to other windows and widgets.
+
+* **Type**: `string`
+* **Default**: `"ondesktop"`
+
+**Allowed values:**
+
+* **`"normal"`**
+
+* **`"onbottom"`**
+
+* **`"ondesktop"`**
+
+* **`"ontop"`**
+
+* **`"ontopmost"`**
+
 ---
 
 ### Behavior Options
