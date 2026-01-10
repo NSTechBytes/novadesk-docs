@@ -3,6 +3,10 @@ title: JSON API
 description: JSON file operations in the Novadesk JavaScript API
 ---
 
+{% aside type="caution" %}
+The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
+{% /aside %}
+
 ## `system.readJson(path)`
 
 Reads and parses a JSON file.
@@ -28,11 +32,11 @@ The parsed JavaScript object if successful, or `null` if the file could not be r
 ```javascript
 var config = system.readJson("config.json");
 if (config) {
-novadesk.log("Loaded configuration");
-novadesk.log("Background: " + config.background);
-novadesk.log("Opacity: " + config.opacity);
+console.log("Loaded configuration");
+console.log("Background: " + config.background);
+console.log("Opacity: " + config.opacity);
 } else {
-novadesk.log("Failed to load configuration");
+console.log("Failed to load configuration");
 }
 ```
 
@@ -64,9 +68,9 @@ lastRun: new Date().toString()
 };
 
 if (system.writeJson("settings.json", settings)) {
-novadesk.log("Settings saved successfully");
+console.log("Settings saved successfully");
 } else {
-novadesk.log("Failed to save settings");
+console.log("Failed to save settings");
 }
 ```
 
@@ -84,7 +88,7 @@ config.opacity = 0.5;
 
 // 3. Write it back
 if (system.writeJson("config.json", config)) {
-novadesk.log("Config updated successfully");
+console.log("Config updated successfully");
 }
 }
 ```

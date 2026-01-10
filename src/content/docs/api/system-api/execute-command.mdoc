@@ -3,6 +3,10 @@ title: Execute Command
 description: Launch external programs, files, or URLs using the system API
 ---
 
+{% aside type="caution" %}
+The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
+{% /aside %}
+
 ## `system.execute(target, [parameters], [workingDir], [show])`
 
 Launches an external application, opens a file, or opens a URL in the default browser.

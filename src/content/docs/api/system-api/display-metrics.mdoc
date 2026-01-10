@@ -3,6 +3,10 @@ title: Display Metrics
 description: Retrieve screen and monitor display metrics in Novadesk
 ---
 
+{% aside type="caution" %}
+The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
+{% /aside %}
+
 ## `system.getDisplayMetrics()`
 
 Returns detailed information about screen dimensions, work areas, and connected monitors.
@@ -45,7 +49,7 @@ Both `workArea` and `screenArea` objects contain:
 ```javascript
 var metrics = system.getDisplayMetrics();
 
-novadesk.log(
+console.log(
   "Primary screen resolution: " +
   metrics.primary.screenArea.width + "x" +
   metrics.primary.screenArea.height
