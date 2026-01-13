@@ -9,7 +9,6 @@ description: Options available for use with all elements in Novadesk application
 - **type**: `string`
 - **Required**: `true`
 - **Description**: Unique identifier for the elements.
-
 ---
 
 #### **`x,y`**
@@ -18,7 +17,6 @@ description: Options available for use with all elements in Novadesk application
 - **default**:`0`
 - **Description**: Specifies the x (horizontal) and y (vertical) position of the element in pixels relative to the
 top-left edge of the widget.
-
 ---
 
 #### **`width,height`**
@@ -26,7 +24,6 @@ top-left edge of the widget.
 - **type**: `number`
 - **default**: `auto calculate`
 - **Description**: Specifies the width and height of the element in pixels.
-
 ---
 
 #### **`solidcolor,solidcolor2`**
@@ -35,7 +32,6 @@ top-left edge of the widget.
 - **Default**: `""`
 - **Description**: Color of the element background. If `SolidColor2` is also specified, the background is a gradient
 composed of `SolidColor` and `SolidColor2`.
-
 ---
 
 #### **`gradientangle`**
@@ -85,9 +81,7 @@ Controls the visual style of the bevel.
 
 * **Type**: `number`
 * **Default**: `1`
-* **Description**:
-Sets the width of the bevel in pixels.  
-Optional; defaults to `1` when a `beveltype` is specified.
+* **Description**: Sets the width of the bevel in pixels. Optional; defaults to `1` when a `beveltype` is specified.
 ---
 
 #### **`bevelcolor`, `bevelcolor2`**
@@ -96,8 +90,7 @@ Optional; defaults to `1` when a `beveltype` is specified.
 * **Default**:
   - **`bevelcolor`**: `"255,255,255,200"`
   - **`bevelcolor2`**: `"0,0,0,150"`
-* **Description**:
-Used when `beveltype` is enabled.Controls the colors applied to the bevel edges.
+* **Description**: Used when `beveltype` is enabled.Controls the colors applied to the bevel edges.
 
 * **Behavior**:
   - For **`raised`** and **`sunken`** bevel types, these colors create highlight and shadow effects.
@@ -109,9 +102,7 @@ Used when `beveltype` is enabled.Controls the colors applied to the bevel edges.
 
 * **Type**: `number | array`
 * **Default**: `0`
-* **Description**:
-Adds padding (in pixels) around the content of the element.  
-The padding area is drawn using the colors defined by `solidcolor` and `solidcolor2`.
+* **Description**: Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `solidcolor` and `solidcolor2`.
 
 * **Syntax**:
   - `padding: 10` : All sides set to 10px
@@ -122,47 +113,133 @@ The padding area is drawn using the colors defined by `solidcolor` and `solidcol
 ```js
 padding: [5, 10, 5, 10]
 ```
-
 ---
-
-
 
 #### **`transformmatrix`**
 
-- **type**: `array`
-- **Default**: `[]`
-- **Description**: 6-element transformation matrix [a, b, c, d, e, f]
+* **Type**: `array` (6 numbers)
+* **Default**: `[]`
+* **Description**:
+A 6-element affine transformation matrix `[m11, m12, m21, m22, dx, dy]`.
+This allows for advanced 2D transformations including translation, scaling, rotation, and shearing.
+
+* **Matrix Structure**:
+`[ ScaleX, SkewY, SkewX, ScaleY, TranslateX, TranslateY ]`
+
+* **Example**:
+```javascript
+// Skew transformation
+transformmatrix: [1, 0.5, 0, 1, 0, 0]
+```
 
 # Mouse Actions
 
-- **Left Mouse Button**
-- `onleftmouseup`: Executed when left mouse button is released
-- `onleftmousedown`: Executed when left mouse button is pressed
-- `onleftdoubleclick`: Executed when left mouse button is double-clicked
+Events that trigger JavaScript functions in response to user interaction.
+---
 
-- **Right Mouse Button**
-- `onrightmouseup`: Executed when right mouse button is released
-- `onrightmousedown`: Executed when right mouse button is pressed
-- `onrightdoubleclick`: Executed when right mouse button is double-clicked
+#### **`onleftmouseup`, `onleftmousedown`, `onleftdoubleclick`**
 
-- **Middle Mouse Button**
-- `onmiddlemouseup`: Executed when middle mouse button is released
-- `onmiddlemousedown`: Executed when middle mouse button is pressed
-- `onmiddledoubleclick`: Executed when middle mouse button is double-clicked
+* **Type**: `function`
+* **Description**:
+Events triggered by the left mouse button.
+- `onleftmouseup`: Button released
+- `onleftmousedown`: Button pressed
+- `onleftdoubleclick`: Button double-clicked
 
-- **X1 Mouse Button (Back)**
-- `onx1mouseup`
-- `onx1mousedown`
-- `onx1doubleclick`
+* **Example**:
+```javascript
+onleftmouseup: function() { console.log("Left click!"); }
+```
+---
 
-- **X2 Mouse Button (Forward)**
-- `onx2mouseup`
-- `onx2mousedown`
-- `onx2doubleclick`
+#### **`onrightmouseup`, `onrightmousedown`, `onrightdoubleclick`**
 
-- `onmouseover`: Executed when mouse enters the element
-- `onmouseleave`: Executed when mouse leaves the element
-- `onscrollup`: Executed when mouse wheel scrolls up
-- `onscrolldown`: Executed when mouse wheel scrolls down
-- `onscrollleft`: Executed when horizontal scroll moves left
-- `onscrollright`: Executed when horizontal scroll moves right
+* **Type**: `function`
+* **Description**:
+Events triggered by the right mouse button.
+- `onrightmouseup`: Button released
+- `onrightmousedown`: Button pressed
+- `onrightdoubleclick`: Button double-clicked
+
+* **Example**:
+```javascript
+onrightmouseup: function() { console.log("Right click!"); }
+```
+---
+
+#### **`onmiddlemouseup`, `onmiddlemousedown`, `onmiddledoubleclick`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by the middle mouse button (scroll wheel click).
+- `onmiddlemouseup`: Button released
+- `onmiddlemousedown`: Button pressed
+- `onmiddledoubleclick`: Button double-clicked
+
+* **Example**:
+```javascript
+onmiddlemouseup: function() { console.log("Middle click!"); }
+```
+---
+
+#### **`onx1mouseup`, `onx1mousedown`, `onx1doubleclick`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by the X1 mouse button (usually "Back").
+
+* **Example**:
+```javascript
+onx1mouseup: function() { console.log("Back button clicked"); }
+```
+---
+
+#### **`onx2mouseup`, `onx2mousedown`, `onx2doubleclick`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by the X2 mouse button (usually "Forward").
+
+* **Example**:
+```javascript
+onx2mouseup: function() { console.log("Forward button clicked"); }
+```
+---
+
+#### **`onmouseover`, `onmouseleave`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by mouse movement.
+- `onmouseover`: Cursor enters the element area
+- `onmouseleave`: Cursor leaves the element area
+
+* **Example**:
+```javascript
+onmouseover: function() { console.log("Mouse entered!"); }
+```
+---
+
+#### **`onscrollup`, `onscrolldown`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by vertical scrolling.
+
+* **Example**:
+```javascript
+onscrollup: function() { console.log("Scrolled up"); }
+```
+---
+
+#### **`onscrollleft`, `onscrollright`**
+
+* **Type**: `function`
+* **Description**:
+Events triggered by horizontal scrolling.
+
+* **Example**:
+```javascript
+onscrollleft: function() { console.log("Scrolled left"); }
+```
+---

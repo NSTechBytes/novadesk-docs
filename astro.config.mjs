@@ -103,7 +103,8 @@ export default defineConfig({
           items: [
             { label: "CLI Commands", link: "/guides/cli-commands/" },
             { label: "Colors", link: "/guides/colors/" },
-            { label: "Script Types", link: "/guides/script-types/" }
+            { label: "Script Types", link: "/guides/script-types/" },
+            { label: "Color Matrix Guide", link: "/guides/color-matrix-guide/" }
           ],
         },
       ],

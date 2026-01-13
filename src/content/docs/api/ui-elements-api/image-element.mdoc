@@ -71,10 +71,24 @@ Accepts CSS color formats (`rgb`, `rgba`, hex).
 ---
 #### **`colormatrix`**
 
-* **Type**: `array`
+* **Type**: `array` (25 numbers)
 * **Default**: `[]`
 * **Description**:
-25-element color transformation matrix used for advanced color effects.
+A 5x5 color transformation matrix used for advanced color effects (e.g., brightness, contrast, alpha, color shifting).
+For a comprehensive guide and more examples, see the [Color Matrix Guide](/guides/color-matrix-guide/).
+The array must contain 25 numbers representing the matrix values (row-major order).
+
+* **Example**:
+```javascript
+// Grayscale matrix
+colormatrix: [
+   0.33, 0.33, 0.33, 0, 0,
+   0.59, 0.59, 0.59, 0, 0,
+   0.11, 0.11, 0.11, 0, 0,
+   0,    0,    0,    1, 0,
+   0,    0,    0,    0, 1
+]
+```
 ---
 
 ## `Supported Image Formats`
