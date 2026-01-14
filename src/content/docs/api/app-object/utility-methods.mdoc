@@ -27,4 +27,45 @@ app.exit();
 app.refresh();
 ```
 ---
+## `app.getProductVersion()`
+
+**Description**: Returns the product version of Novadesk (defined as `ProductVersion` in the executable metadata).
+
+{% aside %}
+For standalone widget applications created with the `nwm` build tool, this value represents the version defined in the widget's `meta.json`.
+{% /aside %}
+
+### Example
+```javascript
+// Get the current product version
+const version = app.getProductVersion();
+console.log("Product Version: " + version);
+```
+---
+## `app.getFileVersion()`
+
+**Description**: Returns the core file version of the executable (defined as `FileVersion` in the executable metadata).
+
+{% aside %}
+For standalone widget applications created with the `nwm` build tool, this value represents the version defined in the widget's `meta.json`.
+{% /aside %}
+
+### Example
+```javascript
+// Get the current file version
+const fileVersion = app.getFileVersion();
+console.log("File Version: " + fileVersion);
+```
+---
+## `app.getNovadeskVersion()`
+
+**Description**: Returns the original, hardcoded version of the Novadesk application. Unlike the metadata-based methods, this value is **never changed** by the `nwm` build tool.
+
+### Example
+```javascript
+// Get the original Novadesk version
+const novadeskVersion = app.getNovadeskVersion();
+console.log("Original Novadesk Version: " + novadeskVersion);
+```
+---
 
