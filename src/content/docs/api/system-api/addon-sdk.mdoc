@@ -1,0 +1,94 @@
+---
+title: Addon SDK
+description: Extend Novadesk functionally with native C++ addons.
+---
+
+{% aside type="caution" %}
+The `system.loadAddon()` method is **only available in the Main script**. Native addons can interact with the Duktape context to register global functions and properties.
+{% /aside %}
+
+Novadesk supports native C++ addons to provide high-performance functionality or access to system APIs not exposed directly to JavaScript. Addons are compiled as **Win32 (x86) DLLs**.
+
+---
+
+## **JavaScript API**
+
+### `system.loadAddon(path)`
+
+Loads a native addon DLL from the specified path.
+
+#### Arguments
+
+* **`path`** (`string`): The relative or absolute path to the `.dll` file. Relative paths are resolved from the current script's directory.
+
+#### Return Value
+
+* **Type**: `object|null`
+* **Description**: Returns the object exported by the addon's `NovadeskAddonInit` function, or `null` if loading fails.
+
+---
+
+## **C++ SDK Overview**
+
+To develop an addon, use the official **Novadesk Addon SDK**. 
+
+### Entry Points
+
+Addons must define an initialization entry point. An optional unload hook is also supported.
+
+```cpp
+#include <NovadeskAPI/novadesk_addon.h>
+
+// Required: Called when system.loadAddon() is invoked
+NOVADESK_ADDON_INIT(ctx) {
+    novadesk::Addon addon(ctx);
+    addon.RegisterString("version", "1.0.0");
+}
+
+// Optional: Called when the script reloads or application exits
+NOVADESK_ADDON_UNLOAD() {
+    // Perform cleanup here
+}
+```
+
+### `novadesk::Addon` Helper
+
+The C++ SDK provides a wrapper to safely register functions and properties without manual stack manipulation.
+
+| Method | Description |
+| :--- | :--- |
+| `RegisterString(name, value)` | Registers a string property. |
+| `RegisterNumber(name, value)` | Registers a numeric property. |
+| `RegisterBool(name, value)` | Registers a boolean property. |
+| `RegisterFunction(name, func)` | Registers a standard Duktape C function. |
+| `RegisterStringFunction(name, value)` | Helper to register a function that returns a constant string. |
+
+### Build Requirements
+
+* **Architecture**: Must target **Win32 (x86)**.
+* **C++ Standard**: **C++20** or later is recommended.
+* **Include Path**: Add the SDK root to your include directories to use `#include <NovadeskAPI/...>`.
+
+---
+
+## **Example**
+
+### `main.cpp`
+```cpp
+#include <NovadeskAPI/novadesk_addon.h>
+
+NOVADESK_ADDON_INIT(ctx) {
+    novadesk::Addon addon(ctx);
+    
+    addon.RegisterString("version", "1.1.0");
+    addon.RegisterStringFunction("greet", "Hello from C++!");
+}
+```
+
+### `index.js`
+```javascript
+const myAddon = system.loadAddon("my_addon.dll");
+if (myAddon) {
+    console.log(myAddon.greet()); // "Hello from C++!"
+}
+```

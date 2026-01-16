@@ -84,6 +84,7 @@ export default defineConfig({
                 { label: "Timers", link: "/api/system-api/timers/" },
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
                 { label: "Execute Command", link: "/api/system-api/execute-command/" },
+                { label: "Addon SDK", link: "/api/system-api/addon-sdk/" },
                 { label: "JSON API", link: "/api/system-api/json-api/" },
                 { label: "Web Fetch API", link: "/api/system-api/web-fetch/" },
                 { label: "Audio API", link: "/api/system-api/audio-api/" },
