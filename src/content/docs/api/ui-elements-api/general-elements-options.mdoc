@@ -30,7 +30,7 @@ top-left edge of the widget.
 
 - **type**: `string`
 - **Default**: `""`
-- **Description**: Color of the element background. If `solidColor2` is also specified, the background is a gradient
+- **Description**: [color](/guides/colors/) of the element background. If `solidColor2` is also specified, the background is a gradient
 composed of `solidColor` and `solidColor2`.
 ---
 
@@ -86,7 +86,7 @@ Controls the visual style of the bevel.
 
 #### **`bevelColor`, `bevelColor2`**
 
-* **Type**: `string` (RGBA)
+* **Type**: `color string`
 * **Default**:
   - **`bevelColor`**: `"255,255,255,200"`
   - **`bevelColor2`**: `"0,0,0,150"`
@@ -131,6 +131,58 @@ This allows for advanced 2D transformations including translation, scaling, rota
 // Skew transformation
 transformmatrix: [1, 0.5, 0, 1, 0, 0]
 ```
+
+# Tooltip Options
+
+Options for displaying tooltips when hovering over the element.
+---
+
+#### **`tooltipText`**
+
+* **Type**: `string`
+* **Default**: `""`
+* **Description**: Text to display in the tooltip. If empty, no tooltip is shown.
+---
+
+#### **`tooltipTitle`**
+
+* **Type**: `string`
+* **Default**: `""`
+* **Description**: Title text displayed in bold above the tooltip text.
+---
+
+#### **`tooltipIcon`**
+
+* **Type**: `string`
+* **Default**: `"none"`
+* **Description**: Icon to display next to the tooltip title.
+* **Valid Values**:
+  - `"none"`
+  - `"info"`
+  - `"warning"`
+  - `"error"`
+---
+
+#### **`tooltipBalloon`**
+
+* **Type**: `boolean`
+* **Default**: `false`
+* **Description**: If `true`, the tooltip is displayed in a cartoon-balloon style.
+---
+
+#### **`tooltipMaxWidth`**
+
+* **Type**: `number`
+* **Default**: `1000`
+* **Description**: Maximum width of the tooltip in pixels. Text exceeding this width will wrap to multiple lines.
+---
+
+#### **`tooltipMaxHeight`**
+
+* **Type**: `number`
+* **Default**: `1000`
+* **Description**: Maximum height of the tooltip in pixels. This is a hint for the tooltip layout, though actual height is determined by content.
+---
 
 # Mouse Actions
 

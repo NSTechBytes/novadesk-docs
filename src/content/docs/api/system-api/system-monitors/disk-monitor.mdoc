@@ -72,7 +72,7 @@ Destroy the disk monitor and free its resources.
 var cDrive = new system.disk({ drive: "C:" });
 var allDisks = new system.disk();  // Monitor all drives
 
-// Update every 5 seconds (disk info doesn't change as frequently)
+// Update every 1 second (disk info doesn't change as frequently)
 var intervalId = setInterval(function () {
     var cStats = cDrive.stats();
 
@@ -92,7 +92,7 @@ var intervalId = setInterval(function () {
 
         console.log(drive.drive + " Drive - Total: " + totalGB + "GB, Used: " + usedGB + "GB, Free: " + freeGB + "GB (" + drive.percent + "%)");
     }
-}, 5000);
+}, 1000);
 
 setTimeout(function () {
     clearInterval(intervalId);

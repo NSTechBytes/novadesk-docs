@@ -3,10 +3,6 @@ title: Text Element
 description: Text UI element in Novadesk with all options and methods.
 ---
 
-The **Text** element allows you to display text content in widgets with various styling and layout options.
-
----
-
 ## Adding a Text Element
 
 Use the `addText()` method on the `win` object inside a **UI Script**:
@@ -14,14 +10,13 @@ Use the `addText()` method on the `win` object inside a **UI Script**:
 ```js
 win.addText(options);
 ```
-
 ---
 ## General Element Options
 
 See general element options [here](/api/ui-elements-api/general-elements-options/):
 ---
-## Text Element Options
 
+## Text Element Options
 ---
 
 #### **`text`**
@@ -30,7 +25,6 @@ See general element options [here](/api/ui-elements-api/general-elements-options
 * **Default**: `""`
 * **Description**:
 Text content to display.
-
 ---
 
 #### **`fontSize`**
@@ -39,7 +33,6 @@ Text content to display.
 * **Default**: `12`
 * **Description**:
 Font size in pixels.
-
 ---
 
 #### **`fontFace`**
@@ -48,17 +41,13 @@ Font size in pixels.
 * **Default**: `"Arial"`
 * **Description**:
 Font face name.
-
 ---
 
 #### **`fontColor`**
 
 * **Type**: `string`
 * **Default**: `"rgb(0,0,0)"`
-* **Description**:
-Text color in CSS format.
-Supports `rgb()`, `rgba()`, and hex values.
-
+* **Description**:[color](/guides/colors/) of the text.
 ---
 
 #### **`fontWeight`**
@@ -72,7 +61,6 @@ Font weight of the text.
 
 * `"normal"`
 * `"bold"`
-
 ---
 
 #### **`fontStyle`**
@@ -86,7 +74,6 @@ Font style of the text.
 
 * `"normal"`
 * `"italic"`
-
 ---
 
 #### **`textAlign`**
@@ -97,7 +84,6 @@ Font style of the text.
 Controls horizontal and vertical text alignment.
 
 See **Alignment Options** below.
-
 ---
 
 #### **`clipString`**
@@ -113,8 +99,6 @@ Controls text clipping behavior when the content exceeds the available space.
   - **`"ellipsis"`** : Clips the text and appends an ellipsis (`...`)
 ---
 
-
-
 ## Alignment Options
 
 ---
@@ -129,7 +113,6 @@ Left aligned, center vertical
 
 * **`"leftbottom"`**
 Left aligned, bottom vertical
-
 ---
 
 #### **Center aligned**
@@ -142,7 +125,6 @@ Center aligned, center vertical
 
 * **`"centerbottom"`**
 Center aligned, bottom vertical
-
 ---
 
 #### **Right aligned**

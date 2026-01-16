@@ -30,7 +30,7 @@ var myWidget = new widgetWindow({
 
 // Use system monitors and timers
 var cpu = new system.cpu();
-setInterval(() => {
+setInterval(function () {
   console.log("CPU usage: " + cpu.usage());
 }, 1000);
 
@@ -69,7 +69,7 @@ win.addText({
 ipc.send("ui-ready");
 
 // Listen for messages from Main
-ipc.on("update-color", (newColor) => {
+ipc.on("update-color", function (newColor) {
   win.setElementProperties("time", { fontColor: newColor });
 });
 ```
@@ -80,7 +80,7 @@ ipc.on("update-color", (newColor) => {
 
 | Feature | Main Script | UI Script |
 | :--- | :--- | :--- |
-| **Common Filename** | `index.js`, `main.js` | `ui.js`, `view.js` |
+| **Common Filename** | `index.js` | `ui.js`, `view.js` |
 | **Reference Object** | `new widgetWindow()` (Constructor) | `win` (Global Object) |
 | **Responsibilities** | Window Management, Hotkeys, Logic | UI Elements, Local Interactions |
 | **Window Control** | Direct (e.g., `widget.setProperties`) | Indirect (via IPC to Main) |

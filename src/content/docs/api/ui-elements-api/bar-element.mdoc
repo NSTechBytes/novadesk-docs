@@ -2,96 +2,109 @@
 title: Bar Element
 description: Documentation for the Novadesk Bar element type.
 ---
+## Adding an Bar Element
 
-The `bar` element is used to create visual indicators like progress bars, level meters, or health bars. It supports
-horizontal and vertical orientations and a wide range of styling options.
+Use the `addBar()` method on the `win` object within a [UI Script](/guides/script-types/#ui-script-the-face):
 
-## Creating a Bar
-
-You can add a bar to your widget using the `win.addBar(options)` method.
-
-```javascript
-win.addBar({
-id: "myProgressBar",
-x: 10,
-y: 10,
-width: 200,
-height: 20,
-value: 0.5, // 50% filled
-barColor: "rgba(0, 255, 0, 1)", // Green bar
-solidColor: "rgba(30, 30, 30, 0.8)", // Dark background
-orientation: "horizontal",
-barCornerRadius: 5
-});
+```js
+win.addImage(options);
 ```
 
 ## Options
 
-The bar element inherits all [General Element Options](/api/ui-elements-api/general-elements-options/) and adds the
-following:
+The bar element inherits all [General Element Options](/api/ui-elements-api/general-elements-options/) and adds the following:
+---
 
 ### `value`
-- **Type**: `number`
-- **Default**: `0.0`
-- **Description**: The fill level of the bar, from `0.0` (empty) to `1.0` (full).
+
+* **Type**: `number`
+* **Default**: `0.0`
+* **Description**:
+The fill level of the bar, from `0.0` (empty) to `1.0` (full).
+---
 
 ### `orientation`
-- **Type**: `string`
-- **Default**: `"horizontal"`
-- **Description**: The layout direction of the bar.
-- `"horizontal"`: Fills from left to right.
-- `"vertical"`: Fills from bottom to top.
+
+* **Type**: `string`
+* **Default**: `"horizontal"`
+* **Description**:
+The direction in which the bar fills.
+- `"horizontal"`: Fills from left to right
+- `"vertical"`: Fills from bottom to top
+---
 
 ### `barCornerRadius`
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Rounding radius for the corners of the bar fill itself.
+
+* **Type**: `number`
+* **Default**: `0`
+* **Description**:
+Corner radius applied to the bar fill.
+---
 
 ### `barColor`
-- **Type**: `string`
-- **Description**: The color of the filled portion of the bar. Supports `rgb()`, `rgba()`, and hex strings.
+
+* **Type**: `string`
+* **Description**:
+The [color](/guides/colors/) of the filled portion of the bar.
+---
 
 ### `barColor2`
-- **Type**: `string`
-- **Description**: The second color for a gradient fill of the bar.
 
-### `barAlpha` / `barAlpha2`
-- **Type**: `number` (0-255)
-- **Description**: Explicit alpha values for the bar colors. Usually handled within the `rgba()` string.
+* **Type**: `string`
+* **Description**:
+The [color](/guides/colors/) used to create a gradient fill.
+---
+
+### `barAlpha`, `barAlpha2`
+
+* **Type**: `number` (0–255)
+* **Description**:
+Explicit alpha values for the bar colors. Usually unnecessary when using `rgba()` like format Colors.
+---
 
 ### `barGradientAngle`
-- **Type**: `number`
-- **Default**: `0.0`
-- **Description**: The angle of the gradient if `barColor2` is provided.
 
-## Updating a Bar
+* **Type**: `number`
+* **Default**: `0.0`
+* **Description**:
+Gradient angle used when `barColor2` is set.
+---
 
-You can update a bar's value or styling dynamically using `win.setElementProperties(id, options)`.
 
+## Example
+
+{% tabs %}
+{% tabitem label="index.js" %}
 ```javascript
-// Update progress to 75%
-win.setElementProperties("myProgressBar", {
-value: 0.75
+
+var exampleBarWindow = new widgetWindow({
+    id: "exampleBar",
+    width: 300,
+    height: 40,
+    backgroundColor:"rgba(255, 255, 255, 1)",
+    script: "ui/ui.js",
 });
 ```
+{% /tabitem %}
 
-## Example: CPU Usage Bar
-
+{% tabitem label="ui/ui.js" %}
 ```javascript
-const cpu = novadesk.subscribe("cpu");
-
 win.addBar({
-id: "cpuBar",
-x: 10, y: 10,
-width: 100, height: 10,
-barColor: "rgba(100, 200, 255, 1)",
-solidColor: "rgba(0, 0, 0, 0.5)",
-value: 0
-});
-
-cpu.on("change", (data) => {
-win.setElementProperties("cpuBar", {
-value: data.total / 100
-});
-});
+    id:"cpu-Bar",
+    x:50,
+    y:10,
+    width:200,
+    height:20,
+    value:0.5,
+    barColor:"rgba(20, 232, 115, 1)",
+    solidColor:"rgba(241, 216, 19, 1)",
+    solidColorRadius:8,
+    barCornerRadius:8
+})
 ```
+{% /tabitem %}
+{% /tabs %}
+
+## Preview
+
+![Widget Preview](/src/assets/images/barPreview.png)
