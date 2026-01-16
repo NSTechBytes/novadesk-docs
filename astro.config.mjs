@@ -85,6 +85,7 @@ export default defineConfig({
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
                 { label: "Execute Command", link: "/api/system-api/execute-command/" },
                 { label: "JSON API", link: "/api/system-api/json-api/" },
+                { label: "Web Fetch API", link: "/api/system-api/web-fetch/" },
               ],
             },
           {
