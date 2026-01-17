@@ -4,7 +4,7 @@ description: Extend Novadesk functionally with native C++ addons.
 ---
 
 {% aside type="caution" %}
-The `system.loadAddon()` method is **only available in the Main script**. Native addons can interact with the Duktape context to register global functions and properties.
+The `system.loadAddon()` method is **only available in the Main script**. Native addons are **engine-agnostic** and do not require linking against Duktape.
 {% /aside %}
 
 Novadesk supports native C++ addons to provide high-performance functionality or access to system APIs not exposed directly to JavaScript. Addons are compiled as **Win32 (x86) DLLs**.
@@ -45,7 +45,7 @@ Unloads a native addon DLL and calls its `NovadeskAddonUnload` hook if defined.
 
 ## **C++ SDK Overview**
 
-To develop an addon, use the official **Novadesk Addon SDK**. 
+To develop an addon, use the official **Novadesk Addon SDK**. The SDK is designed to be **stable** and **engine-independent**.
 
 ### Entry Points
 
@@ -55,14 +55,17 @@ Addons must define an initialization entry point. An optional unload hook is als
 #include <NovadeskAPI/novadesk_addon.h>
 
 // Required: Called when system.loadAddon() is invoked
-NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
-    novadesk::Addon addon(ctx);
+// ctx: Opaque handle to the JS context
+// hMsgWnd: Handle for thread-safe dispatching
+// host: Pointer to the Novadesk Host API
+NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
+    novadesk::Addon addon(ctx, host);
     addon.RegisterString("version", "1.0.0");
 }
 
 // Optional: Called when the script reloads or application exits
 NOVADESK_ADDON_UNLOAD() {
-    // Perform cleanup here
+    // Perform cleanup here (e.g. stop background threads)
 }
 ```
 
@@ -75,46 +78,56 @@ The C++ SDK provides a wrapper to safely register functions and properties witho
 | `RegisterString(name, value)` | Registers a string property. |
 | `RegisterNumber(name, value)` | Registers a numeric property. |
 | `RegisterBool(name, value)` | Registers a boolean property. |
-| `RegisterObject(name, callback)` | Creates a nested object and allows defining properties using a callback. |
-| `RegisterArray(name, vector)` | Registers an array of strings or numbers from a C++ vector. |
-| `RegisterFunction(name, func)` | Registers a standard Duktape C function. |
-| `RegisterStringFunction(name, value)` | Helper to register a function that returns a constant string. |
+| `RegisterObject(name, callback)` | Creates a nested object. |
+| `RegisterArray(name, vector)` | Registers an array of strings or numbers. |
+| `RegisterFunction(name, func, nargs)` | Registers a native C++ function. |
+
+#### **Argument Retrieval & Type Safety**
+Addons can safely interact with the JavaScript stack using the following helper methods on the `Addon` class:
+
+*   **Type Checking**: `IsNumber(idx)`, `IsString(idx)`, `IsBool(idx)`, `IsFunction(idx)`, `IsNull(idx)`
+*   **Data Access**: `GetNumber(idx)`, `GetString(idx)`, `GetBool(idx)`
+*   **Stack Control**: `GetTop()`, `Pop()`, `PopN(n)`
+*   **Error Handling**: `ThrowError(message)` (Immediately interrupts execution and returns an error to JS)
 
 ### Lifecycle & Threads (`Dispatcher`)
 
-Addons can run background threads and safely communicate with the main JS thread using the `Dispatcher`.
+Addons can run background threads and safely communicate with the main JS thread using the `Dispatcher`. **Never call Host API functions or interact with the `ctx` from a background thread.**
 
 ```cpp
-NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
-    novadesk::Dispatcher dispatcher(hMsgWnd);
+NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
+    novadesk::Dispatcher* dispatcher = new novadesk::Dispatcher(hMsgWnd);
     
     // In a background thread:
-    dispatcher.Dispatch([](void* data) {
-         // This runs on the MAIN THREAD
-         // You can safely call JS functions here
-    });
+    std::thread([dispatcher]() {
+        // ... do heavy work ...
+        dispatcher->Dispatch([](void* data) {
+             // This runs on the MAIN THREAD
+             // You can safely use the Host API here
+        });
+    }).detach();
 }
 ```
 
 ### JavaScript Callbacks (`JsFunction`)
 
-The `JsFunction` class allow you to capture a JS function and call it from C++.
+The `JsFunction` class allows you to capture a JS function and call it from C++ (on the main thread).
 
 ```cpp
-addon.RegisterFunction("onEvent", [](duk_context* ctx) -> duk_ret_t {
-    novadesk::JsFunction cb(ctx, 0);
+addon.RegisterFunction("onEvent", [](novadesk_context ctx) -> int {
+    novadesk::JsFunction cb(ctx, g_Host, 0); // Capture arg 0
     if (cb.IsValid()) {
-        cb.Call("Optional Data");
+        cb.Call("Data passed to JS");
     }
     return 0;
-});
+}, 1);
 ```
 
 ### Build Requirements
 
 * **Architecture**: Must target **Win32 (x86)**.
 * **C++ Standard**: **C++20** or later is recommended.
-* **Include Path**: Add the SDK root to your include directories to use `#include <NovadeskAPI/...>`.
+* **Dependencies**: No external dependencies (not even Duktape headers).
 
 ---
 
@@ -124,15 +137,16 @@ addon.RegisterFunction("onEvent", [](duk_context* ctx) -> duk_ret_t {
 ```cpp
 #include <NovadeskAPI/novadesk_addon.h>
 
-NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
-    novadesk::Addon addon(ctx);
-    addon.RegisterString("version", "1.1.0");
+NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
+    novadesk::Addon addon(ctx, host);
     
-    // Nesting an object
-    addon.RegisterObject("utils", [](novadesk::Addon& utils) {
-        utils.RegisterStringFunction("ping", "pong");
-        utils.RegisterArray("data", {1.0, 2.0, 3.0});
-    });
+    // Math utility
+    addon.RegisterFunction("sum", [host](novadesk_context ctx) -> int {
+        double a = host->GetNumber(ctx, 0);
+        double b = host->GetNumber(ctx, 1);
+        host->PushNumber(ctx, a + b);
+        return 1;
+    }, 2);
 }
 ```
 
@@ -140,11 +154,6 @@ NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
 ```javascript
 const myAddon = system.loadAddon("my_addon.dll");
 if (myAddon) {
-    console.log(myAddon.utils.ping()); // "pong"
-    console.log(myAddon.utils.data[0]); // 1.0
-    
-    myAddon.onEvent((msg) => {
-        console.log("Received: " + msg);
-    });
+    console.log("10 + 20 = " + myAddon.sum(10, 20));
 }
 ```
