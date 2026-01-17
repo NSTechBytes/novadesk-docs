@@ -90,6 +90,7 @@ export default defineConfig({
                 { label: "Audio API", link: "/api/system-api/audio-api/" },
                 { label: "Registry API", link: "/api/system-api/registry-api/" },
                 { label: "Clipboard API", link: "/api/system-api/clipboard-api/" },
+                { label: "Power API", link: "/api/system-api/power-api/" },
               ],
             },
           {
