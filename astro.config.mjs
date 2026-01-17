@@ -88,6 +88,8 @@ export default defineConfig({
                 { label: "JSON API", link: "/api/system-api/json-api/" },
                 { label: "Web Fetch API", link: "/api/system-api/web-fetch/" },
                 { label: "Audio API", link: "/api/system-api/audio-api/" },
+                { label: "Registry API", link: "/api/system-api/registry-api/" },
+                { label: "Clipboard API", link: "/api/system-api/clipboard-api/" },
               ],
             },
           {
