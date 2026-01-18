@@ -89,7 +89,7 @@ When no background color is specified, the widget will be transparent.
 Controls the widget’s **Z-order (stacking order)** relative to other windows and widgets.
 
 * **Type**: `string`
-* **Default**: `"ondesktop"`
+* **Default**: `"normal"`
 * **Allowed values:** `"normal"`, `"onbottom"`, `"ondesktop"`, `"ontop"`, `"ontopmost"`
 ---
 
@@ -174,7 +174,7 @@ Widgets can be positioned at different levels in the window stack:
 #### **`normal`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- Clicking the widget does not bring it to the front of all normal windows, including other widget.
+- Clicking the widget will bring it to the front of other normal windows and widgets.
 
 #### **`onbottom`**
 
@@ -185,7 +185,8 @@ Widgets can be positioned at different levels in the window stack:
 #### **`ondesktop`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- Clicking the widget does not bring it to the front of all normal windows, including other widget.
+- Clicking the widget does not bring it to the front of other normal windows or widgets.
+- This is the recommended setting for wallpaper-like widgets.
 ---
 
 ## Widget Methods

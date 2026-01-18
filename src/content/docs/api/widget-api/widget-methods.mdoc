@@ -109,9 +109,9 @@ win.removeElements(["img1", "img2", "text3"]);
 win.removeElements();
 ```
 
-### **`getElementProperties(id)`**
+### **`getElementProperty(id, propertyName)`**
 
-Retrieve the current properties of a UI element.Available only in UI scripts.
+Retrieve a specific property of a UI element. Available only in UI scripts.
 
 ###### **`id`**
 
@@ -120,20 +120,29 @@ Retrieve the current properties of a UI element.Available only in UI scripts.
 ID of the UI element.
 ---
 
+###### **`propertyName`**
+
+* **Type**: `string`
+* **Description**:
+The name of the property to retrieve (e.g., `"text"`, `"x"`, `"y"`, `"width"`, `"height"`).
+---
+
 #### Return Value
 
-* **Type**: `Object | null`
+* **Type**: `any | null | undefined`
 * **Description**:
-An object containing all current properties of the element.  Returns `null` if the element is not found.
+The value of requested property. Returns `null` if the element is not found, or `undefined` if the property does not exist.
 
 #### Example
 
 ```javascript
-var props = win.getElementProperties("myText");
-if (props) {
-  console.log("Text position: " + props.x + ", " + props.y);
-  console.log("Current text: " + props.text);
+var textValue = win.getElementProperty("myText", "text");
+if (textValue !== null) {
+  console.log("Current text: " + textValue);
 }
+
+var xPos = win.getElementProperty("myText", "x");
+console.log("X Position: " + xPos);
 ```
 ---
 ## Widget Management Methods
