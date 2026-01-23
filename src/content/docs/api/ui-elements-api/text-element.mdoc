@@ -3,25 +3,20 @@ title: Text Element
 description: Text UI element in Novadesk with all options and methods.
 ---
 
-The **Text** element allows you to display text content in widgets with various styling and layout options.
-
----
-
 ## Adding a Text Element
 
-Use the `addText()` method on a widget object:
+Use the `addText()` method on the `win` object inside a **UI Script**:
 
 ```js
-widget.addText(options);
-````
-
+win.addText(options);
+```
 ---
 ## General Element Options
 
-See general element options [here](/api/general-elements-options/):
+See general element options [here](/api/ui-elements-api/general-elements-options/):
 ---
-## Text Element Options
 
+## Text Element Options
 ---
 
 #### **`text`**
@@ -30,38 +25,32 @@ See general element options [here](/api/general-elements-options/):
 * **Default**: `""`
 * **Description**:
 Text content to display.
-
 ---
 
-#### **`fontsize`**
+#### **`fontSize`**
 
 * **Type**: `number`
 * **Default**: `12`
 * **Description**:
 Font size in pixels.
-
 ---
 
-#### **`fontface`**
+#### **`fontFace`**
 
 * **Type**: `string`
 * **Default**: `"Arial"`
 * **Description**:
 Font face name.
-
 ---
 
-#### **`fontcolor`**
+#### **`fontColor`**
 
 * **Type**: `string`
 * **Default**: `"rgb(0,0,0)"`
-* **Description**:
-Text color in CSS format.
-Supports `rgb()`, `rgba()`, and hex values.
-
+* **Description**:[color](/guides/colors/) of the text.
 ---
 
-#### **`fontweight`**
+#### **`fontWeight`**
 
 * **Type**: `string`
 * **Default**: `"normal"`
@@ -72,10 +61,9 @@ Font weight of the text.
 
 * `"normal"`
 * `"bold"`
-
 ---
 
-#### **`fontstyle`**
+#### **`fontStyle`**
 
 * **Type**: `string`
 * **Default**: `"normal"`
@@ -86,10 +74,9 @@ Font style of the text.
 
 * `"normal"`
 * `"italic"`
-
 ---
 
-#### **`textalign`**
+#### **`textAlign`**
 
 * **Type**: `string`
 * **Default**: `"lefttop"`
@@ -97,40 +84,19 @@ Font style of the text.
 Controls horizontal and vertical text alignment.
 
 See **Alignment Options** below.
-
 ---
 
-#### **`clipstring`**
+#### **`clipString`**
 
-* **Type**: `number`
-* **Default**: `0`
+* **Type**: `string`
+* **Default**: `"none"`
 * **Description**:
-Enables text clipping behavior.
+Controls text clipping behavior when the content exceeds the available space.
 
-**Valid values:**
-
-* **`0`** — No clipping
-* **`1`** — Clip text
-* **`2`** — Clip text with ellipsis (`...`)
-
----
-
-#### **`clipstringw`**
-
-* **Type**: `number`
-* **Default**: `-1`
-* **Description**:
-Maximum width (in pixels) used for text clipping when `clipstring` is enabled.
-
----
-
-#### **`clipstringh`**
-
-* **Type**: `number`
-* **Default**: `-1`
-* **Description**:
-Maximum height (in pixels) used for text clipping when `clipstring` is enabled.
-
+* **Valid values**:
+  - **`"none"`** : No clipping
+  - **`"clip"`** : Clips the text and appends an ellipsis (`...`) when it exceeds the specified `width`.
+  - **`"ellipsis"`** : Clips the text and appends an ellipsis (`...`)
 ---
 
 ## Alignment Options
@@ -147,7 +113,6 @@ Left aligned, center vertical
 
 * **`"leftbottom"`**
 Left aligned, bottom vertical
-
 ---
 
 #### **Center aligned**
@@ -160,7 +125,6 @@ Center aligned, center vertical
 
 * **`"centerbottom"`**
 Center aligned, bottom vertical
-
 ---
 
 #### **Right aligned**
@@ -176,71 +140,78 @@ Right aligned, bottom vertical
 
 ## Example
 
+{% tabs %}
+{% tabitem label="index.js (Main Script)" %}
 ```javascript
 // create widget window
 var sysWidget = new widgetWindow({
     id: "sysWidget",
     width: 450,
     height: 180,
-    backgroundcolor: "rgba(30, 30, 40, 0.9)",
-    zpos: "ontop",
+    backgroundColor: "rgba(30, 30, 40, 0.9)",
+    zPos: "ontop",
     draggable: true,
+    script: "ui.js"
 });
-
+```
+{% /tabitem %}
+{% tabitem label="ui.js (UI Script)" %}
+```javascript
 // simple text
-sysWidget.addText({
+win.addText({
     id: "simpleText",
     text: "SimpleText",
     x: 10, 
     y: 20,
-    fontsize: 20,
-    fontcolor: "rgb(255, 255, 255)",
-    fontface:"consolas",
-    fontweight: "bold",
-    onleftmouseup: "sysWidget.refresh();"
+    fontSize: 20,
+    fontColor: "rgb(255, 255, 255)",
+    fontFace:"consolas",
+    fontWeight: "bold"
 });
 
 // solid color text
-sysWidget.addText({
+win.addText({
     id: "SolidColorText",
     text: "Solid Color",
     x: 135, 
     y: 15,
     width:140,
     height:30,
-    fontsize: 20,
-    fontcolor: "rgb(255, 255, 255)",
-    solidcolor:"rgb(27, 213, 67)",
-    textalign:"centercenter",
+    fontSize: 20,
+    fontColor: "rgb(255, 255, 255)",
+    solidColor:"rgb(27, 213, 67)",
+    textAlign:"centercenter",
 });
 
 // round solid color text   
-sysWidget.addText({
+win.addText({
     id: "RoundSolidColor",
     text: "Round",
     x: 300, 
     y: 15,
     width:120,
     height:30,
-    fontsize: 20,
-    fontcolor: "rgb(255, 255, 255)",
-    solidcolor:"rgb(27, 117, 213)",
-    solidcolorradius:8,
-    textalign:"centercenter",
+    fontSize: 20,
+    fontColor: "rgb(255, 255, 255)",
+    solidColor:"rgb(27, 117, 213)",
+    solidColorRadius:8,
+    textAlign:"centercenter",
 });
 
 // rotate text
-sysWidget.addText({
+win.addText({
     id: "RotateText",
     text: "Rotate 45",
     x: 10, 
     y: 100,
-    fontsize: 20,
-    fontcolor: "rgb(255, 255, 255)",
+    fontSize: 20,
+    fontColor: "rgb(255, 255, 255)",
     rotate:45,
-    fontstyle: "italic",
+    fontStyle: "italic",
 });
 ```
+{% /tabitem %}
+{% /tabs %}
 
 ## Preview 
 

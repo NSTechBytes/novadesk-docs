@@ -22,8 +22,9 @@ export default defineConfig({
         {
           label: "Introduction",
           items: [
-            { label: "Getting Started", link: "/getting-started/" },
-            { label: "Installation", link: "/installation/" },
+            { label: "Getting Started", link: "/introduction/getting-started/" },
+            { label: "Installation", link: "/introduction/installation/" },
+            { label: "Creating First Widget", link: "/introduction/creating-first-widget/" },
           ],
         },
         {
@@ -37,17 +38,6 @@ export default defineConfig({
               ],
             },
             {
-              label: "Novadesk Object",
-              items: [
-                { label: "Logging", link: "/api/novadesk-object/logging/" },
-                { label: "Path Methods", link: "/api/novadesk-object/path-methods/" },
-                {
-                  label: "Settings",
-                  link: "/api/novadesk-object/settings/",
-                }
-              ],
-            },
-            {
               label: "UI Elements API",
               items: [
                 {
@@ -56,25 +46,71 @@ export default defineConfig({
                 },
                 { label: "Text Element", link: "/api/ui-elements-api/text-element/" },
                 { label: "Image Element", link: "/api/ui-elements-api/image-element/" },
+                { label: "Bar Element", link: "/api/ui-elements-api/bar-element/" },
               ],
             },
             {
-              label: "System Monitors",
+              label: "App Object",
               items: [
-                { label: "CPU Monitor", link: "/api/system-monitors/cpu-monitor/" },
-                { label: "Memory Monitor", link: "/api/system-monitors/memory-monitor/" },
-                { label: "Network Monitor", link: "/api/system-monitors/network-monitor/" },
-                { label: "Mouse Monitor", link: "/api/system-monitors/mouse-monitor/" },
-                { label: "Disk Monitor", link: "/api/system-monitors/disk-monitor/" },
+                {
+                  label: "Settings",
+                  link: "/api/app-object/settings/",
+                },
+                { label: "Utility Methods", link: "/api/app-object/utility-methods/" },
+                { label: "Tray API", link: "/api/app-object/tray-api/" },
+              ],
+            },
+            {
+              label: "Console",
+              items: [
+                { label: "Logging", link: "/api/console/logging/" }
               ],
             },
             {
               label: "System API",
               items: [
+                {
+                  label: "System Monitors",
+                  items: [
+                    { label: "CPU Monitor", link: "/api/system-api/system-monitors/cpu-monitor/" },
+                    { label: "Memory Monitor", link: "/api/system-api/system-monitors/memory-monitor/" },
+                    { label: "Network Monitor", link: "/api/system-api/system-monitors/network-monitor/" },
+                    { label: "Mouse Monitor", link: "/api/system-api/system-monitors/mouse-monitor/" },
+                    { label: "Disk Monitor", link: "/api/system-api/system-monitors/disk-monitor/" },
+                  ],
+                },
                 { label: "Environment Variables", link: "/api/system-api/environment-variables/" },
                 { label: "Hotkey Management", link: "/api/system-api/hotkey-management/" },
                 { label: "Timers", link: "/api/system-api/timers/" },
                 { label: "Display Metrics", link: "/api/system-api/display-metrics/" },
+                { label: "Execute Command", link: "/api/system-api/execute-command/" },
+                { label: "Addon API", link: "/api/system-api/addon-api/" },
+                { label: "JSON API", link: "/api/system-api/json-api/" },
+                { label: "Web Fetch API", link: "/api/system-api/web-fetch/" },
+                { label: "Audio API", link: "/api/system-api/audio-api/" },
+                { label: "Registry API", link: "/api/system-api/registry-api/" },
+                { label: "Clipboard API", link: "/api/system-api/clipboard-api/" },
+                { label: "Power API", link: "/api/system-api/power-api/" },
+              ],
+            },
+          {
+            label:"Include",link: "/api/include/",
+          },
+          {
+            label:"Path Api",link: "/api/path-api/",
+          },
+          {
+            label:"Global Variables",link: "/api/global-variables/",
+          },
+          ],
+        },
+        {
+          label: "Developers",
+          items: [
+            {
+              label: "API Reference",
+              items: [
+                { label: "Addon API (Native)", link: "/developers/api/addon-api/" },
               ],
             },
           ],
@@ -83,7 +119,9 @@ export default defineConfig({
           label: "Guides",
           items: [
             { label: "CLI Commands", link: "/guides/cli-commands/" },
-            { label: "Colors", link: "/guides/colors/" }
+            { label: "Colors", link: "/guides/colors/" },
+            { label: "Script Types", link: "/guides/script-types/" },
+            { label: "Color Matrix Guide", link: "/guides/color-matrix-guide/" }
           ],
         },
       ],

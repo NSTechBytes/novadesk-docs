@@ -3,7 +3,14 @@ title: widgetWindow()
 description: Create and manage desktop widget windows in Novadesk
 ---
 
-The `widgetWindow()` constructor creates a new desktop widget window that can display UI elements like text and images. Widget windows are transparent, layerable, and can be positioned anywhere on the desktop.
+The `widgetWindow` class is the primary interface for creating and managing desktop widgets.
+
+{% aside type="caution" %}
+The `widgetWindow` constructor is **only available in the [Main script](/guides/script-types/#main-script-the-brain)**. UI scripts run within an existing window and
+cannot create new ones.
+{% /aside %}
+A `widgetWindow` creates a new desktop window that can display UI elements like text and images.
+Widget windows are transparent, layerable, and can be positioned anywhere on the desktop.
 
 ## Syntax
 
@@ -59,11 +66,11 @@ An object containing configuration options for the widget window.
 
 ### Visual Options
 
-#### **`backgroundcolor`**
+#### **`backgroundColor`**
 
 - **type**: `Color string`
 - **Default**: `"rgba(0,0,0,0)"`
-- **Description**: Background color in CSS format.
+- **Description**: [Color](/guides/colors/) of the background of the widget window.
 
 {% aside %}
 When no background color is specified, the widget will be transparent.
@@ -77,11 +84,13 @@ When no background color is specified, the widget will be transparent.
 - **Description**: Overall window opacity (0-1)
 ---
 
-#### **`zpos`**
+#### **`zPos`**
 
-- **type**: `string`
-- **Default**: `"ondesktop"`
-- **Description**: Z-order position: "normal", "onbottom", "ondesktop", "ontop", "ontopmost"
+Controls the widget’s **Z-order (stacking order)** relative to other windows and widgets.
+
+* **Type**: `string`
+* **Default**: `"normal"`
+* **Allowed values:** `"normal"`, `"onbottom"`, `"ondesktop"`, `"ontop"`, `"ontopmost"`
 ---
 
 ### Behavior Options
@@ -93,61 +102,93 @@ When no background color is specified, the widget will be transparent.
 - **Description**: Whether the widget can be dragged by the user
 ---
 
-#### **`clickthrough`**
+#### **`clickThrough`**
 
 - **type**: `boolean`
 - **Default**: `false`
 - **Description**: Whether mouse clicks pass through the widget
 ---
 
-#### **`keeponscreen`**
+#### **`keepOnScreen`**
 
 - **type**: `boolean`
 - **Default**: `false`
 - **Description**: Whether to keep the widget within screen bounds
 ---
 
-#### **`snapedges`**
+#### **`snapEdges`**
 
 - **type**: `boolean`
 - **Default**: `true`
 - **Description**: Whether to snap to other widgets and screen edges
 ---
 
+#### **`show`**
+
+- **type**: `boolean`
+- **Default**: `true`
+- **Description**: Controls the initial visibility of the widget.
+---
+
+#### **`dynamicWindowSize`**
+
+- **type**: `boolean`
+- **Default**: `false`
+- **Description**: When enabled, the window automatically adjusts its width and height to fit the bounding box of its UI elements whenever they are updated. **This overrides any fixed `width` and `height` properties.**
+
+{% aside %}
+Even if `dynamicWindowSize` is `false`, Novadesk will automatically calculate the window size **once** during initialization if no `width` or `height` are provided.
+{% /aside %}
+---
+
+#### **`script`**
+
+- **type**: `string`
+- **Default**: `None`
+- **Description**: Path to a dedicated JavaScript file that manages the widget's UI elements.
+{% aside type="caution" %}
+Novadesk uses a **Strict Separation of Concerns**:
+- **UI Elements** (text, images, etc.) can **only** be created and modified within the dedicated UI script using the
+global `win` object.
+- **Window Management** (position, opacity, etc.) can **only** be controlled from the main script via the widget object
+instance.
+- Both scripts use the global [ipc](/api/widget-api/widget-methods/#inter-process-communication-ipc) object for communication.
+{% /aside %}
+
 
 # Z-Order Positions
 
 Widgets can be positioned at different levels in the window stack:
 
-#### **`staytopmost`**
+#### **`ontopmost`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
 - It actively stays above all other windows.
 
-#### **`topmost`**
+#### **`ontop`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- It stays above normal application windows, but not above Stay Topmost widgets.
+- It stays above normal application windows, but not above Topmost widgets.
 - When multiple widgets use this setting, clicking one will bring it above the others.
 
 #### **`normal`**
 
-- The widget does not remain visible when showing the desktop `(Win + D)`.
-- Clicking the widget brings it to the front of all normal windows, including other widget.
+- The widget remains visible when showing the desktop `(Win + D)`.
+- Clicking the widget will bring it to the front of other normal windows and widgets.
 
-#### **`bottom`**
+#### **`onbottom`**
 
 - The widget is hidden when showing the desktop `(Win + D)`.
-- It stays behind normal application windows.
+- It stays behind allapplication windows.
 - Clicking does not change the stacking order between widget using this setting.
 
 #### **`ondesktop`**
 
 - The widget remains visible when showing the desktop `(Win + D)`.
-- Clicking the widget brings it to the front of all normal windows, including other widget.
-
-
+- Clicking the widget does not bring it to the front of other normal windows or widgets.
+- This is the recommended setting for wallpaper-like widgets.
 ---
+
 ## Widget Methods
 
 Once a widget is created, you can use several methods. For more information, see [Widget Methods](/api/widget-api/widget-methods/).
@@ -155,15 +196,15 @@ Once a widget is created, you can use several methods. For more information, see
 ## Example
 
 ```javascript
-var widgetWindow = new widgetWindow({
-    id: "widgetWindow",
-    width: 200,
-    height: 100,
-    backgroundcolor: "rgb(30,30,30)"
-})
+// index.js
+var widget = new widgetWindow({
+  id: "myWidget",
+  width: 300,
+  height: 150,
+  backgroundColor: "rgba(30, 30, 40, 0.9)",
+});
 ```
 
-## Preview 
+## Preview
 
 ![Widget Preview](/src/assets/images/widgetPreview.png)
-
