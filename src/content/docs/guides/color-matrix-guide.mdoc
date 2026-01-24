@@ -12,7 +12,7 @@ The color matrix acts on the RGBA color vector of each pixel. While pixels are t
 The 5x5 matrix is flattened into a 25-element array in your code:
 
 ```javascript
-colormatrix: [
+colorMatrix: [
    RR, RG, RB, RA, RW,  // Red component weights
    GR, GG, GB, GA, GW,  // Green component weights
    BR, BG, BB, BA, BW,  // Blue component weights
@@ -53,7 +53,7 @@ Converts the image to grayscale by averaging RGB channels based on luminance per
 
 ```javascript
 // Grayscale
-colormatrix: [
+colorMatrix: [
   0.33, 0.33, 0.33, 0, 0,
   0.59, 0.59, 0.59, 0, 0,
   0.11, 0.11, 0.11, 0, 0,
@@ -71,7 +71,7 @@ Inverts all color channels, producing a negative image.
 
 ```javascript
 // Invert
-colormatrix: [
+colorMatrix: [
   -1,  0,  0,  0,  0,
    0, -1,  0,  0,  0,
    0,  0, -1,  0,  0,
@@ -89,7 +89,7 @@ Swaps the Red and Blue channels. Useful for correcting color formats or creating
 
 ```javascript
 // Swap RGB to BGR
-colormatrix: [
+colorMatrix: [
   0, 0, 1, 0, 0,
   0, 1, 0, 0, 0,
   1, 0, 0, 0, 0,
@@ -107,7 +107,7 @@ Applies a warm, brownish tone to simulate old photographs.
 
 ```javascript
 // Sepia Color
-colormatrix: [
+colorMatrix: [
   0.393, 0.349, 0.272, 0, 0,
   0.769, 0.686, 0.534, 0, 0,
   0.189, 0.168, 0.131, 0, 0,
@@ -125,7 +125,7 @@ Creates a stark black and white effect by pushing values to extremes.
 
 ```javascript
 // Black and White
-colormatrix: [
+colorMatrix: [
    1.5,  1.5,  1.5, 0, 0,
    1.5,  1.5,  1.5, 0, 0,
    1.5,  1.5,  1.5, 0, 0,
@@ -143,7 +143,7 @@ Simulates the high-contrast, slightly shifted look of instant film.
 
 ```javascript
 // Polaroid Color
-colormatrix: [
+colorMatrix: [
   1.438, -0.062, -0.062, 0, 0,
  -0.122,  1.378, -0.122, 0, 0,
  -0.016, -0.016,  1.483, 0, 0,
@@ -161,7 +161,7 @@ Converts white pixels to transparent (alpha), useful for removing white backgrou
 
 ```javascript
 // White to Alpha
-colormatrix: [
+colorMatrix: [
   1, 0, 0, -1, 0,
   0, 1, 0, -1, 0,
   0, 0, 1, -1, 0,
