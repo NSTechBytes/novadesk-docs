@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import markdoc from "@astrojs/markdoc";
 import starlightScrollToTop from "starlight-scroll-to-top";
+import starlightChangelogs from 'starlight-changelogs'
 
 // https://astro.build/config
 export default defineConfig({
@@ -125,6 +126,7 @@ export default defineConfig({
             { label: "Transform Matrix Guide", link: "/guides/transform-matrix-guide/" },
           ],
         },
+        { label: "Changelog", link: "/changelog/" },
       ],
       plugins: [
         starlightScrollToTop({
@@ -141,6 +143,7 @@ export default defineConfig({
           // Control homepage visibility
           showOnHomepage: false,
         }),
+        starlightChangelogs()
       ],
     }),
   ],
