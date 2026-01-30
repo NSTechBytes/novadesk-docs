@@ -142,7 +142,7 @@ This allows you to, for example, turn an image into grayscale and then use a Col
 
 All examples below apply transformations to this original image:
 
-![Original Image](/src/assets/images/ColorMatrix/Original.png)
+![Original Image](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/Original.png?raw=true)
 
 ---
 
@@ -164,12 +164,12 @@ colorMatrix: [
   0.11, 0.11, 0.11, 0, 0,  // New Blue = avg(R,G,B)
   0,    0,    0,    1, 0,  // Alpha unchanged
   0,    0,    0,    0, 1   // No color shift
-]
+  ]
 ```
 
 **Mathematical Formula**: `Luminance = 0.33×R + 0.59×G + 0.11×B`
 
-![Grayscale](/src/assets/images/ColorMatrix/GreyScale.png)
+![Grayscale](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/GreyScale.png?raw=true)
 
 ---
 
@@ -191,12 +191,12 @@ colorMatrix: [
    0,  0, -1,  0,  0,   // New Blue = -Old_Blue
    0,  0,  0,  1,  0,   // Alpha unchanged
    1,  1,  1,  0,  1    // Add 1 to each RGB channel
-]
+   ]
 ```
 
 **Result**: Light colors become dark, dark colors become light, creating a classic negative film effect.
 
-![Invert](/src/assets/images/ColorMatrix/Invert.png)
+![Invert](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/Invert.png?raw=true)
 
 ---
 
@@ -221,7 +221,7 @@ colorMatrix: [
 
 **Matrix Logic**: This is essentially a permutation matrix that rearranges the color channels without changing their values.
 
-![Swap RGB to BGR](/src/assets/images/ColorMatrix/Swap%20RGB%20to%20BGR.png)
+![Swap RGB to BGR](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/Swap%20RGB%20to%20BGR.png?raw=true)
 
 ---
 
@@ -246,7 +246,7 @@ colorMatrix: [
 
 **Color Theory**: The matrix reduces blue contribution while boosting red and green, creating the characteristic amber-brown tone.
 
-![Sepia](/src/assets/images/ColorMatrix/Sepia%20Color.png)
+![Sepia](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/Swap%20RGB%20to%20BGR.png?raw=true)
 
 ---
 
@@ -289,7 +289,7 @@ colorMatrix: [
  -0.03,   0.05,  -0.02, 0, 1
 ]
 ```
-![Polaroid](/src/assets/images/ColorMatrix/Polaroid%20Color.png)
+![Polaroid](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/Polaroid%20Color.png?raw=true)
 
 ---
 
@@ -314,4 +314,4 @@ colorMatrix: [
 
 **Logic**: Pure white pixels (R=1, G=1, B=1) become transparent because `New_RGB = 1 - 1 = 0`. Other colors remain visible.
 
-![White to Alpha](/src/assets/images/ColorMatrix/White%20to%20Alpha.png)
+![White to Alpha](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/ColorMatrix/White%20to%20Alpha.png?raw=true)
