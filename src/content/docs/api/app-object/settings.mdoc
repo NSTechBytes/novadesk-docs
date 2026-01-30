@@ -4,7 +4,7 @@ description: Programmatically control Novadesk configuration via the app object.
 ---
 
 Novadesk provides several methods to control global application behavior programmatically via the `app` object. These methods can be called at any time and their values are
-persisted to `settings.json`.
+persisted to `settings.json` located in the application's AppData directory.
 
 {% aside type="caution" %}
 Configuration methods are **only available in the Main script**. UI scripts cannot modify global application settings.
@@ -12,7 +12,7 @@ Configuration methods are **only available in the Main script**. UI scripts cann
 
 ## `app.saveLogToFile(bool)`
 
-Enables or disables logging to a file (`novadesk.log`) in the application directory.
+Enables or disables logging to a file (`logs.log`) in the application's AppData directory.
 
 ### Parameters
 
