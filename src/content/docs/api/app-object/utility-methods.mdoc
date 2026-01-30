@@ -68,4 +68,37 @@ const novadeskVersion = app.getNovadeskVersion();
 console.log("Original Novadesk Version: " + novadeskVersion);
 ```
 ---
+## `app.getAppDataPath()`
+
+**Description**: Returns the absolute path to the Novadesk AppData directory (`%APPDATA%\Novadesk\`). This directory is used for storing persistent settings, logs, and configuration.
+
+### Example
+```javascript
+// Get the path to Novadesk AppData
+const appData = app.getAppDataPath();
+console.log("AppData Path: " + appData);
+```
+---
+## `app.getSettingsFilePath()`
+
+**Description**: Returns the absolute path to the `settings.json` file.
+
+### Example
+```javascript
+// Get the settings file path
+const settingsPath = app.getSettingsFilePath();
+console.log("Settings Path: " + settingsPath);
+```
+---
+## `app.getLogPath()`
+
+**Description**: Returns the absolute path to the current log file (`logs.log`).
+
+### Example
+```javascript
+// Get the log file path
+const logPath = app.getLogPath();
+console.log("Log Path: " + logPath);
+```
+---
 
