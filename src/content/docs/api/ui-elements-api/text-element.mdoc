@@ -133,6 +133,32 @@ Forces the text to a specific case.
 Sets the spacing between characters in pixels. Can be positive (wider) or negative (tighter).
 ---
 
+#### **`fontShadow`** {% badge text="New" size="medium" /%}
+
+* **Type**: `object | object[]`
+* **Default**: `[]`
+* **Description**:
+Adds one or more shadows behind the text. Each shadow supports:
+
+* **`x`**: Horizontal offset in pixels (default `0`).
+* **`y`**: Vertical offset in pixels (default `0`).
+* **`blur`**: Blur radius in pixels (default `0`).
+* **`color`**: Shadow color as a [color](/guides/colors/) string (default `"rgba(0,0,0,1)"`).
+
+Examples:
+
+```javascript
+// Single shadow
+fontShadow: { x: 4, y: 4, blur: 8, color: "rgba(0,0,0,0.6)" }
+
+// Multiple layered shadows
+fontShadow: [
+  { blur: 4, color: "#00ffff" },
+  { blur: 10, color: "#00ffff" }
+]
+```
+---
+
 #### **`textAlign`**
 
 * **Type**: `string`
