@@ -62,11 +62,8 @@ composed of `solidColor` and `solidColor2`.
 - **Description**: If set to `true`, antialising (edge smoothing) is used when the element is drawn.
 ---
 
-#### **`bevelType`**
-
-* **Type**: `string`
-* **Default**: `"none"`
-* **Description**: Draws a bevel around the edges of the rectangle defined by `width` and `height`.  
+<Prop name="bevelType" type="string" defaultValue="none">
+  Draws a bevel around the edges of the rectangle defined by `width` and `height`.  
 Controls the visual style of the bevel.
 
 * **Valid values**:
@@ -75,14 +72,11 @@ Controls the visual style of the bevel.
   - **`"sunken"`** : Sunken bevel effect
   - **`"emboss"`** : Embossed effect (3D border)
   - **`"pillow"`** : Pillow effect (faded inside)
----
+</Prop>
 
-#### **`bevelWidth`**
-
-* **Type**: `number`
-* **Default**: `1`
-* **Description**: Sets the width of the bevel in pixels. Optional; defaults to `1` when a `bevelType` is specified.
----
+<Prop name="bevelWidth" type="number" defaultValue="1">
+  Sets the width of the bevel in pixels. Optional; defaults to `1` when a `bevelType` is specified.
+</Prop>
 
 #### **`bevelColor`, `bevelColor2`**
 
@@ -98,11 +92,8 @@ Controls the visual style of the bevel.
   - **`bevelColor2`** provides the contrasting (shadow) color.
 ---
 
-#### **`padding`**
-
-* **Type**: `number | array`
-* **Default**: `0`
-* **Description**: Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `solidColor` and `solidColor2`.
+<Prop name="padding" type="number | array" defaultValue="0">
+  Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `solidColor` and `solidColor2`.
 
 * **Syntax**:
   - `padding: 10` : All sides set to 10px
@@ -113,14 +104,10 @@ Controls the visual style of the bevel.
 ```js
 padding: [5, 10, 5, 10]
 ```
----
+</Prop>
 
-#### **`transformMatrix`**
-
-* **Type**: `array` (6 numbers)
-* **Default**: `[]`
-* **Description**:
-A 6-element affine transformation matrix `[m11, m12, m21, m22, dx, dy]`.
+<Prop name="transformMatrix" type="array" defaultValue="[]">
+  A 6-element affine transformation matrix `[m11, m12, m21, m22, dx, dy]`.
 This allows for advanced 2D transformations including translation, scaling, rotation, and shearing.
 
 * **Matrix Structure**:
@@ -135,54 +122,36 @@ transformMatrix: [1, 0.5, 0, 1, 0, 0]
 # Tooltip Options
 
 Options for displaying tooltips when hovering over the element.
----
+</Prop>
 
-#### **`tooltipText`**
+<Prop name="tooltipText" type="string" defaultValue="">
+  Text to display in the tooltip. If empty, no tooltip is shown.
+</Prop>
 
-* **Type**: `string`
-* **Default**: `""`
-* **Description**: Text to display in the tooltip. If empty, no tooltip is shown.
----
+<Prop name="tooltipTitle" type="string" defaultValue="">
+  Title text displayed in bold above the tooltip text.
+</Prop>
 
-#### **`tooltipTitle`**
-
-* **Type**: `string`
-* **Default**: `""`
-* **Description**: Title text displayed in bold above the tooltip text.
----
-
-#### **`tooltipIcon`**
-
-* **Type**: `string`
-* **Default**: `"none"`
-* **Description**: Icon to display next to the tooltip title.
+<Prop name="tooltipIcon" type="string" defaultValue="none">
+  Icon to display next to the tooltip title.
 * **Valid Values**:
   - `"none"`
   - `"info"`
   - `"warning"`
   - `"error"`
----
+</Prop>
 
-#### **`tooltipBalloon`**
+<Prop name="tooltipBalloon" type="boolean" defaultValue="false">
+  If `true`, the tooltip is displayed in a cartoon-balloon style.
+</Prop>
 
-* **Type**: `boolean`
-* **Default**: `false`
-* **Description**: If `true`, the tooltip is displayed in a cartoon-balloon style.
----
+<Prop name="tooltipMaxWidth" type="number" defaultValue="1000">
+  Maximum width of the tooltip in pixels. Text exceeding this width will wrap to multiple lines.
+</Prop>
 
-#### **`tooltipMaxWidth`**
-
-* **Type**: `number`
-* **Default**: `1000`
-* **Description**: Maximum width of the tooltip in pixels. Text exceeding this width will wrap to multiple lines.
----
-
-#### **`tooltipMaxHeight`**
-
-* **Type**: `number`
-* **Default**: `1000`
-* **Description**: Maximum height of the tooltip in pixels. This is a hint for the tooltip layout, though actual height is determined by content.
----
+<Prop name="tooltipMaxHeight" type="number" defaultValue="1000">
+  Maximum height of the tooltip in pixels. This is a hint for the tooltip layout, though actual height is determined by content.
+</Prop>
 
 # Mouse Actions
 

@@ -18,59 +18,37 @@ See general element options [here](/api/ui-elements-api/general-elements-options
 
 ## Image Element Options
 
-#### **`path`**
+<Prop name="path" type="string" defaultValue="">
+  Path to the image file.
+</Prop>
 
-* **Type**: `string`
-* **Default**: `""`
-* **Description**: Path to the image file.
----
-
-#### **`preserveAspectRatio`**
-
-* **Type**: `string`
-* **Default**: `"stretch"`
-* **Description**:
-Controls how the image maintains its aspect ratio.
+<Prop name="preserveAspectRatio" type="string" defaultValue="stretch">
+  Controls how the image maintains its aspect ratio.
 
 * **Valid values**:
   - **`"stretch"`** : Stretch image to fill the specified dimensions
   - **`"preserve"`** : Fit image within dimensions while maintaining aspect ratio
   - **`"crop"`** : Crop image to fill dimensions while maintaining aspect ratio
----
+</Prop>
 
-#### **`imageAlpha`**
+<Prop name="imageAlpha" type="number" defaultValue="255">
+  Image opacity value in the range `0–255`.
+</Prop>
 
-* **Type**: `number`
-* **Default**: `255`
-* **Description**: Image opacity value in the range `0–255`.
----
+<Prop name="grayscale" type="boolean" defaultValue="false">
+  Applies a grayscale filter to the image when enabled. When combined with `imageTint` or `colorMatrix`, the grayscale effect is applied first.
+</Prop>
 
-#### **`grayscale`**
+<Prop name="tile" type="boolean" defaultValue="false">
+  Repeats (tiles) the image to fill the element area. Hardware-accelerated effects (Greyscale, Tint) are fully supported on tiled images.
+</Prop>
 
-* **Type**: `boolean`
-* **Default**: `false`
-* **Description**: Applies a grayscale filter to the image when enabled. When combined with `imageTint` or `colorMatrix`, the grayscale effect is applied first.
----
+<Prop name="imageTint" type="string" defaultValue="">
+  [color](/guides/colors/) applied to the image.
+</Prop>
 
-#### **`tile`**
-
-* **Type**: `boolean`
-* **Default**: `false`
-* **Description**: Repeats (tiles) the image to fill the element area. Hardware-accelerated effects (Greyscale, Tint) are fully supported on tiled images.
----
-#### **`imageTint`**
-
-* **Type**: `string`
-* **Default**: `""`
-* **Description**: [color](/guides/colors/) applied to the image.
----
-
-#### **`colorMatrix`**
-
-* **Type**: `array` (25 numbers)
-* **Default**: `[]`
-* **Description**:
-A 5x5 color transformation matrix used for advanced color effects (e.g., brightness, contrast, alpha, color shifting).
+<Prop name="colorMatrix" type="array" defaultValue="[]">
+  A 5x5 color transformation matrix used for advanced color effects (e.g., brightness, contrast, alpha, color shifting).
 For a comprehensive guide and more examples, see the [Color Matrix Guide](/guides/color-matrix-guide/).
 The array can contain either **20 numbers** (5x4 Direct2D format) or **25 numbers** (5x5 Rainmeter format). Elements can use `grayscale` and `colorMatrix` simultaneously; effects are chained sequentially.
 
@@ -87,7 +65,7 @@ colorMatrix: [
    0,    0,    0,    0, 1
 ]
 ```
----
+</Prop>
 
 ## `Supported Image Formats`
 

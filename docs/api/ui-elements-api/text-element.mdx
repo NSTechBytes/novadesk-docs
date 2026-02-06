@@ -24,39 +24,24 @@ See general element options [here](/api/ui-elements-api/general-elements-options
 ## Text Element Options
 ---
 
-#### **`text`**
+<Prop name="text" type="string" defaultValue="">
+  Text content to display.
+</Prop>
 
-* **Type**: `string`
-* **Default**: `""`
-* **Description**:
-Text content to display.
----
+<Prop name="fontSize" type="number" defaultValue="12">
+  Font size in pixels.
+</Prop>
 
-#### **`fontSize`**
+<Prop name="fontFace" type="string" defaultValue="Arial">
+  Font face name.
+</Prop>
 
-* **Type**: `number`
-* **Default**: `12`
-* **Description**:
-Font size in pixels.
----
+<Prop name="fontColor" defaultValue="rgb(0,0,0)" type="string">
+  [color](/guides/colors/) or [gradients](/guides/colors/#gradients) of the text.
+</Prop>
 
-#### **`fontFace`**
-
-* **Type**: `string`
-* **Default**: `"Arial"`
-* **Description**:
-Font face name.
----
-
-#### **`fontColor`** * **Type**: `string`
-* **Default**: `"rgb(0,0,0)"`
-* **Description**: [color](/guides/colors/) or [gradients](/guides/colors/#gradients) of the text.
----
-
-#### **`fontWeight`** * **Type**: `string | number`
-* **Default**: `"normal"` (400)
-* **Description**:
-Font weight of the text. Supports numerical weights (100-900) or descriptive strings.
+<Prop name="fontWeight" defaultValue="normal" type="string | number">
+  Font weight of the text. Supports numerical weights (100-900) or descriptive strings.
 
 **Valid string values:**
 
@@ -71,45 +56,31 @@ Font weight of the text. Supports numerical weights (100-900) or descriptive str
 * `"black"`, `"heavy"` (900)
 
 **Numerical values:** Any value between `100` and `900`.
----
+</Prop>
 
-#### **`fontPath`**
+<Prop name="fontPath" type="string" defaultValue="">
+  Path to a custom font file (`.ttf`, `.otf`). If provided, Novadesk will load and use this font instead of searching system fonts.
+</Prop>
 
-* **Type**: `string`
-* **Default**: `""`
-* **Description**:
-Path to a custom font file (`.ttf`, `.otf`). If provided, Novadesk will load and use this font instead of searching system fonts.
----
-
-#### **`fontStyle`**
-
-* **Type**: `string`
-* **Default**: `"normal"`
-* **Description**:
-Font style of the text.
+<Prop name="fontStyle" type="string" defaultValue="normal">
+  Font style of the text.
 
 **Valid values:**
 
 * `"normal"`
 * `"italic"`
----
+</Prop>
 
-#### **`underLine`**  * **Type**: `boolean`
-* **Default**: `false`
-* **Description**:
-Draws a line under the text.
----
+<Prop name="underLine" defaultValue="false" type="boolean">
+  Draws a line under the text.
+</Prop>
 
-#### **`strikeThrough`** * **Type**: `boolean`
-* **Default**: `false`
-* **Description**:
-Draws a line through the text.
----
+<Prop name="strikeThrough" defaultValue="false" type="boolean">
+  Draws a line through the text.
+</Prop>
 
-#### **`case`** * **Type**: `string`
-* **Default**: `"normal"`
-* **Description**:
-Forces the text to a specific case.
+<Prop name="case" defaultValue="normal" type="string">
+  Forces the text to a specific case.
 
 **Valid values:**
 
@@ -118,18 +89,14 @@ Forces the text to a specific case.
 * `"lower"` : converts all text to lowercase.
 * `"capitalize"` : Capitalizes The First Letter Of Each Word.
 * `"sentence"` : Capitalizes the first letter of the first word.
----
+</Prop>
 
-#### **`letterSpacing`**  * **Type**: `number`
-* **Default**: `0`
-* **Description**:
-Sets the spacing between characters in pixels. Can be positive (wider) or negative (tighter).
----
+<Prop name="letterSpacing" defaultValue="0" type="number">
+  Sets the spacing between characters in pixels. Can be positive (wider) or negative (tighter).
+</Prop>
 
-#### **`fontShadow`** * **Type**: `object | object[]`
-* **Default**: `[]`
-* **Description**:
-Adds one or more shadows behind the text. Each shadow supports:
+<Prop name="fontShadow" defaultValue="[]" type="object | object[]">
+  Adds one or more shadows behind the text. Each shadow supports:
 
 * **`x`**: Horizontal offset in pixels (default `0`).
 * **`y`**: Vertical offset in pixels (default `0`).
@@ -148,31 +115,23 @@ fontShadow: [
   { blur: 10, color: "#00ffff" }
 ]
 ```
----
+</Prop>
 
-#### **`textAlign`**
-
-* **Type**: `string`
-* **Default**: `"lefttop"`
-* **Description**:
-Controls horizontal and vertical text alignment.
+<Prop name="textAlign" type="string" defaultValue="lefttop">
+  Controls horizontal and vertical text alignment.
 
 See **Alignment Options** below.
----
+</Prop>
 
-#### **`clipString`**
-
-* **Type**: `string`
-* **Default**: `"none"`
-* **Description**:
-Controls text clipping behavior when the content exceeds the available space.
+<Prop name="clipString" type="string" defaultValue="none">
+  Controls text clipping behavior when the content exceeds the available space.
 
 * **Valid values**:
   - **`"none"`** : No clipping. Text will automatically wrap if a `width` is provided.
   - **`"clip"`** : Clips the text at the element's boundaries (Single line).
   - **`"ellipsis"`** : Clips the text and appends an ellipsis (`...`) (Single line).
   - **`"wrap"`** : Explicitly enables multiline word wrapping.
----
+</Prop>
 
 ## Alignment Options
 

@@ -16,63 +16,32 @@ win.addImage(options);
 ## Options
 
 The bar element inherits all [General Element Options](/api/ui-elements-api/general-elements-options/) and adds the following:
----
 
-### `value`
+<Prop name="value" type="number" defaultValue="0.0">
+  The fill level of the bar, from `0.0` (empty) to `1.0` (full).
+</Prop>
 
-* **Type**: `number`
-* **Default**: `0.0`
-* **Description**:
-The fill level of the bar, from `0.0` (empty) to `1.0` (full).
----
+<Prop name="orientation" type="string" defaultValue="horizontal">
+  The direction in which the bar fills.
+  - `horizontal`: Fills from left to right
+  - `vertical`: Fills from bottom to top
+</Prop>
 
-### `orientation`
+<Prop name="barCornerRadius" type="number" defaultValue="0">
+  Corner radius applied to the bar fill.
+</Prop>
 
-* **Type**: `string`
-* **Default**: `"horizontal"`
-* **Description**:
-The direction in which the bar fills.
-- `"horizontal"`: Fills from left to right
-- `"vertical"`: Fills from bottom to top
----
+<Prop name="barColor" type="string">
+  The [color](/guides/colors/) of the filled portion of the bar.
+</Prop>
 
-### `barCornerRadius`
+<Prop name="barColor2" type="string">
+  The [color](/guides/colors/) used to create a gradient fill.
+</Prop>
 
-* **Type**: `number`
-* **Default**: `0`
-* **Description**:
-Corner radius applied to the bar fill.
----
-
-### `barColor`
-
-* **Type**: `string`
-* **Description**:
-The [color](/guides/colors/) of the filled portion of the bar.
----
-
-### `barColor2`
-
-* **Type**: `string`
-* **Description**:
-The [color](/guides/colors/) used to create a gradient fill.
----
-
-### `barAlpha`, `barAlpha2`
-
-* **Type**: `number` (0–255)
-* **Description**:
-Explicit alpha values for the bar colors. Usually unnecessary when using `rgba()` like format Colors.
----
-
-### `barGradientAngle`
-
-* **Type**: `number`
-* **Default**: `0.0`
-* **Description**:
-Gradient angle (in degrees) used when `barColor2` is set. Supports the full $360^\circ$ range for precise control over the fill direction.
----
-
+<Prop name="barGradientAngle" type="number" defaultValue="0.0">
+  Gradient angle (in degrees) used when `barColor2` is set. Supports the full 360? range for precise control over the fill direction.
+</Prop>
 
 ## Example
 
