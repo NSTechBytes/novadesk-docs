@@ -4,6 +4,7 @@ description: Monitor CPU usage in Novadesk
 ---
 
 import CodeBlock from '@theme/CodeBlock';
+import { Method, MethodParam, ReturnValue } from '@site/src/components/Method';
 import Admonition from '@theme/Admonition';
 
 The CPU monitor class allows you to monitor CPU usage on the system. You can monitor overall system CPU usage or
@@ -19,33 +20,38 @@ System monitors are **only available in the Main script**. UI scripts should req
   {`var cpu = new system.cpu(options);`}
 </CodeBlock>
 
-### Parameters
+### Constructor Parameters
 
-###### **`options`**
-* **Type**: `Object`
-* **Required**: No
-* **Description**: Configuration options for the CPU monitor.
+<MethodParam name="options" type="Object">
+  Configuration options for the CPU monitor.
+  
+  ### `processor` (number)
+  **Default**: `0` (all processors)
+  
+  Processor number to monitor (0 for all processors, 1+ for specific cores).
+</MethodParam>
 
-###### **`processor`**
-* **Type**: `number`
-* **Default**: `0` (all processors)
-* **Description**: Processor number to monitor (0 for all processors, 1+ for specific cores).
 ---
 
-# Methods
+## Methods
 
-### **`usage()`**
+<Method
+  signature="usage()"
+  description="Get the current CPU usage percentage."
+>
+  <ReturnValue type="number">
+    CPU usage percentage (0-100).
+  </ReturnValue>
+</Method>
 
-Get the current CPU usage percentage.
-
-### Return Value
-* **Type**: `number`
-* **Description**: CPU usage percentage (0-100).
 ---
   
-### **`destroy()`**
+<Method
+  signature="destroy()"
+  description="Destroy the CPU monitor and free its resources."
+>
+</Method>
 
-Destroy the CPU monitor and free its resources.
 ---
 
 ## Example

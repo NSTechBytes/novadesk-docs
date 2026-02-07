@@ -4,6 +4,7 @@ description: Monitor disk usage in Novadesk
 ---
 
 import CodeBlock from '@theme/CodeBlock';
+import { Method, MethodParam, ReturnValue } from '@site/src/components/Method';
 import Admonition from '@theme/Admonition';
 
 The Disk monitor class allows you to monitor disk usage for specific drives or all drives on the system.
@@ -18,55 +19,55 @@ System monitors are **only available in the Main script**. UI scripts should req
   {`var disk = new system.disk(options);`}
 </CodeBlock>
 
-### Parameters
+### Constructor Parameters
 
-###### **`options`**
-* **Type**: `Object`
-* **Required**: No
-* **Description**: Configuration options for the disk monitor.
+<MethodParam name="options" type="Object">
+  Configuration options for the disk monitor.
+  
+  ### `drive` (string)
+  **Default**: All drives
+  
+  Drive letter to monitor (e.g., "C:", "D:").
+</MethodParam>
 
-###### **`drive`**
-* **Type**: `string`
-* **Default**: All drives
-* **Description**: Drive letter to monitor (e.g., "C:", "D:").
 ---
 
 ## Methods
 
-### **`stats()`**
+<Method
+  signature="stats()"
+  description="Get current disk statistics."
+>
+  <ReturnValue type="Object | Array">
+    For a single drive monitor, returns an object containing disk statistics:
+    
+    ### `drive` (string)
+    Drive letter.
+    
+    ### `total` (number)
+    Total disk space in bytes.
+    
+    ### `free` (number)
+    Free disk space in bytes.
+    
+    ### `used` (number)
+    Used disk space in bytes.
+    
+    ### `percent` (number)
+    Disk usage percentage (0-100).
+    
+    For an all-drives monitor, returns an array of objects, each containing disk statistics for a drive.
+  </ReturnValue>
+</Method>
 
-Get current disk statistics.
-
-### Return Value
-* **Type**: `Object | Array`
-* **Description**: For a single drive monitor, returns an object containing disk statistics:
-
-###### **`drive`**
-* **Type**: `string`
-* **Description**: Drive letter.
-
-###### **`total`**
-* **Type**: `number`
-* **Description**: Total disk space in bytes.
-
-###### **`free`**
-* **Type**: `number`
-* **Description**: Free disk space in bytes.
-
-###### **`used`**
-* **Type**: `number`
-* **Description**: Used disk space in bytes.
-
-###### **`percent`**
-* **Type**: `number`
-* **Description**: Disk usage percentage (0-100).
-
-For an all-drives monitor, returns an array of objects, each containing disk statistics for a drive.
 ---
   
-### **`destroy()`**
+<Method
+  signature="destroy()"
+  description="Destroy the disk monitor and free its resources."
+>
+</Method>
 
-Destroy the disk monitor and free its resources.
 
 ## Complete Example
 

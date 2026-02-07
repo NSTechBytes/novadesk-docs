@@ -4,6 +4,7 @@ description: Monitor mouse position in Novadesk
 ---
 
 import CodeBlock from '@theme/CodeBlock';
+import { Method, ReturnValue } from '@site/src/components/Method';
 import Admonition from '@theme/Admonition';
 
 The Mouse monitor class allows you to monitor the current mouse cursor position on the screen.
@@ -18,28 +19,33 @@ System monitors are **only available in the Main script**. UI scripts should req
   {`var mouse = new system.mouse();`}
 </CodeBlock>
 
+---
+
 ## Methods
 
-### **`position()`**
+<Method
+  signature="position()"
+  description="Get the current mouse cursor position."
+>
+  <ReturnValue type="Object">
+    An object containing mouse coordinates:
+    
+    ### `x` (number)
+    X-coordinate of the mouse cursor.
+    
+    ### `y` (number)
+    Y-coordinate of the mouse cursor.
+  </ReturnValue>
+</Method>
 
-Get the current mouse cursor position.
-
-### Return Value
-* **Type**: `Object`
-* **Description**: An object containing mouse coordinates:
-
-###### **`x`**
-* **Type**: `number`
-* **Description**: X-coordinate of the mouse cursor.
-
-###### **`y`**
-* **Type**: `number`
-* **Description**: Y-coordinate of the mouse cursor.
 ---
   
-### **`destroy()`**
+<Method
+  signature="destroy()"
+  description="Destroy the mouse monitor and free its resources."
+>
+</Method>
 
-Destroy the mouse monitor and free its resources.
 
 ## Example
 

@@ -4,6 +4,7 @@ description: Monitor network activity in Novadesk
 ---
 
 import CodeBlock from '@theme/CodeBlock';
+import { Method, ReturnValue } from '@site/src/components/Method';
 import Admonition from '@theme/Admonition';
 
 The Network monitor class allows you to monitor network activity including incoming and outgoing data transfer rates and
@@ -19,36 +20,39 @@ System monitors are **only available in the Main script**. UI scripts should req
   {`var network = new system.network();`}
 </CodeBlock>
 
+---
+
 ## Methods
 
-### **`stats()`**
+<Method
+  signature="stats()"
+  description="Get current network statistics."
+>
+  <ReturnValue type="Object">
+    An object containing network statistics:
+    
+    ### `netIn` (number)
+    Incoming network bytes per second.
+    
+    ### `netOut` (number)
+    Outgoing network bytes per second.
+    
+    ### `totalIn` (number)
+    Total incoming bytes since monitor creation.
+    
+    ### `totalOut` (number)
+    Total outgoing bytes since monitor creation.
+  </ReturnValue>
+</Method>
 
-Get current network statistics.
-
-### Return Value
-* **Type**: `Object`
-* **Description**: An object containing network statistics:
-
-###### **`netIn`**
-* **Type**: `number`
-* **Description**: Incoming network bytes per second.
-
-###### **`netOut`**
-* **Type**: `number`
-* **Description**: Outgoing network bytes per second.
-
-###### **`totalIn`**
-* **Type**: `number`
-* **Description**: Total incoming bytes since monitor creation.
-
-###### **`totalOut`**
-* **Type**: `number`
-* **Description**: Total outgoing bytes since monitor creation.
 ---
   
-### **`destroy()`**
+<Method
+  signature="destroy()"
+  description="Destroy the network monitor and free its resources."
+>
+</Method>
 
-Destroy the network monitor and free its resources.
 
 ## Complete Example
 
