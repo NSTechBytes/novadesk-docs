@@ -4,82 +4,112 @@ description: Utilities for working with file and directory paths in Novadesk
 ---
 
 import CodeBlock from '@theme/CodeBlock';
+import { Method, MethodParam, ReturnValue } from '@site/src/components/Method';
 
 The `path` module provides utilities for working with file and directory paths. It is available globally in both Main and UI scripts.
 
-## `path.join([...paths])`
+<Method
+  signature="path.join([...paths])"
+  description="Joins all given path segments together using the platform-specific separator (`\`), then normalizes the resulting path."
+>
+  ### Parameters
+  <MethodParam name="paths" type="string[]">
+    Array of path segments to join.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var fullPath = path.join('C:', 'Users', 'John', 'Desktop', 'widget.js');
+// Returns: "C:\\Users\\John\\Desktop\\widget.js"`}
+  </CodeBlock>
+</Method>
 
-Joins all given path segments together using the platform-specific separator (`\`), then normalizes the resulting path.
-
-### Example
-<CodeBlock language="javascript">
-  {`var fullPath = path.join('C:', 'Users', 'John', 'Desktop', 'widget.js');
-// Returns: "C:\Users\John\Desktop\widget.js"`}
-</CodeBlock>
-
----
-
-## `path.resolve([...paths])`
-
-Resolves a sequence of paths or path segments into an absolute path.
-
-### Example
-<CodeBlock language="javascript">
-  {`var absolutePath = path.resolve('data', 'settings.json');
+<Method
+  signature="path.resolve([...paths])"
+  description="Resolves a sequence of paths or path segments into an absolute path."
+>
+  ### Parameters
+  <MethodParam name="paths" type="string[]">
+    Array of path segments to resolve.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var absolutePath = path.resolve('data', 'settings.json');
 // Returns absolute path relative to the application directory`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.dirname(path)`
-
-Returns the directory name of a path.
-
-### Example
-<CodeBlock language="javascript">
-  {`var dir = path.dirname('/app/data/file.txt');
+<Method
+  signature="path.dirname(path)"
+  description="Returns the directory name of a path."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to get the directory name from.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var dir = path.dirname('/app/data/file.txt');
 // Returns: "/app/data"`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.basename(path[, ext])`
-
-Returns the last portion of a path.
-
-### Example
-<CodeBlock language="javascript">
-  {`var file = path.basename('/app/data/file.txt');
+<Method
+  signature="path.basename(path[, ext])"
+  description="Returns the last portion of a path."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to get the basename from.
+  </MethodParam>
+  <MethodParam name="ext" type="string">
+    Optional extension to remove from the result.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var file = path.basename('/app/data/file.txt');
 // Returns: "file.txt"
 
 var name = path.basename('/app/data/file.txt', '.txt');
 // Returns: "file"`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.extname(path)`
-
-Returns the extension of the path.
-
-### Example
-<CodeBlock language="javascript">
-  {`var ext = path.extname('index.html');
+<Method
+  signature="path.extname(path)"
+  description="Returns the extension of the path."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to get the extension from.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var ext = path.extname('index.html');
 // Returns: ".html"`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.parse(path)`
-
-Returns an object whose properties represent significant elements of the path.
-
-### Return Value
-An object with: `root`, `dir`, `base`, `ext`, `name`.
-
-### Example
-<CodeBlock language="javascript">
-  {`var parts = path.parse('C:\\path\\to\\file.txt');
+<Method
+  signature="path.parse(path)"
+  description="Returns an object whose properties represent significant elements of the path."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to parse.
+  </MethodParam>
+  
+  <ReturnValue type="Object">
+    An object with: `root`, `dir`, `base`, `ext`, `name`.
+  </ReturnValue>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var parts = path.parse('C:\\path\\to\\file.txt');
 /*
 {
   root: 'C:\\',
@@ -89,40 +119,60 @@ An object with: `root`, `dir`, `base`, `ext`, `name`.
   name: 'file'
 }
 */`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.isAbsolute(path)`
-
-Determines if a path is an absolute path.
-
-### Example
-<CodeBlock language="javascript">
-  {`path.isAbsolute("C:\\Users\\Desktop"); // Returns: true
+<Method
+  signature="path.isAbsolute(path)"
+  description="Determines if a path is an absolute path."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to check.
+  </MethodParam>
+  
+  <ReturnValue type="boolean">
+    `true` if the path is absolute, `false` otherwise.
+  </ReturnValue>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`path.isAbsolute("C:\\Users\\Desktop"); // Returns: true
 path.isAbsolute("../images/logo.png"); // Returns: false`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.normalize(path)`
-
-Normalizes the given path, resolving `..` and `.` segments and correcting slashes.
-
-### Example
-<CodeBlock language="javascript">
-  {`var normalized = path.normalize("C:\\Users\\Documents\\..\\Desktop\\.\\widget.js");
+<Method
+  signature="path.normalize(path)"
+  description="Normalizes the given path, resolving `..` and `.` segments and correcting slashes."
+>
+  ### Parameters
+  <MethodParam name="path" type="string">
+    The path to normalize.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var normalized = path.normalize("C:\\Users\\Documents\\..\\Desktop\\.\\widget.js");
 // Returns: "C:\Users\Desktop\widget.js"`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
 
----
-
-## `path.relative(from, to)`
-
-Returns the relative path from `from` to `to` based on the current working directory.
-
-### Example
-<CodeBlock language="javascript">
-  {`var rel = path.relative("C:\\data\\orandea\\test\\aaa", "C:\\data\\orandea\\impl\\bbb");
+<Method
+  signature="path.relative(from, to)"
+  description="Returns the relative path from `from` to `to` based on the current working directory."
+>
+  ### Parameters
+  <MethodParam name="from" type="string">
+    The source path.
+  </MethodParam>
+  <MethodParam name="to" type="string">
+    The destination path.
+  </MethodParam>
+  
+  ### Examples
+  <CodeBlock language="javascript">
+    {`var rel = path.relative("C:\\data\\orandea\\test\\aaa", "C:\\data\\orandea\\impl\\bbb");
 // Returns: "..\\..\\impl\\bbb"`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
