@@ -9,8 +9,6 @@ The `system` object is **only available in the Main script**. UI scripts should 
 
 The Registry API provides methods to read and write Windows Registry keys.
 
----
-
 ## system.readRegistry(path, valueName)
 
 Reads a value from the Windows Registry.
@@ -31,8 +29,6 @@ Reads a value from the Windows Registry.
 - **Type**: `string | number | null`
 - **Description**: Returns the value data if successful. Supports `REG_SZ`, `REG_EXPAND_SZ`, and `REG_DWORD`. Returns `null` if the key or value does not exist.
 
----
-
 ## system.writeRegistry(path, valueName, data)
 
 Writes a value to the Windows Registry. Creates the key if it doesn't exist.
@@ -50,8 +46,6 @@ Writes a value to the Windows Registry. Creates the key if it doesn't exist.
 
 - **Type**: `boolean`
 - **Description**: `true` if successful.
-
----
 
 ## Examples
 

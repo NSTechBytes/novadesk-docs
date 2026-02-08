@@ -1,4 +1,3 @@
-
 # Display Metrics
 
 Retrieve screen and monitor display metrics in Novadesk.

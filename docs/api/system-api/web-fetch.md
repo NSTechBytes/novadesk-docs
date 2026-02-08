@@ -1,4 +1,3 @@
-
 # Web Fetch API
 
 Asynchronously fetch data from the web or local files in Novadesk.
@@ -8,8 +7,6 @@ The `system` object is **only available in the Main script**. UI scripts should 
 :::
 
 The Web Fetch API provides a simple, asynchronous way to retrieve data from URLs (HTTP/HTTPS) or local files. It is designed to be non-blocking, ensuring your widgets remain responsive while data is being fetched.
-
----
 
 ## system.fetch(url, callback)
 
@@ -27,8 +24,6 @@ Initiates an asynchronous fetch request.
   - **Type**: `function(data)`
   - **Description**: The function called when the fetch operation completes.
     - **`data`**: The raw string content of the fetched source. If the operation fails, this will be `null`.
-
----
 
 ## Examples
 

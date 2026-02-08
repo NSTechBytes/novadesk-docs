@@ -39,8 +39,6 @@ Register a global hotkey and bind it to a callback.
 - **Type**: `number`
 - **Description**: Hotkey ID that can be used to unregister the hotkey.
 
----
-
 ## system.unregisterHotkey(id)
 
 Unregister a previously registered hotkey.
@@ -51,8 +49,6 @@ Unregister a previously registered hotkey.
   - **Type**: `number`
   - **Description**: The unique hotkey identifier returned by `system.registerHotkey`.
 
----
-
 ## Supported Keys
 
 ### Modifier Keys
@@ -61,18 +57,12 @@ Unregister a previously registered hotkey.
 - `Shift`
 - `Win`
 
----
-
 ### Alphanumeric Keys
 - Letters: `A`–`Z`
 - Numbers: `0`–`9`
 
----
-
 ### Function Keys
 - `F1`–`F12`
-
----
 
 ### Special Keys
 - `Space`

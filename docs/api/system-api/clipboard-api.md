@@ -9,8 +9,6 @@ The `system` object is **only available in the Main script**. UI scripts should 
 
 The Clipboard API allows widgets to interact with the system clipboard.
 
----
-
 ## system.getClipboardText()
 
 Retrieves the current text content of the clipboard.
@@ -19,8 +17,6 @@ Retrieves the current text content of the clipboard.
 
 - **Type**: `string | null`
 - **Description**: The text content of the clipboard, or `null` if the clipboard is empty or does not contain text.
-
----
 
 ## system.setClipboardText(text)
 
@@ -36,8 +32,6 @@ Sets the text content of the system clipboard.
 
 - **Type**: `boolean`
 - **Description**: `true` if successful.
-
----
 
 ## Example
 

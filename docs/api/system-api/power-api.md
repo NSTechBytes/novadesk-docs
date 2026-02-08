@@ -9,8 +9,6 @@ The `system` object is **only available in the Main script**. UI scripts should 
 
 The Power API provides information about the system's power source, battery status, and CPU frequency.
 
----
-
 ## system.getPowerStatus()
 
 Retrieves current power and battery information.
@@ -54,8 +52,6 @@ Retrieves current power and battery information.
 - **`hz`**
   - **Type**: `number`
   - **Description**: Current CPU frequency in Hz (MHz * 1,000,000).
-
----
 
 ## Example
 

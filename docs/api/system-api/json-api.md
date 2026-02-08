@@ -58,8 +58,6 @@ if (config) {
 [TimeStamp] [Novadesk] [LOG] Opacity: 0.8
 ```
 
----
-
 ## system.writeJson(path, data)
 
 Writes a JavaScript object to a JSON file.
@@ -78,8 +76,6 @@ Writes a JavaScript object to a JSON file.
 
 - **Type**: `boolean`
 - **Description**: Returns `true` if the file was written successfully. Returns `false` if the operation fails.
-
----
 
 ## Examples
 

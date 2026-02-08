@@ -1,4 +1,3 @@
-
 # Timer Functions
 
 Timer functions for scheduling code execution in Novadesk.
@@ -40,8 +39,6 @@ var timerId = setTimeout(function() {
 // clearTimeout(timerId);
 ```
 
----
-
 ## setInterval(callback, interval)
 
 Execute a function repeatedly at specified intervals.
@@ -76,8 +73,6 @@ setTimeout(function() {
 }, 10000);
 ```
 
----
-
 ## clearTimeout(id)
 
 Cancel a timer created with `setTimeout`.
@@ -99,8 +94,6 @@ var timerId = setTimeout(function() {
 clearTimeout(timerId);
 console.log("Timer cancelled");
 ```
-
----
 
 ## clearInterval(id)
 
@@ -125,8 +118,6 @@ setTimeout(function() {
   console.log("Interval stopped");
 }, 5000);
 ```
-
----
 
 ## setImmediate(callback)
 

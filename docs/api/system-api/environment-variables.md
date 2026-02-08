@@ -22,8 +22,6 @@ Get the value of an environment variable.
 - **Type**: `string | Object | null`
 - **Description**: Returns the value of the environment variable, `null` if it does not exist, or an object containing all environment variables when no name is provided.
 
----
-
 ::: tip
 Omitting the parameter will return all environment variables.
 ```js

@@ -40,8 +40,6 @@ Launches an external application, opens a file, or opens a URL in the default br
 - **Type**: `boolean`
 - **Description**: Returns `true` if the command was successfully initiated. Returns `false` if the operation fails.
 
----
-
 ## Examples
 
 ### Launch an Application

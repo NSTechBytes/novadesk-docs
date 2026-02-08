@@ -9,8 +9,6 @@ The `system` object is **only available in the Main script**. UI scripts should 
 
 The Audio API provides methods to control the master system volume and play WAV audio files.
 
----
-
 ## system.getVolume()
 
 Retrieves the current master system volume.
@@ -19,8 +17,6 @@ Retrieves the current master system volume.
 
 - **Type**: `number`
 - **Description**: An integer between `0` and `100` representing the current volume percentage.
-
----
 
 ## system.setVolume(level)
 
@@ -31,8 +27,6 @@ Sets the master system volume.
 - **`level`**
   - **Type**: `number`
   - **Description**: An integer between `0` and `100` representing the target volume percentage. Values outside this range will be clamped.
-
----
 
 ## system.playSound(path, [loop])
 
@@ -54,13 +48,9 @@ Plays a WAV audio file asynchronously.
 - **Type**: `boolean`
 - **Description**: Returns `true` if the sound playback was successfully initiated.
 
----
-
 ## system.stopSound()
 
 Stops any currently playing sound initiated via `playSound()`.
-
----
 
 ## Examples
 
