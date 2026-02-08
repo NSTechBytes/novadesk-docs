@@ -1,11 +1,10 @@
-
 # Global Variables
- Global variables available in Novadesk scripts
 
+Global variables available in Novadesk scripts.
 
-Novadesk provide standard global variables that help you work with file paths relative to your script.
+Novadesk provides standard global variables that help you work with file paths relative to your script.
 
-## `__dirname`
+## __dirname
 
 The absolute path to the directory containing the current script file.
 
@@ -15,8 +14,7 @@ The absolute path to the directory containing the current script file.
 var imagePath = path.join(__dirname, 'assets', 'icon.png');
 win.addImage(imagePath, 10, 10);
 ```
----
 
-## `__filename`
+## __filename
 
 The absolute path to the current script file.

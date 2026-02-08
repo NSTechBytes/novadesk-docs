@@ -1,14 +1,15 @@
-
 # Include Method
- Include method in Novadesk
 
+Include method in Novadesk.
 
-## `include(path)`
+## include(path)
 
 Includes and executes another JavaScript file within the current script context. This is useful for modularizing your code or including shared libraries.
 
-- **`path`**: The path to the JavaScript file to include. 
-    - You can use relative paths (e.g., `./lib/math.js`) or absolute paths.
+### Parameters
+
+- **`path`**: The path to the JavaScript file to include.
+  - You can use relative paths (e.g., `./lib/math.js`) or absolute paths.
 
 ### Example
 
@@ -22,6 +23,6 @@ console.log("Formatted:", result);
 ```
 
 ::: info
- - `include` executes the script immediately in the **global scope** of your current script.
- - If the file does not exist or contains syntax errors, an error will be thrown.
+- `include` executes the script immediately in the **global scope** of your current script.
+- If the file does not exist or contains syntax errors, an error will be thrown.
 :::

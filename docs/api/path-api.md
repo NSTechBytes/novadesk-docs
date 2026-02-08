@@ -1,11 +1,10 @@
-
 # Path API
- Utilities for working with file and directory paths in Novadesk
 
+Utilities for working with file and directory paths in Novadesk.
 
 The `path` module provides utilities for working with file and directory paths. It is available globally in both Main and UI scripts.
 
-## `path.join([...paths])`
+## path.join([...paths])
 
 Joins all given path segments together using the platform-specific separator (`\`), then normalizes the resulting path.
 
@@ -15,9 +14,7 @@ var fullPath = path.join('C:', 'Users', 'John', 'Desktop', 'widget.js');
 // Returns: "C:\Users\John\Desktop\widget.js"
 ```
 
----
-
-## `path.resolve([...paths])`
+## path.resolve([...paths])
 
 Resolves a sequence of paths or path segments into an absolute path.
 
@@ -27,9 +24,7 @@ var absolutePath = path.resolve('data', 'settings.json');
 // Returns absolute path relative to the application directory
 ```
 
----
-
-## `path.dirname(path)`
+## path.dirname(path)
 
 Returns the directory name of a path.
 
@@ -39,9 +34,7 @@ var dir = path.dirname('/app/data/file.txt');
 // Returns: "/app/data"
 ```
 
----
-
-## `path.basename(path[, ext])`
+## path.basename(path[, ext])
 
 Returns the last portion of a path.
 
@@ -54,9 +47,7 @@ var name = path.basename('/app/data/file.txt', '.txt');
 // Returns: "file"
 ```
 
----
-
-## `path.extname(path)`
+## path.extname(path)
 
 Returns the extension of the path.
 
@@ -66,13 +57,12 @@ var ext = path.extname('index.html');
 // Returns: ".html"
 ```
 
----
-
-## `path.parse(path)`
+## path.parse(path)
 
 Returns an object whose properties represent significant elements of the path.
 
 ### Return Value
+
 An object with: `root`, `dir`, `base`, `ext`, `name`.
 
 ### Example
@@ -89,9 +79,7 @@ var parts = path.parse('C:\\path\\to\\file.txt');
 */
 ```
 
----
-
-## `path.isAbsolute(path)`
+## path.isAbsolute(path)
 
 Determines if a path is an absolute path.
 
@@ -101,9 +89,7 @@ path.isAbsolute("C:\\Users\\Desktop"); // Returns: true
 path.isAbsolute("../images/logo.png"); // Returns: false
 ```
 
----
-
-## `path.normalize(path)`
+## path.normalize(path)
 
 Normalizes the given path, resolving `..` and `.` segments and correcting slashes.
 
@@ -113,9 +99,7 @@ var normalized = path.normalize("C:\\Users\\Documents\\..\\Desktop\\.\\widget.js
 // Returns: "C:\Users\Desktop\widget.js"
 ```
 
----
-
-## `path.relative(from, to)`
+## path.relative(from, to)
 
 Returns the relative path from `from` to `to` based on the current working directory.
 
