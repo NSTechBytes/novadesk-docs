@@ -4,7 +4,7 @@ description: Load and manage native C++ addons from JavaScript.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
-import { Method, ReturnValue } from '@site/src/components/Method';
+import { Method, MethodParam, ReturnValue } from '@site/src/components/Method';
 import Admonition from '@theme/Admonition';
 
 <Admonition type="warning">
@@ -19,23 +19,30 @@ Novadesk allows you to extend its functionality by loading native C++ DLLs (addo
   description="Loads a native addon DLL into the Novadesk environment."
 >
   ### Parameters
+    <MethodParam name="path" type="string">
+    The relative or absolute path to the `.dll` file. 
+  </MethodParam>
   <Admonition type="tip">
   * **`path`** (`string`): The relative or absolute path to the `.dll` file. 
       Relative paths are resolved starting from the directory where the current script is located.
   </Admonition>
-  
+  ### Return
   <ReturnValue type="object|null">
     Returns a JavaScript object containing the API exported by the addon, or `null` if the addon fails to load or initialize.
   </ReturnValue>
 </Method>
+
+{/* ========================================================================== */}
 
 <Method
   signature="system.unloadAddon(path)"
   description="Unloads a previously loaded native addon. This disposes of the native resources and calls the addon's optional cleanup code."
 >
   ### Parameters
-  * **`path`** (`string`): The relative or absolute path to the `.dll` file. This **must match exactly** the path provided to `loadAddon()`.
-  
+    <MethodParam name="path" type="string">
+      The relative or absolute path to the `.dll` file. This **must match exactly** the path provided to `loadAddon()`.
+    </MethodParam>
+    ### Return
   <ReturnValue type="boolean">
     Returns `true` if the addon was successfully found and unloaded; `false` otherwise.
   </ReturnValue>

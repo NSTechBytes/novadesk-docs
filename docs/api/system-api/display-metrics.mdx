@@ -16,6 +16,7 @@ The `system` object is **only available in the Main script**. UI scripts should 
   signature="system.getDisplayMetrics()"
   description="Returns detailed information about screen dimensions, work areas, and connected monitors."
 >
+### Return
   <ReturnValue type="Object">
     An object containing structured display data with the following properties:
     
@@ -45,9 +46,7 @@ The `system` object is **only available in the Main script**. UI scripts should 
     - **`x`**, **`y`**: Top-left coordinates
     - **`width`**, **`height`**: Dimensions in pixels
   </ReturnValue>
-</Method>
-
-## Examples
+  ## Examples
 
 ### Get Primary Screen Resolution
 
@@ -61,3 +60,4 @@ console.log(
     metrics.primary.screenArea.height
 );`}
 </CodeBlock>
+</Method>

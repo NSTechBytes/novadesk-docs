@@ -19,6 +19,8 @@ The `system` object is **only available in the Main script**. UI scripts should 
   signature="system.registerHotkey(hotkey, callback)"
   description="Register a global hotkey and bind it to a callback."
 >
+### Parameters
+
   <MethodParam name="hotkey" type="string">
     The key combination to register.
 
@@ -42,10 +44,13 @@ The `system` object is **only available in the Main script**. UI scripts should 
   </ReturnValue>
 </Method>
 
+{/* ========================================================================== */}
+
 <Method
   signature="system.unregisterHotkey(id)"
   description="Unregister a previously registered hotkey."
 >
+### Parameters
   <MethodParam name="id" type="number">
     The unique hotkey identifier returned by `system.registerHotkey`.
   </MethodParam>

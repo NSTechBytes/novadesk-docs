@@ -23,11 +23,14 @@ play WAV audio files.
   signature="system.getVolume()"
   description="Retrieves the current master system volume."
 >
+### Return
   <ReturnValue type="number">
     An integer between `0` and `100` representing the current volume
     percentage.
   </ReturnValue>
 </Method>
+
+{/* ========================================================================== */}
 
 <Method
   signature="system.setVolume(level)"
@@ -39,6 +42,8 @@ play WAV audio files.
     percentage. Values outside this range will be clamped.
   </MethodParam>
 </Method>
+
+{/* ========================================================================== */}
 
 <Method
   signature="system.playSound(path, [loop])"
@@ -60,6 +65,8 @@ play WAV audio files.
     Returns `true` if the sound playback was successfully initiated.
   </ReturnValue>
 </Method>
+
+{/* ========================================================================== */}
 
 <Method signature="system.stopSound()" 
 description="Stops any currently playing sound initiated via playSound()."

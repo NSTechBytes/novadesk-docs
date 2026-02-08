@@ -15,6 +15,7 @@ The `system` object is **only available in the Main script**. UI scripts should 
 
 <Method signature="system.execute(target, [parameters], [workingDir], [show])"
   description="Launches an external application, opens a file, or opens a URL in the default browser.">
+  ### Parameters
   <MethodParam name="target" type="string">
     Path to the executable, file, or a URL.
   </MethodParam>
@@ -39,9 +40,7 @@ The `system` object is **only available in the Main script**. UI scripts should 
   <ReturnValue type="boolean">
     Returns `true` if the command was successfully initiated. Returns `false` if the operation fails.
   </ReturnValue>
-</Method>
-
-## Examples
+  ## Examples
 
 #### Launch an Application
 <CodeBlock language="javascript">
@@ -57,3 +56,4 @@ The `system` object is **only available in the Main script**. UI scripts should 
 <CodeBlock language="javascript">
   {`system.execute("cmd.exe", "/c dir", "C:\\", "normal");`}
 </CodeBlock>
+</Method>

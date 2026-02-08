@@ -1,11 +1,12 @@
 ---
 title: Widget Methods
 description: Methods available on widget objects in Novadesk
+hide_table_of_contents: true
 ---
 
 import CodeBlock from '@theme/CodeBlock';
 import Admonition from '@theme/Admonition';
-import {Method, MethodParam} from '@site/src/components/Method';
+import {Method, MethodParam, ReturnValue} from '@site/src/components/Method';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -27,34 +28,34 @@ The following methods are **only** accessible within the `win` object inside a U
 the main application script.
 </Admonition>
 
-### **`addText(options)`**
+<Method
+  signature="addText(options)"
+  description="Add a text element to the widget. Available only in UI scripts."
+>
+  <MethodParam name="options" type="Object">
+    Configuration options for the text element.  
+    The **`id`** property is required and must be unique.
+    
+    See the Text UI element documentation for all available options:  
+    [Text Element Options](/api/ui-elements-api/text-element/)
+  </MethodParam>
+</Method>
 
-Add a text element to the widget.Available only in UI scripts.  
 ---
 
-<Prop name="options" type="Object">
-  Configuration options for the text element.  
-  The **`id`** property is required and must be unique.
+<Method
+  signature="addImage(options)"
+  description="Add an image element to the widget. Available only in UI scripts."
+>
+  <MethodParam name="options" type="Object">
+    Configuration options for the image element.  
+    The **`id`** property is required and must be unique.
+    
+    See the Image UI element documentation for all available options:  
+    [Image Element Options](/api/ui-elements-api/image-element/)
+  </MethodParam>
+</Method>
 
-  See the Text UI element documentation for all available options:  
-  [Text Element Options](/api/ui-elements-api/text-element/)
-</Prop>
-
-### **`addImage(options)`**
-
-Add an image element to the widget.Available only in UI scripts.  
-
-<Prop name="options" type="Object">
-  Configuration options for the image element.  
-  The **`id`** property is required and must be unique.
-
-  See the Image UI element documentation for all available options:  
-  [Image Element Options](/api/ui-elements-api/image-element/)
-</Prop>
-
-### **`setElementProperties(id, props)`**
-
-Update properties of an existing UI element. Available only in UI scripts.
 ---
 
 <Method signature="setElementProperties(id, props)">
@@ -102,35 +103,34 @@ win.removeElements(["img1", "img2", "text3"]);
 win.removeElements();`}
 </CodeBlock>
 
-### **`getElementProperty(id, propertyName)`**
-
-Retrieve a specific property of a UI element. Available only in UI scripts.
-
-<Prop name="id" type="string">
-  ID of the UI element.
-</Prop>
-
-<Prop name="propertyName" type="string">
-  The name of the property to retrieve (e.g., `"text"`, `"x"`, `"y"`, `"width"`, `"height"`).
-</Prop>
-
-#### Return Value
-
-* **Type**: `any | null | undefined`
-* **Description**:
-The value of requested property. Returns `null` if the element is not found, or `undefined` if the property does not exist.
-
-#### Example
-
-<CodeBlock language="javascript">
-  {`var textValue = win.getElementProperty("myText", "text");
+<Method
+  signature="getElementProperty(id, propertyName)"
+  description="Retrieve a specific property of a UI element. Available only in UI scripts."
+>
+  <MethodParam name="id" type="string">
+    ID of the UI element.
+  </MethodParam>
+  <MethodParam name="propertyName" type="string">
+    The name of the property to retrieve (e.g., `"text"`, `"x"`, `"y"`, `"width"`, `"height"`).
+  </MethodParam>
+  
+  <ReturnValue type="any | null | undefined">
+    The value of requested property. Returns `null` if the element is not found, or `undefined` if the property does not exist.
+  </ReturnValue>
+  
+  #### Examples
+  
+  <CodeBlock language="javascript">
+    {`var textValue = win.getElementProperty("myText", "text");
 if (textValue !== null) {
   console.log("Current text: " + textValue);
 }
 
 var xPos = win.getElementProperty("myText", "x");
 console.log("X Position: " + xPos);`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
+
 ---
 ## Widget Management Methods
 
@@ -139,62 +139,72 @@ The following methods are **only** accessible from the [Main script](/guides/scr
 **unavailable** in [UI scripts](/guides/script-types/#ui-script-the-face).
 </Admonition>
 
-### **`setProperties(options)`**
-
-Update widget properties after creation.
----
-
-<Prop name="options" type="Object">
-  Widget properties to update. The **`id`** property cannot be changed.
-
-  See [Widget Options](/api/widget-api/widget-window/#options-object) for a list of available options.
-</Prop>
-
-#### Example (Main Script)
-
-<CodeBlock language="javascript">
-  {`var widget = new widgetWindow({ id: "my-widget" });
+<Method
+  signature="setProperties(options)"
+  description="Update widget properties after creation."
+>
+  <MethodParam name="options" type="Object">
+    Widget properties to update. The **`id`** property cannot be changed.
+    
+    See [Widget Options](/api/widget-api/widget-window/#options-object) for a list of available options.
+  </MethodParam>
+  
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`var widget = new widgetWindow({ id: "my-widget" });
 
 widget.setProperties({
 x: 200,
 y: 200
 });`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
+
 ---
-### `getProperties()`
 
-Get current widget properties. Available only in the main script.
-
-#### Return Value
-
-An object containing the current widget properties.
-
-#### Example
-
-<CodeBlock language="javascript">
-  {`var props = widget.getProperties();
+<Method
+  signature="getProperties()"
+  description="Get current widget properties. Available only in the main script."
+>
+  <ReturnValue type="Object">
+    An object containing the current widget properties.
+  </ReturnValue>
+  
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`var props = widget.getProperties();
 console.log("Widget position: " + props.x + ", " + props.y);`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
+
 ---
-### `close()`
 
-Close and destroy the widget. Available only in the main script.
+<Method
+  signature="close()"
+  description="Close and destroy the widget. Available only in the main script."
+>
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`widget.close();`}
+  </CodeBlock>
+</Method>
 
-#### Example
-
-<CodeBlock language="javascript">
-  {`widget.close();`}
-</CodeBlock>
 ---
-### `refresh()`
 
-Refresh the widget (reload scripts and redraw). Available only in the main script.
+<Method
+  signature="refresh()"
+  description="Refresh the widget (reload scripts and redraw). Available only in the main script."
+>
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`widget.refresh();`}
+  </CodeBlock>
+</Method>
 
-#### Example
-
-<CodeBlock language="javascript">
-  {`widget.refresh();`}
-</CodeBlock>
 ---
 ### **`on(eventName, callback)`**
 
@@ -237,47 +247,45 @@ widget.on("closed", function () {
 The following methods are **only** accessible in Main script.
 </Admonition>
 
-### **`setContextMenu(items)`**
-
-Sets the entire custom context menu for the widget.This replaces any previously set custom menu items.Available only in Main script.
----
-
-<Prop name="items" type="Array">
-  An array of context menu item objects.
-
-  Each menu item may contain:
-
-  - **`text`**
-  * **Type**: `string`
-  * **Description**:
-  Text displayed for the menu item.
-
-  - **`action`**
-  * **Type**: `function`
-  * **Description**:
-  Function executed when the item is clicked.
-
-  - **`type`**
-  * **Type**: `string`
-  * **Description**:
-  Set to `"separator"` to render a line separator.
-
-  - **`checked`**
-  * **Type**: `boolean`
-  * **Description**:
-  Displays a checkmark next to the item when set to `true`.
-
-  - **`items`**
-  * **Type**: `Array`
-  * **Description**:
-  Array of sub-menu items, creating a nested context menu.
-</Prop>
-
-
-#### Example
-
-<CodeBlock language="javascript">
-  {`widget.setContextMenu([
+<Method
+  signature="setContextMenu(items)"
+  description="Sets the entire custom context menu for the widget. This replaces any previously set custom menu items. Available only in Main script."
+>
+  <MethodParam name="items" type="Array">
+    An array of context menu item objects.
+    
+    Each menu item may contain:
+    
+    - **`text`**
+      * **Type**: `string`
+      * **Description**:
+        Text displayed for the menu item.
+    
+    - **`action`**
+      * **Type**: `function`
+      * **Description**:
+        Function executed when the item is clicked.
+    
+    - **`type`**
+      * **Type**: `string`
+      * **Description**:
+        Set to `"separator"` to render a line separator.
+    
+    - **`checked`**
+      * **Type**: `boolean`
+      * **Description**:
+        Displays a checkmark next to the item when set to `true`.
+    
+    - **`items`**
+      * **Type**: `Array`
+      * **Description**:
+        Array of sub-menu items, creating a nested context menu.
+  </MethodParam>
+  
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`widget.setContextMenu([
   {
     text: "Toggle Submenu",
     items: [
@@ -306,58 +314,67 @@ Sets the entire custom context menu for the widget.This replaces any previously 
     }
   }
 ]);`}
-</CodeBlock>
+  </CodeBlock>
+</Method>
+
 ---
 
-### `clearContextMenu()`
+<Method
+  signature="clearContextMenu()"
+  description="Removes all custom items from the context menu. Available only in Main script."
+>
+  ### Examples
+  
+  <CodeBlock language="javascript">
+    {`widget.clearContextMenu();`}
+  </CodeBlock>
+</Method>
 
-Removes all custom items from the context menu. Available only in Main script.
-
-#### Example
-
-<CodeBlock language="javascript">
-  {`widget.clearContextMenu();`}
-</CodeBlock>
 ---
 
-### **`disableContextMenu(disabled)`**
+<Method
+  signature="disableContextMenu(disabled)"
+  description="Completely disables the context menu for the widget. Available only in Main script."
+>
+  <MethodParam name="disabled" type="boolean">
+    Set to `true` to disable the context menu. Set to `false` to enable it.
+  </MethodParam>
+  
+  ### Examples
+  
+  <CodeBlock language="js">
+    {`widget.disableContextMenu(true);`}
+  </CodeBlock>
+</Method>
 
-Completely disables the context menu for the widget.Available only in Main script.
-
-<Prop name="disabled" type="boolean">
-  Set to `true` to disable the context menu. Set to `false` to enable it.
-</Prop>
-
-#### Example
-
-<CodeBlock language="js">
-  {`widget.disableContextMenu(true);`}
-</CodeBlock>
 ---
 
-### **`showDefaultContextMenuItems(show)`**
-
-Controls the visibility of the default Novadesk context menu items (Refresh, Exit Widget, Close App).Available only in Main script.
-
-<Prop name="show" type="boolean">
-  Set to `true` to show default menu items.
-  Set to `false` to hide them.
-</Prop>
-
-#### Example
-
-<CodeBlock language="js">
-  {`// Hide default items to use a fully custom context menu
+<Method
+  signature="showDefaultContextMenuItems(show)"
+  description="Controls the visibility of the default Novadesk context menu items (Refresh, Exit Widget, Close App). Available only in Main script."
+>
+  <MethodParam name="show" type="boolean">
+    Set to `true` to show default menu items.
+    Set to `false` to hide them.
+  </MethodParam>
+  
+  ### Examples
+  
+  <CodeBlock language="js">
+    {`// Hide default items to use a fully custom context menu
 widget.showDefaultContextMenuItems(false);`}
-</CodeBlock>
----
+  </CodeBlock>
+</Method>
 
+---
 ## Inter-Process Communication (IPC)
 
 The global **`ipc`** object allows data exchange between the **Main script** and the **UI script**.
 
-<Method signature="ipc.on(channel, callback)"
-description="Register a listener for a specific IPC channel.">
+<Method
+  signature="ipc.on(channel, callback)"
+  description="Register a listener for a specific IPC channel."
+>
   <MethodParam name="channel" type="string">
     Name of the channel to listen on.
   </MethodParam>
@@ -378,7 +395,7 @@ description="Register a listener for a specific IPC channel.">
   </MethodParam>
 </Method>
 
-#### Example
+#### Examples
 
 <Tabs>
   <TabItem value="index-js" label="index.js" default>
