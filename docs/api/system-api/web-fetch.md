@@ -1,7 +1,7 @@
 
 # Web Fetch API
- Asynchronously fetch data from the web or local files in Novadesk
 
+Asynchronously fetch data from the web or local files in Novadesk.
 
 ::: warning
 The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
@@ -11,29 +11,28 @@ The Web Fetch API provides a simple, asynchronous way to retrieve data from URLs
 
 ---
 
-## **`system.fetch(url, callback)`**
+## system.fetch(url, callback)
 
 Initiates an asynchronous fetch request.
+
+### Parameters
+
+- **`url`**
+  - **Type**: `string`
+  - **Description**: The source to fetch from.
+    - **Web**: `http://` or `https://` URLs.
+    - **Local**: File paths (e.g., `data.txt`) or `file://` URIs (e.g., `file://C:/config.json`).
+
+- **`callback`**
+  - **Type**: `function(data)`
+  - **Description**: The function called when the fetch operation completes.
+    - **`data`**: The raw string content of the fetched source. If the operation fails, this will be `null`.
+
 ---
 
-###### **`url`**
+## Examples
 
-* **Type**: `string`
-* **Description**: The source to fetch from.
-    * **Web**: `http://` or `https://` URLs.
-    * **Local**: File paths (e.g., `data.txt`) or `file://` URIs (e.g., `file://C:/config.json`).
----
-
-###### **`callback`**
-
-* **Type**: `function(data)`
-* **Description**: The function called when the fetch operation completes.
-    * **`data`**: The raw string content of the fetched source. If the operation fails, this will be `null`.
----
-
-### Examples
-
-#### 1. Fetching a Webpage Title
+### 1. Fetching a Webpage Title
 You can use standard JavaScript Regular Expressions to parse the raw data returned by `system.fetch`.
 
 ```javascript
@@ -52,7 +51,7 @@ system.fetch("https://www.google.com", function(data) {
 });
 ```
 
-#### 2. Fetching and Parsing JSON
+### 2. Fetching and Parsing JSON
 While Novadesk has a dedicated [JSON API](/api/system-api/json-api), `system.fetch` can also be used to retrieve JSON from the web.
 
 ```javascript
@@ -70,7 +69,7 @@ system.fetch("https://jsonplaceholder.typicode.com/todos/1", function(data) {
 });
 ```
 
-#### 3. Reading a Local File
+### 3. Reading a Local File
 `system.fetch` treats relative paths (not starting with http/https) as local file paths relative to the executable directory.
 
 ```javascript

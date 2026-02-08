@@ -1,68 +1,60 @@
 
 # Execute Command
- Launch external programs, files, or URLs using the system API
 
+Launch external programs, files, or URLs using the system API.
 
 ::: warning
 The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
 :::
 
-## **`system.execute(target, [parameters], [workingDir], [show])`**
+## system.execute(target, [parameters], [workingDir], [show])
 
 Launches an external application, opens a file, or opens a URL in the default browser.
 
----
+### Parameters
 
-###### **`target`**
+- **`target`**
+  - **Type**: `string`
+  - **Description**: Path to the executable, file, or a URL.
 
-* **Type**: `string`
-* **Description**: Path to the executable, file, or a URL.
----
+- **`parameters`**
+  - **Type**: `string`
+  - **Description**: Command-line arguments passed to the target. Only used when `target` is an executable.
 
-###### **`parameters`**
+- **`workingDir`**
+  - **Type**: `string`
+  - **Description**: Directory in which the command should be executed.
 
-* **Type**: `string`
-* **Description**: Command-line arguments passed to the target. Only used when `target` is an executable.
----
-
-###### **`workingDir`**
-
-* **Type**: `string`
-* **Description**: Directory in which the command should be executed.
----
-
-###### **`show`**
-
-* **Type**: `string | number`
-* **Default**: `"normal"`
-* **Description**: Controls how the window is displayed.
-
-* **Valid values (string)**:
-  - **`"hide"`**
-  - **`"normal"`**
-  - **`"minimized"`**
-  - **`"maximized"`**
----
+- **`show`**
+  - **Type**: `string | number`
+  - **Default**: `"normal"`
+  - **Description**: Controls how the window is displayed.
+  - **Valid values (string)**:
+    - `"hide"`
+    - `"normal"`
+    - `"minimized"`
+    - `"maximized"`
 
 ### Return Value
 
-* **Type**: `boolean`
-* **Description**: Returns `true` if the command was successfully initiated.Returns `false` if the operation fails.
+- **Type**: `boolean`
+- **Description**: Returns `true` if the command was successfully initiated. Returns `false` if the operation fails.
+
 ---
 
-### Examples
+## Examples
 
-#### Launch an Application
+### Launch an Application
 ```javascript
 system.execute("notepad.exe");
 ```
 
-#### Open a URL
+### Open a URL
 ```javascript
 system.execute("https://www.google.com");
 ```
 
-#### Run a Command with Parameters
+### Run a Command with Parameters
 ```javascript
 system.execute("cmd.exe", "/c dir", "C:\\", "normal");
 ```

@@ -1,32 +1,31 @@
 
 # JSON API
- JSON file operations in the Novadesk JavaScript API
 
+JSON file operations in the Novadesk JavaScript API.
 
 ::: warning
 The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
 :::
 
-## **`system.readJson(path)`**
+## system.readJson(path)
 
 Reads and parses a JSON file.
----
 
-###### **`path`**
+### Parameters
 
-* **Type**: `string`
-* **Description**: Path to the JSON file.Can be absolute or relative to the widget script.
----
+- **`path`**
+  - **Type**: `string`
+  - **Description**: Path to the JSON file. Can be absolute or relative to the widget script.
 
 ### Return Value
 
-* **Type**: `Object | null`
-* **Description**: Returns the parsed JavaScript object if successful.Returns `null` if the file could not be read or parsed.
+- **Type**: `Object | null`
+- **Description**: Returns the parsed JavaScript object if successful. Returns `null` if the file could not be read or parsed.
 
-### Example
+## Example
 
-{% tabs %}
-{% tabitem label="index.js" %}
+:::tabs
+== index.js
 ```javascript
 var config = system.readJson("config.json");
 
@@ -39,9 +38,7 @@ if (config) {
     console.log("Failed to load configuration");
 }
 ```
-{% /tabitem %}
-
-{% tabitem label="style.css" %}
+== config.json
 ```json
 {
     "settings": {
@@ -51,8 +48,7 @@ if (config) {
     "opacity": 0.8
 }
 ```
-{% /tabitem %}
-{% /tabs %}
+:::
 
 **Output**
 ```text
@@ -62,31 +58,32 @@ if (config) {
 [TimeStamp] [Novadesk] [LOG] Opacity: 0.8
 ```
 
-## **`system.writeJson(path, data)`**
+---
+
+## system.writeJson(path, data)
 
 Writes a JavaScript object to a JSON file.
----
 
-###### **`path`**
+### Parameters
 
-* **Type**: `string`
-* **Description**: Path to the JSON file.Can be absolute or relative.
----
+- **`path`**
+  - **Type**: `string`
+  - **Description**: Path to the JSON file. Can be absolute or relative.
 
-###### **`data`**
-
-* **Type**: `Object`
-* **Description**: The JavaScript object to serialize and write to the file.
----
+- **`data`**
+  - **Type**: `Object`
+  - **Description**: The JavaScript object to serialize and write to the file.
 
 ### Return Value
 
-* **Type**: `boolean`
-* **Description**: Returns `true` if the file was written successfully. Returns `false` if the operation fails.
+- **Type**: `boolean`
+- **Description**: Returns `true` if the file was written successfully. Returns `false` if the operation fails.
 
-### Examples 
+---
 
-#### 1. Writing a New File
+## Examples
+
+### 1. Writing a New File
 
 ```javascript
 // index.js
@@ -103,7 +100,7 @@ if (system.writeJson("settings.json", settings)) {
 }
 ```
 
-#### 2. Updating a Single Value
+### 2. Updating a Single Value
 
 ```javascript
 // index.js

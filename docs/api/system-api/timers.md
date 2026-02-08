@@ -1,7 +1,7 @@
 
 # Timer Functions
- Timer functions for scheduling code execution in Novadesk
 
+Timer functions for scheduling code execution in Novadesk.
 
 Novadesk provides several timer functions to schedule code execution, similar to those found in browsers and Node.js.
 
@@ -9,27 +9,24 @@ Novadesk provides several timer functions to schedule code execution, similar to
 Timer functions are **only available in the Main script**. UI scripts should use main script for timing logic and communicate via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc).
 :::
 
-## **`setTimeout(callback, delay)`**
+## setTimeout(callback, delay)
 
 Execute a function after a specified delay.
 
-###### **`callback`**
+### Parameters
 
-* **Type**: `function`
-* **Description**: Function to execute after the specified delay.
----
+- **`callback`**
+  - **Type**: `function`
+  - **Description**: Function to execute after the specified delay.
 
-###### **`delay`**
-
-* **Type**: `number`
-* **Description**: Delay in milliseconds before the callback is executed.
----
+- **`delay`**
+  - **Type**: `number`
+  - **Description**: Delay in milliseconds before the callback is executed.
 
 ### Return Value
 
-* **Type**: `number`
-* **Description**: Timer ID that can be used with `clearTimeout`.
----
+- **Type**: `number`
+- **Description**: Timer ID that can be used with `clearTimeout`.
 
 ### Example
 
@@ -43,27 +40,26 @@ var timerId = setTimeout(function() {
 // clearTimeout(timerId);
 ```
 
-## **`setInterval(callback, interval)`**
+---
+
+## setInterval(callback, interval)
 
 Execute a function repeatedly at specified intervals.
 
-###### **`callback`**
+### Parameters
 
-* **Type**: `function`
-* **Description**: Function to execute repeatedly.
----
+- **`callback`**
+  - **Type**: `function`
+  - **Description**: Function to execute repeatedly.
 
-###### **`interval`**
-
-* **Type**: `number`
-* **Description**: Interval in milliseconds between executions.
----
+- **`interval`**
+  - **Type**: `number`
+  - **Description**: Interval in milliseconds between executions.
 
 ### Return Value
 
-* **Type**: `number`
-* **Description**: Timer ID that can be used with `clearInterval`.
----
+- **Type**: `number`
+- **Description**: Timer ID that can be used with `clearInterval`.
 
 ### Example
 
@@ -80,15 +76,17 @@ setTimeout(function() {
 }, 10000);
 ```
 
-## **`clearTimeout(id)`**
+---
+
+## clearTimeout(id)
 
 Cancel a timer created with `setTimeout`.
 
-###### **`id`**
+### Parameters
 
-* **Type**: `number`
-* **Description**: Timer ID returned by `setTimeout`.
----
+- **`id`**
+  - **Type**: `number`
+  - **Description**: Timer ID returned by `setTimeout`.
 
 ### Example
 
@@ -102,15 +100,17 @@ clearTimeout(timerId);
 console.log("Timer cancelled");
 ```
 
-## **`clearInterval(id)`**
+---
+
+## clearInterval(id)
 
 Cancel a timer created with `setInterval`.
 
-###### **`id`**
+### Parameters
 
-* **Type**: `number`
-* **Description**: Timer ID returned by `setInterval`.
----
+- **`id`**
+  - **Type**: `number`
+  - **Description**: Timer ID returned by `setInterval`.
 
 ### Example
 
@@ -126,21 +126,22 @@ setTimeout(function() {
 }, 5000);
 ```
 
-## **`setImmediate(callback)`**
+---
+
+## setImmediate(callback)
 
 Execute a function as soon as possible in the next event loop iteration.
 
-###### **`callback`**
+### Parameters
 
-* **Type**: `function`
-* **Description**: Function to execute in the next event loop iteration.
----
+- **`callback`**
+  - **Type**: `function`
+  - **Description**: Function to execute in the next event loop iteration.
 
 ### Return Value
 
-* **Type**: `number`
-* **Description**: ID that can be used to cancel the immediate callback.
----
+- **Type**: `number`
+- **Description**: ID that can be used to cancel the immediate callback.
 
 ### Example
 

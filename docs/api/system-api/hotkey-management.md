@@ -1,7 +1,7 @@
 
 # Hotkey Management
- Register and manage global hotkeys in Novadesk
 
+Register and manage global hotkeys in Novadesk.
 
 Novadesk allows you to register global hotkeys that work system-wide, enabling you to control your widgets and applications from anywhere.
 
@@ -9,48 +9,48 @@ Novadesk allows you to register global hotkeys that work system-wide, enabling y
 The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
 :::
 
-### **`system.registerHotkey(hotkey, callback)`**
+## system.registerHotkey(hotkey, callback)
 
 Register a global hotkey and bind it to a callback.
 
-###### **`hotkey`**
+### Parameters
 
-* **Type**: `string`
-* **Description**: The key combination to register.
+- **`hotkey`**
+  - **Type**: `string`
+  - **Description**: The key combination to register.
+  
+  Examples:
+  - `"Ctrl+Alt+R"`
+  - `"Win+D"`
+  - `"Space"`
 
-Examples:
-- `"Ctrl+Alt+R"`
-- `"Win+D"`
-- `"Space"`
----
-
-###### **`callback`**
-
-* **Type**: `function | Object`
-* **Description**: Handler invoked when the hotkey is used.
-
-This can be:
-- A **function** executed on key press
-- An **Object** with optional handlers:
-  - **`onKeyDown`**: Called when the hotkey is pressed
-  - **`onKeyUp`**: Called when the hotkey is released
----
+- **`callback`**
+  - **Type**: `function | Object`
+  - **Description**: Handler invoked when the hotkey is used.
+  
+  This can be:
+  - A **function** executed on key press
+  - An **Object** with optional handlers:
+    - **`onKeyDown`**: Called when the hotkey is pressed
+    - **`onKeyUp`**: Called when the hotkey is released
 
 ### Return Value
 
-* **Type**: `number`
-* **Description**: Hotkey ID that can be used to unregister the hotkey.
+- **Type**: `number`
+- **Description**: Hotkey ID that can be used to unregister the hotkey.
+
 ---
 
-### **`system.unregisterHotkey(id)`**
+## system.unregisterHotkey(id)
 
 Unregister a previously registered hotkey.
 
+### Parameters
 
-###### **`id`**
+- **`id`**
+  - **Type**: `number`
+  - **Description**: The unique hotkey identifier returned by `system.registerHotkey`.
 
-* **Type**: `number`
-* **Description**: The unique hotkey identifier returned by `system.registerHotkey`.
 ---
 
 ## Supported Keys
@@ -60,15 +60,18 @@ Unregister a previously registered hotkey.
 - `Alt`
 - `Shift`
 - `Win`
+
 ---
 
 ### Alphanumeric Keys
 - Letters: `A`–`Z`
 - Numbers: `0`–`9`
+
 ---
 
 ### Function Keys
 - `F1`–`F12`
+
 ---
 
 ### Special Keys

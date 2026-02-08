@@ -1,7 +1,7 @@
 
 # Addon API
- Load and manage native C++ addons from JavaScript.
 
+Load and manage native C++ addons from JavaScript.
 
 ::: warning
 The `system.loadAddon()` method is **only available in the Main script**. Native addons are **engine-agnostic** and do not require linking against Duktape.
@@ -11,42 +11,41 @@ Novadesk allows you to extend its functionality by loading native C++ DLLs (addo
 
 ---
 
-## **Methods**
+## Methods
 
-### `system.loadAddon(path)`
+### system.loadAddon(path)
 
 Loads a native addon DLL into the Novadesk environment.
 
 #### Arguments
 
 ::: tip
-* **`path`** (`string`): The relative or absolute path to the `.dll` file. 
-    Relative paths are resolved starting from the directory where the current script is located.
+- **`path`** (`string`): The relative or absolute path to the `.dll` file. Relative paths are resolved starting from the directory where the current script is located.
 :::
 
 #### Return Value
 
-* **Type**: `object|null`
-* **Description**: Returns a JavaScript object containing the API exported by the addon, or `null` if the addon fails to load or initialize.
+- **Type**: `object|null`
+- **Description**: Returns a JavaScript object containing the API exported by the addon, or `null` if the addon fails to load or initialize.
 
 ---
 
-### `system.unloadAddon(path)`
+### system.unloadAddon(path)
 
 Unloads a previously loaded native addon. This disposes of the native resources and calls the addon's optional cleanup code.
 
 #### Arguments
 
-* **`path`** (`string`): The relative or absolute path to the `.dll` file. This **must match exactly** the path provided to `loadAddon()`.
+- **`path`** (`string`): The relative or absolute path to the `.dll` file. This **must match exactly** the path provided to `loadAddon()`.
 
 #### Return Value
 
-* **Type**: `boolean`
-* **Description**: Returns `true` if the addon was successfully found and unloaded; `false` otherwise.
+- **Type**: `boolean`
+- **Description**: Returns `true` if the addon was successfully found and unloaded; `false` otherwise.
 
 ---
 
-## **Example**
+## Example
 
 ```javascript
 // Load a local addon

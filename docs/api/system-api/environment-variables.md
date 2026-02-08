@@ -1,28 +1,30 @@
 
 # Environment Variables
- Environment variables in the Novadesk JavaScript API
 
+Environment variables in the Novadesk JavaScript API.
 
 ::: warning
 The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods/#inter-process-communication-ipc) if they need system data.
 :::
 
-## **`system.getEnv(name)`**
+## system.getEnv(name)
 
 Get the value of an environment variable.
 
-###### **`name`**
-* **Type**: `string`
-* **Description**: Name of the environment variable. If omitted, all environment variables are returned.
----
+### Parameters
+
+- **`name`**
+  - **Type**: `string`
+  - **Description**: Name of the environment variable. If omitted, all environment variables are returned.
 
 ### Return Value
-* **Type**: `string | Object | null`
-* **Description**: Returns the value of the environment variable, `null` if it does not exist, or an object containing all environment variables when no name is provided.
+
+- **Type**: `string | Object | null`
+- **Description**: Returns the value of the environment variable, `null` if it does not exist, or an object containing all environment variables when no name is provided.
+
 ---
 
 ::: tip
-
 Omitting the parameter will return all environment variables.
 ```js
 var allEnv = system.getEnv();
