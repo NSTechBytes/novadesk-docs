@@ -77,6 +77,7 @@ export default defineConfig({
               },
               { text: 'Addon API', link: '/api/system-api/addon-api' },
               { text: 'Audio API', link: '/api/system-api/audio-api' },
+              { text: 'Audio Level', link: '/api/system-api/audio-level' },
               { text: 'Clipboard API', link: '/api/system-api/clipboard-api' },
               { text: 'Display Metrics', link: '/api/system-api/display-metrics' },
               { text: 'Environment Variables', link: '/api/system-api/environment-variables' },
