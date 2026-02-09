@@ -124,6 +124,29 @@ var xPos = win.getElementProperty("myText", "x");
 console.log("X Position: " + xPos);
 ```
 
+### beginUpdate()
+
+Begin a batch update for UI changes. While in an update batch, redraw is deferred until `endUpdate()` is called. Available only in UI scripts.
+
+### Example
+
+```javascript
+win.beginUpdate();
+win.setElementProperties("myText", { x: 20, y: 20 });
+win.setElementProperties("myImage", { x: 60, y: 20 });
+win.endUpdate();
+```
+
+### endUpdate()
+
+End a batch update and redraw the widget. Available only in UI scripts.
+
+### Example
+
+```javascript
+win.endUpdate();
+```
+
 ## Widget Management Methods
 
 ::: info

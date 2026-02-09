@@ -14,17 +14,13 @@ win.addBar(options);
 
 The bar element inherits all [General Element Options](/api/ui-elements-api/general-elements-options) and adds the following:
 
----
-
-### `value`
+### value
 
 - **Type**: `number`
 - **Default**: `0.0`
 - **Description**: The fill level of the bar, from `0.0` (empty) to `1.0` (full).
 
----
-
-### `orientation`
+### orientation
 
 - **Type**: `string`
 - **Default**: `"horizontal"`
@@ -32,17 +28,13 @@ The bar element inherits all [General Element Options](/api/ui-elements-api/gene
   - `"horizontal"`: Fills from left to right
   - `"vertical"`: Fills from bottom to top
 
----
-
-### `barCornerRadius`
+### barCornerRadius
 
 - **Type**: `number`
 - **Default**: `0`
 - **Description**: Corner radius applied to the bar fill.
 
----
-
-### `barColor`
+### barColor
 
 - **Type**: `string`
 - **Description**: The Color of the filled portion of the bar. Support both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients) .
