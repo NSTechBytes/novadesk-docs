@@ -9,6 +9,7 @@
     "preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@lite-tree/vue": "^1.1.6"
+    "@lite-tree/vue": "^1.1.6",
+    "@miletorix/vitepress-back-to-top-button": "^1.0.3"
   }
 }
