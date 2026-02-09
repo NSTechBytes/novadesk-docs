@@ -20,16 +20,16 @@ nwm build
 
 ## Output Structure
 
-```
-dist/
-  YourWidgetName.exe
-  Widgets/
-    index.js
-    ui/
-      ui.js
-    assets/
-      icon.ico
-```
+<LiteTree>
+- dist/
+    YourWidgetName.exe
+    Widgets/
+        index.js
+        ui/
+            ui.js
+        assets/
+            icon.ico
+</LiteTree>
 
 ## Installer Output
 
@@ -37,30 +37,38 @@ dist/
 
 Example:
 
-```
-dist/
-  setup.exe
-```
+<LiteTree>
+- dist/
+    setup.exe
+</LiteTree>
 
 More examples:
 
 ```json
 // meta.json
 setup: { setupName: "MyWidgetSetup" }
-
-// output
-dist/
-  MyWidgetSetup.exe
 ```
+
+### Output
+<LiteTree>
+// output
+- dist/
+    MyWidgetSetup.exe
+</LiteTree>
+
+---
 
 ```json
 // meta.json
 setup: { setupName: "AcmePlayer" }
-
-// output
-dist/
-  AcmePlayer.exe
 ```
+
+### Output
+<LiteTree>
+// output
+- dist/
+    AcmePlayer.exe
+</LiteTree>
 
 ## Installer Stub Role
 
@@ -73,15 +81,15 @@ If `installer_stub.exe` is not found next to `nwm.exe`, `nwm` falls back to `nwm
 `meta.json` defines your widget identity and installer behavior. `nwm build` reads this file and validates required fields before packaging.
 
 Required fields:
-- `name`
-- `version`
-- `author`
-- `description`
-- `icon`
-- `setup.installDir`
-- `setup.startMenuFolder`
-- `setup.setupName`
-- `setup.setupIcon`
+- name
+- version
+- author
+- description
+- icon
+- setup.installDir
+- setup.startMenuFolder
+- setup.setupName
+- setup.setupIcon
 
 ### name
 
@@ -147,7 +155,3 @@ Installer behavior is driven by the `setup` object in `meta.json`.
   }
 }
 ```
-
-Required fields for build:
-- `name`, `version`, `author`, `description`, `icon`
-- `setup.installDir`, `setup.startMenuFolder`, `setup.setupName`, `setup.setupIcon`
