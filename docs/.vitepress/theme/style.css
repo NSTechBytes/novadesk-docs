@@ -195,7 +195,7 @@
 
 .custom-card__text {
   font-size: 14px;
-  color: #ffffff;
+  color: var(--vp-c-text-1);
 }
 
 

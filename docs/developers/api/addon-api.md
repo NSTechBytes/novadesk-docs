@@ -8,8 +8,6 @@ This guide covers the technical details of the **Novadesk Addon SDK**, used to b
 
 Novadesk addons are **engine-agnostic**. Instead of linking against a specific JavaScript engine (like Duktape), addons interact with Novadesk via a provided **Host API** table. This ensures binary compatibility even if the underlying engine is updated.
 
----
-
 ## **C++ Entry Points**
 
 ### `NOVADESK_ADDON_INIT`
@@ -38,8 +36,6 @@ NOVADESK_ADDON_UNLOAD() {
     // Cleanup your background threads, global memory, etc.
 }
 ```
-
----
 
 ## **Host API Functions**
 
@@ -99,8 +95,6 @@ addon.RegisterFunction("hello", [](novadesk_context ctx) -> int {
 }, 0);
 ```
 
----
-
 ## **Manual Stack Management**
 
 While high-level registration handles most cases, you can manually push values onto the JavaScript stack using the `host` pointer or the `Addon` helper.
@@ -134,8 +128,6 @@ Pushes a new, empty JavaScript object.
 ```cpp
 host->PushObject(ctx);
 ```
-
----
 
 ## **Handling Arguments (In Detail)**
 
@@ -185,8 +177,6 @@ addon.RegisterFunction("test", [host](novadesk_context ctx) -> int {
 }, 1);
 ```
 
----
-
 ## **Type Safety & Validation**
 
 Always validate arguments before using them to prevent addon crashes or engine errors.
@@ -208,8 +198,6 @@ Returns true if the argument is a JavaScript object.
 
 #### `IsNull(index)`
 Returns true if the argument is `null` or `undefined`.
-
----
 
 ## **Stack & Error Control**
 
@@ -242,8 +230,6 @@ if (idx < 0) {
 }
 ```
 
----
-
 ### **Example: Robust Math**
 
 ```cpp
@@ -259,8 +245,6 @@ addon.RegisterFunction("multiply", [host](novadesk_context ctx) -> int {
     return 1;
 }, 2);
 ```
-
----
 
 ## **JavaScript Callbacks (`JsFunction`)**
 
@@ -286,8 +270,6 @@ addon.RegisterFunction("onComplete", [host](novadesk_context ctx) -> int {
 }, 1);
 ```
 
----
-
 ## **Thread Safety & Callbacks**
 
 Native addons often perform work in the background. **You must never touch `novadesk_context` or call Host API functions from a background thread.**
@@ -310,8 +292,6 @@ std::thread([dispatcher]() {
     });
 }).detach();
 ```
-
----
 
 ## **Low-Level Host API (C-Compatible)**
 
@@ -344,8 +324,6 @@ if (fnPtr) {
     host->JsCallFunction(ctx, fnPtr, 1); // Call with 1 argument
 }
 ```
-
----
 
 ## **Full Example: System Utilities**
 
