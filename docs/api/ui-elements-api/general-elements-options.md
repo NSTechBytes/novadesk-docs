@@ -29,27 +29,19 @@ Options available for use with all elements in Novadesk applications.
 
 ---
 
-### `solidColor, solidColor2`
+### `backgroundColor`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: [Color](/guides/colors) of the element background. If `solidColor2` is also specified, the background is a gradient composed of `solidColor` and `solidColor2`.
+- **Description**: Color of the element background. Support both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients)
 
 ---
 
-### `gradientAngle`
+### `backgroundColorRadius`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Angle of the background gradient in degrees when both `solidColor` and `solidColor2` are defined. This accepts a raw number.
-
----
-
-### `solidColorRadius`
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Corner radius for solid color background.
+- **Description**: Sets the corner radius for the element's background in pixels. When greater than 0, this creates rounded corners for the background shape.
 
 ---
 
