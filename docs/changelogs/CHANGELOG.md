@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.4.0.0-beta] - 2026-02-13
+###### 📅 13th February, 2026 
+
+### Added
+
+#### Window & Lifecycle
+- Added new `.on` callbacks for `widgetWindow` focus and unfocus events.
+- Added new `widgetWindow` methods: `setFocus()` and `unFocus()`.
+- Added new `widgetWindow` methods: `getHandle()`, `getInternalPointer()`, and `getTitle()`.
+- Added support for gradient backgrounds in `widgetWindow`.
+
+#### Elements
+- Added new element type `roundLine`.
+- Added new element type `shapes` with multiple shape variants.
+- Added gradient color support for elements.
+- Added automatic width and height calculation for `bar` element.
+- Added new element property `show` to control element visibility.
+
+#### System & Runtime
+- Added new system monitor for `audioLevel`.
+- Added system to detect and verify portable environment support.
+- Added `require` method for loading modules.
+
+#### Performance & Updates
+- Added `win.startUpdate()` and `win.endUpdate()` methods for batch updating element properties.
+
+#### Installation
+- Added self-installation support for widgets using the new tool `installer_stub`.
+
+### Fixed
+- Fixed issue where images were not displayed when width or height was not explicitly set.
+
+### Removed
+- Removed deprecated element properties `solidColor2` and `gradientAngle`, replaced by the new gradient support system.
+
+<!-- ================================================================================= -->
+
 ## [0.3.0.0-beta] - 2026-02-05
 ###### 📅 5th February, 2026 
 
@@ -40,6 +77,7 @@
   - `sentence` : Capitalizes the first letter of the first word  
   Example: `<case=upper>this will be uppercase</case>`
 
+<!-- ================================================================================= -->
 
 ## [0.2.0.0-beta] - 2026-01-30
 ###### 📅 30th January, 2026 
@@ -57,6 +95,8 @@
 - Redirected `settings.json`, `config.json`, and `logs.log` to the user's `%APPDATA%` directory.
 - Updated the installer and uninstaller to handle user data cleanup in AppData.
 - Consolidated resource extraction logic across the codebase for improved performance (caching).
+
+<!-- ================================================================================= -->
 
 ## [0.1.0.0-beta] - 2026-01-30  
 ###### 📅 30th January, 2026  
