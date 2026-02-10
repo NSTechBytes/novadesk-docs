@@ -33,7 +33,7 @@
 - Fixed issue where images were not displayed when width or height was not explicitly set.
 
 ### Removed
-- Removed deprecated element properties `solidColor2` and `gradientAngle`, replaced by the new gradient support system.
+- Removed deprecated element properties like `solidColor2` and `gradientAngle`, replaced by the new gradient support system.
 
 <!-- ================================================================================= -->
 
