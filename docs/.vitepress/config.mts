@@ -144,7 +144,7 @@ export default defineConfig({
       },
       {
         text: 'Changelog',
-        link: '/changelogs/Changelog'
+        link: '/changelogs/CHANGELOG'
       }
     ],
 

@@ -22,7 +22,7 @@ features:
     <div class="custom-card__title">Developers</div>
     <div class="custom-card__text">API reference, SDKs, and integration notes.</div>
   </a>
-  <a class="custom-card" href="/changelogs/changelog">
+  <a class="custom-card" href="/changelogs/CHANGELOG">
     <div class="custom-card__title">Changelog</div>
     <div class="custom-card__text">Release history and notable updates.</div>
   </a>
