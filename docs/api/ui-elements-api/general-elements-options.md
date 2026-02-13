@@ -100,7 +100,7 @@ Options available for use with all elements in Novadesk applications.
 
 - **Type**: `number | array`
 - **Default**: `0`
-- **Description**: Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `solidColor` and `solidColor2`.
+- **Description**: Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `backgroundColor`.
 
 - **Syntax**:
   - `padding: 10`: All sides set to 10px
