@@ -99,6 +99,28 @@ win.setElementProperties("myText", {
 });
 ```
 
+### setElementPropertiesByGroup(group, props)
+
+Update properties for all UI elements that belong to the same `group`. Available only in UI scripts.
+
+### Parameters
+
+- **`group`**
+  - **Type**: `string`
+  - **Description**: Group name to target.
+
+- **`props`**
+  - **Type**: `Object`
+  - **Description**: Properties to apply to every element in the group.
+
+### Example
+
+```javascript
+win.setElementPropertiesByGroup("stats", {
+  show: false
+});
+```
+
 ### removeElements(ids)
 
 Remove one or more UI elements from the widget. Available only in UI scripts.
@@ -127,6 +149,23 @@ win.removeElements(["img1", "img2", "text3"]);
 
 // Clear all content
 win.removeElements();
+```
+
+### removeElementsByGroup(group)
+
+Remove all UI elements that belong to a specific `group`. Available only in UI scripts.
+
+### Parameters
+
+- **`group`**
+  - **Type**: `string`
+  - **Description**: Group name to remove.
+
+### Example
+
+```javascript
+// Remove all elements in the "stats" group
+win.removeElementsByGroup("stats");
 ```
 
 ### getElementProperty(id, propertyName)

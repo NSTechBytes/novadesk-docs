@@ -34,6 +34,18 @@ Options available for use with all elements in Novadesk applications.
 - An element cannot be its own container, and container cycles are not allowed.
 :::
 
+### group
+
+- **Type**: `string`
+- **Default**: `""`
+- **Description**: Assigns the element to a logical group name. Elements in the same group can be updated or removed together using widget UI methods.
+
+::: info
+Group is independent of `container`:
+- `container` controls rendering/hit-testing hierarchy.
+- `group` is a logical label for batch operations.
+:::
+
 ### backgroundColor
 
 - **Type**: `string`
