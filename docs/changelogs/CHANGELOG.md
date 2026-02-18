@@ -55,6 +55,9 @@
   - `mouseOver`
   - `mouseLeave`
 
+### Installer
+- Installer now includes Standard/Portable mode page, blocks Portable installs in system-protected paths, and skips uninstaller/registry/PATH changes when Portable is selected.
+
 ### Fixed
 
 ### Module System
@@ -77,6 +80,8 @@
 ### Engine & JS API
 - Fixed engine event callback context restoration to prevent win/Duktape stack corruption.
 
+### Installer Stub
+- Fixed installer stub uninstall cleanup now removes all child folders/files in install directory (including unknown generated system API caches) before final root deletion, with existing cmd fallback retained.
 <!-- ================================================================================= -->
 
 ## [0.4.0.0-beta] - 2026-02-11
