@@ -74,6 +74,9 @@
 - Fixed mouse routing for non-interactive overlays.
 - Text or overlays no longer steal hover, click, cursor, wheel, or tooltip events from underlying interactive elements.
 
+### Engine & JS API
+- Fixed engine event callback context restoration to prevent win/Duktape stack corruption.
+
 <!-- ================================================================================= -->
 
 ## [0.4.0.0-beta] - 2026-02-11
