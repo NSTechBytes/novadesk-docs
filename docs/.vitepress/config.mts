@@ -78,6 +78,7 @@ export default defineConfig({
                   { text: 'Memory Monitor', link: '/api/system-api/system-monitors/memory-monitor' },
                   { text: 'Mouse Monitor', link: '/api/system-api/system-monitors/mouse-monitor' },
                   { text: 'Network Monitor', link: '/api/system-api/system-monitors/network-monitor' },
+                  { text: 'Now Playing Monitor', link: '/api/system-api/system-monitors/now-playing' },
                 ]
               },
               { text: 'Addon API', link: '/api/system-api/addon-api' },
@@ -150,7 +151,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://novadesk.pages.dev/' }
     ]
   }
 })
