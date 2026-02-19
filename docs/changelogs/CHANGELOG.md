@@ -1,7 +1,7 @@
 # Changelog
 
-## [0.5.0.0-beta] - 2026-02-18
-###### 📅 18th February, 2026 
+## [0.5.0.0-beta] - 2026-02-19
+###### 📅 19th February, 2026 
 
 ### Added
 
@@ -38,6 +38,7 @@
 - Added ICO export functionality.
 
 ### Global Variables
+- Added `__widgetsDir`
 - Added `__offsetX`
 - Added `__offsetY`
 - Added `__offsetXPercent`
@@ -82,6 +83,7 @@
 
 ### Installer Stub
 - Fixed installer stub uninstall cleanup now removes all child folders/files in install directory (including unknown generated system API caches) before final root deletion, with existing cmd fallback retained.
+
 <!-- ================================================================================= -->
 
 ## [0.4.0.0-beta] - 2026-02-11

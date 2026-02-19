@@ -19,6 +19,21 @@ win.addImage(imagePath, 10, 10);
 
 The absolute path to the current script file.
 
+## __widgetsDir
+
+The absolute directory path of the currently loaded widget script context.
+
+::: info
+In current runtime behavior, `__widgetsDir` is set to the same value as `__dirname` for the active script context.
+:::
+
+### Example
+```javascript
+console.log("Widget Dir:", __widgetsDir);
+
+var iconPath = path.join(__widgetsDir, "assets", "icon.png");
+```
+
 ## Mouse Event Variables
 
 The following variables are provided in mouse callback payloads (widget events and element mouse action callbacks):
