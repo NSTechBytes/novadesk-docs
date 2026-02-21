@@ -1,65 +1,73 @@
+---
+title: Logging helpers exposed via the console object.
+---
 
 # Logging
+Novadesk exposes the familiar `console` logging helpers, writing output to both the console and the log file.
 
-Logging functions via the standard console object.
+#### Table of Contents
+[[toc]]
 
-## console.log(...args)
+## `console.log(...args)`
 
-Log an informational message to the console and log file.
+Logs informational messages.
 
 ### Parameters
 
-- **...args** (any): Values to log.
+- **`...args`** (`any`): Values to log.
 
 ### Example
+
 ```javascript
 console.log("Application started");
 console.log("User:", "John Doe", "Version:", "1.0.0");
 ```
 
-## console.warn(...args)
+## `console.warn(...args)`
 
-Log a warning message to the console and log file.
+Logs warning messages.
 
 ### Parameters
 
-- **...args** (any): Values to log as a warning.
+- **`...args`** (`any`): Values to log as a warning.
 
 ### Example
+
 ```javascript
 console.warn("Deprecated function used");
 console.warn("Low memory warning:", 1024, "MB remaining");
 ```
 
-## console.error(...args)
+## `console.error(...args)`
 
-Log an error message to the console and log file.
+Logs error messages.
 
 ### Parameters
 
-- **...args** (any): Values to log as an error.
+- **`...args`** (`any`): Values to log as an error.
 
 ### Example
+
 ```javascript
 console.error("Failed to load configuration file");
 console.error("Error code:", 404, "Message:", "File not found");
 ```
 
-## console.debug(...args)
+## `console.debug(...args)`
 
-Log a debug message to the console and log file.
+Logs debug-level details; output respects the current log level.
 
 ::: warning
-Debug messages are only shown when debug logging is enabled. See how to enable debug logging using [Configuration Methods](/api/app-object/settings).
+Debug messages are visible only when debug logging is enabled via the [app settings](~docs/api/app-object/settings) (see `app.enableDebugging`).
 :::
 
 ### Parameters
 
-- **...args** (any): Values to log as debug information.
+- **`...args`** (`any`): Values to log as debug information.
 
 ### Example
+
 ```javascript
 console.debug("Debug: Entering function calculatePosition");
 console.debug("Debug: Current widget position:", x, y);
-``
-
+```

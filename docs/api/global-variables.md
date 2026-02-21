@@ -1,90 +1,69 @@
+---
+title: Reference Novadesk script global variables.
+---
+
 # Global Variables
+Standard global variables available to Novadesk scripts help you work with script paths and mouse events.
 
-Global variables available in Novadesk scripts.
+#### Table of Contents
+[[toc]]
 
-Novadesk provides standard global variables that help you work with file paths relative to your script.
-
-## __dirname
+## `__dirname`
 
 The absolute path to the directory containing the current script file.
 
 ### Example
+
 ```javascript
 const path = require("path");
-
-// Load an image from an assets folder next to the script
-var imagePath = path.join(__dirname, 'assets', 'icon.png');
+var imagePath = path.join(__dirname, "assets", "icon.png");
 console.log(imagePath);
 ```
 
-## __filename
+## `__filename`
 
 The absolute path to the current script file.
 
-## __widgetsDir
+## `__widgetsDir`
 
-The absolute directory path of the currently loaded widget script context.
+Absolute path to the currently loaded widget script context.
 
 ::: info
-In current runtime behavior, `__widgetsDir` is set to the same value as `__dirname` for the active script context.
+At runtime `__widgetsDir` currently matches `__dirname` for the active script.
 :::
 
 ### Example
+
 ```javascript
 console.log("Widget Dir:", __widgetsDir);
-
 var iconPath = path.join(__widgetsDir, "assets", "icon.png");
 ```
 
 ## Mouse Event Variables
 
-The following variables are provided in mouse callback payloads (widget events and element mouse action callbacks):
+Variables injected into mouse callback payloads for widget events and element mouse actions.
 
-## __offsetX
+### `__offsetX`, `__offsetY`
 
-X position relative to the target area.
+- X/Y position relative to the target area.
+- Widget mouse events measure relative to the widget client area.
+- Element callbacks measure relative to the element.
 
-- For widget mouse events: relative to widget client area.
-- For element callbacks: relative to the element.
+### `__offsetXPercent`, `__offsetYPercent`
 
-## __offsetY
+- **Type**: `number`
+- **Range**: Usually `0-100`; can overflow when outside bounds (e.g., `mouseLeave`).
 
-Y position relative to the target area.
+### `__clientX`, `__clientY`
 
-- For widget mouse events: relative to widget client area.
-- For element callbacks: relative to the element.
+Mouse cursor coordinates in widget client space.
 
-## __offsetXPercent
+### `__screenX`, `__screenY`
 
-Horizontal percentage based on target width.
-
-- Type: `number`
-- Range: usually `0-100` (can be outside this range when pointer is outside bounds, such as `mouseLeave`).
-
-## __offsetYPercent
-
-Vertical percentage based on target height.
-
-- Type: `number`
-- Range: usually `0-100` (can be outside this range when pointer is outside bounds, such as `mouseLeave`).
-
-## __clientX
-
-Mouse X position in widget client coordinates.
-
-## __clientY
-
-Mouse Y position in widget client coordinates.
-
-## __screenX
-
-Mouse X position in screen coordinates.
-
-## __screenY
-
-Mouse Y position in screen coordinates.
+Mouse coordinates in screen space.
 
 ### Example
+
 ```javascript
 widget.on("mouseMove", function (e) {
   console.log("client:", e.__clientX, e.__clientY);
@@ -92,4 +71,3 @@ widget.on("mouseMove", function (e) {
   console.log("offset:", e.__offsetX, e.__offsetY);
 });
 ```
-
