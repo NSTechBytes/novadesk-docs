@@ -128,6 +128,7 @@ export default defineConfig({
           },
 
           { text: 'Timers', link: '/api/timers' },
+           { text: 'IPC', link: '/api/ipc' },
 
         ]
       },

@@ -1,5 +1,13 @@
+---
+title: Time And Date (Duktape)
+---
+
 # Time And Date (Duktape)
 Novadesk uses the Duktape JavaScript engine, so time and date behavior follows the ECMAScript 5.1 `Date` built-in. Duktape targets ES5/ES5.1 semantics, and its `Date` implementation relies on the host platform for local time, time zone, and formatting details.
+
+#### Table of Contents
+[[toc]]
+
 
 All of the methods listed below are available in **both Main and UI scripts**.
 

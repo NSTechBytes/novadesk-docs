@@ -1,6 +1,14 @@
+---
+title: Containers Guide
+---
+
 # Containers Guide
 
 Containers let you group elements and clip their rendering and hit-testing to a parent element’s shape. Any element can become a container simply by having children assigned to it.
+
+#### Table of Contents
+[[toc]]
+
 
 ## How It Works
 

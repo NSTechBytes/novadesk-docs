@@ -1,6 +1,14 @@
-﻿# Widget Build And Installer
+---
+title: Widget Build And Installer
+---
+
+# Widget Build And Installer
 
 This guide explains how `nwm build` packages a widget and how the installer is created using `installer_stub.exe`.
+
+#### Table of Contents
+[[toc]]
+
 
 ## Build Overview
 

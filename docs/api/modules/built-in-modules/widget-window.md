@@ -113,7 +113,7 @@ Omitting the background color results in a fully transparent window.
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Controls the initial visibility of the widget.
+- **Description**: Controls the initial visibility of the widgetWindow.
 
 #### `script`
 
@@ -126,6 +126,133 @@ Novadesk enforces a strict separation of concerns:
 - **Window Management** (position, opacity, etc.) must be managed in the main script through the widget object instance.
 - Both scripts communicate using the global [ipc](/api/widget-api/widget-methods#inter-process-communication-ipc) object.
 :::
+
+## Widget Management Methods
+
+::: info
+These methods are available on a [`widgetWindow`](../widget-window.md) instance inside the Main script. They are unavailable from UI scripts.
+:::
+
+### `widgetWindow.setProperties(options)`
+
+Updates widget configuration.
+
+- **`options`**
+  - **Type**: `Object`
+  - **Description**: Properties to apply. Cannot change `id`.
+
+Refer to [Widget Options](/api/widget-api/widget-window#options-object).
+
+#### Example
+
+```javascript
+widgetWindow.setProperties({ x: 200, y: 200 });
+```
+
+### `widgetWindow.getProperties()`
+
+Returns the current widget configuration.
+
+#### Return Value
+
+- **Type**: `Object`
+
+### `widgetWindow.close()`
+
+Closes and destroys the widgetWindow.
+
+### `widgetWindow.refresh()`
+
+Reloads scripts and redraws the widgetWindow.
+
+### `widgetWindow.setFocus()` / `widgetWindow.unFocus()`
+
+Controls window focus.
+
+### `widgetWindow.getHandle()`
+
+Returns the native window handle.
+
+#### Return Value
+
+- **Type**: `pointer | null`
+
+### `widgetWindow.getInternalPointer()`
+
+Returns an internal pointer to the widget instance.
+
+#### Return Value
+
+- **Type**: `pointer | null`
+
+### `widgetWindow.getTitle()`
+
+Returns the widget window title.
+
+#### Return Value
+
+- **Type**: `string`
+
+### `widgetWindow.on(eventName, callback)`
+
+Registers lifecycle or mouse events.
+
+- **`eventName`** (`string`): See list above (refresh, close, mouse events, etc.)
+- **`callback`** (`function`): Receives event payloads such as mouse coordinates (`__clientX`, `__clientY`, `__offsetX`, `__offsetY`, `__screenX`, `__screenY`).
+
+#### Available events
+
+- `refresh`
+- `close`
+- `closed`
+- `show`
+- `hide`
+- `move`
+- `focus`
+- `unFocus`
+- `mouseOver`
+- `mouseLeave`
+- `mouseMove`
+- `mouseDown`
+- `mouseUp`
+
+#### Example
+
+```javascript
+widgetWindow.on("mouseMove", function (e) {
+  console.log("Mouse:", e.__clientX, e.__clientY);
+});
+```
+
+## Context Menu Methods
+
+::: info
+Only accessible from the Main script.
+:::
+
+### `widgetWindow.setContextMenu(items)`
+
+Replaces the custom context menu.
+
+- **`items`**
+  - **Type**: `Array`
+  - **Description**: Menu configuration (text, action, separators, nested lists).
+
+### `widgetWindow.clearContextMenu()`
+
+Removes custom menu items.
+
+### `widgetWindow.disableContextMenu(disabled)`
+
+Enables or disables the context menu.
+
+- **`disabled`** (`boolean`)
+
+### `widgetWindow.showDefaultContextMenuItems(show)`
+
+Controls default menu visibility.
+
+- **`show`** (`boolean`)
 
 ## Z-Order Positions
 
@@ -158,10 +285,6 @@ Widgets support several stacking positions:
 - Remains visible when showing the desktop.
 - Clicking does not change its stacking order relative to normal windows.
 - Recommended for wallpaper-style widgets.
-
-## Widget Methods
-
-After creation, control the widget via the methods documented in [Widget Methods](/api/widget-api/widget-methods).
 
 ## Example
 

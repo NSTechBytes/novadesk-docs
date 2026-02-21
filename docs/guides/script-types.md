@@ -1,5 +1,13 @@
+---
+title: Script Types
+---
+
 # Script Types
 Understanding the difference between Main scripts and UI scripts in Novadesk
+
+#### Table of Contents
+[[toc]]
+
 
 
 Novadesk uses two distinct types of JavaScript execution environments to build widgets: **Main Scripts** and **UI Scripts**. Each has a specific role and access level.
