@@ -1,25 +1,31 @@
-# Require Method
+---
+title: Require modules from main scripts.
+---
 
+# Require Method
 CommonJS-style module import for Novadesk main scripts.
 
-## require(modulePath)
+#### Table of Contents
+[[toc]]
 
-Loads and executes a module and returns its `module.exports`.
+## `require(modulePath)`
+
+Loads and executes a module, returning its `module.exports`.
 
 ::: warning
-`require` is **only available in the Main script** (`index.js`). UI scripts do not have access to `require`.
+`require` is only available in the Main script (`index.js`). UI scripts do not have access to `require`.
 :::
 
 ### Parameters
 
 - **`modulePath`**
   - **Type**: `string`
-  - **Description**: Path to the module. Relative paths resolve from the requiring file’s directory. If no extension is provided, `.js` is added automatically.
+  - **Description**: Module path. Relative paths resolve from the requiring file’s directory. Adds `.js` when missing.
 
 ### Return Value
 
 - **Type**: `any`
-- **Description**: The `module.exports` value from the required module.
+  - **Description**: The value exported by the required module.
 
 ### Example
 
@@ -37,7 +43,5 @@ exports.add = function(a, b) {
 ```
 
 ::: info
-- Modules are cached after first load; subsequent `require()` calls return the cached `module.exports`.
-- Circular dependencies are supported and will return the current cached exports object.
-- `__filename` and `__dirname` are provided to modules when they are executed.
+- Modules are cached after the first load; subsequent `require()` calls return the cached `module.exports`.
 :::

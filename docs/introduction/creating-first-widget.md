@@ -1,21 +1,28 @@
-# Creating Your First Widget
- A step-by-step guide to creating, running, and building your first Novadesk widget using the nwm tool.
+---
+title: Creating Your First Widget
+---
 
-This guide will walk you through the process of creating a simple widget using the **Novadesk Widget Maker (nwm)**.
+# Creating Your First Widget
+A step-by-step guide to creating, running, and building your first Novadesk widget using the `nwm` tool.
+
+#### Table of Contents
+[[toc]]
+
+This guide walks you through creating a simple widget using the **Novadesk Widget Maker (nwm)**.
 
 ## Prerequisites
 
-Before you begin, ensure you have Novadesk installed and the `nwm.exe` tool available in your path or Novadesk directory.
+Before you begin, ensure Novadesk is installed and `nwm.exe` is available in your PATH or Novadesk directory.
 
 ## 1. Initialize Your Widget
 
-Use the `nwm init` command to scaffold a new widget project. Open your terminal and run:
+Run `nwm init` to scaffold a new widget project:
 
 ```bash
 nwm init my-first-widget
 ```
 
-This creates a new directory called `my-first-widget` with the following structure:
+The command creates:
 
 <LiteTree>
 - my-first-widget/
@@ -26,12 +33,12 @@ This creates a new directory called `my-first-widget` with the following structu
 </LiteTree>
 
 ::: info
-The folder structure is determined by the `widget` template. You can add your own folders (like `lib`, `styles`, etc.) and `nwm build` will automatically include them.
+The template decides the initial structure. You can add folders (e.g., `lib`, `styles`) and `nwm build` will include them.
 :::
 
 ## 2. Customize Your Widget
 
-Open `my-first-widget/ui/ui.js` and edit the text to make it your own:
+Edit `my-first-widget/ui/ui.js` and change the displayed text:
 
 ```javascript
 win.addText({
@@ -49,34 +56,34 @@ win.addText({
 
 ## 3. Run and Preview
 
-To see your widget in action, use the `nwm run` command from inside the widget directory:
+From your widget directory:
 
 ```bash
 cd my-first-widget
 nwm run
 ```
 
-This launches Novadesk and loads your widget script. The terminal will remain open to show you any logs or error messages from your widget.
+This launches Novadesk and loads your widget script. The terminal stays open to show logs or errors.
 
 ::: tip
-You can right-click the Novadesk tray icon and select **Refresh** to reload your script after making changes.
+Right-click the Novadesk tray icon and select **Refresh** to reload your script after edits.
 :::
 
 ## 4. Build for Distribution
 
-Once you're happy with your widget, you can build it into a standalone executable using `nwm build`:
+Run `nwm build` to package a standalone executable:
 
 ```bash
 nwm build
 ```
 
-This command performs several actions:
-1. **Validation**: Checks `meta.json` for required fields (`name`, `version`, `author`, `description`, `icon`).
+It performs:
+1. **Validation**: Ensures `meta.json` has required fields (`name`, `version`, `author`, `description`, `icon`).
 2. **Scaffolding**: Creates a `dist` folder.
-3. **Packaging**: Copies `Novadesk.exe` and your scripts into the correct structure.
-4. **Metadata**: Syncs your widget's name, version, and author into the executable's internal version information.
+3. **Packaging**: Copies `Novadesk.exe` plus your scripts.
+4. **Metadata**: Synchronizes the widget’s metadata into the executable.
 
-Your finished widget will be in the `dist` folder:
+The final widget lives inside `dist`.
 
 <!-- {% filetree %}
 - dist/

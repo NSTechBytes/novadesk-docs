@@ -1,6 +1,13 @@
 
+---
+title: Addon API (Native)
+---
+
 # Addon API (Native)
 Technical guide for building native C++ addons for Novadesk.
+
+#### Table of Contents
+[[toc]]
 
 This guide covers the technical details of the **Novadesk Addon SDK**, used to build native x64 DLLs that integrate with the Novadesk JavaScript engine.
 
