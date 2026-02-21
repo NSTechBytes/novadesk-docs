@@ -14,7 +14,7 @@ win.addShape(options);
 
 ## Shape Options
 
-The shape element inherits all [General Elements Options](/api/ui-elements-api/general-elements-options) and adds the following fields.
+The shape element inherits all [General Elements Options](/api/win/ui-elements-api/general-elements-options) and adds the following fields.
 
 ### `type`
 

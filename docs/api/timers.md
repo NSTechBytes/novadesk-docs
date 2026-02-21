@@ -3,7 +3,7 @@ title: Timer helpers available in the Main script.
 ---
 
 # Timer Functions
-Timing helpers (similar to browsers/Node.js) are available only in the Main script. UI scripts should request timing logic via the Main script through [IPC](/api/widget-api/widget-methods#inter-process-communication-ipc).
+Timing helpers (similar to browsers/Node.js) are available only in the Main script. UI scripts should request timing logic via the Main script through [IPC](/api/win/widget-api/win-object#inter-process-communication-ipc).
 
 #### Table of Contents
 [[toc]]

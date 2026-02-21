@@ -15,7 +15,7 @@ win.addImage(options);
 [[toc]]
 
 ## General Element Options
-Refer to [General Elements Options](/api/ui-elements-api/general-elements-options) for layout, visibility, and interactivity controls.
+Refer to [General Elements Options](/api/win/ui-elements-api/general-elements-options) for layout, visibility, and interactivity controls.
 
 ## Image Element Options
 

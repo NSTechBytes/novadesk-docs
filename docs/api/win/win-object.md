@@ -1,9 +1,9 @@
 ---
-title: Widget Methods
+title: Win Object Methods
 ---
 
-# Widget Methods
-Methods available on widget objects in Novadesk.
+# Win Object Methods
+Methods available on the UI script `win` object and `widgetWindow` instances in Novadesk.
 
 Novadesk enforces a **Strict Separation of Concerns** between the **Main script** (application logic) and **UI scripts** (visual presentation).
 
@@ -30,7 +30,7 @@ Creates a text element inside the UI script.
   - **Type**: `Object`
   - **Description**: Text element configuration. Requires a unique `id`.
 
-Refer to [Text Element Options](/api/ui-elements-api/text-element) for full configuration details.
+Refer to [Text Element Options](/api/win/ui-elements-api/text-element) for full configuration details.
 
 ### `win.addImage(options)`
 
@@ -40,7 +40,7 @@ Adds an image element.
   - **Type**: `Object`
   - **Description**: Image element configuration. Requires a unique `id`.
 
-Refer to [Image Element Options](/api/ui-elements-api/image-element).
+Refer to [Image Element Options](/api/win/ui-elements-api/image-element).
 
 ### `win.addBar(options)`
 
@@ -50,7 +50,7 @@ Adds a bar element.
   - **Type**: `Object`
   - **Description**: Bar element configuration. Requires a unique `id`.
 
-Refer to [Bar Element Options](/api/ui-elements-api/bar-element).
+Refer to [Bar Element Options](/api/win/ui-elements-api/bar-element).
 
 ### `win.addRoundLine(options)`
 
@@ -60,7 +60,7 @@ Adds a roundline element.
   - **Type**: `Object`
   - **Description**: RoundLine configuration. Requires a unique `id`.
 
-See [RoundLine Element Options](/api/ui-elements-api/roundline-element).
+See [RoundLine Element Options](/api/win/ui-elements-api/roundline-element).
 
 ### `win.addShape(options)`
 
@@ -70,7 +70,7 @@ Adds a shape element.
   - **Type**: `Object`
   - **Description**: Shape configuration. Requires a unique `id`.
 
-Refer to [Shape Element Options](/api/ui-elements-api/shape-element).
+Refer to [Shape Element Options](/api/win/ui-elements-api/shape-element).
 
 ### `win.setElementProperties(id, props)`
 
