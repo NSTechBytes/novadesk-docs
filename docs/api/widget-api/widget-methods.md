@@ -243,6 +243,8 @@ See [Widget Options](/api/widget-api/widget-window#options-object) for a list of
 ### Example (Main Script)
 
 ```javascript
+const widgetWindow = require("widget-window");
+
 var widget = new widgetWindow({ id: "my-widget" });
 
 widget.setProperties({
@@ -390,6 +392,9 @@ For `mouseOver`, `mouseLeave`, `mouseMove`, `mouseDown`, and `mouseUp`, callback
 ### Example
 
 ```javascript
+const widgetWindow = require("widget-window");
+var widget = new widgetWindow({ id: "events-widget" });
+
 widget.on("refresh", function () {
   console.log("Widget is refreshing!");
 });
@@ -473,7 +478,7 @@ widget.setContextMenu([
   {
     text: "Refresh",
     action: function () {
-      win.refresh();
+      widget.refresh();
     }
   }
 ]);

@@ -1,16 +1,24 @@
-# Brightness Control
+---
+title: Manage display brightness with the brightness module.
+---
 
+# brightness Module
 Get and set display brightness using the system API.
 
-::: warning
-The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods#inter-process-communication-ipc) if they need system access.
-:::
+The brightness module can be accessed using `require("brightness")`.
 
-## system.getBrightness([options])
+```javascript
+const brightness = require("brightness");
+```
+
+#### Table of Contents
+[[toc]]
+
+## `brightness.getBrightness([options])`
 
 Returns brightness information for a display.
 
-### Parameters
+#### Parameters
 
 - **`options`**
   - **Type**: `Object`
@@ -22,7 +30,7 @@ Returns brightness information for a display.
   - **Default**: `0`
   - **Description**: Display index to query.
 
-### Return Value
+#### Return Value
 
 - **Type**: `Object`
 - **Description**: Brightness details:
@@ -32,11 +40,11 @@ Returns brightness information for a display.
   - **`max`** (`number`): Maximum raw brightness value.
   - **`percent`** (`number`): Normalized brightness percentage (`0-100`).
 
-## system.setBrightness(options)
+## `brightness.setBrightness(options)`
 
-Sets brightness for a display.
+Sets the brightness for a display.
 
-### Parameters
+#### Parameters
 
 - **`options`**
   - **Type**: `Object`
@@ -53,20 +61,20 @@ Sets brightness for a display.
   - **Required**: Yes
   - **Description**: Target brightness percentage. Values are clamped to `0-100`.
 
-### Return Value
+#### Return Value
 
 - **Type**: `boolean`
-- **Description**: Returns `true` if brightness was updated successfully; otherwise `false`.
+- **Description**: `true` if brightness was updated successfully; otherwise `false`.
 
 ## Example
 
 ```javascript
-// Read current brightness
-var info = system.getBrightness({ display: 0 });
+const brightness = require("brightness");
+var info = brightness.getBrightness({ display: 0 });
 console.log("Brightness supported:", info.supported);
 console.log("Brightness percent:", info.percent);
 
 // Set brightness to 60%
-var ok = system.setBrightness({ display: 0, percent: 60 });
+var ok = brightness.setBrightness({ display: 0, percent: 60 });
 console.log("Set brightness:", ok);
 ```

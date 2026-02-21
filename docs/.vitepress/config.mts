@@ -5,6 +5,7 @@ import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
 export default defineConfig({
   title: 'Novadesk Docs',
   description: 'Complete documentation for Novadesk',
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
@@ -12,6 +13,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' }],
     ['link', { rel: 'manifest', href: '/site.webmanifest' }]
   ],
+
   vue: {
     template: {
       compilerOptions: {
@@ -19,22 +21,26 @@ export default defineConfig({
       }
     }
   },
+
   vite: {
     ssr: {
       noExternal: ['vitepress-component-medium-zoom']
     }
   },
+
   markdown: {
     config(md) {
       md.use(tabsMarkdownPlugin)
-    },
+    }
   },
+
   themeConfig: {
     logo: '/logo.svg',
+
     search: {
       provider: 'local'
     },
-    // https://vitepress.dev/reference/default-theme-config
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Introduction', link: '/introduction/getting-started' },
@@ -52,53 +58,12 @@ export default defineConfig({
           { text: 'Creating First Widget', link: '/introduction/creating-first-widget' },
         ]
       },
+
       {
         text: 'API Reference',
         collapsed: false,
         items: [
-          {
-            text: 'App Object',
-            collapsed: true,
-            items: [
-              { text: 'Utility Methods', link: '/api/app-object/utility-methods' },
-              { text: 'Tray API', link: '/api/app-object/tray-api' },
-              { text: 'Settings', link: '/api/app-object/settings' },
-            ]
-          },
-          {
-            text: 'System API',
-            collapsed: true,
-            items: [
-              {
-                text: 'System Monitors',
-                collapsed: true,
-                items: [
-                  { text: 'CPU Monitor', link: '/api/system-api/system-monitors/cpu-monitor' },
-                  { text: 'Disk Monitor', link: '/api/system-api/system-monitors/disk-monitor' },
-                  { text: 'Memory Monitor', link: '/api/system-api/system-monitors/memory-monitor' },
-                  { text: 'Mouse Monitor', link: '/api/system-api/system-monitors/mouse-monitor' },
-                  { text: 'Network Monitor', link: '/api/system-api/system-monitors/network-monitor' },
-                  { text: 'Now Playing Monitor', link: '/api/system-api/system-monitors/now-playing' },
-                ]
-              },
-              { text: 'Addon API', link: '/api/system-api/addon-api' },
-              { text: 'Audio API', link: '/api/system-api/audio-api' },
-              { text: 'Audio Level', link: '/api/system-api/audio-level' },
-              { text: 'Brightness Control', link: '/api/system-api/brightness-control' },
-              { text: 'Clipboard API', link: '/api/system-api/clipboard-api' },
-              { text: 'Display Metrics', link: '/api/system-api/display-metrics' },
-              { text: 'File Icon Extraction', link: '/api/system-api/file-icon-extraction' },
-              { text: 'Wallpaper', link: '/api/system-api/wallpaper' },
-              { text: 'Environment Variables', link: '/api/system-api/environment-variables' },
-              { text: 'Execute Command', link: '/api/system-api/execute-command' },
-              { text: 'Hotkey Management', link: '/api/system-api/hotkey-management' },
-              { text: 'JSON API', link: '/api/system-api/json-api' },
-              { text: 'Power API', link: '/api/system-api/power-api' },
-              { text: 'Registry API', link: '/api/system-api/registry-api' },
-              { text: 'Timers', link: '/api/system-api/timers' },
-              { text: 'Web Fetch', link: '/api/system-api/web-fetch' },
-            ]
-          },
+
           {
             text: 'UI Elements API',
             collapsed: true,
@@ -111,20 +76,62 @@ export default defineConfig({
               { text: 'Text Element', link: '/api/ui-elements-api/text-element' },
             ]
           },
+
           {
             text: 'Widget API',
             collapsed: true,
             items: [
               { text: 'Widget Methods', link: '/api/widget-api/widget-methods' },
-              { text: 'Widget Window', link: '/api/widget-api/widget-window' },
             ]
           },
+
           { text: 'Console Logging', link: '/api/logging' },
-          { text: 'Path API', link: '/api/path-api' },
           { text: 'Global Variables', link: '/api/global-variables' },
-          { text: 'Modules', link: '/api/modules' },
+
+          {
+            text: 'Modules',
+            collapsed: true,
+            link: '/api/modules/modules',
+            items: [
+              {
+                text: 'Built-in Modules',
+                collapsed: true,
+                items: [
+                  { text: 'addon', link: '/api/modules/built-in-modules/addon' },
+                  { text: 'app-volume', link: '/api/modules/built-in-modules/app-volume' },
+                  { text: 'app', link: '/api/modules/built-in-modules/app' },
+                  { text: 'audio-level-monitor', link: '/api/modules/built-in-modules/audio-level-monitor' },
+                  { text: 'audio', link: '/api/modules/built-in-modules/audio' },
+                  { text: 'brightness', link: '/api/modules/built-in-modules/brightness' },
+                  { text: 'clipper', link: '/api/modules/built-in-modules/clipper' },
+                  { text: 'cpu-monitor', link: '/api/modules/built-in-modules/cpu-monitor' },
+                  { text: 'display-metrics', link: '/api/modules/built-in-modules/display-metrics' },
+                  { text: 'disk-monitor', link: '/api/modules/built-in-modules/disk-monitor' },
+                  { text: 'env-variables', link: '/api/modules/built-in-modules/env-variables' },
+                  { text: 'execute', link: '/api/modules/built-in-modules/execute' },
+                  { text: 'file-icon', link: '/api/modules/built-in-modules/file-icon' },
+                  { text: 'hotkeys', link: '/api/modules/built-in-modules/hotkeys' },
+                  { text: 'json', link: '/api/modules/built-in-modules/json' },
+                  { text: 'memory-monitor', link: '/api/modules/built-in-modules/memory-monitor' },
+                  { text: 'mouse-monitor', link: '/api/modules/built-in-modules/mouse-monitor' },
+                  { text: 'network-monitor', link: '/api/modules/built-in-modules/network-monitor' },
+                  { text: 'now-playing-monitor', link: '/api/modules/built-in-modules/now-playing-monitor' },
+                  { text: 'path', link: '/api/modules/built-in-modules/path' },
+                  { text: 'power', link: '/api/modules/built-in-modules/power' },
+                  { text: 'registry', link: '/api/modules/built-in-modules/registry' },
+                  { text: 'wallpaper', link: '/api/modules/built-in-modules/wallpaper' },
+                  { text: 'web-fetch', link: '/api/modules/built-in-modules/web-fetch' },
+                  { text: 'widget-window', link: '/api/modules/built-in-modules/widget-window' },
+                ]
+              }
+            ]
+          },
+
+          { text: 'Timers', link: '/api/timers' },
+
         ]
       },
+
       {
         text: 'Guides',
         collapsed: false,
@@ -140,6 +147,7 @@ export default defineConfig({
           { text: 'Transform Matrix Guide', link: '/guides/transform-matrix-guide' },
         ]
       },
+
       {
         text: 'Developer Resources',
         collapsed: true,
@@ -147,14 +155,18 @@ export default defineConfig({
           { text: 'Addon API', link: '/developers/api/addon-api' },
         ]
       },
+
       {
         text: 'Changelog',
         link: '/changelogs/CHANGELOG'
       }
+
     ],
 
     socialLinks: [
       { icon: 'github', link: 'https://novadesk.pages.dev/' }
     ]
+
   }
+
 })

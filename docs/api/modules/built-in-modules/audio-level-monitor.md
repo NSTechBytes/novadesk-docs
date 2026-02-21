@@ -1,30 +1,34 @@
-# Audio Level
+---
+title: Monitor system audio levels with the audio-level-monitor module.
+---
 
-Monitor system audio levels and frequency bands.
+# audio-level-monitor Module
+Monitor system audio levels and frequency bands through the audio-level-monitor module.
 
-::: warning
-The `system` object is **only available in the Main script**. UI scripts should communicate with the main script via [IPC](/api/widget-api/widget-methods#inter-process-communication-ipc) if they need audio data.
-:::
+The module can be accessed using `require("audio-level-monitor")`.
 
-## system.audioLevel(options)
+```javascript
+const audioLevelMonitor = require("audio-level-monitor");
+```
+
+#### Table of Contents
+[[toc]]
+
+## `new audioLevelMonitor.audioLevel([options])`
 
 Creates an audio level monitor instance.
-
-```js
-var audio = new system.audioLevel(options);
-```
 
 ### Options
 
 - **`port`**
   - **Type**: `string`
   - **Default**: `"output"`
-  - **Description**: Audio endpoint to capture. Use `"output"` or `"input"`.
+  - **Description**: Audio endpoint to capture (`"output"` or `"input"`).
 
 - **`id`**
   - **Type**: `string`
   - **Default**: `""`
-  - **Description**: Specific device ID. Empty string uses the default device.
+  - **Description**: Device ID, use an empty string for the default device.
 
 - **`fftSize`**
   - **Type**: `number`
@@ -44,17 +48,17 @@ var audio = new system.audioLevel(options);
 - **`freqMin`**
   - **Type**: `number`
   - **Default**: `20.0`
-  - **Description**: Minimum frequency (Hz) for band calculation.
+  - **Description**: Minimum frequency in Hz for band calculations.
 
 - **`freqMax`**
   - **Type**: `number`
   - **Default**: `20000.0`
-  - **Description**: Maximum frequency (Hz) for band calculation.
+  - **Description**: Maximum frequency in Hz for bands.
 
 - **`sensitivity`**
   - **Type**: `number`
   - **Default**: `35.0`
-  - **Description**: Overall sensitivity scaling for band output.
+  - **Description**: Sensitivity scaling applied to band output.
 
 - **`rmsAttack`**
   - **Type**: `number`
@@ -96,26 +100,27 @@ var audio = new system.audioLevel(options);
   - **Default**: `1.0`
   - **Description**: Gain applied to peak output.
 
-## audio.stats()
+## `audioLevel.stats()`
 
 Returns the current audio levels.
 
 ### Return Value
 
 - **Type**: `object`
-- **Properties**:
-  - **`rms`**: `number[]` with two values `[left, right]`
-  - **`peak`**: `number[]` with two values `[left, right]`
-  - **`bands`**: `number[]` of length `bands`
+- **Description**:
+  - **`rms`** (`number[]`): RMS levels for left/right channels (`[left, right]`).
+  - **`peak`** (`number[]`): Peak levels for left/right channels (`[left, right]`).
+  - **`bands`** (`number[]`): Frequency band levels; array length equals the configured `bands`.
 
-## audio.destroy()
+## `audioLevel.destroy()`
 
 Releases the audio monitor and its native resources.
 
 ## Example
 
 ```javascript
-var audio = new system.audioLevel({
+const audioLevelMonitor = require("audio-level-monitor");
+var audioLevel = new audioLevelMonitor({
     port: "output",
     bands: 12,
     fftSize: 2048,
@@ -125,8 +130,8 @@ var audio = new system.audioLevel({
     rmsDecay: 300
 });
 
-setInterval(function() {
-    var data = audio.stats();
+setInterval(function () {
+    var data = audioLevel.stats();
     var left = data.rms[0];
     var right = data.rms[1];
     console.log("RMS L/R", left, right);

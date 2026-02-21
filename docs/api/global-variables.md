@@ -10,9 +10,11 @@ The absolute path to the directory containing the current script file.
 
 ### Example
 ```javascript
+const path = require("path");
+
 // Load an image from an assets folder next to the script
 var imagePath = path.join(__dirname, 'assets', 'icon.png');
-win.addImage(imagePath, 10, 10);
+console.log(imagePath);
 ```
 
 ## __filename
