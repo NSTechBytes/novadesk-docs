@@ -14,7 +14,7 @@ const clipper = require("clipper");
 #### Table of Contents
 [[toc]]
 
-## `clipper.getClipboardText()`
+## `clipper.getText()`
 
 Retrieves the current text content of the clipboard.
 
@@ -23,7 +23,7 @@ Retrieves the current text content of the clipboard.
 - **Type**: `string | null`
 - **Description**: The text content of the clipboard, or `null` if the clipboard is empty or does not contain text.
 
-## `clipper.setClipboardText(text)`
+## `clipper.setText(text)`
 
 Sets the text content of the system clipboard.
 
@@ -43,12 +43,12 @@ Sets the text content of the system clipboard.
 ```javascript
 const clipper = require("clipper");
 // Copy text to clipboard
-var success = clipper.setClipboardText("Copied from Novadesk!");
+var success = clipper.setText("Copied from Novadesk!");
 if (success) {
     console.log("Text copied!");
 }
 
 // Read from clipboard
-var text = clipper.getClipboardText();
+var text = clipper.getText();
 console.log("Clipboard contains: " + text);
 ```

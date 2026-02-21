@@ -14,7 +14,7 @@ const registry = require("registry");
 #### Table of Contents
 [[toc]]
 
-## `registry.readRegistry(path, valueName)`
+## `registry.readData(path, valueName)`
 
 Reads a value from the Windows Registry.
 
@@ -34,14 +34,14 @@ Reads a value from the Windows Registry.
 - **Type**: `string | number | null`
 - **Description**: Value data (`REG_SZ`, `REG_EXPAND_SZ`, `REG_DWORD`). Returns `null` if the key/value does not exist.
 
-## `registry.writeRegistry(path, valueName, data)`
+## `registry.writeData(path, valueName, data)`
 
 Writes a value to the Windows Registry, creating the key if needed.
 
 ### Parameters
 
 - **`path`**, **`valueName`**
-  - Same as `readRegistry`.
+  - Same as `readData`.
 
 - **`data`**
   - **Type**: `string | number`
@@ -56,9 +56,9 @@ Writes a value to the Windows Registry, creating the key if needed.
 
 ```javascript
 const registry = require("registry");
-var value = registry.readRegistry("HKCU\\Software\\Novadesk", "theme");
+var value = registry.readData("HKCU\\Software\\Novadesk", "theme");
 console.log("Theme:", value);
 
-var written = registry.writeRegistry("HKCU\\Software\\Novadesk", "theme", "dark");
+var written = registry.writeData("HKCU\\Software\\Novadesk", "theme", "dark");
 console.log("Write successful:", written);
 ```

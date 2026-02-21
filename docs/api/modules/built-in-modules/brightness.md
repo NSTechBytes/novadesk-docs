@@ -14,7 +14,7 @@ const brightness = require("brightness");
 #### Table of Contents
 [[toc]]
 
-## `brightness.getBrightness([options])`
+## `brightness.getValue([options])`
 
 Returns brightness information for a display.
 
@@ -40,7 +40,7 @@ Returns brightness information for a display.
   - **`max`** (`number`): Maximum raw brightness value.
   - **`percent`** (`number`): Normalized brightness percentage (`0-100`).
 
-## `brightness.setBrightness(options)`
+## `brightness.setValue(options)`
 
 Sets the brightness for a display.
 
@@ -70,11 +70,11 @@ Sets the brightness for a display.
 
 ```javascript
 const brightness = require("brightness");
-var info = brightness.getBrightness({ display: 0 });
+var info = brightness.getValue({ display: 0 });
 console.log("Brightness supported:", info.supported);
 console.log("Brightness percent:", info.percent);
 
 // Set brightness to 60%
-var ok = brightness.setBrightness({ display: 0, percent: 60 });
+var ok = brightness.setValue({ display: 0, percent: 60 });
 console.log("Set brightness:", ok);
 ```

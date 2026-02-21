@@ -13,8 +13,8 @@ const json = require("json");
 
 #### Table of Contents
 [[toc]]
-
-## `json.readJson(path)`
+    
+## `json.readData(path)`
 
 Reads and parses a JSON file.
 
@@ -27,7 +27,7 @@ Reads and parses a JSON file.
 - **Type**: `Object | null`
 - **Description**: Parsed object if successful; `null` on failure.
 
-## `json.writeJson(path, data)`
+## `json.writeData(path, data)`
 
 Serializes a JavaScript object to disk as JSON.
 
@@ -52,7 +52,7 @@ Serializes a JavaScript object to disk as JSON.
 == index.js
 ```javascript
 const json = require("json");
-var config = json.readJson("config.json");
+var config = json.readData("config.json");
 console.log("Debug:", config.settings.debug);
 ```
 == config.json
@@ -79,7 +79,7 @@ console.log("Debug:", config.settings.debug);
 
 ```javascript
 const json = require("json");
-var success = json.writeJson("settings.json", { theme: "light", volume: 70 });
+var success = json.writeData("settings.json", { theme: "light", volume: 70 });
 console.log("Saved settings:", success);
 ```
 
@@ -87,7 +87,7 @@ console.log("Saved settings:", success);
 
 ```javascript
 const json = require("json");
-var current = json.readJson("settings.json");
+var current = json.readData("settings.json");
 current.volume = 80;
-json.writeJson("settings.json", current);
+json.writeData("settings.json", current);
 ```

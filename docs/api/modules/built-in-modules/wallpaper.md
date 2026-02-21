@@ -14,7 +14,7 @@ const wallpaper = require("wallpaper");
 #### Table of Contents
 [[toc]]
 
-## `wallpaper.setWallpaper(imagePath, [style])`
+## `wallpaper.set(imagePath, [style])`
 
 Sets the Windows desktop wallpaper from an image file.
 
@@ -49,12 +49,12 @@ Sets the Windows desktop wallpaper from an image file.
 
 ```javascript
 const wallpaper = require("wallpaper");
-wallpaper.setWallpaper("assets/background.jpg");
+wallpaper.set("assets/background.jpg");
 ```
 
 ### Explicit Style
 
 ```javascript
 const wallpaper = require("wallpaper");
-wallpaper.setWallpaper("assets/lakeside.jpg", "fit");
+wallpaper.set("assets/lakeside.jpg", "fit");
 ```

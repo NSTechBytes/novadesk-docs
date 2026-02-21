@@ -14,7 +14,7 @@ const power = require("power");
 #### Table of Contents
 [[toc]]
 
-## `power.getPowerStatus()`
+## `power.getStatus()`
 
 Retrieves current power and battery information.
 
@@ -37,7 +37,7 @@ Retrieves current power and battery information.
 
 ```javascript
 const power = require("power");
-var status = power.getPowerStatus();
+var status = power.getStatus();
 if (status) {
     console.log("Power Source:", status.acline ? "AC" : "Battery");
     console.log("Battery:", status.percent + "%", "Status Code:", status.status);

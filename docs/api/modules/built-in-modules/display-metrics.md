@@ -14,7 +14,7 @@ const displayMetrics = require("display-metrics");
 #### Table of Contents
 [[toc]]
 
-## `displayMetrics.getDisplayMetrics()`
+## `displayMetrics.getMetrics()`
 
 Returns detailed information about screen dimensions, work areas, and connected monitors.
 
@@ -55,7 +55,7 @@ Each monitor object contains:
 
 ```javascript
 const displayMetrics = require("display-metrics");
-var report = displayMetrics.getDisplayMetrics();
+var report = displayMetrics.getMetrics();
 console.log("Primary monitor:", report.primary);
 console.log("Virtual desktop:", report.virtualScreen);
 console.log("Monitors:", report.monitors);
