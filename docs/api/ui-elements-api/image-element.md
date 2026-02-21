@@ -1,21 +1,21 @@
+---
+title: Image element options and supported formats.
+---
 
 # Image Element
+The Image element renders bitmap content inside a UI script via the shared element options.
 
-Image UI element in Novadesk with all options and methods.
-
-## Adding an Image Element
-
-Use the `addImage()` method on the `win` object within a [UI Script](/guides/script-types#ui-script-the-face):
+Use `win.addImage()` in your UI script (`win` is the UI script's global object).
 
 ```js
 win.addImage(options);
 ```
 
+#### Table of Contents
+[[toc]]
+
 ## General Element Options
-
-See general element options [here](/api/ui-elements-api/general-elements-options).
-
----
+Refer to [General Elements Options](/api/ui-elements-api/general-elements-options) for layout, visibility, and interactivity controls.
 
 ## Image Element Options
 
@@ -25,64 +25,56 @@ See general element options [here](/api/ui-elements-api/general-elements-options
 - **Default**: `""`
 - **Description**: Path to the image file.
 
----
-
 ### `preserveAspectRatio`
 
 - **Type**: `string`
 - **Default**: `"stretch"`
 - **Description**: Controls how the image maintains its aspect ratio.
 
-- **Valid values**:
-  - `"stretch"`: Stretch image to fill the specified dimensions
-  - `"preserve"`: Fit image within dimensions while maintaining aspect ratio
-  - `"crop"`: Crop image to fill dimensions while maintaining aspect ratio
+#### Valid values
 
----
+- `"stretch"`
+- `"preserve"`
+- `"crop"`
 
 ### `imageAlpha`
 
 - **Type**: `number`
 - **Default**: `255`
-- **Description**: Image opacity value in the range `0–255`.
-
----
+- **Description**: Opacity in the range `0-255`.
 
 ### `grayscale`
 
 - **Type**: `boolean`
 - **Default**: `false`
-- **Description**: Applies a grayscale filter to the image when enabled. When combined with `imageTint` or `colorMatrix`, the grayscale effect is applied first.
-
----
+- **Description**: Applies a grayscale filter; works with `imageTint` and `colorMatrix`.
 
 ### `tile`
 
 - **Type**: `boolean`
 - **Default**: `false`
-- **Description**: Repeats (tiles) the image to fill the element area. Hardware-accelerated effects (Greyscale, Tint) are fully supported on tiled images.
-
----
+- **Description**: Tiles the image to fill the element area.
 
 ### `imageTint`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: [Color](/guides/colors) applied to the image.
-
----
+- **Description**: Color or gradient applied to the image.
 
 ### `colorMatrix`
 
-- **Type**: `array` (25 numbers)
+- **Type**: `array` (20 or 25 numbers)
 - **Default**: `[]`
-- **Description**: A 5x5 color transformation matrix used for advanced color effects (e.g., brightness, contrast, alpha, color shifting). For a comprehensive guide and more examples, see the [Color Matrix Guide](/guides/color-matrix-guide). The array can contain either **20 numbers** (5x4 Direct2D format) or **25 numbers** (5x5 Rainmeter format). Elements can use `grayscale` and `colorMatrix` simultaneously; effects are chained sequentially.
+- **Description**: Color transformation matrix for brightness, contrast, and color shifts.
 
-If 25 numbers are used, the 5th value of each row (the translation/W column) is automatically handled for compatibility with Direct2D.
+#### Details
 
-- **Example**:
+- 5x4 Direct2D or 5x5 Rainmeter formats are accepted.
+- When 25 numbers are provided, Rainmeter handles the translation column automatically.
+
+#### Example
+
 ```javascript
-// Grayscale matrix
 colorMatrix: [
    0.33, 0.33, 0.33, 0, 0,
    0.59, 0.59, 0.59, 0, 0,
@@ -92,11 +84,7 @@ colorMatrix: [
 ]
 ```
 
----
-
 ## Supported Image Formats
-
-Novadesk supports the following image formats:
 
 - PNG
 - JPEG
@@ -104,7 +92,3 @@ Novadesk supports the following image formats:
 - GIF
 - TIFF
 - ICO
-
-
-
-

@@ -1,27 +1,36 @@
-﻿# Shape Element
+---
+title: Shape element types, properties, and examples.
+---
 
-Documentation for the Novadesk Shape element type.
-
-## Adding a Shape Element
-
-Use the `addShape()` method on the `win` object within a [UI Script](/guides/script-types#ui-script-the-face):
+# Shape Element
+Draw shapes (rectangles, ellipses, lines, arcs, paths, curves, combines) using `win.addShape()` inside a UI script.
 
 ```js
 win.addShape(options);
 ```
 
+#### Table of Contents
+[[toc]]
+
 ## Shape Options
 
-The shape element inherits all [General Element Options](/api/ui-elements-api/general-elements-options) and adds the following:
+The shape element inherits all [General Elements Options](/api/ui-elements-api/general-elements-options) and adds the following fields.
 
-###  type
+### `type`
 
 - **Type**: `string`
 - **Default**: `"rectangle"`
-- **Description**: Shape type to render.
+- **Description**: Determines the shape to render.
 
-Valid values:
-`"rectangle"`, `"ellipse"`, `"line"`, `"arc"`, `"path"`, `"curve"`, `"combine"`.
+#### Valid values
+
+- `"rectangle"`
+- `"ellipse"`
+- `"line"`
+- `"arc"`
+- `"path"`
+- `"curve"`
+- `"combine"`
 
 ## Shape Types
 
@@ -29,25 +38,25 @@ Valid values:
 
 Use `type: "rectangle"`.
 
-###  radiusX
+#### `radiusX`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Corner radius for rectangles on the X axis.
+- **Description**: Corner radius along the X axis.
 
-###  radiusY
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Corner radius for rectangles on the Y axis.
-
-###  radius
+#### `radiusY`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Convenience radius that sets both `radiusX` and `radiusY` if they are not set.
+- **Description**: Corner radius along the Y axis.
 
-### Example
+#### `radius`
+
+- **Type**: `number`
+- **Default**: `0`
+- **Description**: Sets both `radiusX` and `radiusY` when the individual values are unset.
+
+#### Example
 
 ```javascript
 win.addShape({
@@ -68,25 +77,25 @@ win.addShape({
 
 Use `type: "ellipse"`.
 
-###  radiusX
+#### `radiusX`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Radius values for the ellipse on the X axis.
+- **Description**: Radius on the X axis.
 
-###  radiusY
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Radius values for the ellipse on the Y axis.
-
-###  radius
+#### `radiusY`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Convenience radius that sets both `radiusX` and `radiusY` if they are not set.
+- **Description**: Radius on the Y axis.
 
-### Example
+#### `radius`
+
+- **Type**: `number`
+- **Default**: `0`
+- **Description**: Sets both radii when the individual values are unset.
+
+#### Example
 
 ```javascript
 win.addShape({
@@ -108,31 +117,31 @@ win.addShape({
 
 Use `type: "line"`.
 
-###  startX
+#### `startX`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Line start X coordinate.
+- **Description**: Starting X coordinate.
 
-###  startY
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Line start Y coordinate.
-
-###  endX
+#### `startY`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Line end X coordinate.
+- **Description**: Starting Y coordinate.
 
-###  endY
+#### `endX`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Line end Y coordinate.
+- **Description**: Ending X coordinate.
 
-### Example
+#### `endY`
+
+- **Type**: `number`
+- **Default**: `0`
+- **Description**: Ending Y coordinate.
+
+#### Example
 
 ```javascript
 win.addShape({
@@ -155,25 +164,25 @@ win.addShape({
 
 Use `type: "arc"`.
 
-###  startAngle
+#### `startAngle`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Arc start angle in degrees.
+- **Description**: Start angle in degrees.
 
-###  endAngle
+#### `endAngle`
 
 - **Type**: `number`
 - **Default**: `90`
-- **Description**: Arc end angle in degrees.
+- **Description**: End angle in degrees.
 
-###  clockwise
+#### `clockwise`
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Arc direction.
+- **Description**: Sweep direction.
 
-### Example
+#### Example
 
 ```javascript
 win.addShape({
@@ -195,61 +204,31 @@ win.addShape({
 
 Use `type: "curve"`.
 
-###  curveType
+#### `curveType`
 
 - **Type**: `string`
 - **Default**: `"quadratic"`
-- **Description**: Curve type for `curve` shapes. Valid values: `"quadratic"`, `"cubic"`.
+- **Description**: Curve type (`"quadratic"` or `"cubic"`).
 
-###  startX
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Curve start X coordinate.
-
-###  startY
+#### `startX`, `startY`, `endX`, `endY`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Curve start Y coordinate.
+- **Description**: Start and end coordinates.
 
-###  endX
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Curve end X coordinate.
-
-###  endY
+#### `controlX`, `controlY`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Curve end Y coordinate.
+- **Description**: Control point for the curve.
 
-###  controlX
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: First control point X coordinate for curves.
-
-###  controlY
+#### `control2X`, `control2Y`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: First control point Y coordinate for curves.
+- **Description**: Second control point for cubic curves.
 
-###  control2X
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Second control point X coordinate for cubic curves.
-
-###  control2Y
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Second control point Y coordinate for cubic curves.
-
-### Example
+#### Example
 
 ```javascript
 win.addShape({
@@ -275,13 +254,13 @@ win.addShape({
 
 Use `type: "path"`.
 
-###  pathData
+#### `pathData`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: SVG-style path data for `path` shapes.
+- **Description**: SVG-style path data.
 
-### Example
+#### Example
 
 ```javascript
 win.addShape({
@@ -301,90 +280,75 @@ win.addShape({
 
 Use `type: "combine"`.
 
-See **Common Options** below for combine settings.
+See the **Common Options** section below for `combine` settings.
 
 ## Common Options
 
 ### Fill
 
-###  fillColor
+#### `fillColor`
 
 - **Type**: `string`
 - **Default**: `"rgb(255, 255, 255)"`
-- **Description**: Fill color. Supports both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients).
+- **Description**: Fill color or gradient.
 
 ### Stroke
 
-###  strokeWidth
+#### `strokeWidth`
 
 - **Type**: `number`
 - **Default**: `1`
 - **Description**: Stroke width in pixels.
 
-###  strokeColor
+#### `strokeColor`
 
 - **Type**: `string`
 - **Default**: `"rgb(0, 0, 0)"`
-- **Description**: Stroke color. Supports both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients).
+- **Description**: Stroke color or gradient.
 
-###  strokeStartCap
-
-- **Type**: `string`
-- **Default**: `"flat"`
-- **Description**: Start cap style for the stroke.
-
-###  strokeEndCap
+#### `strokeStartCap`, `strokeEndCap`, `strokeDashCap`
 
 - **Type**: `string`
 - **Default**: `"flat"`
-- **Description**: End cap style for the stroke.
+- **Description**: Cap styles for the stroke.
 
-###  strokeDashCap
-
-- **Type**: `string`
-- **Default**: `"flat"`
-- **Description**: Dash cap style for the stroke.
-
-###  strokeLineJoin
+#### `strokeLineJoin`
 
 - **Type**: `string`
 - **Default**: `"miter"`
-- **Description**: Line join style for the stroke.
+- **Description**: Line join style.
 
-###  strokeDashOffset
+#### `strokeDashOffset`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Offset into the stroke dash pattern.
+- **Description**: Offset into the dash pattern.
 
-###  strokeDashes
+#### `strokeDashes`
 
 - **Type**: `array | string`
 - **Default**: `[]`
-- **Description**: Dash pattern for the stroke. Can be an array of numbers or a comma-separated string.
+- **Description**: Dash pattern expressed as an array or comma-delimited string.
 
-### Combine
+### Combine Options
 
-###  base
+#### `base`
 
 - **Type**: `string`
-- **Description**: Base shape ID used as the starting geometry for `combine`.
+- **Description**: ID of the base shape.
 
-###  ops
+#### `ops`
 
 - **Type**: `array`
-- **Description**: List of combine operations applied to the base geometry.
+- **Description**: Combine operations (objects with `id`, `mode`, `consume`).
 
-Each op object:
-`id` (string), `mode` (`"union"`, `"intersect"`, `"xor"`, `"exclude"`), `consume` (boolean).
-
-###  consume
+#### `consume`
 
 - **Type**: `boolean`
 - **Default**: `false`
-- **Description**: If `true`, consume all shapes used in the combine operations.
+- **Description**: When `true`, removes the shapes used in the combine operations.
 
-### Example
+#### Example
 
 ```javascript
 win.addShape({
@@ -420,5 +384,5 @@ win.addShape({
 ```
 
 ::: info
-Use `fillColor` to fill closed shapes (rectangle, ellipse, path, combine). Lines and arcs are stroke-only.
+Use `fillColor` with closed shapes. Line-based shapes (line/arc) rely on stroke settings.
 :::

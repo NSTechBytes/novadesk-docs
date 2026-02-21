@@ -1,43 +1,48 @@
+---
+title: Bar element options and example usage.
+---
+
 # Bar Element
+The Bar element visualizes a value between `0.0` and `1.0` inside a UI script.
 
-Documentation for the Novadesk Bar element type.
-
-## Adding a Bar Element
-
-Use the `addBar()` method on the `win` object within a [UI Script](/guides/script-types#ui-script-the-face):
+Use `win.addBar()` to create the element and combine it with the shared [General Elements Options](/api/ui-elements-api/general-elements-options).
 
 ```js
 win.addBar(options);
 ```
 
+#### Table of Contents
+[[toc]]
+
 ## Bar Options
 
-The bar element inherits all [General Element Options](/api/ui-elements-api/general-elements-options) and adds the following:
-
-### value
+### `value`
 
 - **Type**: `number`
 - **Default**: `0.0`
-- **Description**: The fill level of the bar, from `0.0` (empty) to `1.0` (full).
+- **Description**: Fill level of the bar.
 
-### orientation
+### `orientation`
 
 - **Type**: `string`
 - **Default**: `"horizontal"`
-- **Description**: The direction in which the bar fills.
-  - `"horizontal"`: Fills from left to right
-  - `"vertical"`: Fills from bottom to top
+- **Description**: Fill direction.
 
-### barCornerRadius
+#### Valid values
+
+- `"horizontal"`: Fills left to right
+- `"vertical"`: Fills bottom to top
+
+### `barCornerRadius`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Corner radius applied to the bar fill.
+- **Description**: Corner radius for the filled portion.
 
-### barColor
+### `barColor`
 
 - **Type**: `string`
-- **Description**: The Color of the filled portion of the bar. Support both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients) .
+- **Description**: Fill color or gradient.
 
 ## Example
 
@@ -49,7 +54,7 @@ var exampleBarWindow = new widgetWindow({
     width: 300,
     height: 40,
     backgroundColor: "rgba(255, 255, 255, 1)",
-    script: "ui/ui.js",
+    script: "ui/ui.js"
 });
 ```
 == ui/ui.js
@@ -72,7 +77,3 @@ win.addBar({
 ## Preview
 
 ![Widget Preview](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/barPreview.png?raw=true)
-
-
-
-

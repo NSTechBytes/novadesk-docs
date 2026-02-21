@@ -1,136 +1,109 @@
+---
+title: RoundLine element options and example usage.
+---
+
 # RoundLine Element
+Rounded arc elements (RoundLine) visualize progress with configurable angles and stroke styles.
 
-Documentation for the Novadesk RoundLine element type.
-
-## Adding a RoundLine Element
-
-Use the `addRoundLine()` method on the `win` object within a [UI Script](/guides/script-types#ui-script-the-face):
+Create one with `win.addRoundLine()` and the shared [General Elements Options](/api/ui-elements-api/general-elements-options).
 
 ```js
 win.addRoundLine(options);
 ```
 
+#### Table of Contents
+[[toc]]
+
 ## RoundLine Options
-
-The roundline element inherits all [General Element Options](/api/ui-elements-api/general-elements-options) and adds the following:
-
----
 
 ### `value`
 
 - **Type**: `number`
 - **Default**: `0.0`
-- **Description**: The fill level of the roundline, from `0.0` (empty) to `1.0` (full).
-
----
+- **Description**: Fill level (`0.0` empty, `1.0` full).
 
 ### `radius`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Radius of the arc in pixels. If `0`, the radius is derived from `width`/`height`.
-
----
+- **Description**: Arc radius; derived from width/height when `0`.
 
 ### `thickness`
 
 - **Type**: `number`
 - **Default**: `2`
-- **Description**: Stroke thickness of the arc.
-
----
+- **Description**: Stroke thickness.
 
 ### `endThickness`
 
 - **Type**: `number`
 - **Default**: `-1`
-- **Description**: End thickness for tapered arcs. Use `-1` to match `thickness`.
-
----
+- **Description**: Overwrites the end thickness when positive; `-1` matches `thickness`.
 
 ### `startAngle`
 
 - **Type**: `number`
 - **Default**: `0.0`
-- **Description**: Start angle in degrees. `0` begins at the top (12 o'clock).
-
----
+- **Description**: Start angle in degrees (`0` = 12 o’clock).
 
 ### `totalAngle`
 
 - **Type**: `number`
 - **Default**: `360.0`
-- **Description**: Total sweep of the arc in degrees.
-
----
+- **Description**: Sweep angle in degrees.
 
 ### `clockwise`
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Direction of the sweep. When `false`, the arc draws counterclockwise.
-
----
+- **Description**: Sweep direction.
 
 ### `capType`
 
 - **Type**: `string`
 - **Default**: `"flat"`
 - **Description**: Sets both start and end caps.
-  - `"flat"`
-  - `"round"`
 
----
+#### Valid values
+
+- `"flat"`
+- `"round"`
 
 ### `startCap`
 
 - **Type**: `string`
 - **Default**: `"flat"`
-- **Description**: Start cap style. Overrides `capType` for the start.
-  - `"flat"`
-  - `"round"`
-
----
+- **Description**: Overrides `capType` for the start cap.
 
 ### `endCap`
 
 - **Type**: `string`
 - **Default**: `"flat"`
-- **Description**: End cap style. Overrides `capType` for the end.
-  - `"flat"`
-  - `"round"`
-
----
+- **Description**: Overrides `capType` for the end cap.
 
 ### `dashArray`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Comma-separated dash lengths (e.g. `"10, 5"`).
-
----
+- **Description**: Comma-separated dash pattern (e.g., `"10, 5"`).
 
 ### `ticks`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Draws tick marks along the arc. `0` disables ticks.
-
----
+- **Description**: Adds tick marks along the arc.
 
 ### `lineColor`
 
 - **Type**: `string`
 - **Default**: `"rgb(0, 255, 0)"`
-- **Description**: Color of the foreground arc. Supports both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients).
-
----
+- **Description**: Foreground arc color or gradient.
 
 ### `lineColorBg`
 
 - **Type**: `string`
 - **Default**: `"rgb(50, 50, 50)"`
-- **Description**: Color of the background arc. Supports both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients).
+- **Description**: Background arc color or gradient.
 
 ## Example
 
@@ -142,7 +115,7 @@ var exampleRoundLineWindow = new widgetWindow({
     width: 300,
     height: 200,
     backgroundColor: "rgba(20, 20, 20, 1)",
-    script: "ui/ui.js",
+    script: "ui/ui.js"
 });
 ```
 == ui/ui.js

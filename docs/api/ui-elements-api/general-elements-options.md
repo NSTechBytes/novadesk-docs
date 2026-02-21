@@ -1,337 +1,325 @@
-# General Elements Options
+---
+title: Shared UI element options.
+---
 
-Options available for use with all elements in Novadesk applications.
+# General Elements Options
+Options that apply to every UI element added via the global `win` object inside a UI script.
+
+Use these settings with methods such as `win.addText()`, `win.addImage()`, `win.addShape()`, `win.addBar()`, and `win.addRoundLine()` to control positioning, visibility, interactivity, and tooltips.
+
+```js
+win.addText({
+    id: "example",
+    x: 10,
+    y: 10,
+    width: 200,
+    height: 40
+});
+```
+
+#### Table of Contents
+[[toc]]
 
 ## Element Options
 
-### id
+### `id`
 
 - **Type**: `string`
 - **Required**: `true`
-- **Description**: Unique identifier for the elements. If an element with the same ID already exists, it will be **replaced**.
+- **Description**: Unique identifier for the element. Creating an element with an existing `id` replaces the previous element.
 
-### x, y
+### `x`, `y`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Specifies the x (horizontal) and y (vertical) position of the element in pixels relative to the top-left edge of the widget.
+- **Description**: Horizontal and vertical coordinates relative to the top-left of the widget window.
 
-### width, height
+### `width`, `height`
 
 - **Type**: `number`
 - **Default**: `auto calculate`
-- **Description**: Specifies the width and height of the element in pixels.
+- **Description**: Element dimensions in pixels.
 
-### container
+### `container`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Assigns the element to a container element by ID. The container element clips and groups its children for rendering and hit-testing.
+- **Description**: ID of a container element that clips and groups its children for rendering and hit testing.
 
 ::: info
-- The container element must already exist.
-- A container cannot be contained by another container (no nested containers).
-- An element cannot be its own container, and container cycles are not allowed.
+- The container must already exist.
+- Containers cannot nest.
+- An element cannot be its own container, and cycles are not allowed.
 :::
 
-### group
+### `group`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Assigns the element to a logical group name. Elements in the same group can be updated or removed together using widget UI methods.
+- **Description**: Logical group name for batch updates/removals.
 
 ::: info
-Group is independent of `container`:
-- `container` controls rendering/hit-testing hierarchy.
-- `group` is a logical label for batch operations.
+`group` operates independently from `container`; `container` affects rendering while `group` is purely organizational.
 :::
 
-### backgroundColor
+### `backgroundColor`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Color of the element background. Support both [Solid Color](/guides/colors#solid-colors) and [Gradient Color](/guides/colors#gradients) .
+- **Description**: Background color or gradient for the element.
 
-### backgroundColorRadius
+### `backgroundColorRadius`
 
 - **Type**: `number`
 - **Default**: `0`
-- **Description**: Sets the corner radius for the element's background in pixels. When greater than 0, this creates rounded corners for the background shape.
+- **Description**: Corner radius for the background.
 
-### rotate
+### `rotate`
 
 - **Type**: `number`
 - **Default**: `0`
 - **Description**: Rotation angle in degrees.
 
-### antiAlias
+### `antiAlias`
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: If set to `true`, antialiasing (edge smoothing) is used when the element is drawn.
+- **Description**: Enables antialiasing for smoother rendering.
 
-### show
+### `show`
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Controls element visibility. Set to `false` to hide the element without removing it.
+- **Description**: Controls element visibility without removing it.
 
-### bevelType
+### `bevelType`
 
 - **Type**: `string`
 - **Default**: `"none"`
-- **Description**: Draws a bevel around the edges of the rectangle defined by `width` and `height`. Controls the visual style of the bevel.
+- **Description**: Draws a bezel around the element.
 
-- **Valid values**:
-  - `"none"`: No bevel
-  - `"raised"`: Raised bevel effect
-  - `"sunken"`: Sunken bevel effect
-  - `"emboss"`: Embossed effect (3D border)
-  - `"pillow"`: Pillow effect (faded inside)
+#### Valid values
 
-### bevelWidth
+- `"none"`
+- `"raised"`
+- `"sunken"`
+- `"emboss"`
+- `"pillow"`
+
+### `bevelWidth`
 
 - **Type**: `number`
 - **Default**: `1`
-- **Description**: Sets the width of the bevel in pixels. Optional; defaults to `1` when a `bevelType` is specified.
+- **Description**: Bevel thickness.
 
-### bevelColor, bevelColor2
+### `bevelColor`, `bevelColor2`
 
 - **Type**: `color string`
-- **Default**:
-  - `bevelColor`: `"255,255,255,200"`
-  - `bevelColor2`: `"0,0,0,150"`
-- **Description**: Used when `bevelType` is enabled. Controls the colors applied to the bevel edges.
+- **Default**: `bevelColor`: `"255,255,255,200"`; `bevelColor2`: `"0,0,0,150"`
+- **Description**: Colors for highlights and shadows when a bevel is drawn.
 
-- **Behavior**:
-  - For `raised` and `sunken` bevel types, these colors create highlight and shadow effects.
-  - `bevelColor` typically acts as the primary (highlight) color.
-  - `bevelColor2` provides the contrasting (shadow) color.
-
-### padding
+### `padding`
 
 - **Type**: `number | array`
 - **Default**: `0`
-- **Description**: Adds padding (in pixels) around the content of the element. The padding area is drawn using the colors defined by `backgroundColor`.
+- **Description**: Padding around the element content.
 
-- **Syntax**:
-  - `padding: 10`: All sides set to 10px
-  - `padding: [horizontal, vertical]`: e.g. `[5, 10]`
-  - `padding: [left, top, right, bottom]`: e.g. `[5, 10, 15, 20]`
+#### Syntax
 
-- **Example**:
+- `padding: 10`
+- `padding: [horizontal, vertical]`
+- `padding: [left, top, right, bottom]`
+
+#### Example
+
 ```js
 padding: [5, 10, 5, 10]
 ```
 
-### transformMatrix
+### `transformMatrix`
 
 - **Type**: `array` (6 numbers)
 - **Default**: `[]`
-- **Description**: A 6-element affine transformation matrix `[m11, m12, m21, m22, dx, dy]`. This allows for advanced 2D transformations including translation, scaling, rotation, and shearing.
+- **Description**: Affine transformation matrix `[m11, m12, m21, m22, dx, dy]` for translation, scaling, rotation, and shearing.
 
-- **Matrix Structure**:
-`[ ScaleX, SkewY, SkewX, ScaleY, TranslateX, TranslateY ]`
+#### Example
 
-- **Example**:
-```javascript
-// Skew transformation
+```js
 transformMatrix: [1, 0.5, 0, 1, 0, 0]
 ```
 
 ## Tooltip Options
 
-Options for displaying tooltips when hovering over the element.
-
-### tooltipText
+### `tooltipText`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Text to display in the tooltip. If empty, no tooltip is shown.
+- **Description**: Tooltip text. Empty string disables the tooltip.
 
-### tooltipTitle
+### `tooltipTitle`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Title text displayed in bold above the tooltip text.
+- **Description**: Bold title displayed above the tooltip text.
 
-### tooltipIcon
+### `tooltipIcon`
 
 - **Type**: `string`
 - **Default**: `"none"`
-- **Description**: Icon to display next to the tooltip title.
+- **Description**: Icon next to the title.
 
-- **Valid Values**:
-  - `"none"`
-  - `"info"`
-  - `"warning"`
-  - `"error"`
+#### Valid values
 
-### tooltipBalloon
+- `"none"`
+- `"info"`
+- `"warning"`
+- `"error"`
+
+### `tooltipBalloon`
 
 - **Type**: `boolean`
 - **Default**: `false`
-- **Description**: If `true`, the tooltip is displayed in a cartoon-balloon style.
+- **Description**: Displays the tooltip in a cartoon balloon style.
 
-### tooltipMaxWidth
-
-- **Type**: `number`
-- **Default**: `1000`
-- **Description**: Maximum width of the tooltip in pixels. Text exceeding this width will wrap to multiple lines.
-
-### tooltipMaxHeight
+### `tooltipMaxWidth`
 
 - **Type**: `number`
 - **Default**: `1000`
-- **Description**: Maximum height of the tooltip in pixels. This is a hint for the tooltip layout, though actual height is determined by content.
+- **Description**: Maximum tooltip width in pixels; text wraps beyond this.
+
+### `tooltipMaxHeight`
+
+- **Type**: `number`
+- **Default**: `1000`
+- **Description**: Maximum tooltip height hint.
 
 ## Cursor Options
 
-Options for controlling the mouse cursor when hovering interactive elements.
-
-### mouseEventCursor
+### `mouseEventCursor`
 
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Enables or disables custom mouse cursor behavior for the element.
+- **Description**: Enables custom cursor behavior when the element has mouse callbacks.
 
 ::: info
-Cursor options are applied only when the element has at least one mouse action callback (such as `onLeftMouseUp`, `onMouseOver`, `onScrollUp`, etc.).
+Cursor options only apply when mouse action callbacks (e.g., `onLeftMouseUp`) are registered.
 :::
 
-### mouseEventCursorName
-
-- **Type**: `string`
-- **Default**: `""` (falls back to hand cursor for interactive elements)
-- **Description**: Cursor style name to use for the element.
-
-- **Built-in values**:
-  - `"hand"`
-  - `"text"`
-  - `"help"`
-  - `"busy"`
-  - `"cross"`
-  - `"pen"`
-  - `"no"`
-  - `"size_all"`
-  - `"size_nesw"`
-  - `"size_ns"`
-  - `"size_nwse"`
-  - `"size_we"`
-  - `"uparrow"`
-  - `"wait"`
-
-### cursorsDir
+### `mouseEventCursorName`
 
 - **Type**: `string`
 - **Default**: `""`
-- **Description**: Optional directory for custom cursor files. When provided, `mouseEventCursorName` can reference a file in this folder (with or without `.cur` / `.ani` extension).
+- **Description**: Cursor style (defaults to hand for interactive elements).
 
-### Example
+#### Built-in values
 
-```javascript
-win.addText({
-  id: "clickable-title",
-  text: "Open",
-  onLeftMouseUp: function () {
-    console.log("clicked");
-  },
-  mouseEventCursor: true,
-  mouseEventCursorName: "hand"
-});
-```
+- `hand`
+- `text`
+- `help`
+- `busy`
+- `cross`
+- `pen`
+- `no`
+- `size_all`
+- `size_nesw`
+- `size_ns`
+- `size_nwse`
+- `size_we`
+- `uparrow`
+- `wait`
+
+### `cursorsDir`
+
+- **Type**: `string`
+- **Default**: `""`
+- **Description**: Directory for custom cursor files (`.cur`/`.ani`).
 
 ## Mouse Actions
 
-Events that trigger JavaScript functions in response to user interaction.
-
-### onLeftMouseUp, onLeftMouseDown, onLeftDoubleClick
+### `onLeftMouseUp`, `onLeftMouseDown`, `onLeftDoubleClick`
 
 - **Type**: `function`
-- **Description**: Events triggered by the left mouse button.
-  - `onLeftMouseUp`: Button released
-  - `onLeftMouseDown`: Button pressed
-  - `onLeftDoubleClick`: Button double-clicked
+- **Description**: Events for the left mouse button.
 
-- **Example**:
-```javascript
-onLeftMouseUp: function() { console.log("Left click!"); }
+#### Example
+
+```js
+onLeftMouseUp: function () { console.log("Left click!"); }
 ```
 
-### onRightMouseUp, onRightMouseDown, onRightDoubleClick
+### `onRightMouseUp`, `onRightMouseDown`, `onRightDoubleClick`
 
 - **Type**: `function`
-- **Description**: Events triggered by the right mouse button.
-  - `onRightMouseUp`: Button released
-  - `onRightMouseDown`: Button pressed
-  - `onRightDoubleClick`: Button double-clicked
+- **Description**: Events for the right mouse button.
 
-- **Example**:
-```javascript
-onRightMouseUp: function() { console.log("Right click!"); }
+#### Example
+
+```js
+onRightMouseUp: function () { console.log("Right click!"); }
 ```
 
-### onMiddleMouseUp, onMiddleMouseDown, onMiddleDoubleClick
+### `onMiddleMouseUp`, `onMiddleMouseDown`, `onMiddleDoubleClick`
 
 - **Type**: `function`
-- **Description**: Events triggered by the middle mouse button (scroll wheel click).
-  - `onMiddleMouseUp`: Button released
-  - `onMiddleMouseDown`: Button pressed
-  - `onMiddleDoubleClick`: Button double-clicked
+- **Description**: Events for the middle mouse button.
 
-- **Example**:
-```javascript
-onMiddleMouseUp: function() { console.log("Middle click!"); }
+#### Example
+
+```js
+onMiddleMouseUp: function () { console.log("Middle click!"); }
 ```
 
-### onX1MouseUp, onX1MouseDown, onX1DoubleClick
+### `onX1MouseUp`, `onX1MouseDown`, `onX1DoubleClick`
 
 - **Type**: `function`
-- **Description**: Events triggered by the X1 mouse button (usually "Back").
+- **Description**: Events for the X1 (Back) button.
 
-- **Example**:
-```javascript
-onX1MouseUp: function() { console.log("Back button clicked"); }
+#### Example
+
+```js
+onX1MouseUp: function () { console.log("Back button clicked"); }
 ```
 
-### onX2MouseUp, onX2MouseDown, onX2DoubleClick
+### `onX2MouseUp`, `onX2MouseDown`, `onX2DoubleClick`
 
 - **Type**: `function`
-- **Description**: Events triggered by the X2 mouse button (usually "Forward").
+- **Description**: Events for the X2 (Forward) button.
 
-- **Example**:
-```javascript
-onX2MouseUp: function() { console.log("Forward button clicked"); }
+#### Example
+
+```js
+onX2MouseUp: function () { console.log("Forward button clicked"); }
 ```
 
-### onMouseOver, onMouseLeave
+### `onMouseOver`, `onMouseLeave`
 
 - **Type**: `function`
-- **Description**: Events triggered by mouse movement.
-  - `onMouseOver`: Cursor enters the element area
-  - `onMouseLeave`: Cursor leaves the element area
+- **Description**: Triggered when the cursor enters or leaves the element.
 
-- **Example**:
-```javascript
-onMouseOver: function() { console.log("Mouse entered!"); }
+#### Example
+
+```js
+onMouseOver: function () { console.log("Mouse entered!"); }
 ```
 
-### onScrollUp, onScrollDown
+### `onScrollUp`, `onScrollDown`
 
 - **Type**: `function`
-- **Description**: Events triggered by vertical scrolling.
+- **Description**: Triggered by vertical scrolling.
 
-- **Example**:
-```javascript
-onScrollUp: function() { console.log("Scrolled up"); }
+#### Example
+
+```js
+onScrollUp: function () { console.log("Scrolled up"); }
 ```
 
-### onScrollLeft, onScrollRight
+### `onScrollLeft`, `onScrollRight`
 
 - **Type**: `function`
-- **Description**: Events triggered by horizontal scrolling.
+- **Description**: Triggered by horizontal scrolling.
 
-- **Example**:
-```javascript
-onScrollLeft: function() { console.log("Scrolled left"); }
+#### Example
+
+```js
+onScrollLeft: function () { console.log("Scrolled left"); }
 ```
