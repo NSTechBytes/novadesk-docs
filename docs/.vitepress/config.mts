@@ -131,99 +131,65 @@ export default defineConfig({
             link: "/api/modules/modules",
             items: [
               {
-                text: "Built-in Modules",
+                text: "novadesk",
+                collapsed: true,
+                items: [
+                  { text: "addon", link: "/api/modules/novadesk/addon" },
+                  { text: "app", link: "/api/modules/novadesk/app" },
+                  {
+                    text: "widgetWindow",
+                    link: "/api/modules/novadesk/widgetWindow",
+                  },
+                ],
+              },
+              {
+                text: "system",
                 collapsed: true,
                 items: [
                   {
-                    text: "addon",
-                    link: "/api/modules/built-in-modules/addon",
+                    text: "appVolume",
+                    link: "/api/modules/system/appVolume",
                   },
+                  { text: "audio", link: "/api/modules/system/audio" },
                   {
-                    text: "app-volume",
-                    link: "/api/modules/built-in-modules/app-volume",
-                  },
-                  { text: "app", link: "/api/modules/built-in-modules/app" },
-                  {
-                    text: "audio-level-monitor",
-                    link: "/api/modules/built-in-modules/audio-level-monitor",
-                  },
-                  {
-                    text: "audio",
-                    link: "/api/modules/built-in-modules/audio",
+                    text: "audioLevel",
+                    link: "/api/modules/system/audioLevel",
                   },
                   {
                     text: "brightness",
-                    link: "/api/modules/built-in-modules/brightness",
+                    link: "/api/modules/system/brightness",
                   },
                   {
-                    text: "clipper",
-                    link: "/api/modules/built-in-modules/clipper",
+                    text: "clipboard",
+                    link: "/api/modules/system/clipboard",
+                  },
+                  { text: "cpu", link: "/api/modules/system/cpu" },
+                  { text: "disk", link: "/api/modules/system/disk" },
+                  {
+                    text: "displayMetrics",
+                    link: "/api/modules/system/displayMetrics",
                   },
                   {
-                    text: "cpu-monitor",
-                    link: "/api/modules/built-in-modules/cpu-monitor",
+                    text: "fileIcon",
+                    link: "/api/modules/system/fileIcon",
                   },
+                  { text: "hotkey", link: "/api/modules/system/hotkey" },
+                  { text: "memory", link: "/api/modules/system/memory" },
+                  { text: "mouse", link: "/api/modules/system/mouse" },
+                  { text: "network", link: "/api/modules/system/network" },
                   {
-                    text: "display-metrics",
-                    link: "/api/modules/built-in-modules/display-metrics",
+                    text: "nowPlaying",
+                    link: "/api/modules/system/nowPlaying",
                   },
-                  {
-                    text: "disk-monitor",
-                    link: "/api/modules/built-in-modules/disk-monitor",
-                  },
-                  {
-                    text: "env-variables",
-                    link: "/api/modules/built-in-modules/env-variables",
-                  },
-                  {
-                    text: "execute",
-                    link: "/api/modules/built-in-modules/execute",
-                  },
-                  {
-                    text: "file-icon",
-                    link: "/api/modules/built-in-modules/file-icon",
-                  },
-                  {
-                    text: "hotkeys",
-                    link: "/api/modules/built-in-modules/hotkeys",
-                  },
-                  { text: "json", link: "/api/modules/built-in-modules/json" },
-                  {
-                    text: "memory-monitor",
-                    link: "/api/modules/built-in-modules/memory-monitor",
-                  },
-                  {
-                    text: "mouse-monitor",
-                    link: "/api/modules/built-in-modules/mouse-monitor",
-                  },
-                  {
-                    text: "network-monitor",
-                    link: "/api/modules/built-in-modules/network-monitor",
-                  },
-                  {
-                    text: "now-playing-monitor",
-                    link: "/api/modules/built-in-modules/now-playing-monitor",
-                  },
-                  { text: "path", link: "/api/modules/built-in-modules/path" },
-                  {
-                    text: "power",
-                    link: "/api/modules/built-in-modules/power",
-                  },
+                  { text: "path", link: "/api/modules/system/path" },
+                  { text: "power", link: "/api/modules/system/power" },
                   {
                     text: "registry",
-                    link: "/api/modules/built-in-modules/registry",
+                    link: "/api/modules/system/registry",
                   },
                   {
                     text: "wallpaper",
-                    link: "/api/modules/built-in-modules/wallpaper",
-                  },
-                  {
-                    text: "web-fetch",
-                    link: "/api/modules/built-in-modules/web-fetch",
-                  },
-                  {
-                    text: "widget-window",
-                    link: "/api/modules/built-in-modules/widget-window",
+                    link: "/api/modules/system/wallpaper",
                   },
                 ],
               },
