@@ -209,6 +209,30 @@ export default defineConfig({
                   { text: "worker", link: "/api/modules/os/worker" },
                 ],
               },
+              {
+                text: "std",
+                collapsed: true,
+                items: [
+                  { text: "index", link: "/api/modules/std" },
+                  { text: "usage", link: "/api/modules/std/usage" },
+                  { text: "utility", link: "/api/modules/std/utility" },
+                  { text: "io", link: "/api/modules/std/io" },
+                  { text: "core", link: "/api/modules/std/core" },
+                  {
+                    text: "environment",
+                    link: "/api/modules/std/environment",
+                  },
+                  { text: "file", link: "/api/modules/std/file" },
+                  {
+                    text: "file-methods",
+                    link: "/api/modules/std/file-methods",
+                  },
+                  {
+                    text: "constants",
+                    link: "/api/modules/std/constants",
+                  },
+                ],
+              },
             ],
           },
 

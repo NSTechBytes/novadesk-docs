@@ -46,3 +46,4 @@ import { ... } from "system";
 ## QuickJS Runtime Modules
 
 - [os](./os.md): QuickJS OS module index and usage (`import * as os from "os"`).
+- [std](./std.md): QuickJS standard module index and usage (`import * as std from "std"`).
