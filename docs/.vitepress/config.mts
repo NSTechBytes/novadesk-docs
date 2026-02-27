@@ -192,6 +192,23 @@ export default defineConfig({
                   },
                 ],
               },
+              {
+                text: "os",
+                collapsed: true,
+                items: [
+                  { text: "index", link: "/api/modules/os" },
+                  { text: "usage", link: "/api/modules/os/usage" },
+                  { text: "io", link: "/api/modules/os/io" },
+                  {
+                    text: "filesystem",
+                    link: "/api/modules/os/filesystem",
+                  },
+                  { text: "process", link: "/api/modules/os/process" },
+                  { text: "timers", link: "/api/modules/os/timers" },
+                  { text: "signals", link: "/api/modules/os/signals" },
+                  { text: "worker", link: "/api/modules/os/worker" },
+                ],
+              },
             ],
           },
 
