@@ -1,144 +1,71 @@
 ---
-title: Programmatically control Novadesk configuration via the app module.
+title: Control the Novadesk application via the app object
 ---
 
-# app Module
-Programmatically control Novadesk application configuration via the app module.
+# app
 
-The app module can be accessed using `require("app")`.
+The `app` object provides methods to control the Novadesk application: reloading scripts, exiting, managing the system tray, and querying version info.
+
+`app` is exported from the `novadesk` module.
 
 ```javascript
-const app = require("app");
+import { app } from 'novadesk';
 ```
 
 #### Table of Contents
 [[toc]]
 
-## Settings
-::: info
-Settings methods can be called at any time and their values are persisted to `settings.json`. The storage location depends on [Runtime Mode](/guides/runtime-mode).
-:::
+## Lifecycle
 
-### `app.saveLogToFile(bool)`
+### `app.reload()`
 
-Enables or disables logging to a file (`logs.log`) in the application's AppData directory.
-
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to enable file logging, `false` to disable it.
+Reloads all active widget scripts.
 
 #### Example
+
 ```javascript
-app.saveLogToFile(true);
+app.reload();
 ```
 
-### `app.enableDebugging(bool)`
+### `app.exit()`
 
-Sets the global log level so that debug messages become visible.
-
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to enable debug logging, `false` to use standard informational logging.
+Exits the Novadesk application.
 
 #### Example
+
 ```javascript
-app.enableDebugging(true);
-console.debug("Detailed diagnostic information");
+app.exit();
 ```
 
-### `app.disableLogging(bool)`
-
-Silences or resumes all logging output (console and file).
-
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to silence logs, `false` to resume logging based on other settings.
-
-#### Example
-```javascript
-app.disableLogging(true);
-```
-
-### `app.hideTrayIcon(bool)`
-
-Shows or hides the Novadesk icon in the system tray.
-
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to hide the icon, `false` to show it.
-
-#### Example
-```javascript
-app.hideTrayIcon(true);
-```
-
-### `app.useHardwareAcceleration(bool)`
-
-Toggles Direct2D hardware acceleration.
-
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to use hardware acceleration (default), `false` to use software rendering.
-
-::: info
-Changing this setting requires an **application restart** to take effect.
-:::
-
-#### Example
-```javascript
-app.useHardwareAcceleration(true);
-```
-
-## Tray API
+## Tray
 
 ### `app.setTrayMenu(items)`
 
-Sets the context menu for the application's system tray icon.
+Sets the context menu for the system tray icon. Replaces any previously set menu.
 
 #### Parameters
 
-- **`items`** (`Array<Object>`)
-  - **Description**: Each object can include:
-    - `text` (`string`)
-    - `action` (`function`)
-    - `type` (`string`, `"separator"` for dividers)
-    - `checked` (`boolean`)
-    - `items` (`Array<Object>`) for nested menus
+- **`items`** (`Array<object>`): Menu item definitions. Each object can include:
+  - **`text`** (`string`): Label shown in the menu.
+  - **`action`** (`function`): Callback invoked when the item is clicked.
+  - **`type`** (`string`): Set to `"separator"` to insert a divider.
+  - **`checked`** (`boolean`): Whether the item appears checked.
+  - **`items`** (`Array<object>`): Nested sub-menu items.
 
 #### Example
+
 ```javascript
 app.setTrayMenu([
-  {
-    text: "Open App",
-    action: function () {
-      console.log("Opening...");
-    }
-  },
+  { text: "Reload", action: () => app.reload() },
   { type: "separator" },
   {
-    text: "Settings",
+    text: "Tools",
     items: [
-      { text: "Dark Mode", checked: true, action: toggleDark },
-      { text: "Launch at Startup", checked: false }
+      { text: "Debug Mode", checked: false, action: () => console.log("toggle") }
     ]
   },
   { type: "separator" },
-  {
-    text: "Exit",
-    action: function () {
-      app.exit();
-    }
-  }
+  { text: "Exit", action: () => app.exit() }
 ]);
 ```
 
@@ -148,137 +75,80 @@ Removes all custom tray menu items.
 
 ### `app.showDefaultTrayItems(show)`
 
-Controls visibility of default tray entries.
+Controls visibility of the built-in default tray entries (e.g. "Exit").
 
 #### Parameters
 
-- **`show`**
-  - **Type**: `boolean`
-  - **Description**: `true` to show default items like "Exit", `false` to hide them.
+- **`show`** (`boolean`): `true` to show default items, `false` to hide them.
+
+#### Example
+
+```javascript
+app.showDefaultTrayItems(true);
+```
 
 ### `app.hideTrayIcon(hide)`
 
-Dynamically hides or shows the tray icon.
+Shows or hides the Novadesk system tray icon. The setting is persisted.
 
 #### Parameters
 
-- **`hide`**
-  - **Type**: `boolean`
-  - **Description**: `true` to hide, `false` to show.
+- **`hide`** (`boolean`): `true` to hide the icon, `false` to show it.
 
 #### Example
+
 ```javascript
-app.hideTrayIcon(true);
+app.hideTrayIcon(false);
 ```
 
-## Utility Methods
-
-### `app.exit()`
-
-Exits the Novadesk application.
-
-#### Example
-```javascript
-app.exit();
-```
-
-### `app.refresh()`
-
-Reloads all active widget scripts, useful for programmatically applying updates.
-
-#### Example
-```javascript
-app.refresh();
-```
+## Version Info
 
 ### `app.getProductVersion()`
 
-Returns the product version defined in the executable metadata.
+Returns the product version from the executable metadata.
+
+#### Return Value
+
+- **Type**: `string`
 
 ::: info
-Standalone widget applications built with `nwm` report the version specified in `meta.json`.
+Standalone widget applications built with `nwm` report the version from `meta.json`.
 :::
 
 #### Example
+
 ```javascript
-const version = app.getProductVersion();
-console.log("Product Version:", version);
+console.log("Product version:", app.getProductVersion());
 ```
 
 ### `app.getFileVersion()`
 
-Returns the core file version from the executable metadata.
+Returns the file version from the executable metadata.
+
+#### Return Value
+
+- **Type**: `string`
 
 ::: info
 Standalone widget applications built with `nwm` report the value from `meta.json`.
 :::
 
 #### Example
+
 ```javascript
-const fileVersion = app.getFileVersion();
-console.log("File Version:", fileVersion);
+console.log("File version:", app.getFileVersion());
 ```
 
 ### `app.getNovadeskVersion()`
 
-Returns the original hardcoded Novadesk version. This value is constant even when using `nwm`.
+Returns the hardcoded Novadesk engine version. This value is constant regardless of `nwm` packaging.
+
+#### Return Value
+
+- **Type**: `string`
 
 #### Example
+
 ```javascript
-const novadeskVersion = app.getNovadeskVersion();
-console.log("Original Novadesk Version:", novadeskVersion);
-```
-
-### `app.getAppDataPath()`
-
-Returns the path to `%APPDATA%\Novadesk\`.
-
-#### Example
-```javascript
-const appData = app.getAppDataPath();
-console.log("AppData Path:", appData);
-```
-
-### `app.getSettingsFilePath()`
-
-Returns the absolute path to `settings.json`.
-
-#### Example
-```javascript
-const settingsPath = app.getSettingsFilePath();
-console.log("Settings Path:", settingsPath);
-```
-
-### `app.getLogPath()`
-
-Returns the absolute path to the current `logs.log` file.
-
-#### Example
-```javascript
-const logPath = app.getLogPath();
-console.log("Log Path:", logPath);
-```
-
-### `app.isPortable()`
-
-Returns `true` when Novadesk runs in portable mode, `false` otherwise.
-
-::: info
-Portable mode is detected at runtime based on the executable location and write permissions.
-:::
-
-#### Example
-```javascript
-const isPortable = app.isPortable();
-console.log("Is Portable:", isPortable);
-```
-
-### `app.isFirstRun()`
-
-Returns `true` when Novadesk runs for the first time (missing/empty settings), `false` afterwards.
-
-#### Example
-```javascript
-const isFirstRun = app.isFirstRun();
-console.log("Is First Run:", isFirstRun);
+console.log("Novadesk version:", app.getNovadeskVersion());
 ```
