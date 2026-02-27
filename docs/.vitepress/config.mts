@@ -174,6 +174,7 @@ export default defineConfig({
                     link: "/api/modules/system/fileIcon",
                   },
                   { text: "hotkey", link: "/api/modules/system/hotkey" },
+                  { text: "json", link: "/api/modules/system/json" },
                   { text: "memory", link: "/api/modules/system/memory" },
                   { text: "mouse", link: "/api/modules/system/mouse" },
                   { text: "network", link: "/api/modules/system/network" },

@@ -35,6 +35,7 @@ import { ... } from "system";
 - [displayMetrics](./system/displayMetrics.md): Virtual desktop and monitor layout metrics.
 - [fileIcon](./system/fileIcon.md): Extract file icons to `.ico`.
 - [hotkey](./system/hotkey.md): Global hotkey registration and key callbacks.
+- [json](./system/json.md): JSON parse/stringify plus JSON file read/write helpers.
 - [memory](./system/memory.md): Physical memory totals and usage.
 - [mouse](./system/mouse.md): Current mouse cursor coordinates.
 - [network](./system/network.md): Network RX/TX speed and cumulative totals.
