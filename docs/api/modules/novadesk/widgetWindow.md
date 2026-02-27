@@ -1,305 +1,264 @@
 ---
-title: Create and manage widget windows with the widget-window module.
+title: Create and manage widget windows with widgetWindow.
 ---
 
-# widget-window Module
-Create and manage desktop widget windows in Novadesk. The `widgetWindow` class is the primary interface for building layered, transparent widget windows.
+# widgetWindow
 
-The widget-window module can be accessed using `require("widget-window")`.
+The `widgetWindow` constructor creates a new desktop widget window. Each window can host its own UI script and supports drag, snap, transparency, context menus, and event listeners.
+
+`widgetWindow` is exported from the `novadesk` module.
 
 ```javascript
-const widgetWindow = require("widget-window");
+import { widgetWindow } from 'novadesk';
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new widgetWindow(options)`
+## Constructor
 
-Creates a new desktop widget window and applies the provided configuration.
+### `new widgetWindow(options)`
 
-### Options
+Creates and displays a new widget window.
 
-- **Type**: `Object`
-- **Description**: Configuration options for the widget window.
+#### Options
 
-### Position and Size Options
-
-#### `id`
-
-- **Type**: `string`
-- **Description**: Unique identifier for the widget; also used as the window title.
-
-::: info
-`id` is mandatory. Creating a widget with an existing ID closes the previous widget and replaces it with the new one.
-:::
-
-#### `x`
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: X-coordinate of the widget position.
-
-#### `y`
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Y-coordinate of the widget position.
-
-#### `width`
-
-- **Type**: `number`
-- **Default**: `0` (auto size to content)
-- **Description**: Width of the widget in pixels.
-
-#### `height`
-
-- **Type**: `number`
-- **Default**: `0` (auto size to content)
-- **Description**: Height of the widget in pixels.
-
-### Visual Options
-
-#### `backgroundColor`
-
-- **Type**: `Color string`
-- **Default**: `"rgba(0,0,0,0)"`
-- **Description**: Background color of the widget window.
-
-::: info
-Omitting the background color results in a fully transparent window.
-:::
-
-#### `opacity`
-
-- **Type**: `number`
-- **Default**: `1`
-- **Description**: Overall window opacity (`0-1`).
-
-#### `zPos`
-
-- **Type**: `string`
-- **Default**: `"normal"`
-- **Allowed values**: `"normal"`, `"onbottom"`, `"ondesktop"`, `"ontop"`, `"ontopmost"`
-- **Description**: Controls the widget's stacking order relative to other windows.
-
-### Behavior Options
-
-#### `draggable`
-
-- **Type**: `boolean`
-- **Default**: `true`
-- **Description**: Enables or disables user dragging.
-
-#### `clickThrough`
-
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Allows mouse clicks to pass through the widget window.
-
-#### `keepOnScreen`
-
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Keeps the widget within screen bounds.
-
-#### `snapEdges`
-
-- **Type**: `boolean`
-- **Default**: `true`
-- **Description**: Snaps the widget to other widgets or screen edges.
-
-#### `show`
-
-- **Type**: `boolean`
-- **Default**: `true`
-- **Description**: Controls the initial visibility of the widgetWindow.
-
-#### `script`
-
-- **Type**: `string`
-- **Description**: Path to a UI script that manages the widget's UI elements.
-
-::: warning
-Novadesk enforces a strict separation of concerns:
-- **UI Elements** (text, images, etc.) must be created/updated inside the dedicated UI script via the global `win` object.
-- **Window Management** (position, opacity, etc.) must be managed in the main script through the widget object instance.
-- Both scripts communicate using the global [ipc](/api/win/widget-api/win-object#inter-process-communication-ipc) object.
-:::
-
-## Widget Management Methods
-
-::: info
-These methods are available on a [`widgetWindow`](../widget-window.md) instance inside the Main script. They are unavailable from UI scripts.
-:::
-
-### `widgetWindow.setProperties(options)`
-
-Updates widget configuration.
-
-- **`options`**
-  - **Type**: `Object`
-  - **Description**: Properties to apply. Cannot change `id`.
-
-Refer to [Widget Options](/api/win/widget-api/widget-window#options-object).
+- **`id`** (`string`, default: `"widget"`): Unique identifier. Saved settings are loaded by this ID.
+- **`width`** (`number`): Window width in pixels.
+- **`height`** (`number`): Window height in pixels.
+- **`x`** (`number`): Horizontal position.
+- **`y`** (`number`): Vertical position.
+- **`script`** (`string`): Path to the UI script (relative to entry script).
+- **`backgroundColor`** (`string`, default: `"rgba(0,0,0,0)"`): Background color or gradient string.
+- **`windowOpacity`** (`number`, default: `255`): Master window opacity (`0`–`255`).
+- **`draggable`** (`boolean`, default: `true`): Allow the user to drag the window.
+- **`clickThrough`** (`boolean`, default: `false`): Mouse events pass through the window.
+- **`keepOnScreen`** (`boolean`, default: `false`): Prevent the window from being dragged off-screen.
+- **`snapEdges`** (`boolean`, default: `true`): Snap to screen edges and other widgets when dragging.
+- **`show`** (`boolean`, default: `true`): Show the window immediately after creation.
+- **`zPos`** (`number`, default: `-1`): Z-order position.
 
 #### Example
 
 ```javascript
-widgetWindow.setProperties({ x: 200, y: 200 });
+import { widgetWindow } from 'novadesk';
+
+const win = new widgetWindow({
+  id: "my-widget",
+  width: 400,
+  height: 300,
+  script: "ui.js",
+  backgroundColor: "rgb(10,10,10)",
+  draggable: true,
+  snapEdges: true
+});
 ```
 
-### `widgetWindow.getProperties()`
+---
 
-Returns the current widget configuration.
+## Window Methods
 
-#### Return Value
+### `win.setProperties(options)`
 
-- **Type**: `Object`
-
-### `widgetWindow.close()`
-
-Closes and destroys the widgetWindow.
-
-### `widgetWindow.refresh()`
-
-Reloads scripts and redraws the widgetWindow.
-
-### `widgetWindow.setFocus()` / `widgetWindow.unFocus()`
-
-Controls window focus.
-
-### `widgetWindow.getHandle()`
-
-Returns the native window handle.
-
-#### Return Value
-
-- **Type**: `pointer | null`
-
-### `widgetWindow.getInternalPointer()`
-
-Returns an internal pointer to the widget instance.
-
-#### Return Value
-
-- **Type**: `pointer | null`
-
-### `widgetWindow.getTitle()`
-
-Returns the widget window title.
-
-#### Return Value
-
-- **Type**: `string`
-
-### `widgetWindow.on(eventName, callback)`
-
-Registers lifecycle or mouse events.
-
-- **`eventName`** (`string`): See list above (refresh, close, mouse events, etc.)
-- **`callback`** (`function`): Receives event payloads such as mouse coordinates (`__clientX`, `__clientY`, `__offsetX`, `__offsetY`, `__screenX`, `__screenY`).
-
-#### Available events
-
-- `refresh`
-- `close`
-- `closed`
-- `show`
-- `hide`
-- `move`
-- `focus`
-- `unFocus`
-- `mouseOver`
-- `mouseLeave`
-- `mouseMove`
-- `mouseDown`
-- `mouseUp`
+Updates window properties at runtime. Accepts the same option keys as the constructor.
 
 #### Example
 
 ```javascript
-widgetWindow.on("mouseMove", function (e) {
-  console.log("Mouse:", e.__clientX, e.__clientY);
-});
+win.setProperties({ width: 600, height: 400, backgroundColor: "rgb(30,30,30)" });
 ```
 
-## Context Menu Methods
+### `win.getProperties()`
 
-::: info
-Only accessible from the Main script.
-:::
+Returns an object with the current window state.
 
-### `widgetWindow.setContextMenu(items)`
+#### Return Value
 
-Replaces the custom context menu.
+An object containing: `id`, `x`, `y`, `width`, `height`, `draggable`, `clickThrough`, `keepOnScreen`, `snapEdges`, `show`, `windowOpacity`, `backgroundColor`, `zPos`, `script`.
 
-- **`items`**
-  - **Type**: `Array`
-  - **Description**: Menu configuration (text, action, separators, nested lists).
-
-### `widgetWindow.clearContextMenu()`
-
-Removes custom menu items.
-
-### `widgetWindow.disableContextMenu(disabled)`
-
-Enables or disables the context menu.
-
-- **`disabled`** (`boolean`)
-
-### `widgetWindow.showDefaultContextMenuItems(show)`
-
-Controls default menu visibility.
-
-- **`show`** (`boolean`)
-
-## Z-Order Positions
-
-Widgets support several stacking positions:
-
-### `ontopmost`
-
-- Remains visible even when showing the desktop (`Win + D`).
-- Stays above all other windows.
-
-### `ontop`
-
-- Remains visible when showing the desktop.
-- Sits above normal application windows but below other `ontopmost` widgets.
-- Clicking brings it to the front among other widgets with the same setting.
-
-### `normal`
-
-- Remains visible when showing the desktop.
-- Clicking brings it above other normal windows and widgets.
-
-### `onbottom`
-
-- Hidden when showing the desktop.
-- Sits behind all application windows.
-- Clicking does not change its stacking order among other `onbottom` widgets.
-
-### `ondesktop`
-
-- Remains visible when showing the desktop.
-- Clicking does not change its stacking order relative to normal windows.
-- Recommended for wallpaper-style widgets.
-
-## Example
+#### Example
 
 ```javascript
-// index.js
-const widgetWindow = require("widget-window");
-
-var widget = new widgetWindow({
-  id: "myWidget",
-  width: 300,
-  height: 150,
-  backgroundColor: "rgba(30, 30, 40, 0.9)"
-});
+const props = win.getProperties();
+console.log("Position:", props.x, props.y);
+console.log("Size:", props.width, "x", props.height);
 ```
 
-## Preview
+### `win.close()`
 
-![Widget Preview](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/widgetPreview.png?raw=true)
+Destroys the widget window and releases its resources. Triggers the `close` and `closed` events.
+
+### `win.refresh()`
+
+Clears all UI elements and re-executes the widget’s UI script.
+
+### `win.setFocus()`
+
+Gives keyboard focus to the widget window.
+
+### `win.unFocus()`
+
+Removes keyboard focus from the widget window.
+
+### `win.getHandle()`
+
+Returns the native window handle (`HWND`) as a number.
+
+### `win.getInternalPointer()`
+
+Returns the internal native Widget pointer as a number. Primarily useful for addon interop.
+
+### `win.getTitle()`
+
+Returns the window title string.
+
+---
+
+## Context Menu
+
+### `win.setContextMenu(items)`
+
+Sets the right-click context menu for this widget. Replaces any previous menu.
+
+#### Parameters
+
+- **`items`** (`Array<object>`): Menu item definitions. Each object can include:
+  - **`text`** (`string`): Label.
+  - **`action`** (`function`): Click callback.
+  - **`type`** (`string`): `"separator"` for dividers.
+  - **`checked`** (`boolean`): Check state.
+  - **`items`** (`Array<object>`): Nested sub-menu.
+
+#### Example
+
+```javascript
+win.setContextMenu([
+  { text: "Refresh", action: () => win.refresh() },
+  { type: "separator" },
+  {
+    text: "Tools",
+    items: [
+      { text: "Ping", checked: false, action: () => console.log("ping") }
+    ]
+  }
+]);
+```
+
+### `win.clearContextMenu()`
+
+Removes all custom context menu items.
+
+### `win.disableContextMenu(disable)`
+
+Enables or disables the right-click context menu entirely.
+
+#### Parameters
+
+- **`disable`** (`boolean`): `true` to disable, `false` to enable.
+
+### `win.showDefaultContextMenuItems(show)`
+
+Controls whether the built-in default context menu entries are shown.
+
+#### Parameters
+
+- **`show`** (`boolean`): `true` to show, `false` to hide.
+
+---
+
+## Events
+
+### `win.on(eventName, callback)`
+
+Registers an event listener. Returns the widget instance for chaining.
+
+#### Parameters
+
+- **`eventName`** (`string`): Event name.
+- **`callback`** (`function`): Handler receiving a [Mouse Event Object](/api/global-variables#mouse-event-object) for mouse events.
+
+#### Available Events
+
+- **`show`** — Widget became visible.
+- **`hide`** — Widget was hidden.
+- **`focus`** — Widget gained keyboard focus.
+- **`unFocus`** — Widget lost keyboard focus.
+- **`move`** — Widget position changed.
+- **`refresh`** — Widget UI was refreshed.
+- **`close`** — Widget is about to close.
+- **`closed`** — Widget has been destroyed.
+- **`mouseOver`** — Mouse entered the widget area.
+- **`mouseMove`** — Mouse moved over the widget.
+- **`mouseDown`** — Any mouse button pressed.
+- **`mouseUp`** — Any mouse button released.
+- **`mouseLeave`** — Mouse left the widget area.
+
+#### Example
+
+```javascript
+win.on("mouseMove", (e) => {
+  console.log("client:", e.clientX, e.clientY);
+  console.log("screen:", e.screenX, e.screenY);
+});
+
+win.on("show", () => console.log("Widget visible"));
+win.on("close", () => console.log("Widget closing"));
+```
+
+---
+
+## Full Example
+
+:::tabs
+== index.js
+```javascript
+import { widgetWindow, app } from 'novadesk';
+
+const win = new widgetWindow({
+  id: "demo",
+  width: 400,
+  height: 300,
+  script: "ui.js",
+  backgroundColor: "rgb(10,10,10)",
+  snapEdges: true
+});
+
+win.on("mouseOver", (e) => {
+  console.log("mouse entered", e.clientX, e.clientY);
+});
+
+win.disableContextMenu(false);
+win.showDefaultContextMenuItems(true);
+win.setContextMenu([
+  { text: "Refresh", action: () => win.refresh() },
+  { type: "separator" },
+  { text: "Close", action: () => win.close() }
+]);
+```
+== ui.js
+```javascript
+ui.beginUpdate();
+
+ui.addText({
+  id: "title",
+  text: "Hello Widget",
+  x: 16, y: 14,
+  width: 260, height: 28,
+  fontSize: 16,
+  fontColor: "rgb(230,230,230)"
+});
+
+ui.addShape({
+  id: "box",
+  shapeType: "rectangle",
+  x: 16, y: 52,
+  width: 260, height: 90,
+  fillColor: "rgba(35,35,35,220)",
+  strokeColor: "rgba(255,255,255,40)",
+  strokeWidth: 1,
+  backgroundColorRadius: 10
+});
+
+ui.endUpdate();
+```
+:::
