@@ -1,24 +1,31 @@
 ---
-title: Monitor system audio levels with the audio-level-monitor module.
+title: Read system audio levels with the audioLevel module.
 ---
 
-# audio-level-monitor Module
-Monitor system audio levels and frequency bands through the audio-level-monitor module.
+# audioLevel Module
+Read current system audio levels and spectrum bands in Novadesk.
 
-The module can be accessed using `require("audio-level-monitor")`.
+The `audioLevel` module is exported from the `system` module.
 
 ```javascript
-const audioLevelMonitor = require("audio-level-monitor");
+import { audioLevel } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new audioLevelMonitor.audioLevel([options])`
+## `audioLevel.stats([options])`
 
-Creates an audio level monitor instance.
+Returns current audio level data for the selected endpoint/device.
 
-### Options
+### Parameters
+
+- **`options`**
+  - **Type**: `object`
+  - **Required**: No
+  - **Description**: Optional capture and analysis settings.
+
+### `options`
 
 - **`port`**
   - **Type**: `string`
@@ -28,7 +35,7 @@ Creates an audio level monitor instance.
 - **`id`**
   - **Type**: `string`
   - **Default**: `""`
-  - **Description**: Device ID, use an empty string for the default device.
+  - **Description**: Device ID. Use an empty string for the default device.
 
 - **`fftSize`**
   - **Type**: `number`
@@ -100,27 +107,22 @@ Creates an audio level monitor instance.
   - **Default**: `1.0`
   - **Description**: Gain applied to peak output.
 
-## `audioLevel.stats()`
-
-Returns the current audio levels.
-
 ### Return Value
 
-- **Type**: `object`
+- **Type**: `object | null`
 - **Description**:
-  - **`rms`** (`number[]`): RMS levels for left/right channels (`[left, right]`).
-  - **`peak`** (`number[]`): Peak levels for left/right channels (`[left, right]`).
-  - **`bands`** (`number[]`): Frequency band levels; array length equals the configured `bands`.
-
-## `audioLevel.destroy()`
-
-Releases the audio monitor and its native resources.
+  - Returns `null` when audio stats cannot be collected.
+  - Returns an object with:
+    - **`rms`** (`number[]`): RMS levels for left/right channels (`[left, right]`).
+    - **`peak`** (`number[]`): Peak levels for left/right channels (`[left, right]`).
+    - **`bands`** (`number[]`): Frequency band levels; array length equals the configured `bands`.
 
 ## Example
 
 ```javascript
-const audioLevelMonitor = require("audio-level-monitor");
-var audioLevel = new audioLevelMonitor({
+import { audioLevel } from "system";
+
+const data = audioLevel.stats({
     port: "output",
     bands: 12,
     fftSize: 2048,
@@ -130,10 +132,10 @@ var audioLevel = new audioLevelMonitor({
     rmsDecay: 300
 });
 
-setInterval(function () {
-    var data = audioLevel.stats();
-    var left = data.rms[0];
-    var right = data.rms[1];
+if (data) {
+    const left = data.rms[0];
+    const right = data.rms[1];
     console.log("RMS L/R", left, right);
-}, 50);
+    console.log("Bands:", data.bands);
+}
 ```

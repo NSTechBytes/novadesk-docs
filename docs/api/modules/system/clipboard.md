@@ -1,54 +1,51 @@
 ---
-title: Access the Windows clipboard via the clipper module.
+title: Access Windows clipboard text with the clipboard module.
 ---
 
-# clipper Module
-Access the Windows system clipboard in Novadesk. The Clipboard API allows widgets to interact with clipboard contents programmatically.
+# clipboard Module
+Read and write plain text in the Windows clipboard from Novadesk.
 
-The clipper module can be accessed using `require("clipper")`.
+The `clipboard` module is exported from the `system` module.
 
 ```javascript
-const clipper = require("clipper");
+import { clipboard } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `clipper.getText()`
+## `clipboard.getText()`
 
-Retrieves the current text content of the clipboard.
+Gets the current clipboard text.
 
-#### Return Value
+### Return Value
 
-- **Type**: `string | null`
-- **Description**: The text content of the clipboard, or `null` if the clipboard is empty or does not contain text.
+- **Type**: `string`
+- **Description**: Clipboard text. Returns an empty string (`""`) when text is unavailable.
 
-## `clipper.setText(text)`
+## `clipboard.setText(text)`
 
-Sets the text content of the system clipboard.
+Sets clipboard text.
 
-#### Parameters
+### Parameters
 
 - **`text`**
   - **Type**: `string`
-  - **Description**: The text to copy to the clipboard.
+  - **Description**: Text to write to the clipboard.
 
-#### Return Value
+### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if successful.
+- **Description**: `true` if clipboard text was updated; otherwise `false`.
 
 ## Example
 
 ```javascript
-const clipper = require("clipper");
-// Copy text to clipboard
-var success = clipper.setText("Copied from Novadesk!");
-if (success) {
-    console.log("Text copied!");
-}
+import { clipboard } from "system";
 
-// Read from clipboard
-var text = clipper.getText();
-console.log("Clipboard contains: " + text);
+const ok = clipboard.setText("Copied from Novadesk");
+console.log("setText:", ok);
+
+const value = clipboard.getText();
+console.log("clipboard:", value);
 ```

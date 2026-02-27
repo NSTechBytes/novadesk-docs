@@ -1,80 +1,56 @@
 ---
-title: Manage display brightness with the brightness module.
+title: Read brightness capability status with the brightness module.
 ---
 
 # brightness Module
-Get and set display brightness using the system API.
+Access display brightness capability status in Novadesk.
 
-The brightness module can be accessed using `require("brightness")`.
+The `brightness` module is exported from the `system` module.
 
 ```javascript
-const brightness = require("brightness");
+import { brightness } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `brightness.getValue([options])`
+## `brightness.getValue()`
 
-Returns brightness information for a display.
+Returns brightness information.
 
-#### Parameters
+### Return Value
 
-- **`options`**
-  - **Type**: `Object`
-  - **Required**: No
-  - **Description**: Optional query options.
-
-- **`display`**
-  - **Type**: `number`
-  - **Default**: `0`
-  - **Description**: Display index to query.
-
-#### Return Value
-
-- **Type**: `Object`
-- **Description**: Brightness details:
-  - **`supported`** (`boolean`): Whether brightness control is supported.
-  - **`current`** (`number`): Current raw brightness value.
-  - **`min`** (`number`): Minimum raw brightness value.
-  - **`max`** (`number`): Maximum raw brightness value.
-  - **`percent`** (`number`): Normalized brightness percentage (`0-100`).
+- **Type**: `object`
+- **Description**: Returns:
+  - **`supported`** (`boolean`): Whether brightness control is available. Current implementation returns `false`.
+  - **`current`** (`number`): Current raw brightness value. Current implementation returns `0`.
+  - **`min`** (`number`): Minimum raw brightness value. Current implementation returns `0`.
+  - **`max`** (`number`): Maximum raw brightness value. Current implementation returns `100`.
 
 ## `brightness.setValue(options)`
 
-Sets the brightness for a display.
+Attempts to set brightness.
 
-#### Parameters
+### Parameters
 
 - **`options`**
-  - **Type**: `Object`
-  - **Required**: Yes
-  - **Description**: Brightness options.
+  - **Type**: `object`
+  - **Description**: Reserved for future brightness options.
 
-- **`display`**
-  - **Type**: `number`
-  - **Default**: `0`
-  - **Description**: Display index to target.
-
-- **`percent`**
-  - **Type**: `number`
-  - **Required**: Yes
-  - **Description**: Target brightness percentage. Values are clamped to `0-100`.
-
-#### Return Value
+### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if brightness was updated successfully; otherwise `false`.
+- **Description**: Current implementation always returns `false`.
 
 ## Example
 
 ```javascript
-const brightness = require("brightness");
-var info = brightness.getValue({ display: 0 });
-console.log("Brightness supported:", info.supported);
-console.log("Brightness percent:", info.percent);
+import { brightness } from "system";
 
-// Set brightness to 60%
-var ok = brightness.setValue({ display: 0, percent: 60 });
+const info = brightness.getValue();
+console.log("Brightness supported:", info.supported);
+console.log("Range:", info.min, "-", info.max, "Current:", info.current);
+
+const ok = brightness.setValue({ percent: 60 });
 console.log("Set brightness:", ok);
 ```

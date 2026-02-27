@@ -1,14 +1,14 @@
 ---
-title: Control system volume and play sounds with the audio module.
+title: Control system master volume and WAV playback with the audio module.
 ---
 
 # audio Module
-Control system volume and play WAV sounds in Novadesk through the audio module.
+Control master system volume and play/stop WAV sounds in Novadesk.
 
-The audio module can be accessed using `require("audio")`.
+The `audio` module is exported from the `system` module.
 
 ```javascript
-const audio = require("audio");
+import { audio } from "system";
 ```
 
 #### Table of Contents
@@ -23,15 +23,20 @@ Retrieves the current master system volume.
 - **Type**: `number`
 - **Description**: Current volume percentage (`0-100`).
 
-## `audio.setVolume(level)`
+## `audio.setVolume(value)`
 
 Sets the master system volume.
 
 ### Parameters
 
-- **`level`**
+- **`value`**
   - **Type**: `number`
   - **Description**: Target volume percentage (`0-100`). Values outside the range are clamped.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**: `true` if the volume was updated; otherwise `false`.
 
 ## `audio.playSound(path, [loop])`
 
@@ -41,46 +46,41 @@ Plays a WAV file asynchronously.
 
 - **`path`**
   - **Type**: `string`
-  - **Description**: Path to the WAV file (absolute or relative to the widget script).
+  - **Description**: Path to a WAV file.
 
 - **`loop`**
   - **Type**: `boolean`
+  - **Required**: No
   - **Default**: `false`
-  - **Description**: `true` to loop until `stopSound()` is called.
+  - **Description**: `true` to loop playback until `audio.stopSound()` is called.
 
 ### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if sound playback started; `false` on failure.
+- **Description**: `true` if playback started; otherwise `false`.
 
 ## `audio.stopSound()`
 
-Stops any sound initiated via `playSound()`.
+Stops any sound started with `audio.playSound()`.
 
-## Examples
+### Return Value
 
-### Volume Control
+- **Type**: `boolean`
+- **Description**: Always returns `true`.
+
+## Example
 
 ```javascript
-const audio = require("audio");
-var vol = audio.getVolume();
-console.log("Current Volume:", vol);
+import { audio } from "system";
+
+const current = audio.getVolume();
+console.log("Current volume:", current);
+
 audio.setVolume(50);
-```
 
-### Playing an Alert Sound
-
-```javascript
-const audio = require("audio");
 audio.playSound("assets/alert.wav");
-```
 
-### Looping Background Sound
-
-```javascript
-const audio = require("audio");
-audio.playSound("assets/ambient.wav", true);
 setTimeout(function () {
     audio.stopSound();
-}, 10000);
+}, 3000);
 ```

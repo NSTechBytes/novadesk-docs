@@ -1,88 +1,101 @@
 ---
-title: Monitor disk usage via the disk-monitor module.
+title: Read disk usage metrics with the disk module.
 ---
 
-# disk-monitor Module
-Monitor disk usage for specific drives or all drives on the system through the disk-monitor module.
+# disk Module
+Read disk space and usage metrics in Novadesk.
 
-The disk-monitor module can be accessed using `require("disk-monitor")`.
+The `disk` module is exported from the `system` module.
 
 ```javascript
-const diskMonitor = require("disk-monitor");
+import { disk } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new diskMonitor.disk([options])`
+## `disk.totalBytes([path])`
 
-Instantiates a disk monitor.
+Returns total disk capacity in bytes.
 
-#### Parameters
+### Parameters
 
-- **`options`**
-  - **Type**: `Object`
-  - **Required**: No
-  - **Description**: Configuration options for the disk monitor.
-
-- **`drive`**
+- **`path`**
   - **Type**: `string`
-  - **Default**: All drives
-  - **Description**: Drive letter to monitor (e.g., `"C:"`, `"D:"`).
+  - **Required**: No
+  - **Description**: File or drive path to query (for example, `"C:\\"`).
 
-## `disk.stats()`
+### Return Value
 
-Returns the current disk statistics.
+- **Type**: `number`
+- **Description**: Total bytes for the target volume. Returns `0` if unavailable.
 
-#### Return Value
+## `disk.availableBytes([path])`
 
-- **Type**: `Object | Array`
-- **Description**: For a single-drive monitor, returns an object containing:
-  - **`drive`** (`string`): Drive letter.
-  - **`total`** (`number`): Total disk space in bytes.
-  - **`free`** (`number`): Free disk space in bytes.
-  - **`used`** (`number`): Used disk space in bytes.
-  - **`percent`** (`number`): Usage percentage (`0-100`).
-  
-For an all-drives monitor the method returns an array of objects for each drive with the same properties.
+Returns available bytes for the current user on the target volume.
 
-## `disk.destroy()`
+### Parameters
 
-Destroys the disk monitor and frees its resources.
+- **`path`**
+  - **Type**: `string`
+  - **Required**: No
+  - **Description**: File or drive path to query.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Available bytes for the target volume. Returns `0` if unavailable.
+
+## `disk.usedBytes([path])`
+
+Returns used bytes for the target volume.
+
+### Parameters
+
+- **`path`**
+  - **Type**: `string`
+  - **Required**: No
+  - **Description**: File or drive path to query.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Used bytes for the target volume. Returns `0` if unavailable.
+
+## `disk.usagePercent([path])`
+
+Returns disk usage percentage for the target volume.
+
+### Parameters
+
+- **`path`**
+  - **Type**: `string`
+  - **Required**: No
+  - **Description**: File or drive path to query.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Usage percent (`0-100`) for the target volume. Returns `0` if unavailable.
+
+::: info
+If `path` is omitted, the API uses the current working drive/root.
+:::
 
 ## Example
 
 ```javascript
-// index.js
-const diskMonitor = require("disk-monitor");
-var cDrive = new diskMonitor.disk({ drive: "C:" });
-var allDisks = new diskMonitor.disk();
+import { disk } from "system";
 
-// Update every 1 second (disk info doesn't change as frequently)
-var intervalId = setInterval(function () {
-    var cStats = cDrive.stats();
+const path = "C:\\";
 
-    var cTotalGB = (cStats.total / (1024 * 1024 * 1024)).toFixed(2);
-    var cUsedGB = (cStats.used / (1024 * 1024 * 1024)).toFixed(2);
-    var cFreeGB = (cStats.free / (1024 * 1024 * 1024)).toFixed(2);
+const total = disk.totalBytes(path);
+const available = disk.availableBytes(path);
+const used = disk.usedBytes(path);
+const percent = disk.usagePercent(path);
 
-    console.log("C: Drive - Total: " + cTotalGB + "GB, Used: " + cUsedGB + "GB, Free: " + cFreeGB + "GB (" + cStats.percent + "%)");
-
-    var allStats = allDisks.stats();
-    for (var i = 0; i < allStats.length; i++) {
-        var drive = allStats[i];
-        var totalGB = (drive.total / (1024 * 1024 * 1024)).toFixed(2);
-        var usedGB = (drive.used / (1024 * 1024 * 1024)).toFixed(2);
-        var freeGB = (drive.free / (1024 * 1024 * 1024)).toFixed(2);
-
-        console.log(drive.drive + " Drive - Total: " + totalGB + "GB, Used: " + usedGB + "GB, Free: " + freeGB + "GB (" + drive.percent + "%)");
-    }
-}, 1000);
-
-setTimeout(function () {
-    clearInterval(intervalId);
-    cDrive.destroy();
-    allDisks.destroy();
-    console.log("Disk Monitor Destroyed");
-}, 30000);
+console.log("Total:", total);
+console.log("Available:", available);
+console.log("Used:", used);
+console.log("Usage %:", percent);
 ```
