@@ -1,128 +1,106 @@
 ---
-title: Timer helpers available in the Main script.
+title: Timer functions available in Novadesk scripts.
 ---
 
 # Timer Functions
-Timing helpers (similar to browsers/Node.js) are available only in the Main script. UI scripts should request timing logic via the Main script through [IPC](/api/win/widget-api/win-object#inter-process-communication-ipc).
+
+Timing helpers similar to browsers and Node.js. These functions are registered on the global object and are available in both Main and UI scripts.
 
 #### Table of Contents
 [[toc]]
 
-::: warning
-Timer functions run exclusively in the Main script.
-:::
+## `setTimeout(callback, delay [, ...args])`
 
-## `setTimeout(callback, delay)`
-
-Executes `callback` after the specified delay.
+Executes `callback` once after the specified delay.
 
 ### Parameters
 
 - **`callback`** (`function`): Function to run after the delay.
-- **`delay`** (`number`): Milliseconds to wait before executing.
+- **`delay`** (`number`, optional): Milliseconds to wait before executing. Defaults to `0`. Negative values are clamped to `0`.
+- **`...args`** (`any`, optional): Additional arguments passed to `callback` when it fires.
 
 ### Return Value
 
 - **Type**: `number`
-- **Description**: Timer ID for `clearTimeout`.
+- **Description**: Timer ID that can be passed to `clearTimeout()` to cancel.
 
 ### Example
 
 ```javascript
-var timerId = setTimeout(function () {
-  console.log("This runs after 3 seconds");
+const id = setTimeout(() => {
+  console.log("Fired after 3 seconds");
 }, 3000);
 
-clearTimeout(timerId);
+// With extra arguments
+setTimeout((greeting, name) => {
+  console.log(greeting, name);
+}, 1000, "Hello", "Novadesk");
 ```
 
-## `setInterval(callback, interval)`
+## `setInterval(callback, interval [, ...args])`
 
-Executes `callback` repeatedly.
+Executes `callback` repeatedly at the given interval.
 
 ### Parameters
 
-- **`callback`** (`function`)
-- **`interval`** (`number`): Milliseconds between executions.
+- **`callback`** (`function`): Function to run on each tick.
+- **`interval`** (`number`, optional): Milliseconds between executions. Defaults to `0`. Negative values are clamped to `0`.
+- **`...args`** (`any`, optional): Additional arguments passed to `callback` on each tick.
 
 ### Return Value
 
 - **Type**: `number`
-- **Description**: Timer ID for `clearInterval`.
+- **Description**: Timer ID that can be passed to `clearInterval()` to cancel.
 
 ### Example
 
 ```javascript
-var intervalId = setInterval(function () {
-  console.log("This runs every 2 seconds");
-}, 2000);
-
-setTimeout(function () {
-  clearInterval(intervalId);
-  console.log("Interval stopped");
-}, 10000);
+let tick = 0;
+const id = setInterval(() => {
+  tick += 1;
+  console.log("tick", tick);
+  if (tick >= 5) {
+    clearInterval(id);
+    console.log("Interval stopped");
+  }
+}, 1000);
 ```
 
 ## `clearTimeout(id)`
 
-Cancels a timeout created with `setTimeout`.
+Cancels a timeout created with `setTimeout()`.
 
 ### Parameters
 
-- **`id`** (`number`): Timer ID.
+- **`id`** (`number`): Timer ID returned by `setTimeout()`.
 
 ### Example
 
 ```javascript
-var timerId = setTimeout(function () {
+const id = setTimeout(() => {
   console.log("This will not run");
 }, 5000);
 
-clearTimeout(timerId);
+clearTimeout(id);
 ```
 
 ## `clearInterval(id)`
 
-Cancels an interval created with `setInterval`.
+Cancels an interval created with `setInterval()`.
 
 ### Parameters
 
-- **`id`** (`number`): Interval ID.
+- **`id`** (`number`): Timer ID returned by `setInterval()`.
 
 ### Example
 
 ```javascript
-var intervalId = setInterval(function () {
-  console.log("This runs repeatedly");
+const id = setInterval(() => {
+  console.log("Repeating");
 }, 1000);
 
-setTimeout(function () {
-  clearInterval(intervalId);
-  console.log("Interval stopped");
+setTimeout(() => {
+  clearInterval(id);
+  console.log("Interval stopped after 5 seconds");
 }, 5000);
-```
-
-## `setImmediate(callback)`
-
-Runs the callback as soon as the current execution stack clears.
-
-### Parameters
-
-- **`callback`** (`function`): Function executed on the next tick.
-
-### Return Value
-
-- **Type**: `number`
-- **Description**: ID usable to cancel via `clearImmediate` (if supported).
-
-### Example
-
-```javascript
-console.log("First");
-
-setImmediate(function () {
-  console.log("This runs after current execution completes");
-});
-
-console.log("Second");
 ```
