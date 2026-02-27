@@ -2,13 +2,14 @@
 title: Load and manage native C++ addons with the addon module.
 ---
 
-# addon Module
-The addon module lets you load and manage native C++ addons from JavaScript. Use it to extend Novadesk with performance-critical or platform-specific native code.
+# addon
 
-The addon module can be accessed via `require("addon")`.
+The `addon` object lets you load and manage native C++ addons (DLLs) at runtime. Use it to extend Novadesk with performance-critical or platform-specific native code.
+
+`addon` is exported from the `novadesk` module.
 
 ```javascript
-const addon = require("addon");
+import { addon } from 'novadesk';
 ```
 
 #### Table of Contents
@@ -16,47 +17,54 @@ const addon = require("addon");
 
 ## `addon.load(path)`
 
-Loads a native addon DLL into the Novadesk environment.
+Loads a native addon DLL into the Novadesk runtime. If the addon is already loaded, the existing addon ID is returned without reloading.
+
+The DLL must export a `NovadeskAddonInit` function. An optional `NovadeskAddonUnload` export is called during cleanup.
 
 ### Parameters
 
-- **`path`**
-  - **Type**: `string`
-  - **Description**: Path to the `.dll` file (relative or absolute).
+- **`path`** (`string`): Path to the `.dll` file. Relative paths are resolved from the entry script directory.
 
 ### Return Value
 
-- **Type**: `object | null`
-- **Description**: The exported API object on success, or `null` if the addon fails to load or initialize.
+- **Type**: `number | null`
+- **Description**: A numeric addon ID on success, or `null` if the DLL could not be loaded or is missing the required `NovadeskAddonInit` export.
 
-## `addon.unload(path)`
+### Example
 
-Unloads a previously loaded native addon, releasing native resources and invoking optional cleanup code.
+```javascript
+import { addon } from 'novadesk';
+
+const id = addon.load("./my_addon.dll");
+if (id !== null) {
+  console.log("Addon loaded, id:", id);
+}
+```
+
+## `addon.unload(id)`
+
+Unloads a previously loaded native addon by its ID. Calls the addon’s `NovadeskAddonUnload` export (if present), removes all registered functions, and frees the DLL.
 
 ### Parameters
 
-- **`path`**
-  - **Type**: `string`
-  - **Description**: The same DLL path that was used with `load()`.
+- **`id`** (`number`): The addon ID returned by `addon.load()`.
 
 ### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if the addon was unloaded successfully; `false` otherwise.
+- **Description**: `true` if the addon was found and unloaded; `false` if no addon with that ID exists.
 
-## Example
+### Example
 
 ```javascript
-const addon = require("addon");
+import { addon } from 'novadesk';
 
-const myAddon = addon.load("./utils_addon.dll");
+const id = addon.load("./my_addon.dll");
 
-if (myAddon) {
-    console.log("Addon version:", myAddon.version);
-    const result = myAddon.calculate(10, 20);
-    console.log("Result:", result);
-    addon.unload("./utils_addon.dll");
-}
+// ... use the addon ...
+
+const ok = addon.unload(id);
+console.log("Unloaded:", ok);
 ```
 
 ::: tip
