@@ -1,14 +1,14 @@
 ---
-title: Read and write Windows Registry keys with the registry module.
+title: Read and write Windows Registry values with the registry module.
 ---
 
 # registry Module
-Access Windows Registry values in Novadesk through the registry module.
+Read and write registry values in Novadesk.
 
-The registry module can be accessed using `require("registry")`.
+The `registry` module is exported from the `system` module.
 
 ```javascript
-const registry = require("registry");
+import { registry } from "system";
 ```
 
 #### Table of Contents
@@ -16,49 +16,57 @@ const registry = require("registry");
 
 ## `registry.readData(path, valueName)`
 
-Reads a value from the Windows Registry.
+Reads a registry value.
 
 ### Parameters
 
 - **`path`**
   - **Type**: `string`
-  - **Description**: Full path to the registry key (`HKCU\\`, `HKLM\\`, `HKCR\\`, or `HKU\\`).
-  - **Example**: `HKCU\\Software\\Novadesk`
+  - **Description**: Full key path including hive (for example, `"HKEY_CURRENT_USER\\Software\\MyApp"`).
 
 - **`valueName`**
   - **Type**: `string`
-  - **Description**: Name of the value to read. Use an empty string for the default value.
+  - **Description**: Registry value name.
 
 ### Return Value
 
 - **Type**: `string | number | null`
-- **Description**: Value data (`REG_SZ`, `REG_EXPAND_SZ`, `REG_DWORD`). Returns `null` if the key/value does not exist.
+- **Description**:
+  - Returns a `string` for string values.
+  - Returns a `number` for numeric values.
+  - Returns `null` if the value cannot be read or is unsupported.
 
-## `registry.writeData(path, valueName, data)`
+## `registry.writeData(path, valueName, value)`
 
-Writes a value to the Windows Registry, creating the key if needed.
+Writes a registry value.
 
 ### Parameters
 
-- **`path`**, **`valueName`**
-  - Same as `readData`.
+- **`path`**
+  - **Type**: `string`
+  - **Description**: Full key path including hive.
 
-- **`data`**
+- **`valueName`**
+  - **Type**: `string`
+  - **Description**: Registry value name.
+
+- **`value`**
   - **Type**: `string | number`
-  - **Description**: Strings written as `REG_SZ`, numbers as `REG_DWORD`.
+  - **Description**: Value to write. Strings are written as string data; numbers are written as numeric data.
 
 ### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if the operation succeeded.
+- **Description**: `true` if write succeeded; otherwise `false`.
 
 ## Example
 
 ```javascript
-const registry = require("registry");
-var value = registry.readData("HKCU\\Software\\Novadesk", "theme");
-console.log("Theme:", value);
+import { registry } from "system";
 
-var written = registry.writeData("HKCU\\Software\\Novadesk", "theme", "dark");
-console.log("Write successful:", written);
+const ok = registry.writeData("HKEY_CURRENT_USER\\Software\\NovadeskDemo", "Opacity", 0.85);
+console.log("write:", ok);
+
+const value = registry.readData("HKEY_CURRENT_USER\\Software\\NovadeskDemo", "Opacity");
+console.log("read:", value);
 ```

@@ -181,7 +181,6 @@ export default defineConfig({
                     text: "nowPlaying",
                     link: "/api/modules/system/nowPlaying",
                   },
-                  { text: "path", link: "/api/modules/system/path" },
                   { text: "power", link: "/api/modules/system/power" },
                   {
                     text: "registry",

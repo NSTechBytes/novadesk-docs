@@ -1,60 +1,67 @@
 ---
-title: Monitor system memory with the memory-monitor module.
+title: Read system memory metrics with the memory module.
 ---
 
-# memory-monitor Module
-The memory-monitor module allows you to monitor system memory usage, including total, available, used memory, and load percentage.
+# memory Module
+Read physical memory statistics in Novadesk.
 
-The memory-monitor module can be accessed using `require("memory-monitor")`.
+The `memory` module is exported from the `system` module.
 
 ```javascript
-const memoryMonitor = require("memory-monitor");
+import { memory } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new memoryMonitor.memory()`
+## `memory.totalBytes()`
 
-Creates a memory monitor instance.
-
-## `memory.stats()`
-
-Returns the current memory statistics.
+Returns total physical memory in bytes.
 
 ### Return Value
 
-- **Type**: `Object`
-- **Description**: Contains:
-  - **`total`** (`number`): Total physical memory in bytes.
-  - **`available`** (`number`): Available physical memory in bytes.
-  - **`used`** (`number`): Used physical memory in bytes.
-  - **`percent`** (`number`): Memory load percentage (`0-100`).
+- **Type**: `number`
+- **Description**: Total RAM bytes. Returns `0` if unavailable.
 
-## `memory.destroy()`
+## `memory.availableBytes()`
 
-Destroys the memory monitor and frees its native resources.
+Returns available physical memory in bytes.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Available RAM bytes. Returns `0` if unavailable.
+
+## `memory.usedBytes()`
+
+Returns used physical memory in bytes.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Used RAM bytes. Returns `0` if unavailable.
+
+## `memory.usagePercent()`
+
+Returns memory usage percentage.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Usage percentage (`0-100`). Returns `0` if unavailable.
 
 ## Example
 
 ```javascript
-// index.js
-const memoryMonitor = require("memory-monitor");
-var memory = new memoryMonitor.memory();
+import { memory } from "system";
 
-var intervalId = setInterval(function () {
-    var stats = memory.stats();
-    var totalGB = (stats.total / (1024 * 1024 * 1024)).toFixed(2);
-    var usedGB = (stats.used / (1024 * 1024 * 1024)).toFixed(2);
-    var availableGB = (stats.available / (1024 * 1024 * 1024)).toFixed(2);
+const total = memory.totalBytes();
+const available = memory.availableBytes();
+const used = memory.usedBytes();
+const percent = memory.usagePercent();
 
-    console.log("Memory - Total: " + totalGB + "GB, Used: " + usedGB + "GB, Available: " + availableGB + "GB");
-    console.log("Memory Load: " + stats.percent + "%");
-}, 1000);
-
-setTimeout(function () {
-    clearInterval(intervalId);
-    memory.destroy();
-    console.log("Memory Monitor Destroyed");
-}, 5000);
+console.log("Total:", total);
+console.log("Available:", available);
+console.log("Used:", used);
+console.log("Usage %:", percent);
 ```

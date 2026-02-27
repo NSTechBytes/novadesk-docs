@@ -1,36 +1,34 @@
 ---
-title: Set the desktop wallpaper via the wallpaper module.
+title: Set and read desktop wallpaper with the wallpaper module.
 ---
 
 # wallpaper Module
-Sets the desktop wallpaper using the system API.
+Set the desktop wallpaper and read the current wallpaper path.
 
-The wallpaper module can be accessed using `require("wallpaper")`.
+The `wallpaper` module is exported from the `system` module.
 
 ```javascript
-const wallpaper = require("wallpaper");
+import { wallpaper } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `wallpaper.set(imagePath, [style])`
+## `wallpaper.set(path, [style])`
 
-Sets the Windows desktop wallpaper from an image file.
+Sets desktop wallpaper.
 
 ### Parameters
 
-- **`imagePath`**
+- **`path`**
   - **Type**: `string`
-  - **Required**: Yes
-  - **Description**: Path to the wallpaper image. Relative paths resolve from the current script directory.
+  - **Description**: Image file path.
 
 - **`style`**
   - **Type**: `string`
   - **Required**: No
   - **Default**: `"fill"`
-  - **Description**: Wallpaper display style.
-  - **Valid values**:
+  - **Description**: Wallpaper style. Supported values include:
     - `"fill"`
     - `"fit"`
     - `"stretch"`
@@ -41,20 +39,25 @@ Sets the Windows desktop wallpaper from an image file.
 ### Return Value
 
 - **Type**: `boolean`
-- **Description**: `true` if the wallpaper was set successfully; `false` otherwise (e.g., invalid path or style).
+- **Description**: `true` if wallpaper was updated; otherwise `false`.
 
-## Examples
+## `wallpaper.getCurrentPath()`
 
-### Default Style
+Gets the current wallpaper image path.
+
+### Return Value
+
+- **Type**: `string`
+- **Description**: Current wallpaper path, or empty string (`""`) if unavailable.
+
+## Example
 
 ```javascript
-const wallpaper = require("wallpaper");
-wallpaper.set("assets/background.jpg");
-```
+import { wallpaper } from "system";
 
-### Explicit Style
+const setOk = wallpaper.set("C:\\Wallpapers\\my-wallpaper.jpg", "fill");
+console.log("set:", setOk);
 
-```javascript
-const wallpaper = require("wallpaper");
-wallpaper.set("assets/lakeside.jpg", "fit");
+const current = wallpaper.getCurrentPath();
+console.log("current wallpaper:", current);
 ```

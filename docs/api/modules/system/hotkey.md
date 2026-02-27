@@ -1,41 +1,50 @@
 ---
-title: Register and manage global hotkeys via the hotkeys module.
+title: Register global keyboard hotkeys with the hotkey module.
 ---
 
-# hotkeys Module
-Register and manage global hotkeys in Novadesk to control widgets and applications from anywhere on the system.
+# hotkey Module
+Register and remove keyboard hotkeys in Novadesk.
 
-The hotkeys module can be accessed using `require("hotkeys")`.
+The `hotkey` module is exported from the `system` module.
 
 ```javascript
-const hotkeys = require("hotkeys");
+import { hotkey } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `hotkeys.registerHotkey(hotkey, callback)`
+## `hotkey.register(hotkeyString, handler)`
 
-Registers a global hotkey and binds it to a callback handler.
+Registers a hotkey and returns its registration ID.
 
 ### Parameters
 
-- **`hotkey`**
+- **`hotkeyString`**
   - **Type**: `string`
-  - **Description**: The key combination to register (e.g., `"Ctrl+Alt+R"`, `"Win+D"`, `"Space"`).
+  - **Description**: Hotkey expression like `"CTRL+SHIFT+M"` or `"ALT+F4"`.
 
-- **`callback`**
-  - **Type**: `function | Object`
-  - **Description**: Handler invoked when the hotkey is used.
-    - **function**: Executed on key press.
-    - **Object**: Optional `onKeyDown` and `onKeyUp` handlers.
+- **`handler`**
+  - **Type**: `function | object`
+  - **Description**:
+    - Function form: called on key down.
+    - Object form: `{ onKeyDown?: function, onKeyUp?: function }`.
 
 ### Return Value
 
 - **Type**: `number`
-- **Description**: Hotkey ID used to unregister the hotkey later.
+- **Description**: Registration ID. Returns `-1` if registration fails.
 
-## `hotkeys.unregisterHotkey(id)`
+### Supported Tokens
+
+- Modifiers: `CTRL` / `CONTROL`, `ALT`, `SHIFT`, `WIN` / `WINDOWS`
+- Keys:
+  - Letters: `A-Z`
+  - Digits: `0-9`
+  - Function keys: `F1-F24`
+  - Named keys: `SPACE`, `ENTER` / `RETURN`, `TAB`, `ESC` / `ESCAPE`, `BACKSPACE`, `DELETE` / `DEL`, `INSERT` / `INS`, `HOME`, `END`, `PAGEUP` / `PGUP`, `PAGEDOWN` / `PGDN`, `LEFT`, `RIGHT`, `UP`, `DOWN`
+
+## `hotkey.unregister(id)`
 
 Unregisters a previously registered hotkey.
 
@@ -43,48 +52,38 @@ Unregisters a previously registered hotkey.
 
 - **`id`**
   - **Type**: `number`
-  - **Description**: The identifier returned by `registerHotkey`.
+  - **Description**: Hotkey registration ID returned by `hotkey.register()`.
 
-## Supported Keys
+### Return Value
 
-### Modifier Keys
-- `Ctrl`
-- `Alt`
-- `Shift`
-- `Win`
+- **Type**: `boolean`
+- **Description**: `true` if the hotkey was removed; otherwise `false`.
 
-### Alphanumeric Keys
-- Letters: `A-Z`
-- Numbers: `0-9`
-
-### Function Keys
-- `F1-F12`
-
-### Special Keys
-- `Space`
-- `Enter`
-- `Escape`
-- `Tab`
-- `Backspace`
-- `Delete`
-- `Insert`
-- `Home`
-- `End`
-- `PageUp`
-- `PageDown`
-- `Up`
-- `Down`
-- `Left`
-- `Right`
-
-## Example
+## Examples
 
 ```javascript
-const hotkeys = require("hotkeys");
-var id = hotkeys.registerHotkey("Ctrl+Alt+R", function () {
-    console.log("Refresh triggered");
+import { hotkey } from "system";
+
+const id = hotkey.register("CTRL+SHIFT+M", function () {
+    console.log("Hotkey pressed (key down)");
 });
 
-// Later, unregister the hotkey
-hotkeys.unregisterHotkey(id);
+console.log("hotkey id:", id);
+```
+
+```javascript
+import { hotkey } from "system";
+
+const id = hotkey.register("ALT+F4", {
+    onKeyDown: function () {
+        console.log("ALT+F4 down");
+    },
+    onKeyUp: function () {
+        console.log("ALT+F4 up");
+    }
+});
+
+// Later
+const removed = hotkey.unregister(id);
+console.log("unregister:", removed);
 ```

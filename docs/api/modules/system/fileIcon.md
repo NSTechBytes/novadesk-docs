@@ -1,60 +1,63 @@
 ---
-title: Extract file icons with the file-icon module.
+title: Extract file icons to ICO files with the fileIcon module.
 ---
 
-# file-icon Module
-Extract and export file icons to `.ico` format using the system API.
+# fileIcon Module
+Extract a file's icon and save it as an `.ico` file in Novadesk.
 
-The file-icon module can be accessed using `require("file-icon")`.
+The `fileIcon` module is exported from the `system` module.
 
 ```javascript
-const fileIcon = require("file-icon");
+import { fileIcon } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `fileIcon.extractFileIcon(sourcePath, [outPath], [size])`
+## `fileIcon.extractIcon(filePath, outIcoPath, [size])`
 
-Extracts the icon for a file or application and saves it as an `.ico` file.
+Extracts an icon from a file and writes it to an `.ico` file.
 
-- **`sourcePath`**
+### Parameters
+
+- **`filePath`**
   - **Type**: `string`
-  - **Required**: Yes
-  - **Description**: Path to the source file (e.g., `.exe`, `.lnk`). Relative paths resolve from the current script directory.
+  - **Description**: Source file path (for example, an `.exe`, `.dll`, or other file with an associated icon).
 
-- **`outPath`**
+- **`outIcoPath`**
   - **Type**: `string`
-  - **Required**: No
-  - **Description**: Destination `.ico` path. When omitted, Novadesk writes to `%TEMP%\Novadesk\FileIcons\`.
+  - **Description**: Output `.ico` file path.
 
 - **`size`**
   - **Type**: `number`
   - **Required**: No
   - **Default**: `48`
-  - **Description**: Preferred icon size in pixels. Values above `256` are clamped to `256`.
+  - **Description**: Preferred icon size in pixels.
 
-- **Returns** (`string | null`): Absolute path of the exported `.ico` file on success, or `null` on failure.
+### Return Value
 
-::: info
-- When `outPath` is omitted, the filename is deterministic (hashed from `sourcePath` and `size`), so repeated calls reuse the cache.
-- Relative `outPath` values resolve against the current script directory.
-:::
+- **Type**: `boolean`
+- **Description**: `true` if icon extraction succeeded; otherwise `false`.
 
-## Examples
+## `fileIcon.extractFileIcon(filePath, outIcoPath, [size])`
 
-### Auto Cached Output
+Alias of `fileIcon.extractIcon(filePath, outIcoPath, [size])`.
 
-```javascript
-const fileIcon = require("file-icon");
-var cachedPath = fileIcon.extractFileIcon("C:\\Windows\\System32\\notepad.exe");
-console.log("Cached icon:", cachedPath);
-```
+### Return Value
 
-### Custom Output Path and Size
+- **Type**: `boolean`
+- **Description**: Same as `extractIcon()`.
+
+## Example
 
 ```javascript
-const fileIcon = require("file-icon");
-var saved = fileIcon.extractFileIcon("C:\\Windows\\System32\\calc.exe", "icons/calc.ico", 128);
-console.log("Saved icon:", saved);
+import { fileIcon } from "system";
+
+const ok = fileIcon.extractIcon(
+    "C:\\Windows\\System32\\notepad.exe",
+    "C:\\Temp\\notepad.ico",
+    48
+);
+
+console.log("Icon extracted:", ok);
 ```

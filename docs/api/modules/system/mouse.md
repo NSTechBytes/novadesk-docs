@@ -1,53 +1,44 @@
 ---
-title: Track the cursor using the mouse-monitor module.
+title: Read mouse cursor coordinates with the mouse module.
 ---
 
-# mouse-monitor Module
-The mouse-monitor module lets you monitor the current mouse cursor position on the screen.
+# mouse Module
+Read the current mouse position in screen coordinates.
 
-The mouse-monitor module can be accessed using `require("mouse-monitor")`.
+The `mouse` module is exported from the `system` module.
 
 ```javascript
-const mouseMonitor = require("mouse-monitor");
+import { mouse } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new mouseMonitor.mouse()`
+## `mouse.clientX()`
 
-Creates a mouse monitor instance.
-
-## `mouse.position()`
-
-Returns the current mouse cursor coordinates.
+Returns the current cursor X coordinate.
 
 ### Return Value
 
-- **Type**: `Object`
-- **Description**: Contains:
-  - **`x`** (`number`): X-coordinate of the mouse cursor.
-  - **`y`** (`number`): Y-coordinate of the mouse cursor.
+- **Type**: `number`
+- **Description**: Cursor X position. Returns `0` if unavailable.
 
-## `mouse.destroy()`
+## `mouse.clientY()`
 
-Destroys the mouse monitor and frees its resources.
+Returns the current cursor Y coordinate.
+
+### Return Value
+
+- **Type**: `number`
+- **Description**: Cursor Y position. Returns `0` if unavailable.
 
 ## Example
 
 ```javascript
-// index.js
-const mouseMonitor = require("mouse-monitor");
-var mouse = new mouseMonitor.mouse();
+import { mouse } from "system";
 
-var intervalId = setInterval(function () {
-    var pos = mouse.position();
-    console.log("Mouse Position: X=" + pos.x + ", Y=" + pos.y);
-}, 100);
+const x = mouse.clientX();
+const y = mouse.clientY();
 
-setTimeout(function () {
-    clearInterval(intervalId);
-    mouse.destroy();
-    console.log("Mouse Monitor Destroyed");
-}, 5000);
+console.log("Mouse:", x, y);
 ```

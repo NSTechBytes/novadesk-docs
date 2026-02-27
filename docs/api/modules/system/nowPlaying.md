@@ -1,136 +1,208 @@
 ---
-title: Monitor and control media playback with the now-playing-monitor module.
+title: Read and control media sessions with the nowPlaying module.
 ---
 
-# now-playing-monitor Module
-Monitor and control active media playback in Novadesk through playback metadata and transport controls.
+# nowPlaying Module
+Read active media metadata and control playback in Novadesk.
 
-The now-playing-monitor module can be accessed using `require("now-playing-monitor")`.
+The `nowPlaying` module is exported from the `system` module.
 
 ```javascript
-const nowPlayingMonitor = require("now-playing-monitor");
+import { nowPlaying } from "system";
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `new nowPlayingMonitor.nowPlaying()`
-
-Creates a new now playing monitor instance.
-
 ## `nowPlaying.stats()`
 
-Gets current media session information.
+Returns current media session details.
 
 ### Return Value
 
-- **Type**: `Object`
+- **Type**: `object`
 - **Description**: Contains:
-  - **`available`** (`boolean`): `true` when media session data is available.
-  - **`player`** (`string`): Player/application display name.
-  - **`artist`** (`string`): Track artist.
-  - **`album`** (`string`): Track album.
-  - **`title`** (`string`): Track title.
-  - **`thumbnail`** (`string`): Path to a cached thumbnail image (if available).
-  - **`duration`** (`number`): Total track duration in seconds.
-  - **`position`** (`number`): Current position in seconds.
-  - **`progress`** (`number`): Playback progress percentage (`0-100`).
-  - **`state`** (`number`): Playback state (`0` stopped/unknown, `1` playing, `2` paused).
-  - **`status`** (`number`): Session status (`0` closed, `1` opened).
-  - **`shuffle`** (`boolean`): Shuffle enabled state.
-  - **`repeat`** (`boolean`): Repeat enabled state.
+  - **`available`** (`boolean`)
+  - **`player`** (`string`)
+  - **`artist`** (`string`)
+  - **`album`** (`string`)
+  - **`title`** (`string`)
+  - **`thumbnail`** (`string`): Cached thumbnail image path (empty string if unavailable).
+  - **`duration`** (`number`): Track duration in seconds.
+  - **`position`** (`number`): Current playback position in seconds.
+  - **`progress`** (`number`): Playback progress (`0-100`).
+  - **`state`** (`number`): `0` stopped/unknown, `1` playing, `2` paused.
+  - **`status`** (`number`): `0` closed, `1` opened.
+  - **`shuffle`** (`boolean`)
+  - **`repeat`** (`boolean`): `true` when repeat mode is not `none`.
+
+::: info
+`stats()` always returns an object. When no active media session exists, fields are default/empty and `available` is `false`.
+:::
+
+## `nowPlaying.backend()`
+
+Returns active now-playing backend name.
+
+### Return Value
+
+- **Type**: `string`
+- **Description**:
+  - `"winrt"` when the WinRT now-playing backend is enabled.
+  - `"disabled"` when backend support is not built/enabled.
 
 ## `nowPlaying.play()`
 
-Send the play command to the active media session.
+Requests playback start on the active media session.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
 
 ## `nowPlaying.pause()`
 
-Send the pause command to the active media session.
+Requests pause on the active media session.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
 
 ## `nowPlaying.playPause()`
 
-Toggle between play and pause.
+Requests play/pause toggle on the active media session.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
 
 ## `nowPlaying.stop()`
 
-Stop playback on the active session.
+Requests playback stop on the active media session.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
 
 ## `nowPlaying.next()`
 
-Skip to the next track.
+Requests skip to the next item in the active media session.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
 
 ## `nowPlaying.previous()`
 
-Go to the previous track.
+Requests skip to the previous item in the active media session.
 
-## `nowPlaying.setPosition(value, mode)`
+### Return Value
 
-Seeks playback position.
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when the now-playing backend is enabled and the action is queued.
+  - Returns `false` when backend is disabled.
+
+## `nowPlaying.setPosition(value[, isPercent])`
+
+Sets playback position.
 
 ### Parameters
 
 - **`value`**
   - **Type**: `number`
-  - **Description**: Target position value.
+  - **Description**: Position in seconds by default, or percent when `isPercent` is `true`.
 
-- **`mode`**
-  - **Type**: `string`
+- **`isPercent`**
+  - **Type**: `boolean`
   - **Required**: No
-  - **Default**: `"percent"`
-  - **Description**: Seek mode:
-    - `"percent"`: `value` is treated as percentage (`0-100`).
-    - `"seconds"`: `value` is treated as absolute seconds.
+  - **Default**: `false`
+  - **Description**: `true` to interpret `value` as `0-100` percent of track duration.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**:
+  - Returns `true` when backend is enabled and action is queued.
+  - Returns `false` when backend is disabled.
 
 ::: info
-If `mode` is omitted, values above `100` are treated as seconds.
+When `isPercent` is `true`, the effective seek time is computed from current track duration. Resulting position is clamped to valid bounds.
 :::
 
 ## `nowPlaying.setShuffle(enabled)`
 
-Enable or disable shuffle mode.
+Sets shuffle mode.
 
 ### Parameters
 
 - **`enabled`**
   - **Type**: `boolean`
-  - **Description**: `true` to enable shuffle, `false` to disable it.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**: `true` when backend is enabled; otherwise `false`.
 
 ## `nowPlaying.toggleShuffle()`
 
-Toggle shuffle mode.
+Toggles shuffle mode.
+
+### Return Value
+
+- **Type**: `boolean`
+- **Description**: `true` when backend is enabled; otherwise `false`.
 
 ## `nowPlaying.setRepeat(mode)`
 
-Set the repeat mode.
+Sets repeat mode.
 
 ### Parameters
 
 - **`mode`**
-  - **Type**: `string`
-  - **Valid values**: `"none"`, `"one"`, `"all"`
+  - **Type**: `number`
+  - **Description**: Repeat mode code:
+    - `0`: none
+    - `1`: track (repeat one)
+    - `2`: list (repeat all)
 
-## `nowPlaying.destroy()`
+### Return Value
 
-Destroy the monitor and free its resources.
+- **Type**: `boolean`
+- **Description**: `true` when backend is enabled; otherwise `false`.
+
+## Error Behavior
+
+- `nowPlaying.setPosition(value[, isPercent])` throws a type error when `value` is not numeric.
+- `nowPlaying.setRepeat(mode)` throws a type error when `mode` is not numeric.
 
 ## Example
 
 ```javascript
-const nowPlayingMonitor = require("now-playing-monitor");
-var nowPlaying = new nowPlayingMonitor.nowPlaying();
+import { nowPlaying } from "system";
 
-var intervalId = setInterval(function () {
-    var stats = nowPlaying.stats();
-    console.log("Now playing:", stats.title, "-", stats.artist, "(" + stats.player + ")");
-}, 1000);
+console.log("backend:", nowPlaying.backend());
 
+const stats = nowPlaying.stats();
+console.log("available:", stats.available);
+console.log("player:", stats.player, "title:", stats.title, "progress:", stats.progress + "%");
+
+nowPlaying.playPause();
 nowPlaying.setShuffle(true);
-nowPlaying.setRepeat("all");
-
-setTimeout(function () {
-    clearInterval(intervalId);
-    nowPlaying.destroy();
-    console.log("Now Playing Monitor Destroyed");
-}, 10000);
+nowPlaying.setRepeat(2);        // repeat all
+nowPlaying.setPosition(50, true); // seek to 50%
 ```

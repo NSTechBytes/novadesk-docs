@@ -1,14 +1,14 @@
 ---
-title: Retrieve screen and monitor metrics with the display-metrics module.
+title: Read monitor and virtual desktop metrics with the displayMetrics module.
 ---
 
-# display-metrics Module
-Retrieve screen and monitor metrics in Novadesk using the display-metrics module.
+# displayMetrics Module
+Get virtual desktop bounds and connected monitor information in Novadesk.
 
-The display-metrics module can be accessed using `require("display-metrics")`.
+The `displayMetrics` module is exported from the `system` module.
 
 ```javascript
-const displayMetrics = require("display-metrics");
+import { displayMetrics } from "system";
 ```
 
 #### Table of Contents
@@ -16,47 +16,45 @@ const displayMetrics = require("display-metrics");
 
 ## `displayMetrics.getMetrics()`
 
-Returns detailed information about screen dimensions, work areas, and connected monitors.
+Returns display and monitor metrics.
 
-#### Return Value
+### Return Value
 
-- **Type**: `Object`
-- **Description**: Structured display data with the following properties.
+- **Type**: `object`
+- **Description**: Contains:
+  - **`virtualLeft`** (`number`): Virtual desktop left coordinate.
+  - **`virtualTop`** (`number`): Virtual desktop top coordinate.
+  - **`virtualWidth`** (`number`): Virtual desktop width.
+  - **`virtualHeight`** (`number`): Virtual desktop height.
+  - **`primaryIndex`** (`number`): Index of the primary monitor in `monitors`.
+  - **`count`** (`number`): Number of monitors.
+  - **`monitors`** (`object[]`): Monitor entries:
+    - **`active`** (`boolean`): Whether the monitor is active.
+    - **`deviceName`** (`string`): System device name.
+    - **`monitorName`** (`string`): Human-readable monitor name.
+    - **`screen`** (`object`): Monitor bounds with `left`, `top`, `right`, `bottom`.
 
-### `primary`
+## `displayMetrics.get()`
 
-- **Type**: `Object`
-- **Description**: Information about the primary monitor.
-  - **`workArea`**: Usable desktop area (excluding taskbars/docks).
-  - **`screenArea`**: Full screen resolution.
+Alias of `displayMetrics.getMetrics()`.
 
-### `virtualScreen`
+### Return Value
 
-- **Type**: `Object`
-- **Description**: Combined desktop space across all monitors.
-  - **`x`**, **`y`**: Top-left coordinates.
-  - **`width`**, **`height`**: Total dimensions in pixels.
-
-### `monitors`
-
-- **Type**: `Array`
-- **Description**: Array of connected monitor objects.
-Each monitor object contains:
-  - **`id`**: Unique identifier.
-  - **`workArea`**: Usable desktop area for the monitor.
-  - **`screenArea`**: Full resolution of the monitor.
-
-### Area Object Structure
-
-- **`x`**, **`y`**: Top-left coordinates.
-- **`width`**, **`height`**: Dimensions in pixels.
+- **Type**: `object`
+- **Description**: Same as `getMetrics()`.
 
 ## Example
 
 ```javascript
-const displayMetrics = require("display-metrics");
-var report = displayMetrics.getMetrics();
-console.log("Primary monitor:", report.primary);
-console.log("Virtual desktop:", report.virtualScreen);
-console.log("Monitors:", report.monitors);
+import { displayMetrics } from "system";
+
+const metrics = displayMetrics.getMetrics();
+
+console.log("Virtual bounds:", metrics.virtualLeft, metrics.virtualTop, metrics.virtualWidth, metrics.virtualHeight);
+console.log("Primary monitor index:", metrics.primaryIndex);
+console.log("Monitor count:", metrics.count);
+
+for (const monitor of metrics.monitors) {
+    console.log("Monitor:", monitor.monitorName, monitor.deviceName, monitor.screen);
+}
 ```
