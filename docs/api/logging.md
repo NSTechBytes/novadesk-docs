@@ -7,7 +7,7 @@ title: Logging and the print helper
 The global logging system writes messages to the Novadesk log and is accessible from both main and UI scripts.
 
 ::: info Note
-Global logging writes messages to the Novadesk log and is available in both the main and UI scripts.
+Global logging writes messages to the Novadesk log and is available in both the [Main](/guides/script-types.html#main-script-the-brain) and [UI](/guides/script-types.html#ui-script-the-face) scripts.
 :::
 
 #### Table of Contents
