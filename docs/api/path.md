@@ -7,7 +7,7 @@ title: File path utilities via the global path object.
 The global `path` object provides file-path utilities similar to the Node.js `path` module. It is available in the Main script as a global and also accessible via `require("path")`.
 
 ::: info Note
-In the Main script `path` is a global object, no import is needed and is available in both the [Main](/guides/script-types.html#main-script-the-brain) and [UI](/guides/script-types.html#ui-script-the-face) scripts.
+`path` is a global object, no import is needed and is available in both the [Main](/guides/script-types.html#main-script-the-brain) and [UI](/guides/script-types.html#ui-script-the-face) scripts.
 :::
 
 #### Table of Contents

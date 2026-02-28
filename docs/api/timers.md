@@ -6,6 +6,10 @@ title: Timer functions available in Novadesk scripts.
 
 Timing helpers similar to browsers and Node.js. These functions are registered on the global object and are available in both Main and UI scripts.
 
+::: info Note
+`timers` is a global module, no import is needed, and it is available only in [Main script](/guides/script-types.html#main-script-the-brain). It is not available in [UI script](/guides/script-types.html#ui-script-the-face).
+:::
+
 #### Table of Contents
 [[toc]]
 
