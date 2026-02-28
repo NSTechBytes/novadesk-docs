@@ -100,6 +100,21 @@ Shows or hides the Novadesk system tray icon. The setting is persisted.
 ```javascript
 app.hideTrayIcon(false);
 ```
+## Utils
+
+### `app.enableDebugging(enable)`
+
+Enables or disables debugging mode. This can be useful for development purposes to get more detailed log output.
+
+#### Parameters
+
+- **`enable`** (`boolean`): `true` to enable debugging, `false` to disable it.
+
+#### Example
+
+```javascript
+app.enableDebugging(true);
+```
 
 ## Version Info
 

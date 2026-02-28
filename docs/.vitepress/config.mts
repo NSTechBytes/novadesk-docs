@@ -121,7 +121,7 @@ export default defineConfig({
             ],
           },
 
-          { text: "Console", link: "/api/console" },
+          { text: "Logging", link: "/api/logging" },
           { text: "Path", link: "/api/path" },
           { text: "Global Variables", link: "/api/global-variables" },
 

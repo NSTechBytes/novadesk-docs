@@ -1,10 +1,14 @@
 ---
-title: Console logging and the print helper.
+title: Logging and the print helper
 ---
 
-# Console
+# Logging
 
-The global `console` object writes messages to the Novadesk log. It is available in both Main and UI scripts.
+The global logging system writes messages to the Novadesk log and is accessible from both main and UI scripts.
+
+::: info Note
+Global logging writes messages to the Novadesk log and is available in both the main and UI scripts.
+:::
 
 #### Table of Contents
 [[toc]]
@@ -104,11 +108,14 @@ console.debug("tick", { frame: 42 });
 [TimeStamp] [Novadesk] [DEBUG] tick {"frame":42}
 ```
 
----
+::: warning Important
+`console.debug` will show log only when debugging is enabled.
+See the [app.enableDebugging()](/api/modules/novadesk/app.html#app-enabledebugging-enable) method.
+:::
 
 ## `print(...args)`
 
-Global function — alias for `console.log()`.
+Global function alias for `console.log()` and `console.info`.
 
 ### Example
 
