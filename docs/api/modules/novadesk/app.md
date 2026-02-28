@@ -17,7 +17,7 @@ import { app } from 'novadesk';
 
 ## Lifecycle
 
-### `app.reload()`
+### `app.reload()/app.refresh()`
 
 Reloads all active widget scripts.
 
@@ -25,6 +25,7 @@ Reloads all active widget scripts.
 
 ```javascript
 app.reload();
+app.refresh();
 ```
 
 ### `app.exit()`
@@ -35,6 +36,17 @@ Exits the Novadesk application.
 
 ```javascript
 app.exit();
+```
+
+#### app.isFirstRun()
+
+**Description**: Returns `true` on the first launch when the settings file is missing or empty. Returns `false` on normal subsequent launches.
+
+### Example
+```javascript
+// Check whether this is the first run
+const isFirstRun = app.isFirstRun();
+console.log("Is First Run: " + isFirstRun);
 ```
 
 ## Tray
@@ -100,23 +112,109 @@ Shows or hides the Novadesk system tray icon. The setting is persisted.
 ```javascript
 app.hideTrayIcon(false);
 ```
-## Utils
 
-### `app.enableDebugging(enable)`
+## Settings
 
-Enables or disables debugging mode. This can be useful for development purposes to get more detailed log output.
+### `app.saveLogToFile(bool)`
+
+Enables or disables logging to a file (`logs.log`) in the application's AppData directory.
 
 #### Parameters
 
-- **`enable`** (`boolean`): `true` to enable debugging, `false` to disable it.
+- **`bool`**
+  - **Type**: `boolean`
+  - **Description**: `true` to enable file logging, `false` to disable.
 
 #### Example
-
 ```javascript
-app.enableDebugging(true);
+// Enable logging to file
+app.saveLogToFile(true);
 ```
 
-## Version Info
+### `app.enableDebugging(bool)`
+
+Sets the global log level. When enabled, debug-level messages will be visible in the console and log file.
+
+#### Parameters
+
+- **`bool`**
+  - **Type**: `boolean`
+  - **Description**: `true` to enable debug logging, `false` to use standard informational logging.
+
+#### Example
+```javascript
+app.enableDebugging(true);
+console.debug("Detailed diagnostic information");
+```
+
+### `app.disableLogging(bool)`
+
+Completely disables or enables all logging output (both console and file).
+
+#### Parameters
+
+- **`bool`**
+  - **Type**: `boolean`
+  - **Description**: `true` to silence all logs, `false` to resume logging based on other settings.
+
+#### Example
+```javascript
+// Silence all output for production
+app.disableLogging(true);
+```
+
+### `app.hideTrayIcon(bool)`
+
+Dynamically shows or hides the Novadesk icon in the system tray.
+
+#### Parameters
+
+- **`bool`**
+  - **Type**: `boolean`
+  - **Description**: `true` to hide the icon, `false` to show it.
+
+#### Example
+```javascript
+// Run in "stealth" mode
+app.hideTrayIcon(true);
+```
+
+### `app.useHardwareAcceleration(bool)`
+
+Enables or disables Direct2D hardware acceleration.
+
+#### Parameters
+
+- **`bool`**
+  - **Type**: `boolean`
+  - **Description**: `true` to use hardware-accelerated rendering (Default), `false` to use software rendering.
+
+::: info
+Changing this setting requires an **application restart** to take effect.
+:::
+
+#### Example
+```javascript
+// Enable hardware acceleration
+app.useHardwareAcceleration(true);
+```
+
+## Utils
+
+#### app.isPortable()
+
+**Description**: Returns `true` when Novadesk is running in portable mode, otherwise `false`.
+
+::: info
+Portable mode is detected at runtime based on the executable location and whether Novadesk can write in that directory.
+:::
+
+### Example
+```javascript
+// Check whether Novadesk is running in portable mode
+const isPortable = app.isPortable();
+console.log("Is Portable: " + isPortable);
+```
 
 ### `app.getProductVersion()`
 
@@ -166,4 +264,36 @@ Returns the hardcoded Novadesk engine version. This value is constant regardless
 
 ```javascript
 console.log("Novadesk version:", app.getNovadeskVersion());
+```
+### app.getAppDataPath()
+
+**Description**: Returns the absolute path to the Novadesk AppData directory (`%APPDATA%\Novadesk\`). This directory is used for storing persistent settings, logs, and configuration.
+
+### Example
+```javascript
+// Get the path to Novadesk AppData
+const appData = app.getAppDataPath();
+console.log("AppData Path: " + appData);
+```
+
+### app.getSettingsFilePath()
+
+**Description**: Returns the absolute path to the `settings.json` file.
+
+### Example
+```javascript
+// Get the settings file path
+const settingsPath = app.getSettingsFilePath();
+console.log("Settings Path: " + settingsPath);
+```
+
+### app.getLogPath()
+
+**Description**: Returns the absolute path to the current log file (`logs.log`).
+
+### Example
+```javascript
+// Get the log file path
+const logPath = app.getLogPath();
+console.log("Log Path: " + logPath);
 ```
