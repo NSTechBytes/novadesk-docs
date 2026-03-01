@@ -250,6 +250,7 @@ export default defineConfig({
           { text: "Time And Date", link: "/guides/time" },
           { text: "CLI Commands", link: "/guides/cli-commands" },
           { text: "Runtime Mode", link: "/guides/runtime-mode" },
+          { text: "Settings File", link: "/guides/settings-file" },
           {
             text: "Widget Build And Installer",
             link: "/guides/widget-build-and-installer",

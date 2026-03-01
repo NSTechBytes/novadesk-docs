@@ -1,5 +1,5 @@
 ---
-title: Create and manage widget windows with widgetWindow.
+title: Create and manage widget windows with widgetWindow
 ---
 
 # widgetWindow
@@ -53,8 +53,6 @@ const win = new widgetWindow({
   snapEdges: true
 });
 ```
-
----
 
 ## Window Methods
 
@@ -112,8 +110,6 @@ Returns the internal native Widget pointer as a number. Primarily useful for add
 
 Returns the window title string.
 
----
-
 ## Context Menu
 
 ### `win.setContextMenu(items)`
@@ -164,8 +160,6 @@ Controls whether the built-in default context menu entries are shown.
 
 - **`show`** (`boolean`): `true` to show, `false` to hide.
 
----
-
 ## Events
 
 ### `win.on(eventName, callback)`
@@ -177,21 +171,23 @@ Registers an event listener. Returns the widget instance for chaining.
 - **`eventName`** (`string`): Event name.
 - **`callback`** (`function`): Handler receiving a [Mouse Event Object](/api/global-variables#mouse-event-object) for mouse events.
 
-#### Available Events
+Available Events
 
-- **`show`** — Widget became visible.
-- **`hide`** — Widget was hidden.
-- **`focus`** — Widget gained keyboard focus.
-- **`unFocus`** — Widget lost keyboard focus.
-- **`move`** — Widget position changed.
-- **`refresh`** — Widget UI was refreshed.
-- **`close`** — Widget is about to close.
-- **`closed`** — Widget has been destroyed.
-- **`mouseOver`** — Mouse entered the widget area.
-- **`mouseMove`** — Mouse moved over the widget.
-- **`mouseDown`** — Any mouse button pressed.
-- **`mouseUp`** — Any mouse button released.
-- **`mouseLeave`** — Mouse left the widget area.
+Event Name   | Description
+-------------|-------------------------------------------
+show         | Widget became visible.
+focus        | Widget gained keyboard focus.
+mouseOver    | Mouse entered the widget area.
+mouseMove    | Mouse moved over the widget.
+mouseDown    | Any mouse button pressed.
+mouseUp      | Any mouse button released.
+mouseLeave   | Mouse left the widget area.
+unFocus      | Widget lost keyboard focus.
+move         | Widget position changed.
+refresh      | Widget UI was refreshed.
+close        | Widget is about to close.
+closed       | Widget has been destroyed.
+hide         | Widget was hidden.
 
 #### Example
 
@@ -204,8 +200,6 @@ win.on("mouseMove", (e) => {
 win.on("show", () => console.log("Widget visible"));
 win.on("close", () => console.log("Widget closing"));
 ```
-
----
 
 ## Full Example
 

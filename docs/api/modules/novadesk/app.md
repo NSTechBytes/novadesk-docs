@@ -11,6 +11,9 @@ The `app` object provides methods to control the Novadesk application: reloading
 ```javascript
 import { app } from 'novadesk';
 ```
+::: info Note
+Available only in the [Main script](/guides/script-types.html#main-script-the-brain).
+:::
 
 #### Table of Contents
 [[toc]]
@@ -38,11 +41,11 @@ Exits the Novadesk application.
 app.exit();
 ```
 
-#### app.isFirstRun()
+### `app.isFirstRun()`
 
 **Description**: Returns `true` on the first launch when the settings file is missing or empty. Returns `false` on normal subsequent launches.
 
-### Example
+#### Example
 ```javascript
 // Check whether this is the first run
 const isFirstRun = app.isFirstRun();
@@ -189,7 +192,7 @@ Enables or disables Direct2D hardware acceleration.
   - **Type**: `boolean`
   - **Description**: `true` to use hardware-accelerated rendering (Default), `false` to use software rendering.
 
-::: info
+::: info Note
 Changing this setting requires an **application restart** to take effect.
 :::
 
@@ -201,15 +204,15 @@ app.useHardwareAcceleration(true);
 
 ## Utils
 
-#### app.isPortable()
+### `app.isPortable()`
 
 **Description**: Returns `true` when Novadesk is running in portable mode, otherwise `false`.
 
-::: info
+::: info Note
 Portable mode is detected at runtime based on the executable location and whether Novadesk can write in that directory.
 :::
 
-### Example
+#### Example
 ```javascript
 // Check whether Novadesk is running in portable mode
 const isPortable = app.isPortable();
@@ -224,7 +227,7 @@ Returns the product version from the executable metadata.
 
 - **Type**: `string`
 
-::: info
+::: info Note
 Standalone widget applications built with `nwm` report the version from `meta.json`.
 :::
 
@@ -242,7 +245,7 @@ Returns the file version from the executable metadata.
 
 - **Type**: `string`
 
-::: info
+::: info Note
 Standalone widget applications built with `nwm` report the value from `meta.json`.
 :::
 
@@ -265,33 +268,33 @@ Returns the hardcoded Novadesk engine version. This value is constant regardless
 ```javascript
 console.log("Novadesk version:", app.getNovadeskVersion());
 ```
-### app.getAppDataPath()
+### `app.getAppDataPath()`
 
 **Description**: Returns the absolute path to the Novadesk AppData directory (`%APPDATA%\Novadesk\`). This directory is used for storing persistent settings, logs, and configuration.
 
-### Example
+#### Example
 ```javascript
 // Get the path to Novadesk AppData
 const appData = app.getAppDataPath();
 console.log("AppData Path: " + appData);
 ```
 
-### app.getSettingsFilePath()
+### `app.getSettingsFilePath()`
 
 **Description**: Returns the absolute path to the `settings.json` file.
 
-### Example
+#### Example
 ```javascript
 // Get the settings file path
 const settingsPath = app.getSettingsFilePath();
 console.log("Settings Path: " + settingsPath);
 ```
 
-### app.getLogPath()
+### `app.getLogPath()`
 
 **Description**: Returns the absolute path to the current log file (`logs.log`).
 
-### Example
+#### Example
 ```javascript
 // Get the log file path
 const logPath = app.getLogPath();
