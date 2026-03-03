@@ -23,7 +23,7 @@ Creates and displays a new widget window.
 
 #### Options
 
-- **`id`** (`string`, default: `"widget"`): Unique identifier. Saved settings are loaded by this ID.
+- **`id`** (`string`, default: `""`): Unique identifier. Saved settings are loaded by this ID.
 - **`width`** (`number`): Window width in pixels.
 - **`height`** (`number`): Window height in pixels.
 - **`x`** (`number`): Horizontal position.
@@ -36,8 +36,13 @@ Creates and displays a new widget window.
 - **`keepOnScreen`** (`boolean`, default: `false`): Prevent the window from being dragged off-screen.
 - **`snapEdges`** (`boolean`, default: `true`): Snap to screen edges and other widgets when dragging.
 - **`show`** (`boolean`, default: `true`): Show the window immediately after creation.
-- **`zPos`** (`number`, default: `-1`): Z-order position.
-
+- **`zPos`** (`string`, default: `"normal"`): Z-order position.
+  - **`ontopmost`**: Remains visible even when showing the desktop (`Win + D`). Stays above all other windows.
+  - **`ontop`**: Remains visible when showing the desktop. Sits above normal application windows but below other `ontopmost` widgets. Clicking brings it to the front among other widgets with the same setting.
+  - **`normal`**: Remains visible when showing the desktop. Clicking brings it above other normal windows and widgets.
+  - **`onbottom`**: Hidden when showing the desktop. Sits behind all application windows. Clicking does not change its stacking order among other `onbottom` widgets.
+  - **`ondesktop`**: Remains visible when showing the desktop. Clicking does not change its stacking order relative to normal windows. Recommended for wallpaper-style widgets.
+  
 #### Example
 
 ```javascript
