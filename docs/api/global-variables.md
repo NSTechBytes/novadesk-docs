@@ -4,7 +4,7 @@ title: Global variables available in Novadesk scripts.
 
 # Global Variables
 
-Novadesk injects several global variables into every script. Some are shared between Main and UI scripts, while others are context-specific.
+Novadesk injects several globals into scripts. Some are available in both Main and UI scripts, while others are context-specific.
 
 #### Table of Contents
 [[toc]]
@@ -14,13 +14,12 @@ Novadesk injects several global variables into every script. Some are shared bet
 - **Type**: `string`
 - **Available in**: Main script, UI script
 
-The absolute path to the directory containing the current script file.
+Absolute directory path of the current script file.
 
 ### Example
 
 ```javascript
-const iconPath = path.join(__dirname, "assets", "icon.png");
-console.log(iconPath);
+console.log(__dirname);
 ```
 
 ## `__filename`
@@ -28,98 +27,62 @@ console.log(iconPath);
 - **Type**: `string`
 - **Available in**: Main script, UI script
 
-The absolute path to the current script file.
+Absolute path to the current script file.
 
 ### Example
 
 ```javascript
-console.log("Running:", __filename);
-console.log("Directory:", path.dirname(__filename));
-console.log("Extension:", path.extname(__filename));
+console.log(__filename);
 ```
 
-## `path`
+## `__widgetDir`
 
-- **Type**: `object`
-- **Available in**: Main script
-
-File-path utility object (similar to Node.js `path` module). Provides `join`, `basename`, `dirname`, `extname`, `isAbsolute`, `normalize`, `relative`, `parse`, and `format`.
-
-See [Path](/api/path) for full documentation.
-
-## `console`
-
-- **Type**: `object`
+- **Type**: `string`
 - **Available in**: Main script, UI script
 
-Logging object with `log`, `info`, `warn`, `error`, and `debug` methods. A global `print()` alias for `console.log()` is also available.
+Absolute path to the Widgets root directory.
 
-See [Console](/api/console) for full documentation.
+### Example
 
-## `ipcMain`
-
-- **Type**: `object`
-- **Available in**: Main script only
-
-Inter-process communication object for the Main script. See [IPC](/api/ipc) for full documentation.
-
-## `ipcRenderer`
-
-- **Type**: `object`
-- **Available in**: UI script only
-
-Inter-process communication object for UI scripts. See [IPC](/api/ipc) for full documentation.
-
-## `ui`
-
-- **Type**: `object`
-- **Available in**: UI script only
-
-The widget UI bridge for adding and updating elements. See [UI Elements](/api/win/win-object) for full documentation.
-
----
+```javascript
+console.log(__widgetDir);
+```
 
 ## Mouse Event Object
 
-Widget event callbacks and element mouse actions receive an event object with the following properties:
+Widget callbacks and element mouse handlers receive an event object with:
 
-### `clientX`, `clientY`
-
-- **Type**: `number`
-
-Mouse cursor coordinates in the widget's client space.
-
-### `screenX`, `screenY`
+## `__clientX`, `__clientY`
 
 - **Type**: `number`
 
-Mouse cursor coordinates in screen space.
+Mouse coordinates in widget client space.
 
-### `offsetX`, `offsetY`
+## `__screenX`, `__screenY`
+
+- **Type**: `number`
+
+Mouse coordinates in screen space.
+
+## `__offsetX`, `__offsetY`
 
 - **Type**: `number`
 
-Position relative to the target area. For widget-level events this is relative to the widget client area; for element callbacks it is relative to the element.
+Offset relative to the target region.
 
-### `offsetXPercent`, `offsetYPercent`
+## `__offsetXPercent`, `__offsetYPercent`
 
 - **Type**: `number`
-- **Range**: Typically `0`–`100`; may exceed bounds during `mouseLeave`.
+- **Range**: Usually `0` to `100`; may be outside this range during `mouseLeave`.
 
-Percentage-based offset within the target area.
-
-### `widgetId`
-
-- **Type**: `string`
-
-The ID of the widget that received the event.
+Percentage offsets within the target region.
 
 ### Example
 
 :::tabs
 == index.js
 ```javascript
-import { widgetWindow } from 'novadesk';
+import { widgetWindow } from "novadesk";
 
 const win = new widgetWindow({
   id: "demo",
@@ -140,8 +103,10 @@ win.on("mouseMove", (e) => {
 ui.addShape({
   id: "box",
   shapeType: "rectangle",
-  x: 16, y: 16,
-  width: 260, height: 90,
+  x: 16,
+  y: 16,
+  width: 260,
+  height: 90,
   fillColor: "rgba(35,35,35,220)",
   onMouseOver: (e) => {
     console.log("hover:", e.clientX, e.clientY);
