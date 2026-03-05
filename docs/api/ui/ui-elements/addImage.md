@@ -15,7 +15,7 @@ ui.addImage(options);
 [[toc]]
 
 ## General Element Options
-Refer to [General Elements Options](/api/ui/ui-elements-api/general-elements-options) for layout, visibility, and interactivity controls.
+Refer to [General Elements Options](/api/ui/ui-elements/general-elements-options) for layout, visibility, and interactivity controls.
 
 ## Image Element Options
 

@@ -106,22 +106,22 @@ export default defineConfig({
                 text: "General Elements Options",
                 link: "/api/ui/general-elements-options",
               },
-              { text: "addBar", link: "/api/ui/addBar" },
+              { text: "addBar", link: "/api/ui/ui-elements/addBar" },
               {
                 text: "addShape",
-                link: "/api/ui/addShape",
+                link: "/api/ui/ui-elements/addShape",
               },
               {
                 text: "addImage",
-                link: "/api/ui/addImage",
+                link: "/api/ui/ui-elements/addImage",
               },
               {
                 text: "addRoundLine",
-                link: "/api/ui/addRoundLine",
+                link: "/api/ui/ui-elements/addRoundLine",
               },
               {
                 text: "addText",
-                link: "/api/ui/addText",
+                link: "/api/ui/ui-elements/addText",
               },
             ],
           },

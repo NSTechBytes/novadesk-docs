@@ -30,7 +30,7 @@ Creates a text element inside the UI script.
   - **Type**: `Object`
   - **Description**: Text element configuration. Requires a unique `id`.
 
-Refer to [addText Options](/api/ui/addText) for full configuration details.
+Refer to [addText Options](/api/ui/ui-elements/addText) for full configuration details.
 
 ### `ui.addImage(options)`
 
@@ -40,7 +40,7 @@ Adds an image element.
   - **Type**: `Object`
   - **Description**: Image element configuration. Requires a unique `id`.
 
-Refer to [addImage Options](/api/ui/addImage).
+Refer to [addImage Options](/api/ui/ui-elements/addImage).
 
 ### `ui.addBar(options)`
 
@@ -50,7 +50,7 @@ Adds a bar element.
   - **Type**: `Object`
   - **Description**: Bar element configuration. Requires a unique `id`.
 
-Refer to [addBar Options](/api/ui/addBar).
+Refer to [addBar Options](/api/ui/ui-elements/addBar).
 
 ### `ui.addRoundLine(options)`
 
@@ -60,7 +60,7 @@ Adds a roundline element.
   - **Type**: `Object`
   - **Description**: RoundLine configuration. Requires a unique `id`.
 
-See [addRoundLine Options](/api/ui/addRoundLine).
+See [addRoundLine Options](/api/ui/ui-elements/addRoundLine).
 
 ### `ui.addShape(options)`
 
@@ -70,7 +70,7 @@ Adds a shape element.
   - **Type**: `Object`
   - **Description**: Shape configuration. Requires a unique `id`.
 
-Refer to [addShape Options](/api/ui/addShape).
+Refer to [addShape Options](/api/ui/ui-elements/addShape).
 
 ### `win.setElementProperties(id, props)`
 

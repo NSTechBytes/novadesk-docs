@@ -14,7 +14,7 @@ ui.addShape(options);
 
 ## Shape Options
 
-The shape element inherits all [General Elements Options](/api/ui/ui-elements-api/general-elements-options) and adds the following fields.
+The shape element inherits all [General Elements Options](/api/ui/ui-elements/general-elements-options) and adds the following fields.
 
 ### `type`
 
