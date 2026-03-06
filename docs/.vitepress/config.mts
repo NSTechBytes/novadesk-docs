@@ -101,28 +101,36 @@ export default defineConfig({
               {
                 text: "UI Object Methods",
                 link: "/api/ui/ui-object",
+                collapsed: true,
+                items: []
               },
-              {
-                text: "General Elements Options",
-                link: "/api/ui/general-elements-options",
+              { 
+                text: "UI Elements", 
+                collapsed: true,
+                items: [
+                  {
+                    text: "General Options",
+                    link: "/api/ui/general-elements-options",
+                  },
+                  { text: "addBar", link: "/api/ui/ui-elements/addBar" },
+                  {
+                    text: "addShape",
+                    link: "/api/ui/ui-elements/addShape",
+                  },
+                  {
+                    text: "addImage",
+                    link: "/api/ui/ui-elements/addImage",
+                  },
+                  {
+                    text: "addRoundLine",
+                    link: "/api/ui/ui-elements/addRoundLine",
+                  },
+                  {
+                    text: "addText",
+                    link: "/api/ui/ui-elements/addText",
+                  },]
               },
-              { text: "addBar", link: "/api/ui/ui-elements/addBar" },
-              {
-                text: "addShape",
-                link: "/api/ui/ui-elements/addShape",
-              },
-              {
-                text: "addImage",
-                link: "/api/ui/ui-elements/addImage",
-              },
-              {
-                text: "addRoundLine",
-                link: "/api/ui/ui-elements/addRoundLine",
-              },
-              {
-                text: "addText",
-                link: "/api/ui/ui-elements/addText",
-              },
+
             ],
           },
           {
@@ -130,6 +138,10 @@ export default defineConfig({
             collapsed: true,
             link: "/api/modules/modules",
             items: [
+              {
+                text: "fs",
+                link: "/api/modules/fs",
+              },
               {
                 text: "novadesk",
                 collapsed: true,
