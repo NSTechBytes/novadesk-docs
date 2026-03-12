@@ -4,23 +4,23 @@ title: Tray
 
 # Tray
 
-Use the `Tray` class to control the system tray icon, its context menu, and tray events.
+Use the `tray` constructor to control the system tray icon, its context menu, and tray events.
 
 ```javascript
-import { Tray } from "novadesk";
+import { tray } from "novadesk";
 
-const tray = new Tray("C:/path/to/icon.ico");
+const tray = new tray("C:/path/to/icon.ico");
 ```
 
 
 ## Constructor
 
-### `new Tray(image)`
+### `new tray(image)`
 Creates a tray instance. `image` is an optional icon path.
 
 ```javascript
-const tray = new Tray();
-const trayWithIcon = new Tray("C:/path/to/icon.ico");
+const tray = new tray();
+const trayWithIcon = new tray("C:/path/to/icon.ico");
 ```
 
 ## Methods
