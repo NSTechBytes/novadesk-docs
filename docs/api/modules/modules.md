@@ -13,7 +13,7 @@ Use modules to access system features and Novadesk runtime features from your sc
 Import modules with ES module syntax:
 
 ```javascript
-import { app, widgetWindow } from "novadesk";
+import { app, Tray, widgetWindow } from "novadesk";
 import { cpu, memory, webFetch } from "system";
 ```
 
@@ -66,7 +66,8 @@ File-system APIs for reading/writing files and managing directories.
 ### `novadesk` module
 Runtime and app-control APIs.
 
-- [app](/api/modules/novadesk/app.html): App lifecycle, tray, logging, version and paths.
+- [app](/api/modules/novadesk/app.html): App lifecycle, logging, version and paths.
+- [tray](/api/modules/novadesk/tray.html): System tray icon class, menu control, and events.
 - [widgetWindow](/api/modules/novadesk/widgetWindow.html): Create and manage widget windows.
 - [addon](/api/modules/novadesk/addon.html): Load and manage native C++ DLL addons.
 
