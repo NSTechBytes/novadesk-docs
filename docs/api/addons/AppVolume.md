@@ -3,29 +3,46 @@ title: Control per-application audio sessions with the AppVolume addon.
 ---
 
 # AppVolume Addon
-Manage per-application audio session volume and mute state in Novadesk via the AppVolume addon.
+AppVolume lets you read and control audio sessions for individual apps on Windows. It is great for widgets, stream tools, and quick controls where you want to show or change an app volume without touching the master volume.
 
-The `appVolume` API is provided by the AppVolume addon (not the `system` module).
+This API comes from the AppVolume addon, not the `system` module.
 
 ```javascript
 import { addon } from "novadesk";
-const appVolumeAddon = addon.load("path/to/AppVolume.dll");
-const { appVolume } = appVolumeAddon;
+const appVolume = addon.load("path/to/AppVolume.dll");
 ```
 
 #### Table of Contents
 [[toc]]
 
-## `appVolume.listSessions()`
+## Quick Start
+```javascript
+import { addon } from "novadesk";
+const appVolume = addon.load("path/to/AppVolume.dll");
 
-Returns active output audio sessions.
+const sessions = appVolume.listSessions();
+console.log("sessions:", sessions.length);
+
+if (sessions.length > 0) {
+  const s = sessions[0];
+  console.log("first:", s.processName, s.volume, s.muted);
+
+  appVolume.setVolumeByPid(s.pid, 0.5);
+  appVolume.setMuteByPid(s.pid, true);
+}
+```
+
+## What Is a Session
+Each playing (or recently used) audio source in Windows creates an audio session. A session typically maps to a process, but some apps may create multiple sessions. The API returns each session and lets you change volume or mute for all matching sessions by PID or process name.
+
+## `listSessions()`
+Returns output audio sessions.
 
 ### Return Value
-
 - **Type**: `object[]`
 - **Description**: Array of session objects with:
   - **`pid`** (`number`): Process ID.
-  - **`processName`** (`string`): Process file name.
+  - **`processName`** (`string`): Process file name (for example `chrome.exe`).
   - **`fileName`** (`string`): Executable file name.
   - **`filePath`** (`string`): Full executable path when available.
   - **`iconPath`** (`string`): Extracted `.ico` path when available (cached in the system temp directory), otherwise empty string.
@@ -36,123 +53,85 @@ Returns active output audio sessions.
 
 If session enumeration fails, an empty array is returned.
 
-## `appVolume.getByPid(pid)`
-
-Gets aggregated volume details for all active sessions matching a PID.
+## `getByPid(pid)`
+Gets aggregated volume details for all sessions matching a PID.
 
 ### Parameters
-
-- **`pid`**
-  - **Type**: `number`
-  - **Description**: Target process ID. Must be greater than `0`.
+- **`pid`** (`number`): Target process ID. Must be greater than `0`.
 
 ### Return Value
-
 - **Type**: `object | null`
 - **Description**:
-  - Returns `null` when no active session matches the PID.
+  - Returns `null` when no session matches the PID.
   - Otherwise returns:
     - **`volume`** (`number`): Average volume of matching sessions (`0.0-1.0`).
     - **`muted`** (`boolean`): `true` if any matching session is muted.
     - **`peak`** (`number`): Maximum peak across matching sessions.
 
-## `appVolume.getByProcessName(name)`
-
-Gets aggregated volume details for all active sessions matching a process name.
+## `getByProcessName(name)`
+Gets aggregated volume details for all sessions matching a process name.
 
 ### Parameters
-
-- **`name`**
-  - **Type**: `string`
-  - **Description**: Process name match (case-insensitive), usually executable file name like `"chrome.exe"`.
+- **`name`** (`string`): Process name match (case-insensitive), usually executable file name like `"chrome.exe"`.
 
 ### Return Value
-
 - **Type**: `object | null`
 - **Description**: Same shape and behavior as `getByPid()`.
 
-## `appVolume.setVolumeByPid(pid, volume01)`
-
-Sets volume for all active sessions matching a PID.
-
-### Parameters
-
-- **`pid`**
-  - **Type**: `number`
-  - **Description**: Target process ID. Must be greater than `0`.
-
-- **`volume01`**
-  - **Type**: `number`
-  - **Description**: Target volume in `0.0-1.0`. Values outside this range are clamped.
-
-### Return Value
-
-- **Type**: `boolean`
-- **Description**: `true` if at least one matching active session was updated; otherwise `false`.
-
-## `appVolume.setVolumeByProcessName(name, volume01)`
-
-Sets volume for all active sessions matching a process name.
+## `setVolumeByPid(pid, volume01)`
+Sets volume for all sessions matching a PID.
 
 ### Parameters
-
-- **`name`**
-  - **Type**: `string`
-  - **Description**: Process name match (case-insensitive).
-
-- **`volume01`**
-  - **Type**: `number`
-  - **Description**: Target volume in `0.0-1.0`. Values outside this range are clamped.
+- **`pid`** (`number`): Target process ID. Must be greater than `0`.
+- **`volume01`** (`number`): Target volume in `0.0-1.0`. Values outside this range are clamped.
 
 ### Return Value
-
 - **Type**: `boolean`
-- **Description**: `true` if at least one matching active session was updated; otherwise `false`.
+- **Description**: `true` if at least one matching session was updated; otherwise `false`.
 
-## `appVolume.setMuteByPid(pid, mute)`
-
-Sets mute state for all active sessions matching a PID.
+## `setVolumeByProcessName(name, volume01)`
+Sets volume for all sessions matching a process name.
 
 ### Parameters
-
-- **`pid`**
-  - **Type**: `number`
-  - **Description**: Target process ID. Must be greater than `0`.
-
-- **`mute`**
-  - **Type**: `boolean`
-  - **Description**: `true` to mute, `false` to unmute.
+- **`name`** (`string`): Process name match (case-insensitive).
+- **`volume01`** (`number`): Target volume in `0.0-1.0`. Values outside this range are clamped.
 
 ### Return Value
-
 - **Type**: `boolean`
-- **Description**: `true` if at least one matching active session was updated; otherwise `false`.
+- **Description**: `true` if at least one matching session was updated; otherwise `false`.
 
-## `appVolume.setMuteByProcessName(name, mute)`
-
-Sets mute state for all active sessions matching a process name.
+## `setMuteByPid(pid, mute)`
+Sets mute state for all sessions matching a PID.
 
 ### Parameters
-
-- **`name`**
-  - **Type**: `string`
-  - **Description**: Process name match (case-insensitive).
-
-- **`mute`**
-  - **Type**: `boolean`
-  - **Description**: `true` to mute, `false` to unmute.
+- **`pid`** (`number`): Target process ID. Must be greater than `0`.
+- **`mute`** (`boolean`): `true` to mute, `false` to unmute.
 
 ### Return Value
-
 - **Type**: `boolean`
-- **Description**: `true` if at least one matching active session was updated; otherwise `false`.
+- **Description**: `true` if at least one matching session was updated; otherwise `false`.
 
-## Example
+## `setMuteByProcessName(name, mute)`
+Sets mute state for all sessions matching a process name.
 
+### Parameters
+- **`name`** (`string`): Process name match (case-insensitive).
+- **`mute`** (`boolean`): `true` to mute, `false` to unmute.
+
+### Return Value
+- **Type**: `boolean`
+- **Description**: `true` if at least one matching session was updated; otherwise `false`.
+
+## Beginner Tips
+- Start by calling `listSessions()` and log the results. It helps you confirm process names and PIDs.
+- Some apps only create a session when audio is actually playing.
+- Use `setVolumeByPid` when you know the PID is stable, and `setVolumeByProcessName` for quick matching.
+- If you want to show icons, use `iconPath` and provide a fallback image for missing icons.
+
+## Example Usage
 ```javascript
 import { addon } from "novadesk";
-const appVolumeAddon = addon.load("path/to/AppVolume.dll");
-const { appVolume } = appVolumeAddon;
+const appVolume = addon.load("path/to/AppVolume.dll");
 
 const sessions = appVolume.listSessions();
 console.log("sessions:", sessions.length);
@@ -172,3 +151,10 @@ if (sessions.length > 0) {
     console.log("aggregated:", stats);
 }
 ```
+
+## Download addon ⬇️
+
+Download the latest version of the add-on and discover what’s possible with our brilliant widget example.
+
+<CustomButton href="https://github.com/Official-Novadesk/AppVolume/releases/download/v1.0.0.0/AppVolume_v1.0.0.zip" text="Download" />
+<CustomButton href="https://github.com/Official-Novadesk/AppVolume" theme="outline">View on Github</CustomButton>

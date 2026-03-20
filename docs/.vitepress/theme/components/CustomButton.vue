@@ -38,6 +38,11 @@ const classes = computed(() => {
   border-radius: 20px;
   font-size: 14px;
   text-decoration: none !important;
+  margin-right: 12px;
+}
+
+.custom-button:last-child {
+  margin-right: 0;
 }
 
 .custom-button--filled {
@@ -77,10 +82,5 @@ const classes = computed(() => {
   color: #A8B1FF;
   border-color: #A8B1FF;
 }
-
-
-
-
-
 
 </style>
