@@ -67,7 +67,7 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "Introduction", link: "/introduction/getting-started" },
-      { text: "API", link: "/api/ui/general-elements-options" },
+      { text: "API", link: "/api/logging" },
       { text: "Guides", link: "/guides/script-types" },
     ],
 
@@ -148,6 +148,7 @@ export default defineConfig({
                 items: [
                   { text: "addon", link: "/api/modules/novadesk/addon" },
                   { text: "app", link: "/api/modules/novadesk/app" },
+                  { text: "tray", link: "/api/modules/novadesk/tray" },
                   {
                     text: "widgetWindow",
                     link: "/api/modules/novadesk/widgetWindow",
@@ -177,10 +178,6 @@ export default defineConfig({
                   { text: "json", link: "/api/modules/system/json" },
                   { text: "memory", link: "/api/modules/system/memory" },
                   { text: "network", link: "/api/modules/system/network" },
-                  {
-                    text: "nowPlaying",
-                    link: "/api/modules/system/nowPlaying",
-                  },
                   { text: "power", link: "/api/modules/system/power" },
                   {
                     text: "registry",

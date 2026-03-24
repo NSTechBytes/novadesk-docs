@@ -52,10 +52,6 @@ const isFirstRun = app.isFirstRun();
 console.log("Is First Run: " + isFirstRun);
 ```
 
-## Tray
-Tray APIs are now provided by the `tray` module.
-See [tray](/api/modules/novadesk/tray.html).
-
 ## Settings
 
 ### `app.saveLogToFile(bool)`
