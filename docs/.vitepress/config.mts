@@ -113,6 +113,7 @@ export default defineConfig({
                     link: "/api/ui/ui-elements/general-elements-options",
                   },
                   { text: "addBar", link: "/api/ui/ui-elements/addBar" },
+                  { text: "addLine", link: "/api/ui/ui-elements/addLine" },
                   {
                     text: "addShape",
                     link: "/api/ui/ui-elements/addShape",
