@@ -115,12 +115,28 @@ export default defineConfig({
                   { text: "addBar", link: "/api/ui/ui-elements/addBar" },
                   { text: "addLine", link: "/api/ui/ui-elements/addLine" },
                   {
+                    text: "addHistogram",
+                    link: "/api/ui/ui-elements/addHistogram",
+                  },
+                  {
                     text: "addShape",
                     link: "/api/ui/ui-elements/addShape",
                   },
                   {
                     text: "addImage",
                     link: "/api/ui/ui-elements/addImage",
+                  },
+                  {
+                    text: "addButton",
+                    link: "/api/ui/ui-elements/addButton",
+                  },
+                  {
+                    text: "addBitmap",
+                    link: "/api/ui/ui-elements/addBitmap",
+                  },
+                  {
+                    text: "addRotator",
+                    link: "/api/ui/ui-elements/addRotator",
                   },
                   {
                     text: "addRoundLine",

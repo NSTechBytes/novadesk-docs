@@ -1,5 +1,5 @@
 ---
-title: Line element options, scaling behavior, and examples.
+title: Line element options and example usage.
 ---
 
 # Line Element
@@ -36,6 +36,18 @@ Minimum is `1`. Values lower than `1` are clamped to `1`.
 
 ::: info
 Minimum is `1.0`.
+:::
+
+### `maxPoints`
+
+- **Type**: `number`
+- **Default**: `0`
+- **Description**: Fixed graph capacity for spacing and history trimming.
+
+::: info
+- `0` disables capacity limiting.
+- Negative values are clamped to `0`.
+- When set above `0`, older points are trimmed to keep only the latest `maxPoints` values.
 :::
 
 ### `horizontalLines`
@@ -132,6 +144,10 @@ For more lines, continue the same pattern:
 - **Type**: `number[]`
 - **Description**: The points for one line.
 
+::: info
+Each `data*` array accepts one or more values, but at least 2 points are needed to render a visible segment.
+:::
+
 ### `lineColor*`
 
 - **Type**: `string`
@@ -153,6 +169,7 @@ Invalid non-finite scale values fallback to `1.0`.
 - `ui.addLine()` requires an options object.
 - If `id` already exists, the previous element is replaced.
 - A line with fewer than 2 points is not drawn.
+- `lineCount` controls how many `data*`, `lineColor*`, and `lineScale*` slots are active.
 - If you skip `data2`/`data3` etc., those extra lines stay empty.
 
 ## Beginner Tips
