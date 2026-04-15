@@ -5,7 +5,7 @@ title: Bitmap element options and example usage.
 # Bitmap Element
 The Bitmap element renders frame-based image strips for meters, digits, and sprite-like indicators.
 
-Create one with `ui.addBitmap()` and the shared [General Elements Options](/api/ui/ui-elements/general-elements-options).
+Create one with `ui.addBitmap()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addBitmap(options);
@@ -152,3 +152,4 @@ ui.addBitmap({
 });
 ```
 :::
+

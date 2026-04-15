@@ -5,7 +5,7 @@ title: Histogram element options and example usage.
 # Histogram Element
 The Histogram element draws compact bar-by-bar graphs from one or two data arrays.
 
-Create one with `ui.addHistogram()` and the shared [General Elements Options](/api/ui/ui-elements/general-elements-options).
+Create one with `ui.addHistogram()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addHistogram(options);
@@ -133,3 +133,4 @@ ui.addHistogram({
 });
 ```
 :::
+

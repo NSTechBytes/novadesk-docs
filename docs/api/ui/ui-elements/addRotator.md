@@ -5,7 +5,7 @@ title: Rotator element options and example usage.
 # Rotator Element
 The Rotator element rotates an image based on a value range or remainder cycle.
 
-Create one with `ui.addRotator()` and the shared [General Elements Options](/api/ui/ui-elements/general-elements-options).
+Create one with `ui.addRotator()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addRotator(options);
@@ -120,3 +120,4 @@ ui.addRotator({
 });
 ```
 :::
+

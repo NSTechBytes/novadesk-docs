@@ -109,8 +109,12 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
-                    text: "General Options",
-                    link: "/api/ui/ui-elements/general-elements-options",
+                    text: "General Element Options",
+                    link: "/api/ui/ui-elements/general-options/general-elements-options",
+                  },
+                  {
+                    text: "General Image Options",
+                    link: "/api/ui/ui-elements/general-options/general-image-options",
                   },
                   { text: "addBar", link: "/api/ui/ui-elements/addBar" },
                   { text: "addLine", link: "/api/ui/ui-elements/addLine" },
@@ -263,3 +267,4 @@ export default defineConfig({
     socialLinks: [{ icon: "github", link: "https://novadesk.pages.dev/" }],
   },
 });
+
