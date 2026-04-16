@@ -224,6 +224,7 @@ export default defineConfig({
               { text: "AppVolume", link: "/api/addons/AppVolume" },
               { text: "AudioLevel", link: "/api/addons/AudioLevel" },
               { text: "Brightness", link: "/api/addons/Brightness" },
+              { text: "BlurBehind", link: "/api/addons/BlurBehind" },
               { text: "Hotkey", link: "/api/addons/Hotkey" },
               { text: "InputBox", link: "/api/addons/InputBox" },
               { text: "NowPlaying", link: "/api/addons/NowPlaying" },
