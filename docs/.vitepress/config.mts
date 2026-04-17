@@ -99,6 +99,12 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: "UI Object Methods",
+                link: "/api/ui/ui-object",
+                collapsed: true,
+                items: []
+              },
+              {
                 text: "General Options",
                 items: [
                   {
@@ -112,21 +118,16 @@ export default defineConfig({
                 ],
               },
               {
-                text: "UI Object Methods",
-                link: "/api/ui/ui-object",
-                collapsed: true,
-                items: []
-              },
-              {
                 text: "UI Elements",
                 collapsed: true,
                 items: [
-                  { text: "addBar", link: "/api/ui/ui-elements/addBar" },
-                  { text: "addLine", link: "/api/ui/ui-elements/addLine" },
                   {
                     text: "addAreaGraph",
                     link: "/api/ui/ui-elements/addAreaGraph",
                   },
+                  { text: "addBar", link: "/api/ui/ui-elements/addBar" },
+                  { text: "addLine", link: "/api/ui/ui-elements/addLine" },
+
                   {
                     text: "addHistogram",
                     link: "/api/ui/ui-elements/addHistogram",
