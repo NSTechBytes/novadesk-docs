@@ -1,6 +1,7 @@
 # Changelog
 
-## Unreleased
+## [0.9.9.0-beta] - 2026-07-04
+###### 📅 04th July, 2026
 
 ### Added
 
