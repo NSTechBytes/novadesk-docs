@@ -205,16 +205,36 @@ if (route) {
   color: var(--vp-c-text-2);
 }
 
-/* Format any paragraph blocks inside the slot to have no extra margin */
+/* Paragraphs */
 .property-box__body :deep(p) {
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
-.property-box__body :deep(p + p) {
-  margin-top: 8px;
+.property-box__body :deep(p:last-child) {
+  margin-bottom: 0;
 }
 
-/* Style inline code inside the description */
+/* Headings inside slot */
+.property-box__body :deep(h3),
+.property-box__body :deep(h4),
+.property-box__body :deep(h5) {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--vp-c-text-3);
+  margin: 16px 0 8px 0;
+  padding: 0;
+  border: none;
+}
+
+.property-box__body :deep(h3:first-child),
+.property-box__body :deep(h4:first-child),
+.property-box__body :deep(h5:first-child) {
+  margin-top: 0;
+}
+
+/* Inline code */
 .property-box__body :deep(code) {
   font-family: var(--vp-font-family-mono);
   background-color: var(--vp-c-bg-mute);
@@ -223,5 +243,59 @@ if (route) {
   font-size: 0.9em;
   color: var(--vp-c-text-1);
   border: 1px solid var(--vp-c-divider);
+}
+
+/* Code blocks (fenced code) */
+.property-box__body :deep(div[class*="language-"]) {
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.property-box__body :deep(div[class*="language-"]:last-child) {
+  margin-bottom: 0;
+}
+
+/* Override code inside pre — remove inline code styling */
+.property-box__body :deep(pre code) {
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Lists */
+.property-box__body :deep(ul),
+.property-box__body :deep(ol) {
+  margin: 8px 0;
+  padding-left: 20px;
+  color: var(--vp-c-text-2);
+}
+
+.property-box__body :deep(ul:last-child),
+.property-box__body :deep(ol:last-child) {
+  margin-bottom: 0;
+}
+
+.property-box__body :deep(li) {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+
+.property-box__body :deep(li > code) {
+  font-size: 0.85em;
+}
+
+/* Bold and italic */
+.property-box__body :deep(strong) {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.property-box__body :deep(em) {
+  color: var(--vp-c-text-2);
 }
 </style>

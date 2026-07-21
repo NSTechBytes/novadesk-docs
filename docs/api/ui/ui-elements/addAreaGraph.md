@@ -16,11 +16,22 @@ ui.addAreaGraph(options);
 
 ## Area Graph Options
 
-### `data`
+<PropertyBox name="data" type="Array<number>" defaultValue="[] (empty array)">
+  The data property contains an array of numeric values representing the data points to be plotted on the area graph. Each value corresponds to a point on the graph, with values plotted sequentially from the graph's starting edge (left or right, depending on the graphStart setting).
 
-- **Type**: `number[]`
-- **Default**: `[]`
-- **Description**: Data points to plot.
+Data Format
+
+```js
+ data: [value1, value2, value3, ..., valueN]
+```
+
+* Each element must be a number (integer or floating-point value).
+* The array can initially be empty.
+* Values are plotted sequentially in the order they appear in the array.
+* The visual height of each point is determined by its value relative to minValue and maxValue, or to the automatically calculated range when autoRange: true.
+
+</PropertyBox>
+
 
 ### `minValue`, `maxValue`
 
