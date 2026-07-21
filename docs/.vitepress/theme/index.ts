@@ -9,6 +9,7 @@ import '@miletorix/vitepress-back-to-top-button/style.css'
 import MyLayout from './MyLayout.vue'
 import CustomButton from './components/CustomButton.vue'
 import LeftTextRightImage from './components/LeftTextRightImage.vue'
+import PropertyBox from './components/PropertyBox.vue'
 
 export default {
   extends: DefaultTheme,
@@ -18,6 +19,7 @@ export default {
     app.component('LiteTree', LiteTree)
     app.component('CustomButton', CustomButton)
     app.component('LeftTextRightImage', LeftTextRightImage)
+    app.component('PropertyBox', PropertyBox)
     BackToTopButton(app, {
       progressColor: '#3f4152', 
     })
