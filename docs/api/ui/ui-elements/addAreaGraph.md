@@ -32,12 +32,32 @@ Data Format
 
 </PropertyBox>
 
+<PropertyBox name="minValue" type="number" defaultValue="0.0">
+  The `minValue` property defines the minimum value of the Y-axis scale for the area graph. It represents the lower bound of the graph's vertical range and determines how data points are mapped to pixel positions on the graph.
 
-### `minValue`, `maxValue`
+When `autoRange` is `false`, `minValue` works together with `maxValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
 
-- **Type**: `number`
-- **Defaults**: `0` and `1`
-- **Description**: Manual range used when `autoRange` is `false`.
+* Defines the lower bound of the graph's Y-axis.
+* Used only when `autoRange` is `false`.
+* Works together with `maxValue` to create a fixed value range.
+* Values below `minValue` are displayed at the bottom of the graph.
+* The default value is `0.0`.
+
+</PropertyBox>
+
+<PropertyBox name="maxValue" type="number" defaultValue="1.0">
+
+  The `maxValue` property defines the maximum value of the Y-axis scale for the area graph. It represents the upper bound of the graph's vertical range and determines how data points are mapped to pixel positions on the graph.
+
+When `autoRange` is `false`, `maxValue` works together with `minValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
+
+* Defines the upper bound of the graph's Y-axis.
+* Used only when `autoRange` is `false`.
+* Works together with `minValue` to create a fixed value range.
+* Values above `maxValue` are displayed at the top of the graph.
+* The default value is `1.0`.
+
+</PropertyBox>
 
 ### `autoRange`
 
