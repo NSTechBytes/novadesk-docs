@@ -59,11 +59,20 @@ When `autoRange` is `false`, `maxValue` works together with `minValue` to establ
 
 </PropertyBox>
 
-### `autoRange`
+<PropertyBox name="autoRange" type="boolean" defaultValue="false">
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Uses min/max from `data` automatically.
+  The `autoRange` property controls whether the area graph automatically calculates the Y-axis range from the data or uses manually specified values.
+
+When `autoRange` is `true`, the graph automatically determines the minimum and maximum values from the `data` array. When `autoRange` is `false`, the graph uses the values specified by `minValue` and `maxValue` to define a fixed Y-axis scale.
+
+* When `true`, the Y-axis range is calculated automatically from the data.
+* When `false`, the graph uses the specified `minValue` and `maxValue`.
+* Automatically adjusts the graph scale as data changes.
+* Use a fixed range when you need a consistent scale across multiple graphs.
+* The default value is `false`.
+
+</PropertyBox>
+
 
 ### `lineColor`
 
