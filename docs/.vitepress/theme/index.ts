@@ -10,6 +10,7 @@ import MyLayout from './MyLayout.vue'
 import CustomButton from './components/CustomButton.vue'
 import LeftTextRightImage from './components/LeftTextRightImage.vue'
 import PropertyBox from './components/PropertyBox.vue'
+import MethodBox from './components/MethodBox.vue'
 
 export default {
   extends: DefaultTheme,
@@ -20,6 +21,7 @@ export default {
     app.component('CustomButton', CustomButton)
     app.component('LeftTextRightImage', LeftTextRightImage)
     app.component('PropertyBox', PropertyBox)
+    app.component('MethodBox', MethodBox)
     BackToTopButton(app, {
       progressColor: '#3f4152', 
     })
