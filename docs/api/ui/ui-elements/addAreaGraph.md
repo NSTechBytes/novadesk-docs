@@ -79,7 +79,6 @@ The property supports the same color formats as `lineColor`, including named CSS
 
 </PropertyBox>
 
-
 <PropertyBox name="lineWidth" type="number" defaultValue="1.0">
   
   The `lineWidth` property controls the thickness, in pixels, of the stroke drawn along the top edge of the area graph. This stroke connects all data points to form the graph's outline.
@@ -90,75 +89,70 @@ When `pixelHitTest` is enabled, the `lineWidth` value also affects the hit-test 
 
 </PropertyBox>
 
+<PropertyBox name="maxPoints" type="number" defaultValue="0">
 
-### `gridVisible`
+  The `maxPoints` property controls the maximum number of data points that the area graph stores and displays at any time. When the number of data points exceeds this limit, only the most recent values are retained, while the oldest values are silently discarded from the beginning of the data array.
 
-- **Type**: `boolean`
-- **Default**: `true`
-- **Description**: Shows or hides graph grid lines.
+When set to `0`, no limit is applied, allowing all data points to be stored and rendered.
 
-::: info
-When `gridVisible` is `false`, no grid lines are drawn even if `gridColor`, `gridX`, and `gridY` are set.
-:::
+</PropertyBox>
 
-### `gridColor`
+<PropertyBox name="gridVisible" type="boolean" defaultValue="true">
 
-- **Type**: `string`
-- **Default**: `"rgba(100, 100, 100, 0.39)"` (approx.)
-- **Description**: Grid line color or gradient.
+  The `gridVisible` property acts as the master switch for grid line rendering in the area graph. When set to `true`, horizontal and vertical grid lines are drawn behind the graph data according to the `gridX`, `gridY`, and `gridColor` settings, including their configured alpha values.
 
-### `gridX`, `gridY`
+When set to `false`, no grid lines are rendered, regardless of the values of any other grid-related properties.
 
-- **Type**: `number`
-- **Defaults**: `20` and `20`
-- **Description**: Horizontal and vertical grid spacing in pixels.
+</PropertyBox>
 
-::: info
-Values less than or equal to `0` disable that axis grid direction.
-:::
+<PropertyBox name="gridColor" type="string" defaultValue='"rgba(100, 100, 100, 0.39)"'>
 
-### `graphStart`
+  The `gridColor` property defines the color or gradient applied to all grid lines in the area graph, including both vertical grid lines controlled by `gridX` and horizontal grid lines controlled by `gridY`.
 
-- **Type**: `string`
-- **Default**: `"right"`
-- **Description**: Side where newest samples appear.
+It supports the same color formats as `lineColor` and `fillColor`, including named CSS colors, hexadecimal colors, `rgb()`/`rgba()` notation, linear gradients, and radial gradients.
 
-#### Valid values
+Any alpha (transparency) value specified in the color string is extracted and stored separately as `gridAlpha`. This alpha value acts as a secondary visibility check: if `gridAlpha` evaluates to `0`, grid lines are not rendered even when `gridVisible` is `true`.
 
-- `"left"`
-- `"right"`
+</PropertyBox>
 
-### `flip`
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Flips graph vertically.
+<PropertyBox name="gridX" type="number" defaultValue="20">
 
-## Runtime Notes
+  The `gridX` property defines the spacing, in pixels, between vertical grid lines in the area graph. Vertical grid lines run from the top to the bottom of the graph, dividing it into columns. For example, setting `gridX` to `40` draws one vertical grid line every 40 pixels across the graph's width.
 
-- Area Graph supports improved shape-aware hit testing. Enable `pixelHitTest: true` to use pixel-aware checks instead of only bounds.
+Setting `gridX` to `0` or a negative value disables vertical grid lines entirely. Horizontal grid lines controlled by `gridY` are unaffected.
 
-## Example
+</PropertyBox>
 
-```javascript
-ui.addAreaGraph({
-    id: "cpu-graph",
-    x: 20,
-    y: 60,
-    width: 560,
-    height: 200,
-    data: [],
-    minValue: 0,
-    maxValue: 100,
-    autoRange: false,
-    lineColor: "#00b4ff",
-    lineWidth: 2,
-    fillColor: "rgba(0, 179, 255, 0.28)",
-    gridVisible: true,
-    gridColor: "rgba(255,255,255,0.16)",
-    gridX: 30,
-    gridY: 20,
-    maxPoints: 120,
-    graphStart: "right"
-});
-```
+<PropertyBox name="gridY" type="number" defaultValue="20">
+
+  The `gridY` property defines the spacing, in pixels, between horizontal grid lines in the area graph. Horizontal grid lines run from the left to the right edge of the graph, dividing it into rows. For example, setting `gridY` to `50` draws one horizontal grid line every 50 pixels across the graph's height.
+
+Setting `gridY` to `0` or a negative value disables horizontal grid lines entirely. Vertical grid lines controlled by `gridX` are unaffected.
+
+</PropertyBox>
+
+
+<PropertyBox name="graphStart" type="string" defaultValue='"right"'>
+  
+  The `graphStart` property controls which horizontal edge of the graph the newest data point is anchored to. It determines the direction in which data flows as new points are added, causing the graph to fill from right to left or from left to right.
+
+This property does not determine where the graph begins drawing visually. Instead, it controls the position of the most recent data point. Older data points are always pushed toward the opposite edge.
+
+Valid values:
+
+| Value     | Behavior                                              |
+| --------- | ----------------------------------------------------- |
+| `"right"` | The newest data point appears on the right (default). |
+| `"left"`  | The newest data point appears on the left.            |
+
+</PropertyBox>
+
+
+<PropertyBox name="flip" type="boolean" defaultValue="false">
+
+  The `flip` property inverts the vertical axis of the area graph. When set to `false`, high values are positioned toward the top of the graph and low values toward the bottom, following the standard chart convention. When set to `true`, this behavior is reversed: high values are positioned toward the bottom and low values toward the top.
+
+The fill area always follows the data line. When `flip` is `true`, the data line is inverted vertically, and the enclosed fill area is adjusted accordingly so that it remains correctly filled between the data line and the appropriate graph boundary.
+
+</PropertyBox>
