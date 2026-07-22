@@ -37,12 +37,6 @@ Data Format
 
 When `autoRange` is `false`, `minValue` works together with `maxValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
 
-* Defines the lower bound of the graph's Y-axis.
-* Used only when `autoRange` is `false`.
-* Works together with `maxValue` to create a fixed value range.
-* Values below `minValue` are displayed at the bottom of the graph.
-* The default value is `0.0`.
-
 </PropertyBox>
 
 <PropertyBox name="maxValue" type="number" defaultValue="1.0">
@@ -50,12 +44,6 @@ When `autoRange` is `false`, `minValue` works together with `maxValue` to establ
   The `maxValue` property defines the maximum value of the Y-axis scale for the area graph. It represents the upper bound of the graph's vertical range and determines how data points are mapped to pixel positions on the graph.
 
 When `autoRange` is `false`, `maxValue` works together with `minValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
-
-* Defines the upper bound of the graph's Y-axis.
-* Used only when `autoRange` is `false`.
-* Works together with `minValue` to create a fixed value range.
-* Values above `maxValue` are displayed at the top of the graph.
-* The default value is `1.0`.
 
 </PropertyBox>
 
@@ -65,38 +53,43 @@ When `autoRange` is `false`, `maxValue` works together with `minValue` to establ
 
 When `autoRange` is `true`, the graph automatically determines the minimum and maximum values from the `data` array. When `autoRange` is `false`, the graph uses the values specified by `minValue` and `maxValue` to define a fixed Y-axis scale.
 
-* When `true`, the Y-axis range is calculated automatically from the data.
-* When `false`, the graph uses the specified `minValue` and `maxValue`.
-* Automatically adjusts the graph scale as data changes.
-* Use a fixed range when you need a consistent scale across multiple graphs.
-* The default value is `false`.
+</PropertyBox>
+
+<PropertyBox name="lineColor" type="string" defaultValue='"rgb(0, 180, 255)"'>
+  
+  The `lineColor` property defines the color or gradient applied to the top edge of the area graph. It controls the appearance of the stroke that connects each data point, forming the upper boundary of the filled area.
+
+The property supports multiple CSS color formats, including solid colors and gradients.
+</PropertyBox>
+
+<PropertyBox name="lineWidth" type="number" defaultValue="1.0">
+  
+  The `lineWidth` property controls the thickness of the stroke drawn along the top edge of the area graph. This line is rendered as a separate path above the filled area, connecting each data point in sequence.
+
+A thinner line provides a clean, precise appearance, while a thicker line creates a bolder and more prominent look that is easier to distinguish.
+</PropertyBox>
+
+<PropertyBox name="fillColor" type="string" defaultValue='"rgba(0, 180, 255, 0.196)"'>
+  
+  The `fillColor` property defines the color or gradient used to fill the area beneath the graph line down to the bottom edge of the graph. Since it covers the largest visible portion of the graph, it has the greatest impact on its overall appearance.
+
+Internally, the fill is rendered as a closed polygon that begins at the bottom-left of the graph, follows the line through each data point, extends to the bottom-right, and then closes back to the starting point. The entire enclosed area is filled using `fillColor`.
+
+The property supports the same color formats as `lineColor`, including named CSS colors, hexadecimal colors, `rgb()`/`rgba()` notation, linear gradients, and radial gradients.
 
 </PropertyBox>
 
 
-### `lineColor`
+<PropertyBox name="lineWidth" type="number" defaultValue="1.0">
+  
+  The `lineWidth` property controls the thickness, in pixels, of the stroke drawn along the top edge of the area graph. This stroke connects all data points to form the graph's outline.
 
-- **Type**: `string`
-- **Default**: `"rgb(0, 180, 255)"`
-- **Description**: Stroke color or gradient for the top line.
+It accepts any positive floating-point value. Values below `0.1` are automatically clamped to `0.1`.
 
-### `lineWidth`
+When `pixelHitTest` is enabled, the `lineWidth` value also affects the hit-test tolerance, making thicker lines easier to interact with.
 
-- **Type**: `number`
-- **Default**: `1.0`
-- **Description**: Top line thickness.
+</PropertyBox>
 
-### `fillColor`
-
-- **Type**: `string`
-- **Default**: `"rgba(0, 180, 255, 0.2)"` (approx.)
-- **Description**: Fill color or gradient for the area below the line.
-
-### `maxPoints`
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Trims stored data to the latest N points when greater than `0`.
 
 ### `gridVisible`
 
