@@ -16,67 +16,50 @@ ui.addBar(options);
 
 ## Bar Options
 
-### `value`
+<PropertyBox name="value" type="number" defaultValue="0.0">
 
-- **Type**: `number`
-- **Default**: `0.0`
-- **Description**: Fill level of the bar.
+  The `value` property controls how much of the bar is filled. It represents a normalized fraction of the bar's total length or height, where `0.0` means completely empty and `1.0` means completely full.
 
-### `orientation`
+The bar does not use a minimum or maximum value scale. Instead, `value` is always interpreted as a direct fraction of the bar's total size. For example, a value of `0.5` always fills exactly half of the bar, regardless of its width, height, or orientation.
 
-- **Type**: `string`
-- **Default**: `"horizontal"`
-- **Description**: Fill direction.
+Scale:
 
-#### Valid values
+| Value  | Meaning                          |
+| ------ | -------------------------------- |
+| `0.0`  | The bar is completely empty.     |
+| `0.25` | The bar is 25% filled.           |
+| `0.5`  | The bar is 50% filled (halfway). |
+| `0.75` | The bar is 75% filled.           |
+| `1.0`  | The bar is completely full.      |
 
-- `"horizontal"`: Fills left to right
-- `"vertical"`: Fills bottom to top
+</PropertyBox>
 
-### `barCornerRadius`
+<PropertyBox name="orientation" type="string" defaultValue='"horizontal"'>
 
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Corner radius for the filled portion.
+  The `orientation` property controls the axis along which the bar fills. In horizontal mode, the filled area grows from the left edge toward the right. In vertical mode, it grows from the bottom edge upward, matching the natural behavior expected from a gauge, volume meter, or level indicator.
 
-### `barColor`
+Valid values:
 
-- **Type**: `string`
-- **Description**: Fill color or gradient.
+| Value          | Behavior                                    |
+| -------------- | ------------------------------------------- |
+| `"horizontal"` | The bar fills from left to right (default). |
+| `"vertical"`   | The bar fills from bottom to top.           |
 
-## Example
+</PropertyBox>
 
-:::tabs
-== index.js
-```javascript
-import { widgetWindow } from "novadesk";
 
-var exampleBarWindow = new widgetWindow({
-    id: "exampleBar",
-    width: 300,
-    height: 40,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    script: "ui/script.ui.js"
-});
-```
-== ui/script.ui.js
-```javascript
-ui.addBar({
-    id: "cpu-Bar",
-    x: 50,
-    y: 10,
-    width: 200,
-    height: 20,
-    value: 0.5,
-    barColor: "rgba(20, 232, 115, 1)",
-    backgroundColor: "rgba(241, 216, 19, 1)",
-    backgroundColorRadius: 8,
-    barCornerRadius: 8
-});
-```
-:::
+<PropertyBox name="barCornerRadius" type="number" defaultValue="0">
 
-## Preview
+  The `barCornerRadius` property controls the corner radius, in pixels, of the filled portion of the bar. It applies only to the colored area determined by `value` and is independent of `backgroundColorRadius`, which controls the corner radius of the background track.
 
-![Widget Preview](https://github.com/Official-Novadesk/novadesk-assets/blob/master/docs/barPreview.png?raw=true)
+Setting `barCornerRadius` and `backgroundColorRadius` to the same value creates a fully cohesive, pill-shaped appearance.
 
+</PropertyBox>
+
+<PropertyBox name="barColor" type="string" defaultValue='"rgb(0, 255, 0)"'>
+
+  The `barColor` property defines the color or gradient of the filled portion of the bar. Without `barColor`, no bar fill is rendered; only the background track is visible if `backgroundColor` is set.
+
+It supports all color formats available in the Novadesk color system, including named CSS colors, hexadecimal colors, `rgb()`/`rgba()` notation, linear gradients, and radial gradients.
+
+</PropertyBox>

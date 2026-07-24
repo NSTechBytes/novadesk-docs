@@ -115,7 +115,6 @@ Any alpha (transparency) value specified in the color string is extracted and st
 
 </PropertyBox>
 
-
 <PropertyBox name="gridX" type="number" defaultValue="20">
 
   The `gridX` property defines the spacing, in pixels, between vertical grid lines in the area graph. Vertical grid lines run from the top to the bottom of the graph, dividing it into columns. For example, setting `gridX` to `40` draws one vertical grid line every 40 pixels across the graph's width.
