@@ -11,6 +11,7 @@ import CustomButton from './components/CustomButton.vue'
 import LeftTextRightImage from './components/LeftTextRightImage.vue'
 import PropertyBox from './components/PropertyBox.vue'
 import MethodBox from './components/MethodBox.vue'
+import CallbackBox from './components/CallbackBox.vue'
 
 export default {
   extends: DefaultTheme,
@@ -22,6 +23,7 @@ export default {
     app.component('LeftTextRightImage', LeftTextRightImage)
     app.component('PropertyBox', PropertyBox)
     app.component('MethodBox', MethodBox)
+    app.component('CallbackBox', CallbackBox)
     BackToTopButton(app, {
       progressColor: '#3f4152', 
     })

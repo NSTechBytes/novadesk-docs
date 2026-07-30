@@ -234,8 +234,8 @@ if (route) {
   margin-top: 0;
 }
 
-/* Inline code */
-.property-box__body :deep(code) {
+/* Inline code (only when not inside a fenced pre block) */
+.property-box__body :deep(:not(pre) > code) {
   font-family: var(--vp-font-family-mono);
   background-color: var(--vp-c-bg-mute);
   padding: 2px 5px;
@@ -257,12 +257,24 @@ if (route) {
   margin-bottom: 0;
 }
 
-/* Override code inside pre — remove inline code styling */
-.property-box__body :deep(pre code) {
-  background: none;
-  padding: 0;
-  border: none;
-  border-radius: 0;
+/* Ensure proper padding on pre and remove inner borders from pre code */
+.property-box__body :deep(div[class*="language-"] pre) {
+  padding: 16px !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.property-box__body :deep(div[class*="language-"] pre code) {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
   color: inherit;
   font-size: inherit;
 }

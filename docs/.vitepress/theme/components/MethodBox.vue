@@ -347,6 +347,29 @@ const badgeStyle = computed(() => {
 .method-box__example :deep(div[class*="language-"]) {
   margin: 0;
   border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.method-box__example :deep(div[class*="language-"] pre) {
+  padding: 16px !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.method-box__example :deep(div[class*="language-"] pre code) {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: inherit;
+  font-size: inherit;
 }
 
 @media (max-width: 640px) {
