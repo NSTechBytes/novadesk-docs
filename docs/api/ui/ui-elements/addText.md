@@ -31,7 +31,7 @@ The text can be changed at runtime using `ui.setElementProperties()`. Updating t
 
 Example:
 
-```js id="f8m2kr"
+```js
  ui.addText({
      id: "label",
      text: "Hello, Novadesk!"
@@ -62,7 +62,7 @@ The value must be the name of an installed system font, or the family name of a 
 
 Example:
 
-```js id="k4p7nv"
+```js
  ui.addText({
      id: "systemFont",
      fontFace: "Arial"
@@ -94,7 +94,7 @@ Larger values produce larger text, while smaller values produce more compact tex
 
 Example:
 
-```js id="v9n4px"
+```js
  ui.addText({
      id: "body",
      fontSize: 12
@@ -128,7 +128,7 @@ When a gradient is specified, it is automatically applied across the entire text
 
 Example:
 
-```js id="w3h8qm"
+```js
  ui.addText({
      id: "solid",
      fontColor: "#ffffff"
@@ -174,7 +174,7 @@ Valid named values:
 
 Example:
 
-```js id="q6v8kn"
+```js
  ui.addText({
      id: "regular",
      fontWeight: 400
@@ -206,7 +206,7 @@ When set to `true`, the text is displayed using the italic variant of the select
 
 Example:
 
-```js id="m5r8zt"
+```js
  ui.addText({
      id: "italicText",
      italic: true
@@ -230,7 +230,7 @@ Fonts loaded from URLs are downloaded asynchronously. Once the font has been cac
 
 Example:
 
-```js id="p8x4nh"
+```js
  ui.addText({
      id: "customFont",
      fontPath: "./fonts/Inter-Regular.ttf",
@@ -268,7 +268,7 @@ Valid values:
 
 Example:
 
-```js id="g7k2wm"
+```js
  ui.addText({
      id: "topLeft",
      textAlign: "left"
@@ -309,7 +309,7 @@ Valid values:
 
 Example:
 
-```js id="r5n8qx"
+```js
  ui.addText({
      id: "overflow",
      textClip: "none"
@@ -341,7 +341,7 @@ The value is measured in device-independent pixels (DIPs). Positive values incre
 
 Example:
 
-```js id="x4p8qm"
+```js
  ui.addText({
      id: "normal",
      letterSpacing: 0
@@ -373,7 +373,7 @@ When set to `true`, the underline spans the rendered text. It affects the entire
 
 Example:
 
-```js id="m7r5kn"
+```js
  ui.addText({
      id: "link",
      underLine: true
@@ -395,7 +395,7 @@ When set to `true`, the strikethrough spans the rendered text. It affects the en
 
 Example:
 
-```js id="v3t9ph"
+```js
  ui.addText({
      id: "completed",
      strikeThrough: true
@@ -427,7 +427,7 @@ Valid values:
 
 Example:
 
-```js id="q9h6xt"
+```js
  ui.addText({
      id: "upper",
      case: "upper"
@@ -463,7 +463,7 @@ Each shadow object supports the following properties:
 
 Example:
 
-```js id="n5k8zr"
+```js
  ui.addText({
      id: "singleShadow",
      fontShadow: {
@@ -503,7 +503,7 @@ When set to `true`, the user can click and drag to select text, copy the selecte
 
 Example:
 
-```js id="h8m4qx"
+```js
  ui.addText({
      id: "selectable",
      textSelection: true
@@ -525,7 +525,7 @@ It is applied only when `textSelection` is enabled and the user has an active te
 
 Example:
 
-```js id="t3q7pk"
+```js
  ui.addText({
      id: "windowsStyle",
      textSelection: true,
@@ -549,7 +549,7 @@ It is applied only when `textSelection` is enabled and text is actively selected
 
 Example:
 
-```js id="k6r9vn"
+```js
  ui.addText({
      id: "whiteSelection",
      textSelection: true,
