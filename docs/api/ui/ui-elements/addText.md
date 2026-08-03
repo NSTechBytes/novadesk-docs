@@ -21,187 +21,550 @@ ui.addText(options);
 
 ## Text Element Options
 
-### `text`
+<PropertyBox name="text" type="string" defaultValue='""'>
 
-- **Type**: `string`
-- **Default**: `""`
-- **Description**: Content displayed by the element.
+The `text` property specifies the content displayed by the text element.
 
-### `fontSize`
+It supports plain text, `\n` line breaks, and inline style markup for applying different styles to individual portions of the text. See the **Inline Styles** section for the complete list of supported tags.
 
-- **Type**: `number`
-- **Default**: `12`
-- **Description**: Font size in pixels.
+The text can be changed at runtime using `ui.setElementProperties()`. Updating this property immediately redraws the element with the new content.
 
-### `fontFace`
+Example:
 
-- **Type**: `string`
-- **Default**: `"Arial"`
-- **Description**: Font face name.
+```js id="f8m2kr"
+ ui.addText({
+     id: "label",
+     text: "Hello, Novadesk!"
+ });
 
-### `fontColor`
+ ui.addText({
+     id: "status",
+     text: "CPU: 45.2%"
+ });
 
-- **Type**: `string`
-- **Default**: `"rgb(0,0,0)"`
-- **Description**: Color or gradient for the text.
+ ui.addText({
+     id: "multiline",
+     text: "Line 1\nLine 2\nLine 3"
+ });
 
-### `fontWeight`
-
-- **Type**: `string | number`
-- **Default**: `"normal"` (400)
-- **Description**: Font weight; numeric values `100-900` are supported.
-
-#### Valid string values
-
-- `"thin"` (100)
-- `"extralight"`, `"ultralight"` (200)
-- `"light"` (300)
-- `"normal"`, `"regular"` (400)
-- `"medium"` (500)
-- `"semibold"`, `"demibold"` (600)
-- `"bold"` (700)
-- `"extrabold"`, `"ultrabold"` (800)
-- `"black"`, `"heavy"` (900)
-
-### `fontPath`
-
-- **Type**: `string`
-- **Default**: `""`
-- **Description**: Path to a custom `.ttf` or `.otf` font file.
-
-### `fontStyle`
-
-- **Type**: `string`
-- **Default**: `"normal"`
-- **Description**: Font style.
-
-#### Valid values
-
-- `"normal"`
-- `"italic"`
-
-### `underLine`
-
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Draws an underline.
-
-### `strikeThrough`
-
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Draws a strikethrough line.
-
-### `case`
-
-- **Type**: `string`
-- **Default**: `"normal"`
-- **Description**: Forces uppercase, lowercase, capitalization, or sentence case.
-
-#### Valid values
-
-- `"normal"`: Original casing
-- `"upper"`: `THIS IS UPPERCASE`
-- `"lower"`: `this is lowercase`
-- `"capitalize"`: `Capitalizes Each Word`
-- `"sentence"`: `Capitalizes the first letter only`
-
-### `letterSpacing`
-
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Spacing between characters in pixels.
-
-### `fontShadow`
-
-- **Type**: `object | object[]`
-- **Default**: `[]`
-- **Description**: Applies one or more shadows behind the text.
-
-- **Shadow properties**
-  - `x`: horizontal offset (default `0`)
-  - `y`: vertical offset (default `0`)
-  - `blur`: blur radius (default `0`)
-  - `color`: color string (default `"rgba(0,0,0,1)"`)
-
-#### Examples
-
-```javascript
-fontShadow: { x: 4, y: 4, blur: 8, color: "rgba(0,0,0,0.6)" }
+ ui.setElementProperties("label", {
+     text: "Updated: " + value
+ });
 ```
 
-```javascript
-fontShadow: [
-  { blur: 4, color: "#00ffff" },
-  { blur: 10, color: "#00ffff" }
-]
+</PropertyBox>
+
+<PropertyBox name="fontFace" type="string" defaultValue='"Arial"'>
+
+The `fontFace` property specifies the font family used to render the text.
+
+The value must be the name of an installed system font, or the family name of a custom font loaded using the `fontPath` property. If `fontPath` is provided, `fontFace` should match the font family contained within that font file.
+
+Example:
+
+```js id="k4p7nv"
+ ui.addText({
+     id: "systemFont",
+     fontFace: "Arial"
+ });
+
+ ui.addText({
+     id: "uiFont",
+     fontFace: "Segoe UI"
+ });
+
+ ui.addText({
+     id: "monoFont",
+     fontFace: "Consolas"
+ });
+
+ ui.addText({
+     id: "customFont",
+     fontFace: "Inter"
+ });
 ```
 
-### `textAlign`
+</PropertyBox>
 
-- **Type**: `string`
-- **Default**: `"lefttop"`
-- **Description**: Horizontal and vertical alignment.
+<PropertyBox name="fontSize" type="number" defaultValue="12">
 
-### `textClip`
+The `fontSize` property specifies the size of the text in typographic points.
 
-- **Type**: `string`
-- **Default**: `"none"`
-- **Description**: Controls clipping when content exceeds width.
+Larger values produce larger text, while smaller values produce more compact text. This property affects all text in the element except portions that override the size using inline style markup.
 
-#### Valid values
+Example:
 
-- `"none"`
-- `"clip"`
-- `"ellipsis"`
-- `"wrap"`
+```js id="v9n4px"
+ ui.addText({
+     id: "body",
+     fontSize: 12
+ });
 
-### `textSelection`
+ ui.addText({
+     id: "subheading",
+     fontSize: 16
+ });
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Allows users to select and copy text from this element with the mouse. When enabled, selectable text uses the I-beam cursor, supports drag selection, double-click word selection, and copies the current selection with `Ctrl+C`.
+ ui.addText({
+     id: "heading",
+     fontSize: 24
+ });
 
-### `selectionBackgroundColor`
+ ui.addText({
+     id: "display",
+     fontSize: 48
+ });
+```
 
-- **Type**: `string`
-- **Default**: `"#3390FF"` with partial opacity
-- **Description**: Selection highlight color. Supports the same color formats as other text colors.
+</PropertyBox>
 
-### `selectionTextColor`
+<PropertyBox name="fontColor" type="string" defaultValue='"rgb(0, 0, 0)"'>
 
-- **Type**: `string`
-- **Default**: unchanged text color
-- **Description**: Optional color used for selected text.
+The `fontColor` property specifies the color or gradient used to render the text.
 
-## Runtime Notes
+It supports all Novadesk color formats, including named CSS colors, hexadecimal colors, `rgb()`, `rgba()`, `linearGradient()`, and `radialGradient()`.
 
-- Text hit testing uses the rendered glyph ink region instead of the full text layout box.
-- This prevents false hover/click detection in empty areas above or below glyphs.
-- Text selection is opt-in with `textSelection: true`; non-selectable text keeps normal hit testing and mouse behavior.
-- Dragging selected text does not start widget dragging.
+When a gradient is specified, it is automatically applied across the entire text layout bounds rather than each individual character.
 
-## Alignment Options
+Example:
 
-Both standard (non-hyphenated) and hyphenated CSS-like formats are supported.
+```js id="w3h8qm"
+ ui.addText({
+     id: "solid",
+     fontColor: "#ffffff"
+ });
 
-### Left aligned
+ ui.addText({
+     id: "transparent",
+     fontColor: "rgba(255,255,255,0.85)"
+ });
 
-- `"lefttop"`, `"left"`, or `"left-top"`
-- `"leftcenter"` or `"left-center"`
-- `"leftbottom"` or `"left-bottom"`
+ ui.addText({
+     id: "linear",
+     fontColor: "linearGradient(0, #ff0080, #9966ff, #00b4ff)"
+ });
 
-### Center aligned
+ ui.addText({
+     id: "radial",
+     fontColor: "radialGradient(circle, #ffaa00, #ff3333)"
+ });
+```
 
-- `"centertop"`, `"center"`, or `"center-top"`
-- `"centercenter"`, `"middlecenter"`, `"middle"`, `"center-center"`, or `"middle-center"`
-- `"centerbottom"` or `"center-bottom"`
+</PropertyBox>
 
-### Right aligned
+<PropertyBox name="fontWeight" type="number | string" defaultValue="400">
 
-- `"righttop"`, `"right"`, or `"right-top"`
-- `"rightcenter"` or `"right-center"`
-- `"rightbottom"` or `"right-bottom"`
+The `fontWeight` property specifies the thickness of the rendered text.
+
+It accepts either a numeric weight (`100`–`900`) or one of several named weight strings. Named values are case-insensitive and are automatically converted to their corresponding numeric weight.
+
+Valid named values:
+
+| Value                           | Numeric Weight |
+| ------------------------------- | -------------: |
+| `"thin"`                        |          `100` |
+| `"extralight"` / `"ultralight"` |          `200` |
+| `"light"`                       |          `300` |
+| `"normal"` / `"regular"`        |          `400` |
+| `"medium"`                      |          `500` |
+| `"semibold"` / `"demibold"`     |          `600` |
+| `"bold"`                        |          `700` |
+| `"extrabold"` / `"ultrabold"`   |          `800` |
+| `"black"` / `"heavy"`           |          `900` |
+
+Example:
+
+```js id="q6v8kn"
+ ui.addText({
+     id: "regular",
+     fontWeight: 400
+ });
+
+ ui.addText({
+     id: "bold",
+     fontWeight: 700
+ });
+
+ ui.addText({
+     id: "namedBold",
+     fontWeight: "bold"
+ });
+
+ ui.addText({
+     id: "semiBold",
+     fontWeight: "semibold"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="italic" type="boolean" defaultValue="false">
+
+The `italic` property controls whether the text is rendered in italic style.
+
+When set to `true`, the text is displayed using the italic variant of the selected font, if available. This property is equivalent to setting `fontStyle` to `"italic"`.
+
+Example:
+
+```js id="m5r8zt"
+ ui.addText({
+     id: "italicText",
+     italic: true
+ });
+
+ ui.addText({
+     id: "italicAlias",
+     fontStyle: "italic"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="fontPath" type="string" defaultValue='""'>
+
+The `fontPath` property specifies the location of a custom font file used to render the text.
+
+The value can be a path to a local font file (`.ttf` or `.otf`) relative to the script directory, or an HTTP/HTTPS URL. When using a custom font, the `fontFace` property must match the font family name embedded in the font file.
+
+Fonts loaded from URLs are downloaded asynchronously. Once the font has been cached, the text element automatically re-renders using the new font.
+
+Example:
+
+```js id="p8x4nh"
+ ui.addText({
+     id: "customFont",
+     fontPath: "./fonts/Inter-Regular.ttf",
+     fontFace: "Inter"
+ });
+
+ ui.addText({
+     id: "webFont",
+     fontPath: "https://example.com/fonts/Inter-Regular.ttf",
+     fontFace: "Inter"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="textAlign" type="string" defaultValue='"left"'>
+
+The `textAlign` property controls the horizontal and vertical alignment of text within the element's bounding box.
+
+It accepts either the full `"horizontal-vertical"` format or one of several shorthand aliases. The `align` property is also accepted as an alias. All values are case-insensitive.
+
+Valid values:
+
+| Value                          | Horizontal | Vertical |
+| ------------------------------ | ---------- | -------- |
+| `"left"` / `"left-top"`        | Left       | Top      |
+| `"center"` / `"center-top"`    | Center     | Top      |
+| `"right"` / `"right-top"`      | Right      | Top      |
+| `"left-center"`                | Left       | Center   |
+| `"center-center"` / `"middle"` | Center     | Center   |
+| `"right-center"`               | Right      | Center   |
+| `"left-bottom"`                | Left       | Bottom   |
+| `"center-bottom"`              | Center     | Bottom   |
+| `"right-bottom"`               | Right      | Bottom   |
+
+Example:
+
+```js id="g7k2wm"
+ ui.addText({
+     id: "topLeft",
+     textAlign: "left"
+ });
+
+ ui.addText({
+     id: "topCenter",
+     textAlign: "center"
+ });
+
+ ui.addText({
+     id: "centered",
+     textAlign: "center-center"
+ });
+
+ ui.addText({
+     id: "bottomRight",
+     textAlign: "right-bottom"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="textClip" type="string" defaultValue='"none"'>
+
+The `textClip` property controls how text is rendered when it exceeds the element's `width` or `height`.
+
+It supports disabling clipping, clipping at the element boundary, displaying an ellipsis (`…`) for truncated text, or wrapping text onto multiple lines. Values are case-insensitive.
+
+Valid values:
+
+| Value             | Behavior                                                                    |
+| ----------------- | --------------------------------------------------------------------------- |
+| `"none"`          | Text is rendered normally and may extend beyond the element bounds.         |
+| `"clip"` / `"on"` | Text is clipped at the element boundary without modification.               |
+| `"ellipsis"`      | Text is clipped and an ellipsis (`…`) is displayed at the truncation point. |
+| `"wrap"`          | Text wraps onto additional lines within the element width.                  |
+
+Example:
+
+```js id="r5n8qx"
+ ui.addText({
+     id: "overflow",
+     textClip: "none"
+ });
+
+ ui.addText({
+     id: "clipped",
+     textClip: "clip"
+ });
+
+ ui.addText({
+     id: "ellipsis",
+     textClip: "ellipsis"
+ });
+
+ ui.addText({
+     id: "wrapped",
+     textClip: "wrap"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="letterSpacing" type="number" defaultValue="0.0">
+
+The `letterSpacing` property specifies the additional horizontal spacing between adjacent characters.
+
+The value is measured in device-independent pixels (DIPs). Positive values increase the spacing between characters, while negative values reduce it, allowing for tighter text layouts.
+
+Example:
+
+```js id="x4p8qm"
+ ui.addText({
+     id: "normal",
+     letterSpacing: 0
+ });
+
+ ui.addText({
+     id: "wide",
+     letterSpacing: 2
+ });
+
+ ui.addText({
+     id: "headline",
+     letterSpacing: 8
+ });
+
+ ui.addText({
+     id: "tight",
+     letterSpacing: -1
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="underLine" type="boolean" defaultValue="false">
+
+The `underLine` property controls whether an underline is drawn beneath the text.
+
+When set to `true`, the underline spans the rendered text. It affects the entire text unless overridden by inline style markup.
+
+Example:
+
+```js id="m7r5kn"
+ ui.addText({
+     id: "link",
+     underLine: true
+ });
+
+ ui.addText({
+     id: "plain",
+     underLine: false
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="strikeThrough" type="boolean" defaultValue="false">
+
+The `strikeThrough` property controls whether a horizontal line is drawn through the middle of the text.
+
+When set to `true`, the strikethrough spans the rendered text. It affects the entire text unless overridden by inline style markup.
+
+Example:
+
+```js id="v3t9ph"
+ ui.addText({
+     id: "completed",
+     strikeThrough: true
+ });
+
+ ui.addText({
+     id: "normal",
+     strikeThrough: false
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="case" type="string" defaultValue='"normal"'>
+
+The `case` property controls how the displayed text is transformed without modifying the underlying `text` value.
+
+The transformation affects rendering only. Reading the `text` property always returns the original, unmodified string. Values are case-insensitive.
+
+Valid values:
+
+| Value          | Effect                                         |
+| -------------- | ---------------------------------------------- |
+| `"normal"`     | Displays the text exactly as provided.         |
+| `"upper"`      | Converts all characters to uppercase.          |
+| `"lower"`      | Converts all characters to lowercase.          |
+| `"capitalize"` | Capitalizes the first letter of each word.     |
+| `"sentence"`   | Capitalizes the first letter of each sentence. |
+
+Example:
+
+```js id="q9h6xt"
+ ui.addText({
+     id: "upper",
+     case: "upper"
+ });
+
+ ui.addText({
+     id: "capitalize",
+     case: "capitalize"
+ });
+
+ ui.addText({
+     id: "sentence",
+     case: "sentence"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="fontShadow" type="object | Array<object>" defaultValue="none">
+
+The `fontShadow` property adds one or more drop shadows behind the rendered text.
+
+A single shadow can be specified as an object, or multiple shadows can be provided as an array. Shadows are rendered in the order they appear, allowing layered glow and outline effects.
+
+Each shadow object supports the following properties:
+
+| Property | Type     |        Default | Description                  |
+| -------- | -------- | -------------: | ---------------------------- |
+| `x`      | `number` |            `0` | Horizontal offset in pixels. |
+| `y`      | `number` |            `0` | Vertical offset in pixels.   |
+| `blur`   | `number` |            `0` | Blur radius in pixels.       |
+| `color`  | `string` | `"rgb(0,0,0)"` | Shadow color.                |
+
+Example:
+
+```js id="n5k8zr"
+ ui.addText({
+     id: "singleShadow",
+     fontShadow: {
+         x: 0,
+         y: 2,
+         blur: 4,
+         color: "rgba(0,0,0,0.50)"
+     }
+ });
+
+ ui.addText({
+     id: "glow",
+     fontShadow: [
+         {
+             x: 0,
+             y: 1,
+             blur: 2,
+             color: "rgba(0,0,0,0.60)"
+         },
+         {
+             x: 0,
+             y: 0,
+             blur: 10,
+             color: "rgba(0,180,255,0.40)"
+         }
+     ]
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="textSelection" type="boolean" defaultValue="false">
+
+The `textSelection` property controls whether the user can select text within the element.
+
+When set to `true`, the user can click and drag to select text, copy the selected text to the clipboard using standard keyboard shortcuts, and see the selection highlighted using `selectionBackgroundColor`. When `false`, the text behaves as a non-selectable label.
+
+Example:
+
+```js id="h8m4qx"
+ ui.addText({
+     id: "selectable",
+     textSelection: true
+ });
+
+ ui.addText({
+     id: "label",
+     textSelection: false
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="selectionBackgroundColor" type="string" defaultValue='"rgba(51, 144, 255, 0.47)"'>
+
+The `selectionBackgroundColor` property specifies the background color used to highlight selected text.
+
+It is applied only when `textSelection` is enabled and the user has an active text selection. This property accepts standard color values but does not support gradients.
+
+Example:
+
+```js id="t3q7pk"
+ ui.addText({
+     id: "windowsStyle",
+     textSelection: true,
+     selectionBackgroundColor: "rgba(0, 120, 215, 0.40)"
+ });
+
+ ui.addText({
+     id: "greenHighlight",
+     textSelection: true,
+     selectionBackgroundColor: "rgba(0, 255, 136, 0.35)"
+ });
+```
+
+</PropertyBox>
+
+<PropertyBox name="selectionTextColor" type="string" defaultValue='"rgb(255, 255, 255)"'>
+
+The `selectionTextColor` property specifies the color used to render selected text.
+
+It is applied only when `textSelection` is enabled and text is actively selected. If this property is not specified, the selected text continues to use its original `fontColor`.
+
+Example:
+
+```js id="k6r9vn"
+ ui.addText({
+     id: "whiteSelection",
+     textSelection: true,
+     selectionTextColor: "#ffffff"
+ });
+
+ ui.addText({
+     id: "blackSelection",
+     textSelection: true,
+     selectionTextColor: "#000000"
+ });
+```
+
+</PropertyBox>
+
 
 ## Inline Styling
 
