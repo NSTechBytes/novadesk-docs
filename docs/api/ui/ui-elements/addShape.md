@@ -199,6 +199,44 @@ Example:
 
 </PropertyBox>
 
+<PropertyBox name="startX, startY, endX, endY" type="number" defaultValue="0">
+
+The `startX`, `startY`, `endX`, and `endY` properties define the start and end points of line and curve shapes in the element's local coordinate system.
+
+When `type` is `"line"`, these properties specify the two endpoints of the line. When `type` is `"curve"`, they define the start and end anchor points of the Bézier curve, while the control points determine the curve's shape.
+
+Unlike most other shapes, line and curve elements do not use the `x`, `y`, `width`, or `height` properties to define their geometry. Their appearance is determined entirely by these coordinate properties. The `x` and `y` properties are used only for the element's positioning and click-testing bounds.
+
+Example:
+
+```js
+ ui.addShape({
+     id: "myLine",
+     type: "line",
+     startX: 20,
+     startY: 20,
+     endX: 200,
+     endY: 100,
+     strokeColor: "#00b4ff",
+     strokeWidth: 3
+ });
+
+ ui.addShape({
+     id: "myCurve",
+     type: "curve",
+     startX: 20,
+     startY: 100,
+     controlX: 150,
+     controlY: 0,
+     endX: 280,
+     endY: 100,
+     strokeColor: "#ff6600",
+     strokeWidth: 4
+ });
+```
+
+</PropertyBox>
+
 <PropertyBox name="curveType" type="string" defaultValue='"quadratic"'>
 
 The `curveType` property selects the Bézier curve algorithm used when `type` is set to `"curve"`.
