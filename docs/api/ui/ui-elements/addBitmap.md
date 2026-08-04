@@ -16,140 +16,167 @@ ui.addBitmap(options);
 
 ## Bitmap Options
 
-### `value`
+<PropertyBox name="bitmapImageName" type="string" required>
+  The `bitmapImageName` property specifies the sprite sheet image that contains all bitmap frames. Relative paths are resolved from the script directory, while HTTP and HTTPS URLs are loaded asynchronously.
 
-- **Type**: `number`
-- **Default**: `0.0`
-- **Description**: Current value used to select frame(s).
+  ```javascript
+  bitmapImageName: "./assets/progress.png"
+  bitmapImageName: "./assets/digits.png"
+  bitmapImageName: "https://example.com/assets/animation.png"
+  ```
 
-### `bitmapImageName`
+</PropertyBox>
 
-- **Type**: `string`
-- **Default**: `""`
-- **Description**: Path to the bitmap strip image.
+<PropertyBox name="value" type="number" defaultValue="0.0">
+  The `value` property specifies the current value used to determine which frame is displayed.
 
-### `bitmapFrames`
+  When `bitmapExtend` is `false`, the value is normalized between `minValue` and `maxValue` and then mapped to the corresponding frame index.
 
-- **Type**: `number`
-- **Default**: `1`
-- **Description**: Number of frames in the strip.
+  When `bitmapExtend` is `true`, the value is treated as an integer. Each digit is rendered as an individual frame from the sprite sheet, creating an odometer-style display.
 
-::: info
-Values less than or equal to `0` are clamped to `1`.
-:::
+  ```javascript
+  // Standard: show frame 7 of 10 (70% through)
+  value: 70,
+  minValue: 0,
+  maxValue: 100,
+  bitmapFrames: 10
 
-### `bitmapZeroFrame`
+  // Extend: show "42" using digit frames
+  value: 42,
+  bitmapExtend: true,
+  bitmapFrames: 10
+  ```
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Controls whether frame `0` is reserved for zero when using normalized (non-extend) mode.
+</PropertyBox>
 
-### `bitmapExtend`
+<PropertyBox name="bitmapFrames" type="number" defaultValue="1">
+  The `bitmapFrames` property specifies the total number of frames contained in the sprite sheet. The image is divided into this many equally sized frames.
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Enables multi-digit rendering mode using repeated frames.
+  Values less than or equal to `0` are automatically clamped to `1`.
 
-### `minValue`, `maxValue`
+  ```javascript
+  bitmapFrames: 10    // 10-frame animation (0-9)
+  bitmapFrames: 60    // 60-frame clock seconds
+  bitmapFrames: 100   // 100-step progress bar
+  ```
 
-- **Type**: `number`
-- **Defaults**: `0.0` and `1.0`
-- **Description**: Range used to normalize `value` when `bitmapExtend` is `false`.
+</PropertyBox>
 
-::: info
-If `maxValue <= minValue`, max is internally adjusted to avoid zero-width range.
-:::
+<PropertyBox name="minValue" type="number" defaultValue="0.0">
+  The `minValue` property defines the value that maps to the first frame (frame `0`).
 
-### `bitmapOrientation`
+  This property is only used when `bitmapExtend` is `false`.
 
-- **Type**: `string`
-- **Default**: `"auto"`
-- **Description**: Frame strip orientation.
+  ```javascript
+  minValue: 0
+  maxValue: 100
 
-#### Valid values
+  minValue: -50
+  maxValue: 50
+  ```
 
-- `"auto"`
-- `"horizontal"`
-- `"vertical"`
+</PropertyBox>
 
-### `bitmapDigits`
+<PropertyBox name="maxValue" type="number" defaultValue="1.0">
+  The `maxValue` property defines the value that maps to the last frame in the sprite sheet. Together with `minValue`, it determines the complete value range.
 
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Fixed digit count in `bitmapExtend` mode. `0` means auto digits.
+  If `maxValue` is less than or equal to `minValue`, it is automatically set to `minValue + 0.001` to ensure a valid range.
 
-### `bitmapAlign`
+</PropertyBox>
 
-- **Type**: `string`
-- **Default**: `"left"`
-- **Description**: Horizontal alignment for extended digit rendering.
+<PropertyBox name="bitmapZeroFrame" type="boolean" defaultValue="false">
+  The `bitmapZeroFrame` property changes how frame `0` is used in standard mode.
 
-#### Valid values
+  When set to `false`, frame `0` represents values at or below `minValue`, and the remaining frames are distributed evenly across the value range.
 
-- `"left"`
-- `"center"`
-- `"right"`
+  When set to `true`, frame `0` is reserved as a dedicated zero or empty state that is displayed only when `value` equals `0`. The remaining `bitmapFrames - 1` frames represent the value range.
 
-### `bitmapSeparation`
+  ```javascript
+  // Volume indicator with silent state
+  bitmapFrames: 5,
+  bitmapZeroFrame: true,
+  value: 0
+  ```
 
-- **Type**: `number`
-- **Default**: `0`
-- **Description**: Pixel spacing between digits in `bitmapExtend` mode.
+</PropertyBox>
 
-## Shared Image Options
+<PropertyBox name="bitmapExtend" type="boolean" defaultValue="false">
+  The `bitmapExtend` property enables odometer mode when set to `true`.
 
-Bitmap supports:
-- `imageAlpha`
-- `grayscale`
-- `useExifOrientation`
-- `imageTint`
-- `imageFlip`
-- `colorMatrix`
+  In this mode, the `value` is treated as a non-negative integer and decomposed into individual digits. Each digit is rendered using a separate frame from the sprite sheet and displayed horizontally.
 
-::: warning
-`imageCrop` is ignored for Bitmap element semantics.
-:::
+  The digit base is determined by `bitmapFrames`. For example, `bitmapFrames: 10` displays decimal digits, `bitmapFrames: 16` displays hexadecimal digits, and `bitmapFrames: 2` displays binary digits. If `bitmapFrames` is `1`, a base of `2` is used.
 
-## Runtime Notes
+  ```text
+  value: 42, bitmapFrames: 10
+  Renders: frame[4] | frame[2]
 
-- `ui.addBitmap()` requires an options object.
-- If `id` already exists, the previous element is replaced.
-- Bitmap is frame-driven: parser forces `width` and `height` to auto mode for this element.
+  value: 1234, bitmapFrames: 10
+  Renders: frame[1] | frame[2] | frame[3] | frame[4]
+  ```
 
-## Example
+  ```javascript
+  bitmapImageName: "./assets/digits-0-9.png",
+  bitmapFrames: 10,
+  bitmapExtend: true,
+  value: 1337
+  ```
 
-:::tabs
-== index.js
-```javascript
-import { widgetWindow } from "novadesk";
+</PropertyBox>
 
-new widgetWindow({
-    id: "bitmapExample",
-    width: 520,
-    height: 260,
-    backgroundColor: "rgba(20, 24, 31, 0.96)",
-    script: "ui/script.ui.js"
-});
-```
-== ui/script.ui.js
-```javascript
-ui.addBitmap({
-    id: "cpu-bitmap",
-    x: 28,
-    y: 95,
-    value: 0,
-    bitmapImageName: "./assets/digits-0-9.png",
-    bitmapFrames: 10,
-    bitmapZeroFrame: false,
-    bitmapExtend: true,
-    maxValue: 100,
-    bitmapOrientation: "horizontal",
-    bitmapDigits: 3,
-    bitmapAlign: "left",
-    bitmapSeparation: -8,
-    imageTint: "rgba(230,245,255,1)",
-    imageAlpha: 255
-});
-```
-:::
+<PropertyBox name="bitmapDigits" type="number" defaultValue="0">
+  The `bitmapDigits` property specifies the number of digit frames rendered in extend mode.
 
+  This property is only used when `bitmapExtend` is `true`.
+
+  A value of `0` automatically calculates the required number of digits based on the current value. Values greater than `0` always render the specified number of digits, padding with leading zero frames when necessary.
+
+  ```javascript
+  bitmapExtend: true,
+  bitmapDigits: 4,
+  value: 7
+  ```
+
+</PropertyBox>
+
+<PropertyBox name="bitmapOrientation" type="string" defaultValue='"auto"'>
+  The `bitmapOrientation` property overrides the automatic frame layout detection.
+
+  Supported values are `"auto"`, `"horizontal"`, and `"vertical"`.
+
+  When set to `"auto"`, tall images are treated as vertically stacked frames, while wide images are treated as horizontally arranged frames.
+
+  ```javascript
+  bitmapOrientation: "auto"
+  bitmapOrientation: "horizontal"
+  bitmapOrientation: "vertical"
+  ```
+
+</PropertyBox>
+
+<PropertyBox name="bitmapAlign" type="string" defaultValue='"left"'>
+  The `bitmapAlign` property controls the horizontal alignment of the rendered digit group.
+
+  This property only applies when `bitmapExtend` is `true`.
+
+  Supported values are `"left"`, `"center"`, and `"right"`.
+
+  ```javascript
+  bitmapExtend: true,
+  bitmapAlign: "right",
+  x: 200
+  ```
+
+</PropertyBox>
+
+<PropertyBox name="bitmapSeparation" type="number" defaultValue="0">
+  The `bitmapSeparation` property specifies the spacing, in pixels, between adjacent digit frames.
+
+  This property only applies when `bitmapExtend` is `true`.
+
+  ```javascript
+  bitmapExtend: true,
+  bitmapSeparation: 4
+  ```
+
+</PropertyBox>
