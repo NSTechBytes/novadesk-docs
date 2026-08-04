@@ -23,63 +23,103 @@ Refer to:
 
 ## Image Element Options
 
-### `path`
+<PropertyBox name="path" type="string" required>
+  The `path` property specifies the image file to display. Relative paths are resolved from the script directory, while HTTP and HTTPS URLs are loaded asynchronously in the background.
 
-- **Type**: `string`
-- **Default**: `""`
-- **Description**: Path to the image file.
+  The image element remains empty until the image has finished loading, after which it updates automatically.
 
-### `preserveAspectRatio`
+  ```javascript
+  path: "./assets/logo.png"
+  path: "../shared/icons/cpu.svg"
+  path: "https://example.com/banner.jpg"
+  ```
 
-- **Type**: `string`
-- **Default**: `"stretch"`
-- **Description**: Controls how the image maintains its aspect ratio.
+  The image source can also be changed at runtime.
 
-#### Valid values
+  ```javascript
+  ui.setElementProperties("my-image", {
+      path: "./assets/logo-dark.png"
+  });
+  ```
 
-- `"stretch"`
-- `"preserve"`
-- `"crop"`
+</PropertyBox>
 
-### `scaleMargins`
+<PropertyBox name="preserveAspectRatio" type="string" defaultValue='"stretch"'>
+  The `preserveAspectRatio` property controls how the image is scaled to fit the element's `width` and `height`.
 
-- **Type**: `number[]`
-- **Default**: `[]`
-- **Description**: 9-slice style margins for scalable image regions.
+  Supported values are `"stretch"`, `"preserve"`, and `"crop"`.
 
-#### Syntax
+  When set to `"stretch"`, the image is resized to exactly match the element bounds, ignoring its original aspect ratio. This fills the entire element but may distort the image.
 
-- `[left, top, right, bottom]`
+  ```text
+  Element: 300×100     Image: 200×200
+  Result:  300×100 (stretched)
+  ```
 
-### `tile`
+  When set to `"preserve"`, the image is scaled down uniformly so it fits entirely within the element while maintaining its aspect ratio. The image is centered, and empty space may appear around it.
 
-- **Type**: `boolean`
-- **Default**: `false`
-- **Description**: Tiles the image to fill the element area.
+  ```text
+  Element: 300×100     Image: 200×200
+  Scale:   min(300/200, 100/200) = 0.5
+  Result:  100×100, centered
+  ```
 
-## Example
+  When set to `"crop"`, the image is scaled uniformly to completely fill the element while preserving its aspect ratio. Any excess area is cropped from the edges.
 
-```javascript
-ui.addImage({
-    id: "logo",
-    x: 20,
-    y: 20,
-    width: 180,
-    height: 180,
-    path: "./assets/logo.png",
-    preserveAspectRatio: "preserve",
-    imageAlpha: 230,
-    imageTint: "rgba(255,255,255,0.95)",
-    imageFlip: "none"
-});
-```
+  ```text
+  Element: 300×100     Image: 200×200
+  Scale:   max(300/200, 100/200) = 1.5
+  Result:  300×300 image with the center 300×100 visible
+  ```
 
-## Supported Image Formats
+  ```javascript
+  preserveAspectRatio: "crop"       // Fill bounds, crop excess
+  preserveAspectRatio: "preserve"   // Maintain aspect ratio
+  preserveAspectRatio: "stretch"    // Fill bounds (default)
+  ```
 
-- PNG
-- JPEG
-- BMP
-- GIF
-- TIFF
-- ICO
+</PropertyBox>
 
+<PropertyBox name="tile" type="boolean" defaultValue="false">
+  The `tile` property specifies whether the image should repeat to fill the element.
+
+  When enabled, the entire image (or the cropped region when `imageCrop` is used) is tiled using `D2D1_EXTEND_MODE_WRAP`, creating a seamless repeating pattern.
+
+  ```javascript
+  ui.addImage({
+      id: "background",
+      x: 0,
+      y: 0,
+      width: 1020,
+      height: 800,
+      path: "./textures/noise.png",
+      tile: true,
+      imageAlpha: 30,
+  });
+  ```
+
+  `tile` is only supported when `preserveAspectRatio` is set to `"stretch"`. It cannot be used together with `"preserve"` or `"crop"`.
+
+</PropertyBox>
+
+<PropertyBox name="scaleMargins" type="array<number>">
+  The `scaleMargins` property enables 9-slice scaling (also known as scale-9 or border-image).
+
+  The image is divided into a 3×3 grid using four margin values in the order `[left, top, right, bottom]`. The four corners remain at their original size, the edges stretch along a single axis, and the center stretches freely in both directions.
+
+  ```javascript
+  ui.addImage({
+      id: "button-bg",
+      path: "./assets/button.png",
+      width: 200,
+      height: 50,
+      scaleMargins: [10, 10, 10, 10],
+      preserveAspectRatio: "stretch",
+  });
+  ```
+
+  `scaleMargins` requires `tile` to be `false` and `preserveAspectRatio` to be `"stretch"`. If color matrix effects are applied, 9-slice scaling is disabled and the image is rendered normally.
+
+  All margin values are clamped to `0` or greater. If the combined left and right margins exceed the image width, they are reduced proportionally to fit the source image.
+
+</PropertyBox>
