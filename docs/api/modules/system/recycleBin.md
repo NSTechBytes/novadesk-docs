@@ -4,52 +4,108 @@ title: Access Windows Recycle Bin APIs from the system module.
 
 # recycleBin
 
-`recycleBin` is exported by the `system` module and provides Recycle Bin actions and stats.
+Open, empty, and inspect the Windows Recycle Bin.
 
 ```javascript
 import { recycleBin } from "system";
 ```
 
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
+
 #### Table of Contents
 [[toc]]
 
-## `recycleBin.openBin()`
+---
 
-Opens Windows Recycle Bin in Explorer.
+<MethodBox
+  name="recycleBin.openBin()"
+  badge="recycleBin"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the request was accepted by the shell, <code>false</code> otherwise.</template>
 
-### Return Value
+Opens the Windows Recycle Bin folder in Explorer.
 
-- **Type**: `boolean`
-- **Description**: `true` if the request was accepted, otherwise `false`.
+<template #example>
 
-## `recycleBin.emptyBin()`
+```javascript
+import { recycleBin } from "system";
 
-Empties Recycle Bin using normal shell behavior.
+recycleBin.openBin();
+```
 
-### Return Value
+</template>
+</MethodBox>
 
-- **Type**: `boolean`
-- **Description**: `true` on success, otherwise `false`.
+---
 
-## `recycleBin.emptyBinSilent()`
+<MethodBox
+  name="recycleBin.emptyBin()"
+  badge="recycleBin"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> on success, <code>false</code> otherwise.</template>
 
-Empties Recycle Bin in silent mode (no confirmation/progress UI).
+Empties the Recycle Bin using the normal shell behavior — shows the confirmation dialog and progress UI.
 
-### Return Value
+<template #example>
 
-- **Type**: `boolean`
-- **Description**: `true` on success, otherwise `false`.
+```javascript
+import { recycleBin } from "system";
 
-## `recycleBin.getStats()`
+recycleBin.emptyBin();
+```
 
-Reads current Recycle Bin stats.
+</template>
+</MethodBox>
 
-### Return Value
+---
 
-- **Type**: `{ itemCount: number, totalSizeBytes: number } | null`
-- **Description**: Returns an object on success, otherwise `null`.
+<MethodBox
+  name="recycleBin.emptyBinSilent()"
+  badge="recycleBin"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> on success, <code>false</code> otherwise.</template>
 
-## Example
+Empties the Recycle Bin silently — no confirmation dialog or progress UI is shown.
+
+<template #example>
+
+```javascript
+import { recycleBin } from "system";
+
+recycleBin.emptyBinSilent();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="recycleBin.getStats()"
+  badge="recycleBin"
+  badgeType="core"
+  returns="object | null"
+>
+<template #returns>An object with <code>itemCount</code> and <code>totalSizeBytes</code>, or <code>null</code> on failure.</template>
+
+Returns the current item count and total size of the Recycle Bin contents.
+
+The returned object has these properties:
+
+| Property | Type | Description |
+|---|---|---|
+| `itemCount` | `number` | Number of items currently in the Recycle Bin. |
+| `totalSizeBytes` | `number` | Total size of all items in bytes. |
+
+<template #example>
 
 ```javascript
 import { recycleBin } from "system";
@@ -57,6 +113,9 @@ import { recycleBin } from "system";
 const stats = recycleBin.getStats();
 if (stats) {
   console.log("Items:", stats.itemCount);
-  console.log("Bytes:", stats.totalSizeBytes);
+  console.log("Size:", (stats.totalSizeBytes / 1048576).toFixed(1), "MB");
 }
 ```
+
+</template>
+</MethodBox>

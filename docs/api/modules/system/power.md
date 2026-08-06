@@ -3,44 +3,56 @@ title: Read power and battery status with the power module.
 ---
 
 # power Module
-Read system power status details in Novadesk.
 
-The `power` module is exported from the `system` module.
+Read system power and battery status.
 
 ```javascript
 import { power } from "system";
 ```
+
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## `power.getStatus()`
+---
 
-Returns current power/battery status.
+<MethodBox
+  name="power.getStatus()"
+  badge="power"
+  badgeType="core"
+  returns="object | null"
+>
+<template #returns>A power status object, or <code>null</code> if the status cannot be read.</template>
 
-### Return Value
+Returns the current system power and battery status.
 
-- **Type**: `object | null`
-- **Description**:
-  - Returns `null` if power status cannot be read.
-  - Otherwise returns:
-    - **`acline`** (`number`): `1` when connected to AC power, otherwise `0`.
-    - **`status`** (`number`): Battery status code.
-    - **`status2`** (`number`): Additional battery status code.
-    - **`lifetime`** (`number`): Remaining battery lifetime in seconds (when available).
-    - **`percent`** (`number`): Battery percentage (`0-100`).
-    - **`mhz`** (`number`): Current CPU frequency in MHz.
-    - **`hz`** (`number`): Current CPU frequency in Hz.
+The returned object has these properties:
 
-## Example
+| Property | Type | Description |
+|---|---|---|
+| `acline` | `number` | `1` when connected to AC power, `0` on battery. |
+| `status` | `number` | Battery status code (Win32 `BATTERY_FLAG_*`). |
+| `status2` | `number` | Additional battery status code. |
+| `lifetime` | `number` | Estimated remaining battery life in seconds. |
+| `percent` | `number` | Battery charge percentage (`0–100`). |
+| `mhz` | `number` | Current CPU clock speed in MHz. |
+| `hz` | `number` | Current CPU clock speed in Hz. |
+
+<template #example>
 
 ```javascript
 import { power } from "system";
 
-const status = power.getStatus();
-if (status) {
-    console.log("AC:", status.acline);
-    console.log("Battery %:", status.percent);
-    console.log("CPU MHz:", status.mhz);
+const s = power.getStatus();
+if (s) {
+  console.log("AC power:", s.acline === 1);
+  console.log("Battery:", s.percent + "%");
+  console.log("CPU MHz:", s.mhz);
 }
 ```
+
+</template>
+</MethodBox>

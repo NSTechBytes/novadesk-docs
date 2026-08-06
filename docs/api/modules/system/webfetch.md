@@ -4,72 +4,67 @@ title: Read text from web URLs or files with webFetch from the system module.
 
 # webFetch
 
-Read text content from HTTP/HTTPS/file sources using `webFetch` from the `system` module.
+Fetch text content from HTTP/HTTPS URLs or local files asynchronously.
 
 ```javascript
 import { webFetch } from "system";
 ```
+
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## `webFetch(urlOrPath)`
+---
 
-Fetches text from:
-- `http://...`
-- `https://...`
-- `file://...`
-- local file paths
+<MethodBox
+  name="webFetch(urlOrPath)"
+  badge="system"
+  badgeType="core"
+  returns="Promise&lt;string&gt;"
+  :parameters="[
+    { name: 'urlOrPath', type: 'string', description: 'URL (http://, https://, file://) or local file path to fetch. Relative paths resolve from the widget entry script directory.' }
+  ]"
+>
+<template #returns>A <code>Promise</code> that resolves with the fetched text on success, or rejects on failure.</template>
 
-Relative local paths are resolved from the widget entry script directory.
+Fetches text content from a URL or file path. Runs on a background thread and resolves the returned Promise on the JS thread when complete.
 
-### Parameters
+Supported sources:
+- `https://...` — HTTPS request
+- `http://...` — HTTP request
+- `file:///...` — Local file via file URL
+- Relative path — Resolved from the widget entry script directory
+- Absolute path — Direct file read
 
-- **`urlOrPath`**
-  - **Type**: `string`
-  - **Required**: Yes
-  - **Description**: URL or filesystem path to load.
+::: warning
+Throws a `TypeError` synchronously if `urlOrPath` is missing or empty. Network and file errors cause the Promise to reject.
+:::
 
-### Return Value
-
-- **Type**: `Promise<string>`
-- **Description**: Resolves with fetched text on success.
-
-### Errors
-
-- Throws a `TypeError` when `urlOrPath` is missing or invalid/empty.
-- Promise rejects when fetch/read fails.
-
-### Example: Fetch Web JSON
+<template #example>
 
 ```javascript
 import { webFetch } from "system";
 
-async function load() {
+// Fetch from HTTPS
+async function loadJson() {
   const text = await webFetch("https://api.github.com");
-  console.log("length:", text.length);
+  const data = JSON.parse(text);
+  console.log(data);
 }
-load();
+loadJson();
+
+// Read a local file (relative path)
+webFetch("./data/config.json")
+  .then(text => console.log(text))
+  .catch(err => console.error("Failed:", err));
+
+// Read a local file (file:// URL)
+webFetch("file:///C:/Temp/notes.txt")
+  .then(text => console.log(text));
 ```
 
-### Example: Read Local File (Relative)
-
-```javascript
-import { webFetch } from "system";
-
-async function loadLocal() {
-  const text = await webFetch("./data/config.json");
-  console.log(text);
-}
-loadLocal();
-```
-
-### Example: Read Local File (file://)
-
-```javascript
-import { webFetch } from "system";
-
-webFetch("file:///C:/Temp/sample.txt")
-  .then((text) => console.log(text))
-  .catch((err) => console.error("webFetch failed:", err));
-```
+</template>
+</MethodBox>

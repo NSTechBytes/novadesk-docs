@@ -3,69 +3,116 @@ title: Read network throughput and totals with the network module.
 ---
 
 # network Module
-Read network receive/transmit rates and cumulative traffic totals.
 
-The `network` module is exported from the `system` module.
+Read network receive/transmit speeds and cumulative traffic totals.
 
 ```javascript
 import { network } from "system";
 ```
 
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
+
+::: info Sampling
+Values are sampled and cached internally for approximately 400ms. Very frequent calls may return the same sample.
+:::
+
 #### Table of Contents
 [[toc]]
 
-## `network.rxSpeed()`
+---
 
-Returns current receive speed.
+<MethodBox
+  name="network.rxSpeed()"
+  badge="network"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>Current receive speed in bytes per second across all operational interfaces. Returns <code>0</code> if unavailable.</template>
 
-### Return Value
+Returns the current network receive throughput.
 
-- **Type**: `number`
-- **Description**: Bytes per second received across operational interfaces. Returns `0` if unavailable.
-
-## `network.txSpeed()`
-
-Returns current transmit speed.
-
-### Return Value
-
-- **Type**: `number`
-- **Description**: Bytes per second sent across operational interfaces. Returns `0` if unavailable.
-
-## `network.bytesReceived()`
-
-Returns cumulative received bytes.
-
-### Return Value
-
-- **Type**: `number`
-- **Description**: Total bytes received across operational interfaces. Returns `0` if unavailable.
-
-## `network.bytesSent()`
-
-Returns cumulative sent bytes.
-
-### Return Value
-
-- **Type**: `number`
-- **Description**: Total bytes sent across operational interfaces. Returns `0` if unavailable.
-
-::: info
-Values are sampled internally and cached briefly (about 400ms), so very frequent calls may return the same sample.
-:::
-
-## Example
+<template #example>
 
 ```javascript
 import { network } from "system";
 
 const rx = network.rxSpeed();
-const tx = network.txSpeed();
-const totalRx = network.bytesReceived();
-const totalTx = network.bytesSent();
-
-console.log("RX B/s:", rx);
-console.log("TX B/s:", tx);
-console.log("Total RX:", totalRx);
-console.log("Total TX:", totalTx);
+console.log("Download:", (rx / 1024).toFixed(1), "KB/s");
 ```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="network.txSpeed()"
+  badge="network"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>Current transmit speed in bytes per second across all operational interfaces. Returns <code>0</code> if unavailable.</template>
+
+Returns the current network transmit throughput.
+
+<template #example>
+
+```javascript
+import { network } from "system";
+
+const tx = network.txSpeed();
+console.log("Upload:", (tx / 1024).toFixed(1), "KB/s");
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="network.bytesReceived()"
+  badge="network"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>Total bytes received since the last system boot across all operational interfaces. Returns <code>0</code> if unavailable.</template>
+
+Returns the cumulative bytes received since boot.
+
+<template #example>
+
+```javascript
+import { network } from "system";
+
+const total = network.bytesReceived();
+console.log("Total received:", (total / 1073741824).toFixed(2), "GB");
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="network.bytesSent()"
+  badge="network"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>Total bytes sent since the last system boot across all operational interfaces. Returns <code>0</code> if unavailable.</template>
+
+Returns the cumulative bytes sent since boot.
+
+<template #example>
+
+```javascript
+import { network } from "system";
+
+const total = network.bytesSent();
+console.log("Total sent:", (total / 1073741824).toFixed(2), "GB");
+```
+
+</template>
+</MethodBox>

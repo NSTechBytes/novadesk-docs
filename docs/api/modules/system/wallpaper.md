@@ -3,61 +3,79 @@ title: Set and read desktop wallpaper with the wallpaper module.
 ---
 
 # wallpaper Module
-Set the desktop wallpaper and read the current wallpaper path.
 
-The `wallpaper` module is exported from the `system` module.
+Set the desktop wallpaper and read the current wallpaper path.
 
 ```javascript
 import { wallpaper } from "system";
 ```
+
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## `wallpaper.set(path, [style])`
+---
 
-Sets desktop wallpaper.
+<MethodBox
+  name="wallpaper.set(path [, style])"
+  badge="wallpaper"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'path', type: 'string', description: 'Absolute path to the image file to use as wallpaper.' },
+    { name: 'style', type: 'string', optional: true, description: 'Wallpaper style. One of: fill, fit, stretch, tile, center, span. Defaults to fill.' }
+  ]"
+>
+<template #returns><code>true</code> if the wallpaper was updated, <code>false</code> otherwise.</template>
 
-### Parameters
+Sets the desktop wallpaper to the given image file.
 
-- **`path`**
-  - **Type**: `string`
-  - **Description**: Image file path.
+**Style options:**
 
-- **`style`**
-  - **Type**: `string`
-  - **Required**: No
-  - **Default**: `"fill"`
-  - **Description**: Wallpaper style. Supported values include:
-    - `"fill"`
-    - `"fit"`
-    - `"stretch"`
-    - `"tile"`
-    - `"center"`
-    - `"span"`
+| Value | Behavior |
+|---|---|
+| `fill` | Scales to fill the screen, cropping if needed (default) |
+| `fit` | Scales to fit within the screen, preserving aspect ratio |
+| `stretch` | Stretches to fill the screen, ignoring aspect ratio |
+| `tile` | Tiles the image across the desktop |
+| `center` | Centers the image at its original size |
+| `span` | Spans across multiple monitors |
 
-### Return Value
-
-- **Type**: `boolean`
-- **Description**: `true` if wallpaper was updated; otherwise `false`.
-
-## `wallpaper.getCurrentPath()`
-
-Gets the current wallpaper image path.
-
-### Return Value
-
-- **Type**: `string`
-- **Description**: Current wallpaper path, or empty string (`""`) if unavailable.
-
-## Example
+<template #example>
 
 ```javascript
 import { wallpaper } from "system";
 
-const setOk = wallpaper.set("C:\\Wallpapers\\my-wallpaper.jpg", "fill");
-console.log("set:", setOk);
+const ok = wallpaper.set("C:\\Wallpapers\\landscape.jpg", "fill");
+console.log("Wallpaper set:", ok);
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="wallpaper.getCurrentPath()"
+  badge="wallpaper"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The current wallpaper image path, or an empty string if unavailable.</template>
+
+Returns the file path of the currently set desktop wallpaper.
+
+<template #example>
+
+```javascript
+import { wallpaper } from "system";
 
 const current = wallpaper.getCurrentPath();
-console.log("current wallpaper:", current);
+console.log("Current wallpaper:", current);
 ```
+
+</template>
+</MethodBox>

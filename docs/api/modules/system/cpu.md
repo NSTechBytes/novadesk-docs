@@ -3,62 +3,84 @@ title: Read CPU usage with the cpu module.
 ---
 
 # cpu Module
-Read current system CPU usage in Novadesk.
 
-The `cpu` module is exported from the `system` module.
+Read current CPU usage and system uptime.
 
 ```javascript
 import { cpu } from "system";
 ```
+
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## `cpu.usage()`
+---
 
-Returns current total CPU usage percentage.
+<MethodBox
+  name="cpu.usage()"
+  badge="cpu"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>CPU usage percentage in the range <code>0–100</code>. Returns <code>0</code> if stats are unavailable.</template>
 
-### Return Value
+Returns the current total CPU usage across all cores as a percentage.
 
-- **Type**: `number`
-- **Description**: CPU usage percentage in the range `0-100`. Returns `0` if stats are unavailable.
-
-## `cpu.getUpTime([format])`
-
-Returns the total system uptime since boot.
-
-### Parameters
-
-- **`format`** (Optional)
-    - **Type**: `string`
-    - **Description**: A format string to return a human-readable duration. If omitted, returns total seconds as a number.
-    - **Supported Tokens**:
-        - `%d`: Days
-        - `%h`: Hours (total hours within the day)
-        - `%m`: Minutes (total minutes within the hour)
-        - `%s`: Seconds (total seconds within the minute)
-        - `%H`: Padded hours (e.g., `05`)
-        - `%M`: Padded minutes (e.g., `09`)
-        - `%S`: Padded seconds (e.g., `01`)
-
-### Return Value
-
-- **Type**: `number | string`
-- **Description**: Total seconds as a `number` if no format is provided, otherwise a formatted `string`.
-
-## Example
+<template #example>
 
 ```javascript
 import { cpu } from "system";
 
-// Get raw seconds
-const seconds = cpu.getUpTime();
-console.log(`System has been up for ${seconds} seconds.`);
-
-// Get formatted string
-const uptime = cpu.getUpTime("%d days, %H:%M:%S");
-console.log("Uptime:", uptime);
-
-const value = cpu.usage();
-console.log("CPU usage:", value + "%");
+const usage = cpu.usage();
+console.log("CPU:", usage + "%");
 ```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="cpu.getUpTime([format])"
+  badge="cpu"
+  badgeType="core"
+  returns="number | string"
+  :parameters="[
+    { name: 'format', type: 'string', optional: true, description: 'Format string for a human-readable duration. If omitted, returns raw seconds as a number.' }
+  ]"
+>
+<template #returns>Total uptime in seconds as a <code>number</code> when no format is given, or a formatted <code>string</code> when a format is provided.</template>
+
+Returns the total system uptime since the last boot.
+
+**Format tokens:**
+
+| Token | Description |
+|---|---|
+| `%d` | Days |
+| `%h` | Hours within the day |
+| `%m` | Minutes within the hour |
+| `%s` | Seconds within the minute |
+| `%H` | Padded hours (e.g. `05`) |
+| `%M` | Padded minutes (e.g. `09`) |
+| `%S` | Padded seconds (e.g. `01`) |
+
+<template #example>
+
+```javascript
+import { cpu } from "system";
+
+// Raw seconds
+const seconds = cpu.getUpTime();
+console.log("Uptime seconds:", seconds);
+
+// Formatted string
+const uptime = cpu.getUpTime("%d days, %H:%M:%S");
+console.log("Uptime:", uptime); // e.g. "3 days, 04:22:11"
+```
+
+</template>
+</MethodBox>

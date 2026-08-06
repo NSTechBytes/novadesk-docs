@@ -3,49 +3,70 @@ title: Access Windows clipboard text with the clipboard module.
 ---
 
 # clipboard Module
-Read and write plain text in the Windows clipboard from Novadesk.
 
-The `clipboard` module is exported from the `system` module.
+Read and write plain text in the Windows clipboard.
 
 ```javascript
 import { clipboard } from "system";
 ```
 
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
+
 #### Table of Contents
 [[toc]]
 
-## `clipboard.getText()`
+---
 
-Gets the current clipboard text.
+<MethodBox
+  name="clipboard.getText()"
+  badge="clipboard"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The current clipboard text, or an empty string if no text is available.</template>
 
-### Return Value
+Gets the current plain text content of the Windows clipboard.
 
-- **Type**: `string`
-- **Description**: Clipboard text. Returns an empty string (`""`) when text is unavailable.
+<template #example>
 
-## `clipboard.setText(text)`
+```javascript
+import { clipboard } from "system";
 
-Sets clipboard text.
+const text = clipboard.getText();
+console.log("Clipboard:", text);
+```
 
-### Parameters
+</template>
+</MethodBox>
 
-- **`text`**
-  - **Type**: `string`
-  - **Description**: Text to write to the clipboard.
+---
 
-### Return Value
+<MethodBox
+  name="clipboard.setText(text)"
+  badge="clipboard"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'text', type: 'string', description: 'Text to write to the clipboard.' }
+  ]"
+>
+<template #returns><code>true</code> if the clipboard was updated, <code>false</code> otherwise.</template>
 
-- **Type**: `boolean`
-- **Description**: `true` if clipboard text was updated; otherwise `false`.
+Sets the Windows clipboard to the given plain text string.
 
-## Example
+<template #example>
 
 ```javascript
 import { clipboard } from "system";
 
 const ok = clipboard.setText("Copied from Novadesk");
-console.log("setText:", ok);
+console.log("setText:", ok); // true
 
 const value = clipboard.getText();
-console.log("clipboard:", value);
+console.log("clipboard:", value); // "Copied from Novadesk"
 ```
+
+</template>
+</MethodBox>
