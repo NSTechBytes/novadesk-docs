@@ -4,43 +4,58 @@ title: Logging and the print helper
 
 # Logging
 
-The global logging system writes messages to the Novadesk log and is accessible from both main and UI scripts.
+The global logging system writes messages to the Novadesk log. All `console.*` methods and the `print` shorthand are available without any import.
 
-::: info Note
-Global logging writes messages to the Novadesk log and is available in both the [Main](/guides/script-types.html#main-script-the-brain) and [UI](/guides/script-types.html#ui-script-the-face) scripts.
+::: info Availability
+All logging functions are globals available in both the [Main script](/guides/script-types.html#main-script-the-brain) and the [UI script](/guides/script-types.html#ui-script-the-face). No import needed.
 :::
 
 #### Table of Contents
 [[toc]]
 
-## `console.log(...args)`
+---
 
-Writes a general log message.
+<MethodBox
+  name="console.log(...args)"
+  badge="console"
+  badgeType="core"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log. Objects are serialized to JSON automatically.' }
+  ]"
+>
 
-### Parameters
+Writes a general log message to the Novadesk log.
 
-- **`...args`** (`any`): Values to log. Objects are serialized automatically.
-
-### Example
+<template #example>
 
 ```javascript
-console.log("Hello", { key: "value" });
+console.log("Widget ready");
+console.log("State:", { loaded: true, count: 3 });
 ```
 
 **Output**
 ```text
-[TimeStamp] [Novadesk] [LOG] Hello {"key":"value"}
+[TimeStamp] [Novadesk] [LOG] Widget ready
+[TimeStamp] [Novadesk] [LOG] State: {"loaded":true,"count":3}
 ```
 
-## `console.info(...args)`
+</template>
+</MethodBox>
 
-Writes an informational message.
+---
 
-### Parameters
+<MethodBox
+  name="console.info(...args)"
+  badge="console"
+  badgeType="core"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log.' }
+  ]"
+>
 
-- **`...args`** (`any`): Values to log.
+Writes an informational message to the Novadesk log.
 
-### Example
+<template #example>
 
 ```javascript
 console.info("Widget loaded successfully");
@@ -51,74 +66,118 @@ console.info("Widget loaded successfully");
 [TimeStamp] [Novadesk] [INFO] Widget loaded successfully
 ```
 
-## `console.warn(...args)`
+</template>
+</MethodBox>
 
-Writes a warning message.
+---
 
-### Parameters
+<MethodBox
+  name="console.warn(...args)"
+  badge="console"
+  badgeType="core"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log.' }
+  ]"
+>
 
-- **`...args`** (`any`): Values to log.
+Writes a warning message to the Novadesk log. Use this for non-fatal issues that should be visible without enabling debug mode.
 
-### Example
+<template #example>
 
 ```javascript
-console.warn("Low memory");
+console.warn("Config missing, using defaults");
 ```
 
 **Output**
 ```text
-[TimeStamp] [Novadesk] [WARN] Low memory
+[TimeStamp] [Novadesk] [WARN] Config missing, using defaults
 ```
 
-## `console.error(...args)`
+</template>
+</MethodBox>
 
-Writes an error message.
+---
 
-### Parameters
+<MethodBox
+  name="console.error(...args)"
+  badge="console"
+  badgeType="core"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log.' }
+  ]"
+>
 
-- **`...args`** (`any`): Values to log.
+Writes an error message to the Novadesk log. Use this for failures that need immediate attention.
 
-### Example
+<template #example>
 
 ```javascript
-console.error("Something went wrong");
+console.error("Failed to load config:", err.message);
 ```
 
 **Output**
 ```text
-[TimeStamp] [Novadesk] [ERROR] Something went wrong
+[TimeStamp] [Novadesk] [ERROR] Failed to load config: file not found
 ```
 
-## `console.debug(...args)`
+</template>
+</MethodBox>
 
-Writes a debug message.
+---
 
-### Parameters
+<MethodBox
+  name="console.debug(...args)"
+  badge="console"
+  badgeType="core"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log.' }
+  ]"
+>
 
-- **`...args`** (`any`): Values to log.
+Writes a debug message. These messages are **only visible when debugging is enabled** — they are silently dropped at runtime otherwise.
 
-### Example
-
-```javascript
-console.debug("tick", { frame: 42 });
-```
-
-**Output**
-```text
-[TimeStamp] [Novadesk] [DEBUG] tick {"frame":42}
-```
-
-::: warning Important
-`console.debug` will show log only when debugging is enabled.
-See the [app.enableDebugging()](/api/modules/novadesk/app.html#app-enabledebugging-enable) method.
+::: warning Requires debugging enabled
+`console.debug` output only appears when debugging is turned on. See [`app.enableDebugging()`](/api/modules/novadesk/app.html#appenabledebuggingbool) to enable it from code, or toggle it from the Manage window settings panel.
 :::
 
-## `print(...args)`
+<template #example>
 
-Global function alias for `console.log()` and `console.info`.
+```javascript
+console.debug("tick", { frame: 42, elapsed: 16.7 });
+```
 
-### Example
+**Output** (only when debugging is enabled)
+```text
+[TimeStamp] [Novadesk] [DEBUG] tick {"frame":42,"elapsed":16.7}
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="print(...args)"
+  badge="global"
+  badgeType="ui"
+  :parameters="[
+    { name: '...args', type: 'any', description: 'Values to log.' }
+  ]"
+>
+
+Shorthand alias for `console.log()`. Useful for quick one-liners during development.
+
+<template #example>
 
 ```javascript
 print("Hello from Novadesk");
+// same as: console.log("Hello from Novadesk")
 ```
+
+**Output**
+```text
+[TimeStamp] [Novadesk] [LOG] Hello from Novadesk
+```
+
+</template>
+</MethodBox>

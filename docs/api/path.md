@@ -263,7 +263,7 @@ console.log(p.ext);  // ".js"
 ---
 
 <MethodBox
-  name=".format(pathObject)"
+  name="path.format(pathObject)"
   badge="path"
   badgeType="core"
   returns="string"
