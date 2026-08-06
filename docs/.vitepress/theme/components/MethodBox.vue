@@ -138,9 +138,10 @@ const badgeStyle = computed(() => {
       </div>
 
       <!-- Returns section -->
-      <div v-if="returns" class="method-box__section method-box__returns">
+      <div v-if="returns || $slots.returns" class="method-box__section method-box__returns">
         <span class="method-box__section-title method-box__returns-title">RETURNS:</span>
-        <code class="method-box__returns-value">{{ returns }}</code>
+        <code v-if="returns" class="method-box__returns-value">{{ returns }}</code>
+        <span v-if="$slots.returns" class="method-box__returns-desc"><slot name="returns" /></span>
       </div>
 
       <!-- Code Example -->
@@ -317,6 +318,7 @@ const badgeStyle = computed(() => {
   align-items: center;
   gap: 8px;
   font-size: 14px;
+  flex-wrap: wrap;
 }
 
 .method-box__returns-title {
@@ -338,6 +340,12 @@ const badgeStyle = computed(() => {
   color: #34d399 !important;
   background-color: rgba(52, 211, 153, 0.08);
   border-color: rgba(52, 211, 153, 0.18);
+}
+
+.method-box__returns-desc {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--vp-c-text-2);
 }
 
 .method-box__example {

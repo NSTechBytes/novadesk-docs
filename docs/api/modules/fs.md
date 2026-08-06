@@ -1,4 +1,4 @@
----
+﻿---
 title: Read and write files with the fs module
 ---
 
@@ -32,6 +32,7 @@ Both absolute and relative paths are accepted. Relative paths resolve from the *
     { name: 'path', type: 'string', description: 'File path to read. Relative paths resolve from the entry script directory.' }
   ]"
 >
+<template #returns>The full file contents as a UTF-8 string, or <code>null</code> if the file could not be opened.</template>
 
 Reads the full contents of a file and returns it as a UTF-8 string. Returns `null` if the file cannot be opened or does not exist.
 
@@ -65,6 +66,7 @@ if (content !== null) {
     { name: 'append', type: 'boolean', optional: true, description: 'true appends to the file; false (default) overwrites it.' }
   ]"
 >
+<template #returns><code>true</code> if the write succeeded, <code>false</code> if the file could not be opened or written.</template>
 
 Writes text to a file. Creates the file if it does not exist. Returns `true` on success, `false` on failure.
 
@@ -97,6 +99,7 @@ console.log(result); // "Started\nLine 2\n"
     { name: 'path', type: 'string', description: 'File or directory path to test.' }
   ]"
 >
+<template #returns><code>true</code> if the path exists (file, directory, or symlink), <code>false</code> otherwise.</template>
 
 Returns `true` if the path exists (file, directory, or symlink), `false` otherwise.
 
@@ -125,6 +128,7 @@ if (!fs.exists(__dirname + "\\data")) {
     { name: 'recursive', type: 'boolean', optional: true, description: 'true (default) creates all intermediate directories. false creates only the final directory.' }
   ]"
 >
+<template #returns><code>true</code> if the directory exists after the call (including if it already existed), <code>false</code> on failure.</template>
 
 Creates a directory. Returns `true` if the directory exists after the call (including if it already existed), `false` on failure.
 
@@ -154,6 +158,7 @@ fs.mkdir(__dirname + "\\data\\logs", false);
     { name: 'path', type: 'string', description: 'Directory path to list.' }
   ]"
 >
+<template #returns>Array of entry names (not full paths) inside the directory. Empty array if the directory is empty or unreadable.</template>
 
 Returns an array of entry names (files and subdirectories) inside the given directory. Returns an empty array if the directory is empty or cannot be read. Entry names are filenames only — not full paths.
 
@@ -183,6 +188,7 @@ const fullPaths = entries.map(name => __dirname + "\\data\\" + name);
     { name: 'path', type: 'string', description: 'Path to the file or empty directory to remove.' }
   ]"
 >
+<template #returns><code>true</code> if the file or empty directory was removed, <code>false</code> if it did not exist or could not be removed.</template>
 
 Removes a file or an **empty** directory. Returns `true` on success, `false` on failure (e.g. path does not exist or directory is not empty).
 
@@ -214,6 +220,7 @@ console.log("removed:", removed); // true
     { name: 'to', type: 'string', description: 'New path. Can be in a different directory to move the entry.' }
   ]"
 >
+<template #returns><code>true</code> if the rename or move succeeded, <code>false</code> on failure.</template>
 
 Renames or moves a file or directory. Returns `true` on success, `false` on failure.
 
@@ -245,6 +252,7 @@ fs.rename(__dirname + "\\temp.txt", __dirname + "\\archive\\temp.txt");
     { name: 'overwrite', type: 'boolean', optional: true, description: 'true (default) overwrites the destination if it exists. false fails if the destination already exists.' }
   ]"
 >
+<template #returns><code>true</code> if the copy succeeded, <code>false</code> on failure or if <code>overwrite</code> is false and the destination already exists.</template>
 
 Copies a file from `from` to `to`. Returns `true` on success, `false` on failure.
 
@@ -277,6 +285,7 @@ if (!ok) {
     { name: 'path', type: 'string', description: 'File or directory path to inspect.' }
   ]"
 >
+<template #returns>A metadata object with <code>isFile</code>, <code>isDirectory</code>, <code>isSymlink</code>, <code>size</code>, and <code>mode</code> — or <code>null</code> if the path does not exist.</template>
 
 Returns a metadata object for the given path, or `null` if the path does not exist.
 
@@ -316,11 +325,11 @@ A complete walkthrough of every `fs` function:
 ```javascript
 import * as fs from "fs";
 
-const baseDir  = __dirname + "\\tmp";
+const baseDir   = __dirname + "\\tmp";
 const nestedDir = baseDir + "\\nested\\child";
-const fileA    = baseDir + "\\a.txt";
-const fileB    = baseDir + "\\b.txt";
-const fileC    = baseDir + "\\c.txt";
+const fileA     = baseDir + "\\a.txt";
+const fileB     = baseDir + "\\b.txt";
+const fileC     = baseDir + "\\c.txt";
 
 // Create nested directories
 console.log("mkdir:", fs.mkdir(nestedDir));

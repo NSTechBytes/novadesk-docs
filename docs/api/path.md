@@ -1,4 +1,4 @@
----
+﻿---
 title: File path utilities via the global path object.
 ---
 
@@ -33,6 +33,7 @@ const full = path.join(__dirname, "assets", "icon.png");
     { name: '...segments', type: 'string', description: 'One or more path segments to join together.' }
   ]"
 >
+<template #returns>The joined and normalized path string.</template>
 
 Joins all given path segments using the Windows path separator (`\`) and normalizes the result, collapsing redundant separators and resolving `.` segments.
 
@@ -65,6 +66,7 @@ path.join("C:\\Users\\me", ".", "Widgets");
     { name: 'ext', type: 'string', optional: true, description: 'If provided, strips this extension from the result.' }
   ]"
 >
+<template #returns>The last path component, with the extension stripped if <code>ext</code> was provided.</template>
 
 Returns the last portion of a path — typically the filename. Optionally removes a trailing extension.
 
@@ -90,6 +92,7 @@ path.basename("C:\\Widgets\\my-widget\\");             // "my-widget"
     { name: 'filePath', type: 'string', description: 'The file path to extract the directory from.' }
   ]"
 >
+<template #returns>The directory portion of the path, or <code>"."</code> if there is none.</template>
 
 Returns the directory portion of a path — everything up to but not including the last component. Returns `"."` when there is no directory part.
 
@@ -117,6 +120,7 @@ path.dirname("index.js");
     { name: 'filePath', type: 'string', description: 'The file path to extract the extension from.' }
   ]"
 >
+<template #returns>The file extension including the leading dot, or an empty string if there is none.</template>
 
 Returns the file extension of the path, including the leading dot. Returns an empty string if there is no extension.
 
@@ -143,6 +147,7 @@ path.extname(".gitignore");  // ""
     { name: 'filePath', type: 'string', description: 'The path string to test.' }
   ]"
 >
+<template #returns><code>true</code> if the path is absolute, <code>false</code> if it is relative.</template>
 
 Returns `true` if the path is absolute (starts with a drive letter or UNC root), `false` if it is relative.
 
@@ -173,6 +178,7 @@ path.isAbsolute("assets\\icon.png");   // false
     { name: 'filePath', type: 'string', description: 'The path to normalize.' }
   ]"
 >
+<template #returns>The normalized path, or <code>"."</code> if the result would be empty.</template>
 
 Normalizes a path by resolving `..` and `.` segments, removing redundant separators, and standardizing to backslashes. Returns `"."` if the result would be empty.
 
@@ -201,6 +207,7 @@ path.normalize("assets//images\\\\icon.png");
     { name: 'to', type: 'string', description: 'The destination path.' }
   ]"
 >
+<template #returns>The relative path from <code>from</code> to <code>to</code>.</template>
 
 Returns the relative path from `from` to `to`. Useful when you need a portable path that is relative to a known base.
 
@@ -228,8 +235,9 @@ path.relative("C:\\Widgets\\a", "C:\\Widgets\\b\\ui.js");
     { name: 'filePath', type: 'string', description: 'The file path to break into components.' }
   ]"
 >
+<template #returns>An object with <code>root</code>, <code>dir</code>, <code>base</code>, <code>name</code>, and <code>ext</code> components.</template>
 
-Breaks a path string into its individual components. This is the inverse of `.format()`.
+Breaks a path string into its individual components. This is the inverse of `path.format()`.
 
 The returned object has these properties:
 
@@ -274,8 +282,9 @@ console.log(p.ext);  // ".js"
     { name: 'ext', type: 'string', optional: true, description: 'File extension including the dot. Used when base is not provided.' }
   ]"
 >
+<template #returns>The assembled path string. <code>base</code> takes priority over <code>name</code> + <code>ext</code> when both are present.</template>
 
-Constructs a path string from an object of components. This is the inverse of `.parse()`.
+Constructs a path string from an object of components. This is the inverse of `path.parse()`.
 
 When both `base` and `name`/`ext` are provided, `base` takes priority and `name`/`ext` are ignored.
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: Inter-Process Communication (IPC) between Main and UI scripts.
 ---
 
@@ -178,6 +178,7 @@ ipcRenderer.send("ui-ready", { ts: Date.now() });
     { name: 'payload', type: 'any', optional: true, description: 'Data to send to the handler.' }
   ]"
 >
+<template #returns>The value returned by the matching <code>ipcMain.handle()</code> handler.</template>
 
 Sends a request to the Main script and **returns the handler's return value synchronously**. The Main script must have a matching `ipcMain.handle()` registered — otherwise a `ReferenceError` is thrown.
 

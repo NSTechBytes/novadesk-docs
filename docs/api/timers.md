@@ -1,4 +1,4 @@
----
+﻿---
 title: Timer functions available in Novadesk scripts.
 ---
 
@@ -30,6 +30,7 @@ Use `setTimeout` for a one-shot delay and `setInterval` for repeating work. Alwa
     { name: '...args', type: 'any', optional: true, description: 'Extra arguments forwarded to the callback when it fires.' }
   ]"
 >
+<template #returns>A timer ID that can be passed to <code>clearTimeout()</code> to cancel the pending call.</template>
 
 Schedules `callback` to run **once** after `delay` milliseconds. Returns a timer ID you can pass to `clearTimeout()` to cancel before it fires.
 
@@ -69,6 +70,7 @@ clearTimeout(cancelId);
     { name: '...args', type: 'any', optional: true, description: 'Extra arguments forwarded to the callback on each tick.' }
   ]"
 >
+<template #returns>A timer ID that can be passed to <code>clearInterval()</code> to stop the repeating calls.</template>
 
 Schedules `callback` to run **repeatedly** every `interval` milliseconds. Returns a timer ID you can pass to `clearInterval()` to stop the loop.
 
