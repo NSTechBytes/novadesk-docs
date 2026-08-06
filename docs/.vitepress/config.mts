@@ -211,6 +211,10 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: "audio",
+                    link: "/api/modules/system/audio",
+                  },
+                  {
                     text: "clipboard",
                     link: "/api/modules/system/clipboard",
                   },
