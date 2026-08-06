@@ -4,316 +4,470 @@ title: Control the Novadesk application via the app object
 
 # app
 
-The `app` object provides methods to control the Novadesk application: reloading scripts, exiting, logging control, and querying version info.
-
-`app` is exported from the `novadesk` module.
+Control the Novadesk runtime — reload scripts, manage settings, query paths, and persist widget state.
 
 ```javascript
 import { app } from 'novadesk';
 ```
-::: info Note
-Available only in the [Main script](/guides/script-types.html#main-script-the-brain).
+
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
 :::
 
 #### Table of Contents
 [[toc]]
 
+---
+
 ## Lifecycle
 
-### `app.reload()/app.refresh()`
+<MethodBox
+  name="app.reload()"
+  badge="app"
+  badgeType="core"
+>
 
-Reloads all active widget scripts.
+Reloads all active widget scripts. Equivalent to `app.refresh()`.
 
-#### Example
+<template #example>
 
 ```javascript
 app.reload();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="app.refresh()"
+  badge="app"
+  badgeType="core"
+>
+
+Alias of `app.reload()`. Reloads all active widget scripts.
+
+<template #example>
+
+```javascript
 app.refresh();
 ```
 
-### `app.exit()`
+</template>
+</MethodBox>
 
-Exits the Novadesk application.
+---
 
-#### Example
+<MethodBox
+  name="app.exit()"
+  badge="app"
+  badgeType="core"
+>
+
+Exits the Novadesk application gracefully.
+
+<template #example>
 
 ```javascript
 app.exit();
 ```
 
-### `app.requestSingleInstanceLock()`
+</template>
+</MethodBox>
 
-Requests ownership of the single-instance lock.
+---
 
-#### Return Value
+<MethodBox
+  name="app.requestSingleInstanceLock()"
+  badge="app"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the single-instance lock was acquired, <code>false</code> if another instance already holds it.</template>
 
-- **Type**: `boolean`
-- **Description**: `true` if the lock was acquired, otherwise `false`.
+Requests ownership of the global single-instance mutex. Use this when building standalone launcher widgets.
 
-#### Example
+<template #example>
 
 ```javascript
 const hasLock = app.requestSingleInstanceLock();
-console.log("Single instance lock:", hasLock);
+if (!hasLock) {
+  console.log("Another instance is running");
+  app.exit();
+}
 ```
 
-### `app.releaseSingleInstanceLock()`
+</template>
+</MethodBox>
 
-Releases the single-instance lock.
+---
 
-#### Return Value
+<MethodBox
+  name="app.releaseSingleInstanceLock()"
+  badge="app"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> after the release is requested.</template>
 
-- **Type**: `boolean`
-- **Description**: Returns `true` after release is requested.
+Releases the single-instance lock acquired by `app.requestSingleInstanceLock()`.
 
-#### Example
+<template #example>
 
 ```javascript
 app.releaseSingleInstanceLock();
 ```
 
-### `app.isFirstRun()`
+</template>
+</MethodBox>
 
-**Description**: Returns `true` on the first launch when the settings file is missing or empty. Returns `false` on normal subsequent launches.
+---
 
-#### Example
+<MethodBox
+  name="app.isFirstRun()"
+  badge="app"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> on the first launch when no settings file exists, <code>false</code> on subsequent launches.</template>
+
+Returns whether this is the first time Novadesk has been launched (i.e. the settings file is missing or empty). Useful for showing onboarding UI.
+
+<template #example>
+
 ```javascript
-// Check whether this is the first run
-const isFirstRun = app.isFirstRun();
-console.log("Is First Run: " + isFirstRun);
+if (app.isFirstRun()) {
+  console.log("Welcome! First launch detected.");
+}
 ```
+
+</template>
+</MethodBox>
+
+---
 
 ## Settings
 
-### `app.saveLogToFile(bool)`
+<MethodBox
+  name="app.saveLogToFile(enable)"
+  badge="app"
+  badgeType="core"
+  :parameters="[
+    { name: 'enable', type: 'boolean', description: 'true to write logs to logs.log in the AppData directory, false to disable.' }
+  ]"
+>
 
-Enables or disables logging to a file (`logs.log`) in the application's AppData directory.
+Enables or disables persistent log file output. Logs are written to `app.getLogPath()`.
 
-#### Parameters
+<template #example>
 
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to enable file logging, `false` to disable.
-
-#### Example
 ```javascript
-// Enable logging to file
 app.saveLogToFile(true);
 ```
 
-### `app.enableDebugging(bool)`
+</template>
+</MethodBox>
 
-Sets the global log level. When enabled, debug-level messages will be visible in the console and log file.
+---
 
-#### Parameters
+<MethodBox
+  name="app.enableDebugging(enable)"
+  badge="app"
+  badgeType="core"
+  :parameters="[
+    { name: 'enable', type: 'boolean', description: 'true to enable debug-level logging, false to revert to standard logging.' }
+  ]"
+>
 
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to enable debug logging, `false` to use standard informational logging.
+Sets the global log level. When enabled, `console.debug()` output becomes visible in the log and console.
 
-#### Example
+<template #example>
+
 ```javascript
 app.enableDebugging(true);
-console.debug("Detailed diagnostic information");
+console.debug("Detailed diagnostic info");
 ```
 
-### `app.disableLogging(bool)`
+</template>
+</MethodBox>
 
-Completely disables or enables all logging output (both console and file).
+---
 
-#### Parameters
+<MethodBox
+  name="app.disableLogging(disable)"
+  badge="app"
+  badgeType="core"
+  :parameters="[
+    { name: 'disable', type: 'boolean', description: 'true to silence all log output, false to resume logging.' }
+  ]"
+>
 
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to silence all logs, `false` to resume logging based on other settings.
+Completely suppresses all logging output (both console and file). Use in production builds to avoid performance overhead.
 
-#### Example
+<template #example>
+
 ```javascript
-// Silence all output for production
 app.disableLogging(true);
 ```
 
-### `app.useHardwareAcceleration(bool)`
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="app.useHardwareAcceleration(enable)"
+  badge="app"
+  badgeType="core"
+  :parameters="[
+    { name: 'enable', type: 'boolean', description: 'true to use Direct2D hardware rendering (default), false to use software rendering.' }
+  ]"
+>
 
 Enables or disables Direct2D hardware acceleration.
 
-#### Parameters
-
-- **`bool`**
-  - **Type**: `boolean`
-  - **Description**: `true` to use hardware-accelerated rendering (Default), `false` to use software rendering.
-
-::: info Note
-Changing this setting requires an **application restart** to take effect.
+::: warning Requires restart
+This setting is saved immediately but only takes effect after restarting Novadesk.
 :::
 
-#### Example
+<template #example>
+
 ```javascript
-// Enable hardware acceleration
-app.useHardwareAcceleration(true);
+app.useHardwareAcceleration(false); // switch to software rendering
 ```
+
+</template>
+</MethodBox>
+
+---
 
 ## Utils
 
-### `app.isPortable()`
+<MethodBox
+  name="app.isPortable()"
+  badge="app"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> when running in portable mode, <code>false</code> otherwise.</template>
 
-**Description**: Returns `true` when Novadesk is running in portable mode, otherwise `false`.
+Returns whether Novadesk is running in portable mode. Portable mode is detected at runtime based on whether a `settings.json` exists next to the executable.
 
-::: info Note
-Portable mode is detected at runtime based on the executable location and whether Novadesk can write in that directory.
-:::
-
-#### Example
-```javascript
-// Check whether Novadesk is running in portable mode
-const isPortable = app.isPortable();
-console.log("Is Portable: " + isPortable);
-```
-
-### `app.getProductVersion()`
-
-Returns the product version from the executable metadata.
-
-#### Return Value
-
-- **Type**: `string`
-
-::: info Note
-Standalone widget applications built with `nwm` report the version from `meta.json`.
-:::
-
-#### Example
+<template #example>
 
 ```javascript
-console.log("Product version:", app.getProductVersion());
+if (app.isPortable()) {
+  console.log("Running portable");
+}
 ```
 
-### `app.getFileVersion()`
+</template>
+</MethodBox>
 
-Returns the file version from the executable metadata.
+---
 
-#### Return Value
+<MethodBox
+  name="app.getProductVersion()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The product version string from the executable metadata.</template>
 
-- **Type**: `string`
+Returns the product version. For widgets packaged with `nwm`, this reports the version from `meta.json`.
 
-::: info Note
-Standalone widget applications built with `nwm` report the value from `meta.json`.
-:::
+<template #example>
 
-#### Example
+```javascript
+console.log("Version:", app.getProductVersion()); // e.g. "1.2.0.0"
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="app.getFileVersion()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The file version string from the executable metadata.</template>
+
+Returns the file version from the executable. For `nwm`-packaged widgets, this reports the value from `meta.json`.
+
+<template #example>
 
 ```javascript
 console.log("File version:", app.getFileVersion());
 ```
 
-### `app.getNovadeskVersion()`
+</template>
+</MethodBox>
 
-Returns the hardcoded Novadesk engine version. This value is constant regardless of `nwm` packaging.
+---
 
-#### Return Value
+<MethodBox
+  name="app.getNovadeskVersion()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The hardcoded Novadesk engine version string, regardless of packaging.</template>
 
-- **Type**: `string`
+Returns the Novadesk engine version. This is always the engine version, even inside `nwm`-packaged widgets.
 
-#### Example
+<template #example>
 
 ```javascript
-console.log("Novadesk version:", app.getNovadeskVersion());
+console.log("Engine:", app.getNovadeskVersion()); // e.g. "0.9.9.0"
 ```
-### `app.getAppDataPath()`
 
-**Description**: Returns the absolute path to the Novadesk AppData directory (`%APPDATA%\Novadesk\`). This directory is used for storing persistent settings, logs, and configuration.
+</template>
+</MethodBox>
 
-#### Example
+---
+
+<MethodBox
+  name="app.getAppDataPath()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>Absolute path to the Novadesk AppData directory (<code>%APPDATA%\Novadesk\</code>).</template>
+
+Returns the path to the Novadesk AppData folder used for settings, logs, and persistent storage.
+
+<template #example>
+
 ```javascript
-// Get the path to Novadesk AppData
-const appData = app.getAppDataPath();
-console.log("AppData Path: " + appData);
+console.log("AppData:", app.getAppDataPath());
 ```
 
-### `app.getSettingsFilePath()`
+</template>
+</MethodBox>
 
-**Description**: Returns the absolute path to the `settings.json` file.
+---
 
-#### Example
+<MethodBox
+  name="app.getSettingsFilePath()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>Absolute path to the active <code>settings.json</code> file.</template>
+
+Returns the path to the Novadesk settings file.
+
+<template #example>
+
 ```javascript
-// Get the settings file path
-const settingsPath = app.getSettingsFilePath();
-console.log("Settings Path: " + settingsPath);
+console.log("Settings:", app.getSettingsFilePath());
 ```
 
-### `app.getLogPath()`
+</template>
+</MethodBox>
 
-**Description**: Returns the absolute path to the current log file (`logs.log`).
+---
 
-#### Example
+<MethodBox
+  name="app.getLogPath()"
+  badge="app"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>Absolute path to the current <code>logs.log</code> file.</template>
+
+Returns the path to the current log file.
+
+<template #example>
+
 ```javascript
-// Get the log file path
-const logPath = app.getLogPath();
-console.log("Log Path: " + logPath);
+console.log("Log file:", app.getLogPath());
 ```
+
+</template>
+</MethodBox>
+
+---
 
 ## Storage
 
-### `app.storage.get(key, defaultValue?)`
+`app.storage` is a simple persistent key/value store. Values are JSON-serialized and saved to `app.getAppDataPath() + "storage.json"`. Keys are strings; values can be any JSON-serializable type.
 
-Reads a value from app storage.
+<MethodBox
+  name="app.storage.get(key [, defaultValue])"
+  badge="storage"
+  badgeType="core"
+  returns="any"
+  :parameters="[
+    { name: 'key', type: 'string', description: 'Storage key to read.' },
+    { name: 'defaultValue', type: 'any', optional: true, description: 'Returned when the key is missing. Defaults to undefined.' }
+  ]"
+>
+<template #returns>The stored value if the key exists, otherwise <code>defaultValue</code> or <code>undefined</code>.</template>
 
-#### Parameters
+Reads a value from persistent app storage.
 
-- `key` (`string`): Storage key.
-- `defaultValue` (`any`, optional): Returned when key is missing.
-
-#### Return Value
-
-- Stored value if found, otherwise `defaultValue` (if provided), otherwise `undefined`.
-
-#### Example
+<template #example>
 
 ```javascript
 const theme = app.storage.get("ui.theme", "dark");
-console.log(theme);
+const count = app.storage.get("session.count", 0);
 ```
 
-### `app.storage.set(key, value)`
+</template>
+</MethodBox>
 
-Writes a value to app storage.
+---
 
-#### Parameters
+<MethodBox
+  name="app.storage.set(key, value)"
+  badge="storage"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'key', type: 'string', description: 'Storage key to write.' },
+    { name: 'value', type: 'any', description: 'JSON-serializable value to store.' }
+  ]"
+>
+<template #returns><code>true</code> if the value was saved successfully.</template>
 
-- `key` (`string`): Storage key.
-- `value` (`any`): JSON-serializable value.
+Writes a value to persistent app storage. Overwrites any existing value at that key.
 
-#### Return Value
-
-- **Type**: `boolean` (`true` on success)
-
-#### Example
+<template #example>
 
 ```javascript
-app.storage.set("session.count", 3);
+app.storage.set("ui.theme", "dark");
 app.storage.set("profile", { name: "Nasir", pro: true });
+app.storage.set("session.count", 3);
 ```
 
-### `app.storage.remove(key)`
+</template>
+</MethodBox>
 
-Deletes a key from app storage.
+---
 
-#### Parameters
+<MethodBox
+  name="app.storage.remove(key)"
+  badge="storage"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'key', type: 'string', description: 'Storage key to delete.' }
+  ]"
+>
+<template #returns><code>true</code> if the key existed and was removed, <code>false</code> if the key was not found.</template>
 
-- `key` (`string`): Storage key.
+Deletes a key from persistent app storage.
 
-#### Return Value
-
-- **Type**: `boolean` (`true` if key existed and was removed)
-
-#### Example
+<template #example>
 
 ```javascript
 app.storage.remove("session.count");
 ```
 
-### Storage File
-
-Values are persisted in:
-
-- `app.getAppDataPath() + "storage.json"`
+</template>
+</MethodBox>

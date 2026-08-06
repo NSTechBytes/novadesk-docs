@@ -4,50 +4,67 @@ title: Create and manage widget windows with widgetWindow
 
 # widgetWindow
 
-The `widgetWindow` constructor creates a new desktop widget window. Each window can host its own UI script and supports drag, snap, transparency, toolbar visibility, context menus, and event listeners.
-
-`widgetWindow` is exported from the `novadesk` module.
+Create desktop widget windows. Each window hosts a UI script and supports drag, snap, transparency, context menus, and events.
 
 ```javascript
 import { widgetWindow } from "novadesk";
 ```
 
-#### Table of Contents
+::: info Availability
+Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
+:::
 
+#### Table of Contents
 [[toc]]
+
+---
 
 ## Constructor
 
-### `new widgetWindow(options)`
+<MethodBox
+  name="new widgetWindow(options)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'options', type: 'object', description: 'Window configuration object. See options table below.' }
+  ]"
+>
 
-Creates and displays a new widget window.
+Creates and displays a new desktop widget window.
 
-#### Options
+**Options:**
 
-- **`id`** (`string`, default: `""`): Unique identifier. Saved settings are loaded by this ID.
-- **`width`** (`number`): Window width in pixels.
-- **`height`** (`number`): Window height in pixels.
-- **`x`** (`number`): Horizontal position.
-- **`y`** (`number`): Vertical position.
-- **`script`** (`string`): Path to the UI script (relative to entry script).
-- **`backgroundColor`** (`string`, default: `"rgba(0,0,0,0)"`): Background color or gradient string.
-- **`windowOpacity`** (`number`, default: `255`): Master window opacity (`0`–`255`).
-- **`draggable`** (`boolean`, default: `true`): Allow the user to drag the window.
-- **`clickThrough`** (`boolean`, default: `false`): Mouse events pass through the window.
-- **`keepOnScreen`** (`boolean`, default: `false`): Prevent the window from being dragged off-screen.
-- **`snapEdges`** (`boolean`, default: `true`): Snap to screen edges and other widgets when dragging.
-- **`showInToolbar`** (`boolean`, default: `false`): Show this widget in the Windows toolbar/taskbar.
-- **`toolbarIcon`** (`string`, default: `""`): Path to toolbar icon.
-- **`toolbarTitle`** (`string`, default: `""`): Custom toolbar/taskbar title.
-- **`show`** (`boolean`, default: `true`): Show the window immediately after creation.
-- **`zPos`** (`string`, default: `"normal"`): Z-order position.
-  - **`ontopmost`**: Remains visible even when showing the desktop (`Win + D`). Stays above all other windows.
-  - **`ontop`**: Remains visible when showing the desktop. Sits above normal application windows but below other `ontopmost` widgets. Clicking brings it to the front among other widgets with the same setting.
-  - **`normal`**: Remains visible when showing the desktop. Clicking brings it above other normal windows and widgets.
-  - **`onbottom`**: Hidden when showing the desktop. Sits behind all application windows. Clicking does not change its stacking order among other `onbottom` widgets.
-  - **`ondesktop`**: Remains visible when showing the desktop. Clicking does not change its stacking order relative to normal windows. Recommended for wallpaper-style widgets.
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `id` | `string` | `""` | Unique identifier. Saved position/size are loaded by this ID. |
+| `width` | `number` | — | Window width in pixels. |
+| `height` | `number` | — | Window height in pixels. |
+| `x` | `number` | — | Horizontal screen position. |
+| `y` | `number` | — | Vertical screen position. |
+| `script` | `string` | — | Path to the UI script, relative to the entry script. |
+| `backgroundColor` | `string` | `"rgba(0,0,0,0)"` | Background color or gradient. |
+| `windowOpacity` | `number` | `255` | Master window opacity (`0`–`255`). |
+| `draggable` | `boolean` | `true` | Allow the user to drag the window. |
+| `clickThrough` | `boolean` | `false` | Mouse events pass through the window. |
+| `keepOnScreen` | `boolean` | `false` | Prevent dragging off-screen. |
+| `snapEdges` | `boolean` | `true` | Snap to screen edges and other widgets while dragging. |
+| `showInToolbar` | `boolean` | `false` | Show in the Windows taskbar. |
+| `toolbarIcon` | `string` | `""` | Path to the taskbar icon. |
+| `toolbarTitle` | `string` | `""` | Custom taskbar title. |
+| `show` | `boolean` | `true` | Show window immediately after creation. |
+| `zPos` | `string` | `"normal"` | Z-order position (see values below). |
 
-#### Example
+**`zPos` values:**
+
+| Value | Behavior |
+|---|---|
+| `ontopmost` | Always on top of everything, visible over the desktop. |
+| `ontop` | Above normal windows, visible over the desktop. |
+| `normal` | Normal stacking order, visible over the desktop. |
+| `onbottom` | Behind all app windows, hidden when showing the desktop. |
+| `ondesktop` | Visible over the desktop, static z-order — ideal for wallpaper-style widgets. |
+
+<template #example>
 
 ```javascript
 import { widgetWindow } from "novadesk";
@@ -58,38 +75,53 @@ const win = new widgetWindow({
   height: 300,
   script: "ui.js",
   backgroundColor: "rgb(10,10,10)",
-  draggable: true,
   snapEdges: true,
   showInToolbar: true,
   toolbarTitle: "My Widget",
 });
 ```
 
+</template>
+</MethodBox>
+
+---
+
 ## Window Methods
 
-### `win.setProperties(options)`
+<MethodBox
+  name="win.setProperties(options)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'options', type: 'object', description: 'Partial options object. Accepts the same keys as the constructor.' }
+  ]"
+>
 
-Updates window properties at runtime. Accepts the same option keys as the constructor.
+Updates one or more window properties at runtime. Only the provided keys are changed.
 
-#### Example
+<template #example>
 
 ```javascript
-win.setProperties({
-  width: 600,
-  height: 400,
-  backgroundColor: "rgb(30,30,30)",
-});
+win.setProperties({ width: 600, height: 400 });
+win.setProperties({ backgroundColor: "rgb(30,30,30)", draggable: false });
 ```
 
-### `win.getProperties()`
+</template>
+</MethodBox>
 
-Returns an object with the current window state.
+---
 
-#### Return Value
+<MethodBox
+  name="win.getProperties()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="object"
+>
+<template #returns>An object containing all current window properties: <code>id</code>, <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>draggable</code>, <code>clickThrough</code>, <code>keepOnScreen</code>, <code>snapEdges</code>, <code>showInToolbar</code>, <code>toolbarIcon</code>, <code>toolbarTitle</code>, <code>show</code>, <code>windowOpacity</code>, <code>backgroundColor</code>, <code>zPos</code>, <code>script</code>.</template>
 
-An object containing: `id`, `x`, `y`, `width`, `height`, `draggable`, `clickThrough`, `keepOnScreen`, `snapEdges`, `showInToolbar`, `toolbarIcon`, `toolbarTitle`, `show`, `windowOpacity`, `backgroundColor`, `zPos`, `script`.
+Returns the current state of all window properties.
 
-#### Example
+<template #example>
 
 ```javascript
 const props = win.getProperties();
@@ -97,286 +129,651 @@ console.log("Position:", props.x, props.y);
 console.log("Size:", props.width, "x", props.height);
 ```
 
-### `win.close()`
+</template>
+</MethodBox>
 
-Destroys the widget window and releases its resources. Triggers the `close` and `closed` events.
+---
 
-### `win.destroy()`
+<MethodBox
+  name="win.show()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Shows the widget window. Triggers the `show` event.
+
+<template #example>
+
+```javascript
+win.show();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.hide()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Hides the widget window. Triggers the `hide` event.
+
+<template #example>
+
+```javascript
+win.hide();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.close()"
+  badge="widgetWindow"
+  badgeType="core"
+>
+
+Destroys the widget window and releases resources. Triggers the `close` and `closed` events.
+
+<template #example>
+
+```javascript
+win.close();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.destroy()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
 Destroys the widget window immediately without triggering the `close` event.
 
-### `win.show()`
+<template #example>
 
-Shows the widget window. Returns the widget instance for chaining.
+```javascript
+win.destroy();
+```
 
-### `win.hide()`
+</template>
+</MethodBox>
 
-Hides the widget window. Returns the widget instance for chaining.
+---
 
-### `win.isFocused()`
+<MethodBox
+  name="win.isVisible()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window is currently visible.</template>
 
-Returns whether the widget window currently has keyboard focus.
+Returns whether the window is visible.
 
-#### Return Value
+<template #example>
 
-- **Type**: `boolean`
+```javascript
+if (!win.isVisible()) win.show();
+```
 
-### `win.isVisible()`
+</template>
+</MethodBox>
 
-Returns whether the widget window is currently visible.
+---
 
-#### Return Value
+<MethodBox
+  name="win.isFocused()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window currently has keyboard focus.</template>
 
-- **Type**: `boolean`
+Returns whether the window has keyboard focus.
 
-### `win.isDestroyed()`
+<template #example>
 
-Returns whether the widget window has been destroyed.
+```javascript
+console.log("Focused:", win.isFocused());
+```
 
-#### Return Value
+</template>
+</MethodBox>
 
-- **Type**: `boolean`
+---
 
-### `win.setBounds(bounds)`
+<MethodBox
+  name="win.isDestroyed()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window has been destroyed.</template>
 
-Sets the position and/or size of the widget window.
+Returns whether the window has been destroyed. Always check this before calling methods on a window that may have been closed.
 
-#### Parameters
+<template #example>
 
-- **`bounds`** (`object`): Object with optional properties:
-  - **`x`** (`number`): New X position
-  - **`y`** (`number`): New Y position
-  - **`width`** (`number`): New width
-  - **`height`** (`number`): New height
+```javascript
+if (!win.isDestroyed()) win.setProperties({ width: 500 });
+```
 
-#### Example
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.setBounds(bounds)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'bounds', type: 'object', description: 'Object with optional x, y, width, height properties.' }
+  ]"
+>
+
+Sets the position and/or size of the window. Only provided keys are applied.
+
+<template #example>
 
 ```javascript
 win.setBounds({ x: 100, y: 100, width: 500, height: 400 });
 win.setBounds({ width: 600 }); // Only change width
 ```
 
-### `win.getBounds()`
+</template>
+</MethodBox>
 
-Returns the current window position and size.
+---
 
-#### Return Value
+<MethodBox
+  name="win.getBounds()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="object"
+>
+<template #returns>An object with <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code>.</template>
 
-- **Type**: `object` with properties: `x`, `y`, `width`, `height`
+Returns the current position and size of the window.
 
-#### Example
+<template #example>
 
 ```javascript
-const bounds = win.getBounds();
-console.log("Position:", bounds.x, bounds.y);
-console.log("Size:", bounds.width, "x", bounds.height);
+const b = win.getBounds();
+console.log("At:", b.x, b.y, "Size:", b.width, "x", b.height);
 ```
 
-### `win.setSize(width, height)`
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.setSize(width, height)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'width', type: 'number', description: 'New width in pixels.' },
+    { name: 'height', type: 'number', description: 'New height in pixels.' }
+  ]"
+>
 
 Sets the window size.
 
-#### Parameters
-
-- **`width`** (`number`): New width in pixels
-- **`height`** (`number`): New height in pixels
-
-#### Example
+<template #example>
 
 ```javascript
 win.setSize(800, 600);
 ```
 
-### `win.getSize()`
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.getSize()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="object"
+>
+<template #returns>An object with <code>width</code> and <code>height</code>.</template>
 
 Returns the current window size.
 
-#### Return Value
+<template #example>
 
-- **Type**: `object` with properties: `width`, `height`
+```javascript
+const { width, height } = win.getSize();
+console.log(width, "x", height);
+```
 
-### `win.setBackgroundColor(color)`
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.setBackgroundColor(color)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'color', type: 'string', description: 'CSS-style color string, e.g. rgb(10,10,10) or rgba(0,0,0,128).' }
+  ]"
+>
 
 Sets the window background color.
 
-#### Parameters
-
-- **`color`** (`string`): Color string (e.g., `"rgb(10,10,10)"`, `"rgba(0,0,0,128)"`)
-
-#### Example
+<template #example>
 
 ```javascript
 win.setBackgroundColor("rgba(20, 20, 30, 200)");
 ```
 
-### `win.getBackgroundColor()`
+</template>
+</MethodBox>
 
-Returns the current background color string.
+---
 
-### `win.setOpacity(value)`
+<MethodBox
+  name="win.getBackgroundColor()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The current background color string.</template>
 
-Sets the window opacity.
+Returns the current background color.
 
-#### Parameters
+<template #example>
 
-- **`value`** (`number`): Opacity value. Accepts:
-  - `0–1` range (e.g., `0.5` for 50%)
-  - `0–100` range (e.g., `50` for 50%)
-  - `0–255` range (e.g., `128` for ~50%)
+```javascript
+console.log("BG:", win.getBackgroundColor());
+```
 
-#### Example
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.setOpacity(value)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'value', type: 'number', description: 'Opacity as 0–1 (e.g. 0.5), 0–100 (e.g. 50), or 0–255 (e.g. 128).' }
+  ]"
+>
+
+Sets the window opacity. All three common ranges are accepted and normalised automatically.
+
+<template #example>
 
 ```javascript
 win.setOpacity(0.75); // 75% opaque
+win.setOpacity(50);   // also 50% opaque
 ```
 
-### `win.refresh()`
+</template>
+</MethodBox>
 
-Clears all UI elements and re-executes the widget’s UI script.
+---
 
-::: info
-Before reloading `.ui.js`, stale `ipcRenderer` listeners from the previous UI instance are cleared to prevent duplicate callbacks.
-:::
+<MethodBox
+  name="win.refresh()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
-### `win.setFocus()`
+Clears all UI elements and re-executes the widget UI script. Stale `ipcRenderer` listeners from the previous UI instance are cleaned up automatically.
+
+<template #example>
+
+```javascript
+win.refresh();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.setFocus()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
 Gives keyboard focus to the widget window.
 
-### `win.unFocus()`
+<template #example>
+
+```javascript
+win.setFocus();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.unFocus()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
 Removes keyboard focus from the widget window.
 
-### `win.minimize()`
+<template #example>
 
-Minimizes the widget window and triggers the `minimize` event.
+```javascript
+win.unFocus();
+```
 
-### `win.unMinimize()`
+</template>
+</MethodBox>
 
-Restores a minimized widget window and triggers the `unMinimize` event.
+---
 
-### `win.getHandle()`
+<MethodBox
+  name="win.minimize()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
-Returns the native window handle (`HWND`) as a number.
+Minimizes the widget window. Triggers the `minimize` event.
 
-### `win.getInternalPointer()`
+<template #example>
 
-Returns the internal native Widget pointer as a number. Primarily useful for addon interop.
+```javascript
+win.minimize();
+```
 
-### `win.getTitle()`
+</template>
+</MethodBox>
 
-Returns the window title string.
+---
+
+<MethodBox
+  name="win.unMinimize()"
+  badge="widgetWindow"
+  badgeType="core"
+>
+
+Restores a minimized widget window. Triggers the `unMinimize` event.
+
+<template #example>
+
+```javascript
+win.unMinimize();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.getHandle()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>The native Windows <code>HWND</code> as a number.</template>
+
+Returns the native window handle. Primarily useful for native addon interop.
+
+<template #example>
+
+```javascript
+const hwnd = win.getHandle();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.getInternalPointer()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>The internal native Widget pointer as a number.</template>
+
+Returns the internal Widget pointer. Useful when passing the widget reference to a native addon.
+
+<template #example>
+
+```javascript
+const ptr = win.getInternalPointer();
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.getTitle()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The window title string.</template>
+
+Returns the current window title.
+
+<template #example>
+
+```javascript
+console.log("Title:", win.getTitle());
+```
+
+</template>
+</MethodBox>
+
+---
 
 ## Context Menu
 
-### `win.setContextMenu(items)`
+<MethodBox
+  name="win.setContextMenu(items)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'items', type: 'object[]', description: 'Array of menu item definitions. Each item can have text, action, type, checked, and items (sub-menu).' }
+  ]"
+>
 
-Sets the right-click context menu for this widget. Replaces any previous menu.
+Sets the right-click context menu for the widget. Replaces any previous menu.
 
-#### Parameters
+**Menu item properties:**
 
-- **`items`** (`Array<object>`): Menu item definitions. Each object can include:
-  - **`text`** (`string`): Label.
-  - **`action`** (`function`): Click callback.
-  - **`type`** (`string`): `"separator"` for dividers.
-  - **`checked`** (`boolean`): Check state.
-  - **`items`** (`Array<object>`): Nested sub-menu.
+| Property | Type | Description |
+|---|---|---|
+| `text` | `string` | Label text. |
+| `action` | `function` | Click callback. |
+| `type` | `string` | `"separator"` to insert a divider. |
+| `checked` | `boolean` | Shows a checkmark when `true`. |
+| `items` | `object[]` | Nested sub-menu items. |
 
-#### Example
+<template #example>
 
 ```javascript
 win.setContextMenu([
   { text: "Refresh", action: () => win.refresh() },
-  { type: "separator" },
   {
     text: "Tools",
     items: [
-      { text: "Ping", checked: false, action: () => console.log("ping") },
-    ],
+      { text: "Debug", checked: false, action: () => app.enableDebugging(true) }
+    ]
   },
+  { type: "separator" },
+  { text: "Close", action: () => win.close() }
 ]);
 ```
 
-### `win.clearContextMenu()`
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.clearContextMenu()"
+  badge="widgetWindow"
+  badgeType="core"
+>
 
 Removes all custom context menu items.
 
-### `win.disableContextMenu(disable)`
+<template #example>
 
-Enables or disables the right-click context menu entirely.
+```javascript
+win.clearContextMenu();
+```
 
-#### Parameters
+</template>
+</MethodBox>
 
-- **`disable`** (`boolean`): `true` to disable, `false` to enable.
+---
 
-### `win.showDefaultContextMenuItems(show)`
+<MethodBox
+  name="win.disableContextMenu(disable)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'disable', type: 'boolean', description: 'true to disable the right-click menu entirely, false to enable it.' }
+  ]"
+>
 
-Controls whether the built-in default context menu entries are shown.
+Enables or disables the right-click context menu.
 
-#### Parameters
+<template #example>
 
-- **`show`** (`boolean`): `true` to show, `false` to hide.
+```javascript
+win.disableContextMenu(true);  // no right-click menu
+win.disableContextMenu(false); // restore menu
+```
+
+</template>
+</MethodBox>
+
+---
+
+<MethodBox
+  name="win.showDefaultContextMenuItems(show)"
+  badge="widgetWindow"
+  badgeType="core"
+  :parameters="[
+    { name: 'show', type: 'boolean', description: 'true to show the built-in default menu items, false to hide them.' }
+  ]"
+>
+
+Controls whether the built-in Novadesk default context menu entries (e.g. Refresh, Close) are shown alongside custom items.
+
+<template #example>
+
+```javascript
+win.showDefaultContextMenuItems(false); // custom menu only
+```
+
+</template>
+</MethodBox>
+
+---
 
 ## Events
 
-### `win.on(eventName, callback)`
+<MethodBox
+  name="win.on(event, callback)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'event', type: 'string', description: 'Event name. See supported events table below.' },
+    { name: 'callback', type: 'function', description: 'Handler function. Mouse events receive a Mouse Event Object as argument.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
 
-Registers an event listener. Returns the widget instance for chaining.
+Registers an event listener on the widget window. Mouse events pass a [Mouse Event Object](/api/global-variables#mouse-event-object) to the callback.
 
-#### Parameters
+**Supported events:**
 
-- **`eventName`** (`string`): Event name.
-- **`callback`** (`function`): Handler receiving a [Mouse Event Object](/api/global-variables#mouse-event-object) for mouse events.
+| Event | Trigger |
+|---|---|
+| `show` | Window became visible. |
+| `hide` | Window was hidden. |
+| `focus` | Window gained keyboard focus. |
+| `unFocus` | Window lost keyboard focus. |
+| `minimize` | Window was minimized. |
+| `unMinimize` | Window was restored from minimized state. |
+| `move` | Window position changed. |
+| `refresh` | UI script was refreshed. |
+| `close` | Window is about to close. |
+| `closed` | Window has been destroyed. |
+| `mouseOver` | Mouse entered the window area. |
+| `mouseLeave` | Mouse left the window area. |
+| `mouseMove` | Mouse moved over the window. |
+| `mouseDown` | Any mouse button was pressed. |
+| `mouseUp` | Any mouse button was released. |
+| `click` | Left click released on the window. |
+| `right-click` | Right click released on the window. |
+| `double-click` | Left button double-clicked on the window. |
+| `scroll-up` | Mouse wheel scrolled up. |
+| `scroll-down` | Mouse wheel scrolled down. |
 
-Available Events
-
-| Event Name   | Description                           |
-| ------------ | ------------------------------------- |
-| show         | Widget became visible.                |
-| focus        | Widget gained keyboard focus.         |
-| mouseOver    | Mouse entered the widget area.        |
-| mouseMove    | Mouse moved over the widget.          |
-| mouseDown    | Any mouse button pressed.             |
-| mouseUp      | Any mouse button released.            |
-| click        | Left click released on widget.        |
-| right-click  | Right click released on widget.       |
-| double-click | Left button double click on widget.   |
-| scroll-up    | Mouse wheel scrolled up on widget.    |
-| scroll-down  | Mouse wheel scrolled down on widget.  |
-| mouseLeave   | Mouse left the widget area.           |
-| unFocus      | Widget lost keyboard focus.           |
-| minimize     | Widget minimized.                     |
-| unMinimize   | Widget restored from minimized state. |
-| move         | Widget position changed.              |
-| refresh      | Widget UI was refreshed.              |
-| close        | Widget is about to close.             |
-| closed       | Widget has been destroyed.            |
-| hide         | Widget was hidden.                    |
-
-## Runtime Overrides (Ctrl key)
-
-When the Ctrl key is held, widget runtime interaction temporarily overrides some options:
-
-- Dragging can be initiated even when `draggable` is `false`.
-- Click-through widgets become interactable while Ctrl is held.
-- Snap behavior can be bypassed while dragging (useful for precise placement).
-
-#### Example
+<template #example>
 
 ```javascript
-win.on("mouseMove", (e) => {
-  console.log("client:", e.clientX, e.clientY);
-  console.log("screen:", e.screenX, e.screenY);
+win.on("click", (e) => {
+  console.log("Clicked at:", e.__clientX, e.__clientY);
 });
 
-win.on("show", () => console.log("Widget visible"));
-win.on("close", () => console.log("Widget closing"));
+win.on("mouseMove", (e) => {
+  console.log("Mouse:", e.__clientX, e.__clientY);
+});
+
+win.on("close", () => console.log("Closing..."));
+win.on("closed", () => console.log("Destroyed"));
 ```
+
+</template>
+</MethodBox>
+
+---
+
+## Runtime Overrides
+
+When the **Ctrl key** is held down, the widget runtime temporarily overrides some interaction settings:
+
+- Dragging works even when `draggable` is `false`
+- Click-through widgets become interactable
+- Snap behavior can be bypassed for precise placement
+
+---
 
 ## Full Example
 
 :::tabs
 == index.js
-
 ```javascript
 import { widgetWindow, app } from "novadesk";
 
@@ -390,20 +787,16 @@ const win = new widgetWindow({
 });
 
 win.on("mouseOver", (e) => {
-  console.log("mouse entered", e.clientX, e.clientY);
+  console.log("Mouse entered", e.__clientX, e.__clientY);
 });
 
-win.disableContextMenu(false);
-win.showDefaultContextMenuItems(true);
 win.setContextMenu([
   { text: "Refresh", action: () => win.refresh() },
   { type: "separator" },
   { text: "Close", action: () => win.close() },
 ]);
 ```
-
 == ui.js
-
 ```javascript
 ui.beginUpdate();
 
@@ -433,5 +826,4 @@ ui.addShape({
 
 ui.endUpdate();
 ```
-
 :::
