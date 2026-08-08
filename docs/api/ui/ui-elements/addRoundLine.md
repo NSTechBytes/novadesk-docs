@@ -1,11 +1,11 @@
----
+﻿---
 title: RoundLine element options and example usage.
 ---
 
 # RoundLine Element
 Rounded arc elements (RoundLine) visualize progress with configurable angles and stroke styles.
 
-Create one with `ui.addRoundLine()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip), and [Mouse Events Callback](/api/ui/ui-elements/general-options/general-mouse-options).
+Create one with `ui.addRoundLine()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addRoundLine(options);

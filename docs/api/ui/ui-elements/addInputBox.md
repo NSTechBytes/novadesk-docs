@@ -1,4 +1,4 @@
----
+﻿---
 title: ui.addInputBox(options)
 ---
 
@@ -16,8 +16,8 @@ ui.addInputBox(options);
 ## Shared Options
 
 - [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for layout, visibility, padding, grouping, and interaction.
-- [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip) for tooltip appearance and behavior.
-- [General Mouse Options](/api/ui/ui-elements/general-options/general-mouse-options) for mouse callbacks.
+- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for tooltip appearance and behavior.
+- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for mouse callbacks.
 
 ## Options
 

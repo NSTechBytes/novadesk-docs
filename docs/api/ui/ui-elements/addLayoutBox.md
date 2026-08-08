@@ -1,4 +1,4 @@
----
+﻿---
 title: ui.addLayoutBox(options)
 ---
 

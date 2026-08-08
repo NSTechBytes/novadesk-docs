@@ -1,11 +1,11 @@
----
+﻿---
 title: Button element options and example usage.
 ---
 
 # Button Element
 The Button element draws an image-based button and triggers actions on click.
 
-Create one with `ui.addButton()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip), and [Mouse Events Callback](/api/ui/ui-elements/general-options/general-mouse-options).
+Create one with `ui.addButton()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addButton(options);

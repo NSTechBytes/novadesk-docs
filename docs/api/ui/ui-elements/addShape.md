@@ -1,4 +1,4 @@
----
+﻿---
 title: Shape element types, properties, and examples.
 ---
 
@@ -16,7 +16,7 @@ ui.addShape(options);
 
 ## Shape Options
 
-The shape element inherits all [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip), and [General Mouse Options](/api/ui/ui-elements/general-options/general-mouse-options).
+The shape element inherits all [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 <PropertyBox name="type" type="string" defaultValue='"rectangle"'>
 

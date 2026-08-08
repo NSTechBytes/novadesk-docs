@@ -1,4 +1,4 @@
----
+﻿---
 title: Line element options and example usage.
 ---
 
@@ -7,7 +7,7 @@ The Line element draws one or more graph lines using `ui.addLine()` inside a UI 
 
 Use it for sparkline-style charts, trends, or compact mini graphs.
 
-Create one with `ui.addLine()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip), and [Mouse Events Callback](/api/ui/ui-elements/general-options/general-mouse-options).
+Create one with `ui.addLine()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addLine(options);

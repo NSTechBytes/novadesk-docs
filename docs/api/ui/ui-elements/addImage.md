@@ -1,4 +1,4 @@
----
+﻿---
 title: Image element options and supported formats.
 ---
 
@@ -18,8 +18,8 @@ ui.addImage(options);
 Refer to:
 - [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for layout and interaction.
 - [General Image Options](/api/ui/ui-elements/general-options/general-image-options) for shared image processing fields.
-- [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip) for tooltip appearance and behavior.
-- [Mouse Events Callback](/api/ui/ui-elements/general-options/general-mouse-options) for mouse interaction and cursor settings.
+- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for tooltip appearance and behavior.
+- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for mouse interaction and cursor settings.
 
 ## Image Element Options
 

@@ -1,11 +1,11 @@
----
+﻿---
 title: Rotator element options and example usage.
 ---
 
 # Rotator Element
 The Rotator element displays a bitmap image that rotates to an angle calculated from a numeric value. The classic use case is a gauge needle — the image is a needle graphic, and value drives its angle.
 
-Create one with `ui.addRotator()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Tooltip Options](/api/ui/ui-elements/general-options/tooltip), and [Mouse Events Callback](/api/ui/ui-elements/general-options/general-mouse-options).
+Create one with `ui.addRotator()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
 
 ```js
 ui.addRotator(options);
