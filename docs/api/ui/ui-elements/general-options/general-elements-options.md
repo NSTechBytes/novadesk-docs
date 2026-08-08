@@ -1,5 +1,6 @@
-
+---
 title: Shared UI element options.
+---
 
 # General Element Options
 

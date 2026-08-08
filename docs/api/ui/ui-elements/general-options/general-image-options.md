@@ -1,5 +1,5 @@
 ---
-title: Shared image options for UI image-based elements.
+title: Shared image options for UI image-based elements
 ---
 
 # General Image Options
@@ -10,8 +10,6 @@ Use these together with [General Element Options](/api/ui/ui-elements/general-op
 
 #### Table of Contents
 [[toc]]
-
----
 
 ## Image Processing
 
@@ -55,8 +53,7 @@ ui.addImage({ id: "icon", path: "./icon.png", imageTint: "rgba(0,180,255,0.5)" }
 
 Flips the rendered image. Valid values:
 
-| Value | Description |
-|---|---|
+| Value | Description ||
 | `"none"` | No flip (default). |
 | `"horizontal"` | Mirrors the image left-to-right. |
 | `"vertical"` | Mirrors the image top-to-bottom. |
@@ -95,8 +92,6 @@ See the [Color Matrix Guide](/guides/color-matrix-guide) for recipes and example
 :::
 
 </PropertyBox>
-
----
 
 ## Crop
 

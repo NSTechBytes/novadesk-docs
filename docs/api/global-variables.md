@@ -1,111 +1,142 @@
 ---
-title: Global variables available in Novadesk scripts.
+title: Global variables available in Novadesk scripts
 ---
 
 # Global Variables
 
-Novadesk injects several globals into scripts. Some are available in both Main and UI scripts, while others are context-specific.
+Novadesk injects several globals into every script at startup. Some are available in both the Main and UI script; others are context-specific.
+
+::: info Availability
+Unless noted otherwise, all globals on this page are available in both the [Main script](/guides/script-types.html#main-script-the-brain) and the [UI script](/guides/script-types.html#ui-script-the-face).
+:::
 
 #### Table of Contents
 [[toc]]
 
-## `__dirname`
+## Path Globals
 
-- **Type**: `string`
-- **Available in**: Main script, UI script
+<PropertyBox name="__dirname" type="string">
 
-Absolute directory path of the current script file.
-
-### Example
+Absolute directory path of the **current** script file.
 
 ```javascript
 console.log(__dirname);
+// "C:\\Users\\me\\Documents\\Novadesk\\Widgets\\my-widget"
 ```
 
-## `__filename`
+</PropertyBox>
 
-- **Type**: `string`
-- **Available in**: Main script, UI script
+<PropertyBox name="__filename" type="string">
 
-Absolute path to the current script file.
-
-### Example
+Absolute path to the **current** script file itself.
 
 ```javascript
 console.log(__filename);
+// "C:\\Users\\me\\Documents\\Novadesk\\Widgets\\my-widget\\index.js"
 ```
 
-## `__widgetDir`
+</PropertyBox>
 
-- **Type**: `string`
-- **Available in**: Main script, UI script
+<PropertyBox name="__mainScriptDirPath" type="string">
 
-Absolute path to the Widgets root directory.
+Absolute directory path of the **entry/main** script file (`index.js`).
 
-### Example
+In a UI script, `__dirname` points to the UI script's own folder, while `__mainScriptDirPath` always points to the widget root — useful when resolving shared assets from a UI script.
+
+```javascript
+// Inside ui.js — resolves an asset relative to the widget root, not the UI script
+const iconPath = __mainScriptDirPath + "\\assets\\icon.png";
+```
+
+</PropertyBox>
+
+<PropertyBox name="__widgetDir" type="string">
+
+Absolute path to the Widgets root directory (the folder that contains all widgets).
 
 ```javascript
 console.log(__widgetDir);
+// "C:\\Users\\me\\Documents\\Novadesk\\Widgets"
 ```
 
-## `__addonsPath`
+</PropertyBox>
 
-- **Type**: `string`
-- **Available in**: Main script, UI script
+<PropertyBox name="__addonsPath" type="string">
 
-Absolute path to the Addons directory.
-
-### Example
+Absolute path to the Addons directory where native addon DLLs are stored.
 
 ```javascript
 console.log(__addonsPath);
+// "C:\\Users\\me\\Documents\\Novadesk\\Addons"
 ```
 
-## `__mainScriptDirPath`
-
-- **Type**: `string`
-- **Available in**: Main script, UI script
-
-Absolute directory path of the entry/main script file.
-
-This is useful in UI scripts when you need to resolve assets relative to the main script location.
-
-### Example
-
-```javascript
-console.log(__mainScriptDirPath);
-```
+</PropertyBox>
 
 ## Mouse Event Object
 
-Widget callbacks and element mouse handlers receive an event object with:
+Widget window callbacks (e.g. `win.on("mouseMove", ...)`) and UI element mouse handlers (e.g. `onMouseOver`, `onDrag`) receive an event object. Its properties are exposed as underscored keys:
 
-## `__clientX`, `__clientY`
+<PropertyBox name="__clientX / __clientY" type="number">
 
-- **Type**: `number`
+Mouse coordinates in **widget client space** — relative to the top-left corner of the widget window.
 
-Mouse coordinates in widget client space.
+```javascript
+win.on("mouseMove", (e) => {
+  console.log("client:", e.__clientX, e.__clientY);
+});
+```
 
-## `__screenX`, `__screenY`
+</PropertyBox>
 
-- **Type**: `number`
+<PropertyBox name="__screenX / __screenY" type="number">
 
-Mouse coordinates in screen space.
+Mouse coordinates in **screen space** — absolute pixel position on the display.
 
-## `__offsetX`, `__offsetY`
+```javascript
+win.on("click", (e) => {
+  console.log("screen:", e.__screenX, e.__screenY);
+});
+```
 
-- **Type**: `number`
+</PropertyBox>
 
-Offset relative to the target region.
+<PropertyBox name="__offsetX / __offsetY" type="number">
 
-## `__offsetXPercent`, `__offsetYPercent`
+Mouse offset in pixels **relative to the target element or region** that received the event.
 
-- **Type**: `number`
-- **Range**: Usually `0` to `100`; may be outside this range during `mouseLeave`.
+```javascript
+ui.addShape({
+  id: "box",
+  shapeType: "rectangle",
+  x: 16, y: 16, width: 260, height: 90,
+  fillColor: "rgba(35,35,35,220)",
+  onMouseOver: (e) => {
+    console.log("offset:", e.__offsetX, e.__offsetY);
+  }
+});
+```
 
-Percentage offsets within the target region.
+</PropertyBox>
 
-### Example
+<PropertyBox name="__offsetXPercent / __offsetYPercent" type="number">
+
+Mouse offset as a **percentage** of the target region's width and height. Normally in the range `0–100`, but may go outside this range during `mouseLeave` events as the cursor exits the element bounds.
+
+```javascript
+ui.addImage({
+  id: "slider",
+  path: "./track.png",
+  x: 10, y: 10, width: 200, height: 20,
+  onDrag: (e) => {
+    const pct = Math.max(0, Math.min(100, e.__offsetXPercent));
+    console.log("Position:", pct.toFixed(1) + "%");
+  }
+});
+```
+
+</PropertyBox>
+
+## Full Example
 
 :::tabs
 == index.js
@@ -131,10 +162,8 @@ win.on("mouseMove", (e) => {
 ui.addShape({
   id: "box",
   shapeType: "rectangle",
-  x: 16,
-  y: 16,
-  width: 260,
-  height: 90,
+  x: 16, y: 16,
+  width: 260, height: 90,
   fillColor: "rgba(35,35,35,220)",
   onMouseOver: (e) => {
     console.log("hover:", e.__clientX, e.__clientY);
@@ -144,8 +173,4 @@ ui.addShape({
   }
 });
 ```
-:::
-
-::: info
-Mouse event fields are exposed as underscored properties (for example `__clientX`, `__offsetYPercent`).
 :::
