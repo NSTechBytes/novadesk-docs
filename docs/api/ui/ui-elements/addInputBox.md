@@ -1,707 +1,442 @@
 ﻿---
-title: ui.addInputBox(options)
+title: addInputBox
 ---
 
-# `ui.addInputBox(options)`
+# ui.addInputBox()
 
-The InputBox element is a fully interactive text input field rendered entirely with Direct2D/DirectWrite. It supports typing, cursor movement, text selection, clipboard operations, undo/redo, password masking, multi-line mode, and input type filtering.
+A fully interactive text input field rendered with Direct2D and DirectWrite. Supports typing, cursor movement, text selection, clipboard operations, undo/redo, password masking, multi-line editing, and per-character input filtering.
 
-```js
+```javascript
 ui.addInputBox(options);
 ```
+
+::: info
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) (position, size, visibility, padding, tooltip, mouse events, etc.).
+
+The cursor is always set to the I-beam regardless of `mouseEventCursorName`.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## Shared Options
+## Quick Example
 
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for layout, visibility, padding, grouping, and interaction.
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for tooltip appearance and behavior.
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for mouse callbacks.
+```javascript
+ui.addInputBox({
+  id: "search",
+  x: 16, y: 40,
+  width: 260, height: 36,
+  placeholder: "Search...",
+  fontSize: 14,
+  fontColor: "rgb(230,230,230)",
+  fillColor: "rgba(255,255,255,0.08)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  borderFocusColor: "rgb(0,180,255)",
+  borderRadius: 6,
+  onEnter: () => {
+    const query = ui.getElementProperty("search", "text");
+    ipcRenderer.send("search", { query });
+  }
+});
+```
 
-## Options
+## Content
 
 <PropertyBox name="text" type="string" defaultValue='""'>
 
-The `text` property specifies the current text content of the input box. It can be used to provide an initial value when the element is created or to replace the existing content programmatically.
+Initial text content of the input box. When updated via `setElementProperties`, the content is completely replaced, the caret moves to the start, any selection is cleared, and the undo/redo history is reset.
 
-When the `text` property is updated using `ui.setElementProperties()`, the current content is completely replaced. The caret is moved to the beginning of the text, any active selection is cleared, and the undo/redo history is reset.
+Read the current value at any time with `ui.getElementProperty(id, "text")`.
 
-The current value of the input box can be retrieved at any time using `ui.getElementProperty()`.
+```javascript
+// Set initial value
+ui.addInputBox({ id: "name", text: "John Doe" });
 
-Example:
+// Read current value
+const val = ui.getElementProperty("name", "text");
 
-```js
- ui.addInputBox({
-     id: "name",
-     text: "John Doe"
- });
-
- // Read the current value
- var val = ui.getElementProperty("name", "text");
-
- // Replace the text programmatically
- ui.setElementProperties("name", {
-     text: "Jane Smith"
- });
+// Replace programmatically
+ui.setElementProperties("name", { text: "Jane Smith" });
 ```
 
 </PropertyBox>
 
 <PropertyBox name="placeholder" type="string" defaultValue='""'>
 
-The `placeholder` property specifies the text displayed when the input box is empty and does not have keyboard focus. It provides a hint about the expected input without becoming part of the field's actual value.
-
-The placeholder text disappears automatically as soon as the user enters any text or the `text` property is no longer empty. It is rendered using `placeholderColor` instead of `fontColor`.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "search",
-     placeholder: "Type to search…",
-     placeholderColor: "rgba(255,255,255,0.40)"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fontFace" type="string" defaultValue='"Segoe UI"'>
-
-The `fontFace` property specifies the font family used to render both the input text and the placeholder text. The value should be the name of an installed system font. To use a custom font, specify the font family here and provide the corresponding font file using the `fontPath` property.
-
-If the specified font cannot be found, the system automatically falls back to an available font.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "editor",
-     fontFace: "Consolas"
- });
-
- ui.addInputBox({
-     id: "search",
-     fontFace: "Segoe UI"
- });
-
- ui.addInputBox({
-     id: "custom",
-     fontFace: "Inter",
-     fontPath: "./fonts/Inter-Regular.ttf"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fontSize" type="number" defaultValue="14">
-
-The `fontSize` property specifies the size of the text displayed in the input box. The value is measured in typographic points and applies to both the input text and the placeholder text.
-
-Larger values make the text easier to read, while smaller values allow more text to fit within the available space.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "small",
-     fontSize: 12
- });
-
- ui.addInputBox({
-     id: "default",
-     fontSize: 14
- });
-
- ui.addInputBox({
-     id: "large",
-     fontSize: 18
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fontColor / textColor" type="string" defaultValue='"rgb(240, 240, 240)"'>
-
-The `fontColor` property defines the color or gradient used to render the text entered into the input box. The alias `textColor` is also supported. If both properties are specified, `fontColor` takes precedence.
-
-It supports all color formats available in the Novadesk color system, including named CSS colors, hexadecimal colors (`#RRGGBB`, `#RRGGBBAA`), `rgb()`/`rgba()` notation, `linearGradient()`, and `radialGradient()`.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "username",
-     fontColor: "#ffffff"
- });
-
- ui.addInputBox({
-     id: "email",
-     fontColor: "rgba(220, 220, 220, 0.9)"
- });
-
- ui.addInputBox({
-     id: "search",
-     fontColor: "linearGradient(0, #00b4ff, #9966ff)"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fontWeight" type="number" defaultValue="400">
-
-The `fontWeight` property specifies the weight of the text displayed in the input box. It maps directly to DirectWrite font weight values and accepts values from `100` to `900`.
-
-Higher values produce bolder text, while lower values produce lighter text. The property affects both the input text and the placeholder text.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "light",
-     fontWeight: 300
- });
-
- ui.addInputBox({
-     id: "normal",
-     fontWeight: 400
- });
-
- ui.addInputBox({
-     id: "bold",
-     fontWeight: 700
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="italic" type="boolean" defaultValue="false">
-
-The `italic` property controls whether the text is rendered using an italic font style.
-
-When set to `true`, the input text and placeholder text are displayed in italics. When set to `false`, the text is rendered using the normal upright style.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "notes",
-     italic: true
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fontPath" type="string" defaultValue='""'>
-
-The `fontPath` property specifies the path or URL of a custom font file to use with the input box. The value may be a relative or absolute file path, or an `http` or `https` URL.
-
-When using a custom font, the `fontFace` property must match the font family name contained within the font file.
-
-Remote fonts are downloaded asynchronously. Once the font has been cached, the input box is automatically redrawn using the new font.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "custom",
-     fontFace: "Inter",
-     fontPath: "./fonts/Inter-Regular.ttf"
- });
-
- ui.addInputBox({
-     id: "remote",
-     fontFace: "Inter",
-     fontPath: "https://example.com/fonts/Inter-Regular.ttf"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="align" type="string" defaultValue='"left"'>
-
-The `align` property controls the horizontal alignment of text within the input box. Valid values are `"left"`, `"center"`, and `"right"`. The value is case-insensitive.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "left",
-     align: "left"
- });
-
- ui.addInputBox({
-     id: "center",
-     align: "center"
- });
-
- ui.addInputBox({
-     id: "right",
-     align: "right"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="placeholderColor" type="string" defaultValue='"rgb(150, 150, 150)"'>
-
-The `placeholderColor` property defines the color or gradient used to render the placeholder text when the input box is empty.
-
-It supports all color formats available in the Novadesk color system, including named CSS colors, hexadecimal colors (`#RRGGBB`, `#RRGGBBAA`), `rgb()`/`rgba()` notation, `linearGradient()`, and `radialGradient()`.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "search",
-     placeholder: "Type to search...",
-     placeholderColor: "rgba(255,255,255,0.35)"
- });
-
- ui.addInputBox({
-     id: "name",
-     placeholderColor: "rgba(150,150,150,1)"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="caretColor" type="string" defaultValue='"rgb(255, 255, 255)"'>
-
-The `caretColor` property defines the color or gradient of the blinking text cursor displayed while the input box has keyboard focus.
-
-The caret blinks automatically at approximately 530 ms intervals and supports all color formats available in the Novadesk color system, including named CSS colors, hexadecimal colors (`#RRGGBB`, `#RRGGBBAA`), `rgb()`/`rgba()` notation, `linearGradient()`, and `radialGradient()`.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "editor",
-     caretColor: "#00b4ff"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="selectionColor" type="string" defaultValue='"rgba(135, 206, 235, 0.5)"'>
-
-The `selectionColor` property defines the background color or gradient used to highlight selected text. The highlight is rendered behind the text so the selected characters remain visible.
-
-It supports all color formats available in the Novadesk color system.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "editor",
-     selectionColor: "rgba(0, 120, 215, 0.45)"
- });
-
- ui.addInputBox({
-     id: "notes",
-     selectionColor: "rgba(153, 102, 255, 0.50)"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="fillColor" type="string" defaultValue='"rgb(30, 30, 34)"'>
-
-The `fillColor` property defines the background color or gradient of the input box.
-
-Setting the value to `"transparent"` or `"none"` disables the background fill, allowing the widget background to show through. When `borderRadius` is greater than `0`, the background is clipped to the rounded corners.
-
-It supports all color formats available in the Novadesk color system.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "default",
-     fillColor: "rgb(30, 30, 34)"
- });
-
- ui.addInputBox({
-     id: "glass",
-     fillColor: "rgba(255,255,255,0.10)"
- });
-
- ui.addInputBox({
-     id: "gradient",
-     fillColor: "linearGradient(90, rgba(30,30,40,1), rgba(20,20,30,1))"
- });
-
- ui.addInputBox({
-     id: "transparent",
-     fillColor: "transparent"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="borderWidth" type="number" defaultValue="0">
-
-The `borderWidth` property specifies the thickness of the border drawn around the input box. The value is measured in pixels.
-
-A value of `0` disables the border completely.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "thin",
-     borderWidth: 1
- });
-
- ui.addInputBox({
-     id: "standard",
-     borderWidth: 2
- });
-
- ui.addInputBox({
-     id: "thick",
-     borderWidth: 3
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="borderRadius" type="number" defaultValue="0">
-
-The `borderRadius` property specifies the corner radius, in pixels, applied to both the background fill and the border.
-
-Larger values produce more rounded corners. Setting the radius to approximately half the element's height creates a pill-shaped input box.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "square",
-     borderRadius: 0
- });
-
- ui.addInputBox({
-     id: "rounded",
-     borderRadius: 8
- });
-
- ui.addInputBox({
-     id: "pill",
-     borderRadius: 20
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="borderColor" type="string" defaultValue='"rgb(0, 0, 0)"'>
-
-The `borderColor` property defines the color or gradient of the border when the input box is not focused. It is visible only when `borderWidth` is greater than `0`.
-
-It supports all color formats available in the Novadesk color system.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "default",
-     borderWidth: 1,
-     borderColor: "rgba(255,255,255,0.20)"
- });
-
- ui.addInputBox({
-     id: "gradient",
-     borderWidth: 2,
-     borderColor: "linearGradient(0, #9966ff, #00b4ff)"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="borderFocusColor" type="string" defaultValue="Uses borderColor">
-
-The `borderFocusColor` property defines the color or gradient of the border while the input box has keyboard focus.
-
-If this property is not specified, the control uses `borderColor` when focused. Setting the value to `"transparent"` or `"none"` removes the focus border.
-
-It supports all color formats available in the Novadesk color system.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "search",
-     borderFocusColor: "#00b4ff"
- });
-
- ui.addInputBox({
-     id: "disabledFocus",
-     borderFocusColor: "none"
- });
-```
-
-</PropertyBox>
-
-<PropertyBox name="password" type="boolean" defaultValue="false">
-
-The `password` property controls whether the input box displays the entered text as password characters.
-
-When set to `true`, every typed character is displayed as a bullet (`•`) while the actual text remains unchanged internally. The original value can still be retrieved using `ui.getElementProperty(id, "text")`.
-
-When set to `false`, the input is displayed as plain text.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "password",
-     password: true
- });
-
- var password = ui.getElementProperty("password", "text");
+Hint text shown when the input is empty and unfocused. Rendered using `placeholderColor` and disappears as soon as the user types or `text` is set.
+
+```javascript
+placeholder: "Type to search..."
+placeholder: "Enter your email"
 ```
 
 </PropertyBox>
 
 <PropertyBox name="maxLength" type="number" defaultValue="0">
 
-The `maxLength` property specifies the maximum number of characters the input box accepts.
+Maximum number of characters accepted. `0` means unlimited. When the limit is reached, keyboard input is ignored and pasted text is truncated to fit.
 
-A value of `0` removes the limit. When the maximum length is reached, additional keyboard input is ignored, and pasted text is automatically truncated to fit within the allowed length.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "unlimited",
-     maxLength: 0
- });
-
- ui.addInputBox({
-     id: "username",
-     maxLength: 16
- });
-
- ui.addInputBox({
-     id: "pin",
-     maxLength: 8
- });
+```javascript
+maxLength: 0    // unlimited
+maxLength: 16   // username
+maxLength: 4    // PIN
 ```
 
 </PropertyBox>
 
 <PropertyBox name="multiline" type="boolean" defaultValue="false">
 
-The `multiline` property controls whether the input box accepts multiple lines of text.
+When `true`, Enter inserts a newline and text wraps to the element width. Vertical scrolling activates when content overflows. The default text alignment becomes `left-top` so text starts at the top.
 
-When set to `true`, pressing the <kbd>Enter</kbd> key inserts a new line instead of triggering the `onEnter` event. Text automatically wraps to fit the element's width, and vertical scrolling is enabled when the content exceeds the element's height.
-
-When set to `false` (default), the input box behaves as a single-line field. Pressing <kbd>Enter</kbd> triggers the `onEnter` event, and horizontal scrolling is used when the text exceeds the available width.
-
-In multiline mode, the default text alignment changes from `"left-center"` to `"left-top"` so that text begins at the top of the input box.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "username",
-     multiline: false
- });
-
- ui.addInputBox({
-     id: "notes",
-     multiline: true
- });
-```
+When `false`, Enter fires the `onEnter` callback and text scrolls horizontally.
 
 </PropertyBox>
 
+<PropertyBox name="password" type="boolean" defaultValue="false">
+
+When `true`, all characters are displayed as bullet symbols while the actual text is preserved internally. The real value is still readable via `ui.getElementProperty(id, "text")`.
+
+</PropertyBox>
+
+## Input Filtering
+
 <PropertyBox name="inputType" type="string" defaultValue='"any"'>
 
-The `inputType` property restricts which characters the user can type into the input box. The filter is applied only to keyboard input—text assigned programmatically through the `text` property is not validated.
+Restricts which characters the user can type. Programmatic updates via `text` bypass this filter. When a rejected character is entered, `onInvalidInput` fires. The value is case-insensitive.
 
-When the user attempts to enter a character that is not allowed, the character is rejected and the `onInvalidInput` event is triggered.
-
-Valid values:
-
-| Value            | Aliases                 | Allowed Characters                                                |
-| ---------------- | ----------------------- | ----------------------------------------------------------------- |
-| `"any"`          | —                       | All characters (default)                                          |
-| `"integer"`      | `"int"`                 | Digits (`0–9`) and an optional leading `-`                        |
-| `"float"`        | `"number"`, `"decimal"` | Digits, an optional leading `-`, and a single decimal point (`.`) |
-| `"letters"`      | `"alpha"`               | Unicode alphabetic characters only                                |
-| `"alphanumeric"` | `"alnum"`               | Letters and digits                                                |
-| `"hex"`          | `"hexadecimal"`         | `0–9`, `A–F`, `a–f`                                               |
-| `"email"`        | —                       | Letters, digits, `@`, `.`, `-`, `_`, and `+`                      |
-| `"custom"`       | —                       | Characters specified by `allowedChars`                            |
-
-The value is case-insensitive, so `"INTEGER"`, `"Integer"`, and `"integer"` are treated the same.
-
-Example:
-
-```js
- ui.addInputBox({
-     id: "age",
-     inputType: "integer"
- });
-
- ui.addInputBox({
-     id: "price",
-     inputType: "float"
- });
-
- ui.addInputBox({
-     id: "email",
-     inputType: "email"
- });
-
- ui.addInputBox({
-     id: "answer",
-     inputType: "custom",
-     allowedChars: "YyNn"
- });
-```
+| Value | Aliases | Allowed characters |
+|---|---|---|
+| `"any"` | | All characters (default) |
+| `"integer"` | `"int"` | Digits and an optional leading `-` |
+| `"float"` | `"number"`, `"decimal"` | Digits, optional `-`, and one `.` |
+| `"letters"` | `"alpha"` | Unicode alphabetic characters only |
+| `"alphanumeric"` | `"alnum"` | Letters and digits |
+| `"hex"` | `"hexadecimal"` | `0–9`, `A–F`, `a–f` |
+| `"email"` | | Letters, digits, `@`, `.`, `-`, `_`, `+` |
+| `"custom"` | | Characters specified by `allowedChars` |
 
 </PropertyBox>
 
 <PropertyBox name="allowedChars" type="string" defaultValue='""'>
 
-The `allowedChars` property specifies the exact set of characters that may be entered when `inputType` is set to `"custom"`.
+The exact set of characters permitted when `inputType` is `"custom"`. Each character in the string is a valid input. An empty string while `inputType` is `"custom"` blocks all keyboard input.
 
-Each character in the string is treated as a valid input character. If `allowedChars` is empty while `inputType` is `"custom"`, all keyboard input is blocked.
+```javascript
+inputType: "custom",
+allowedChars: "0123456789+-*/(). "   // calculator input
+```
 
-This property is ignored unless `inputType` is `"custom"`.
+</PropertyBox>
 
-Example:
+## Typography
 
-```js
- ui.addInputBox({
-     id: "calculator",
-     inputType: "custom",
-     allowedChars: "0123456789+-*/()."
- });
+<PropertyBox name="fontFace" type="string" defaultValue='"Segoe UI"'>
 
- ui.addInputBox({
-     id: "uppercase",
-     inputType: "custom",
-     allowedChars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
- });
+Font family name. Use with `fontPath` for a custom font file. Falls back to a system font if the name is not found.
+
+</PropertyBox>
+
+<PropertyBox name="fontSize" type="number" defaultValue="14">
+
+Font size in typographic points. Applies to both input text and placeholder text.
+
+</PropertyBox>
+
+<PropertyBox name="fontColor / textColor" type="string" defaultValue='"rgb(240,240,240)"'>
+
+Color or gradient of the input text. `fontColor` and `textColor` are both accepted — `fontColor` is checked first and takes precedence if both are provided.
+
+Supports `rgb()`, `rgba()`, hex, `linearGradient()`, and `radialGradient()`.
+
+</PropertyBox>
+
+<PropertyBox name="fontWeight" type="number" defaultValue="400">
+
+Font weight from `100` (thin) to `900` (black). Maps to DirectWrite font weight values.
+
+</PropertyBox>
+
+<PropertyBox name="italic" type="boolean" defaultValue="false">
+
+`true` renders text in italic style.
+
+</PropertyBox>
+
+<PropertyBox name="fontPath" type="string" defaultValue='""'>
+
+Path or URL to a custom font file. When using a custom font, `fontFace` must match the font family name inside the file. Remote URLs are downloaded asynchronously and the element redraws once cached.
+
+```javascript
+fontFace: "Inter",
+fontPath: "./fonts/Inter-Regular.ttf"
+```
+
+</PropertyBox>
+
+<PropertyBox name="align" type="string" defaultValue='"left"'>
+
+Horizontal text alignment. Accepts `"left"`, `"center"`, or `"right"`. Case-insensitive. The vertical alignment is always centered (or top in multiline mode).
+
+</PropertyBox>
+
+## Colors
+
+<PropertyBox name="fillColor" type="string" defaultValue='"rgb(30,30,34)"'>
+
+Background color or gradient of the input box. Set to `"none"` or `"transparent"` to remove the background fill entirely.
+
+```javascript
+fillColor: "rgb(30,30,34)"           // solid dark
+fillColor: "rgba(255,255,255,0.08)"  // frosted glass
+fillColor: "transparent"             // no background
+```
+
+</PropertyBox>
+
+<PropertyBox name="placeholderColor" type="string" defaultValue='"rgb(150,150,150)"'>
+
+Color or gradient of the placeholder text.
+
+</PropertyBox>
+
+<PropertyBox name="caretColor" type="string" defaultValue='"rgb(255,255,255)"'>
+
+Color or gradient of the blinking text cursor. The caret blinks at approximately 530ms intervals while the input has focus.
+
+</PropertyBox>
+
+<PropertyBox name="selectionColor" type="string" defaultValue='"rgba(135,206,235,0.5)"'>
+
+Background color or gradient of the text selection highlight. Rendered behind the selected characters so they remain visible.
+
+</PropertyBox>
+
+## Border
+
+<PropertyBox name="borderWidth" type="number" defaultValue="0">
+
+Border thickness in pixels. `0` hides the border. Accepts integer values.
+
+</PropertyBox>
+
+<PropertyBox name="borderRadius" type="number" defaultValue="0">
+
+Corner radius in pixels for both the background fill and the border. Accepts integer values.
+
+```javascript
+borderRadius: 0    // square
+borderRadius: 6    // slightly rounded
+borderRadius: 18   // pill shape (for a 36px tall input)
+```
+
+</PropertyBox>
+
+<PropertyBox name="borderColor" type="string" defaultValue='"rgb(0,0,0)"'>
+
+Border color or gradient when the input is not focused. Only visible when `borderWidth` is greater than `0`.
+
+</PropertyBox>
+
+<PropertyBox name="borderFocusColor" type="string">
+
+Border color or gradient when the input has keyboard focus. Falls back to `borderColor` when not set. Set to `"none"` or `"transparent"` to suppress the focus border entirely.
+
+```javascript
+borderFocusColor: "rgb(0,180,255)"    // blue focus ring
+borderFocusColor: "none"              // no focus ring
 ```
 
 </PropertyBox>
 
 ## Event Callbacks
 
-<CallbackBox name="onChange" signature="onChange(): void" :optional="true">
+<CallbackBox name="onEnter" signature="onEnter(): void" :optional="true">
 
-Fired whenever the text in the input box changes. This includes user typing, deleting text, pasting content, or programmatic updates made through `ui.setElementProperties()`. The alias `onTextChange` is also supported.
+Fired when Enter is pressed in single-line mode. Not fired in multiline mode (Enter inserts a newline instead).
 
-```js
-ui.addInputBox({
-  id: "my-input",
-
-  onChange: function () {
-    var val = ui.getElementProperty("my-input", "text");
-    console.log("Changed to:", val);
-  }
-});
+```javascript
+onEnter: () => {
+  const query = ui.getElementProperty("search", "text");
+  ipcRenderer.send("search", { query });
+}
 ```
 
 </CallbackBox>
 
-<CallbackBox name="onEnter" signature="onEnter(): void" :optional="true">
+<CallbackBox name="onChange / onTextChange" signature="onChange(): void" :optional="true">
 
-Fired when the user presses the <kbd>Enter</kbd> key in a single-line input box. In multiline mode, pressing <kbd>Enter</kbd> inserts a new line instead, so this callback is not invoked.
+Fired whenever the text content changes — typing, deletion, paste, or programmatic updates via `setElementProperties`. Both `onChange` and `onTextChange` are accepted; if both are provided, `onChange` takes precedence.
 
-```js
-ui.addInputBox({
-  id: "search-box",
-
-  onEnter: function () {
-    var query = ui.getElementProperty("search-box", "text");
-    doSearch(query);
-  }
-});
+```javascript
+onChange: () => {
+  const val = ui.getElementProperty("input", "text");
+  ui.setElementProperties("char-count", { text: val.length + " / 100" });
+}
 ```
 
 </CallbackBox>
 
 <CallbackBox name="onFocus" signature="onFocus(): void" :optional="true">
 
-Fired once when the input box gains keyboard focus. At this point the caret becomes visible, starts blinking, and the user can begin typing.
+Fired once when the input gains keyboard focus.
 
-```js
-ui.addInputBox({
-  id: "search-box",
-
-  onFocus: function () {
-    ui.setElementProperties("search-box", {
-      borderColor: "#00b4ff"
-    });
-  }
-});
+```javascript
+onFocus: () => {
+  ui.setElementProperties("search", { borderColor: "rgb(0,180,255)" });
+}
 ```
 
 </CallbackBox>
 
 <CallbackBox name="onBlur" signature="onBlur(): void" :optional="true">
 
-Fired once when the input box loses keyboard focus, such as when the user clicks elsewhere or tabs to another control.
+Fired once when the input loses keyboard focus.
 
-```js
-ui.addInputBox({
-  id: "search-box",
-
-  onBlur: function () {
-    var val = ui.getElementProperty("search-box", "text");
-    validateInput(val);
-  }
-});
+```javascript
+onBlur: () => {
+  ui.setElementProperties("search", { borderColor: "rgba(255,255,255,0.15)" });
+  const val = ui.getElementProperty("search", "text");
+  if (!val) ui.setElementProperties("search", { borderColor: "rgb(220,60,60)" });
+}
 ```
 
 </CallbackBox>
 
 <CallbackBox name="onInvalidInput" signature="onInvalidInput(): void" :optional="true">
 
-Fired when the user attempts to enter a character that is rejected by the current `inputType` filter. This callback is useful for displaying validation feedback such as changing the border color, playing a sound, or showing an error message.
+Fired when the user types a character rejected by `inputType`. Useful for showing validation feedback.
 
-```js
-ui.addInputBox({
-  id: "num-input",
-  inputType: "integer",
-
-  onInvalidInput: function () {
-    ui.setElementProperties("num-input", {
-      borderColor: "#ff3333"
-    });
-
-    setTimeout(function () {
-      ui.setElementProperties("num-input", {
-        borderColor: "#444"
-      });
-    }, 300);
-  }
-});
+```javascript
+onInvalidInput: () => {
+  ui.setElementProperties("num-input", { borderColor: "rgb(220,60,60)" });
+  setTimeout(() => {
+    ui.setElementProperties("num-input", { borderColor: "rgba(255,255,255,0.15)" });
+  }, 300);
+}
 ```
 
 </CallbackBox>
 
-## Keyboard Shortcuts (Built-in)
+## Built-in Keyboard Shortcuts
 
-The InputBox handles these keyboard operations automatically:
+These operations are handled automatically:
 
-| **Key**                            | **Action**                                                |
-| ---------------------------------- | --------------------------------------------------------- |
-| `←` / `→`                          | Move caret left/right                                     |
-| `Home` / `End`                     | Jump to start/end of line                                 |
-| `↑` / `↓`                          | Move up/down a line (multiline only)                      |
-| `Shift + ←` / `→` / `Home` / `End` | Extend selection                                          |
-| `Backspace`                        | Delete character before caret                             |
-| `Delete`                           | Delete character after caret                              |
-| `Ctrl + A`                         | Select all text                                           |
-| `Ctrl + C`                         | Copy selection to clipboard                               |
-| `Ctrl + X`                         | Cut selection to clipboard                                |
-| `Ctrl + V`                         | Paste from clipboard                                      |
-| `Ctrl + Z`                         | Undo                                                      |
-| `Ctrl + Y` / `Ctrl + Shift + Z`    | Redo                                                      |
-| `Enter`                            | Fire `onEnter` (single-line) / Insert newline (multiline) |
-| `Tab`                              | Insert 4 spaces                                           |
+| Key | Action |
+|---|---|
+| Arrow keys | Move caret |
+| `Home` / `End` | Jump to start/end of line |
+| `↑` / `↓` | Move up/down a line (multiline only) |
+| `Shift` + arrow keys | Extend selection |
+| `Backspace` | Delete character before caret |
+| `Delete` | Delete character after caret |
+| `Ctrl+A` | Select all |
+| `Ctrl+C` | Copy |
+| `Ctrl+X` | Cut |
+| `Ctrl+V` | Paste |
+| `Ctrl+Z` | Undo |
+| `Ctrl+Y` / `Ctrl+Shift+Z` | Redo |
+| `Enter` | Fire `onEnter` (single-line) or insert newline (multiline) |
+| `Tab` | Insert 4 spaces |
+
+## Practical Examples
+
+**Search box with focus border**
+
+```javascript
+ui.addInputBox({
+  id: "search",
+  x: 16, y: 40,
+  width: 260, height: 36,
+  placeholder: "Search...",
+  fillColor: "rgba(255,255,255,0.06)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.12)",
+  borderFocusColor: "rgb(0,180,255)",
+  borderRadius: 6,
+  onEnter: () => {
+    const q = ui.getElementProperty("search", "text");
+    ipcRenderer.send("search", { query: q });
+  }
+});
+```
+
+**Numeric-only input with invalid feedback**
+
+```javascript
+ui.addInputBox({
+  id: "port",
+  x: 80, y: 80,
+  width: 100, height: 32,
+  placeholder: "Port",
+  inputType: "integer",
+  maxLength: 5,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.15)",
+  borderFocusColor: "rgb(0,180,255)",
+  borderRadius: 4,
+  onInvalidInput: () => {
+    ui.setElementProperties("port", { borderColor: "rgb(220,60,60)" });
+    setTimeout(() => {
+      ui.setElementProperties("port", { borderColor: "rgba(255,255,255,0.15)" });
+    }, 400);
+  }
+});
+```
+
+**Password field**
+
+```javascript
+ui.addInputBox({
+  id: "password",
+  x: 16, y: 80,
+  width: 260, height: 36,
+  placeholder: "Password",
+  password: true,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.12)",
+  borderFocusColor: "rgb(0,180,255)",
+  borderRadius: 6,
+  onEnter: () => {
+    const pw = ui.getElementProperty("password", "text");
+    ipcRenderer.send("login", { password: pw });
+  }
+});
+```
+
+**Multi-line notes field**
+
+```javascript
+ui.addInputBox({
+  id: "notes",
+  x: 16, y: 60,
+  width: 360, height: 120,
+  placeholder: "Write a note...",
+  multiline: true,
+  fillColor: "rgba(255,255,255,0.05)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.10)",
+  borderFocusColor: "rgb(100,180,255)",
+  borderRadius: 4,
+  onChange: () => {
+    const val = ui.getElementProperty("notes", "text");
+    ipcRenderer.send("note-changed", { text: val });
+  }
+});
+```
+
+**Custom character filter — calculator**
+
+```javascript
+ui.addInputBox({
+  id: "calc",
+  x: 16, y: 40,
+  width: 200, height: 36,
+  inputType: "custom",
+  allowedChars: "0123456789+-*/().",
+  placeholder: "0",
+  align: "right",
+  borderWidth: 1,
+  borderRadius: 4
+});
+```
