@@ -1,157 +1,247 @@
 ﻿---
-title: Area Graph element options and example usage.
+title: addAreaGraph
 ---
 
-# Area Graph Element
-The Area Graph element draws a filled line graph from numeric data points.
+# ui.addAreaGraph()
 
-Create one with `ui.addAreaGraph()` and the shared [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
+Draws a scrolling filled area graph from an array of numeric data points. The newest point always anchors to one edge and older points scroll toward the other edge as new data arrives.
 
-```js
+```javascript
 ui.addAreaGraph(options);
 ```
+
+::: info
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) (position, size, visibility, tooltip, mouse events, etc.).
+:::
 
 #### Table of Contents
 [[toc]]
 
-## Area Graph Options
+## Quick Example
 
-<PropertyBox name="data" type="Array<number>" defaultValue="[] (empty array)">
-  The data property contains an array of numeric values representing the data points to be plotted on the area graph. Each value corresponds to a point on the graph, with values plotted sequentially from the graph's starting edge (left or right, depending on the graphStart setting).
-
-Data Format
-
-```js
- data: [value1, value2, value3, ..., valueN]
+```javascript
+ui.addAreaGraph({
+  id: "cpu-graph",
+  x: 16, y: 40,
+  width: 260, height: 60,
+  lineColor: "rgb(0,180,255)",
+  fillColor: "rgba(0,180,255,0.15)",
+  lineWidth: 1.5,
+  minValue: 0, maxValue: 100,
+  gridX: 40, gridY: 20,
+  maxPoints: 60
+});
 ```
 
-* Each element must be a number (integer or floating-point value).
-* The array can initially be empty.
-* Values are plotted sequentially in the order they appear in the array.
-* The visual height of each point is determined by its value relative to minValue and maxValue, or to the automatically calculated range when autoRange: true.
+## Data
+
+<PropertyBox name="data" type="number[]" defaultValue="[]">
+
+Array of numeric values to plot. Each value corresponds to one point on the graph, plotted sequentially from the newest edge to the oldest. Values are stored as floats.
+
+When `maxPoints` is set and the array exceeds that limit, only the most recent `maxPoints` values are kept.
+
+```javascript
+// Provide initial data
+ui.addAreaGraph({
+  id: "graph",
+  data: [10, 25, 40, 30, 60, 55, 70],
+  minValue: 0, maxValue: 100
+});
+
+// Append a new reading via setElementProperties
+ipcRenderer.on("update", (event, payload) => {
+  const current = ui.getElementProperty("graph", "data") ?? [];
+  current.push(payload.value);
+  ui.setElementProperties("graph", { data: current });
+});
+```
 
 </PropertyBox>
 
-<PropertyBox name="minValue" type="number" defaultValue="0.0">
-  The `minValue` property defines the minimum value of the Y-axis scale for the area graph. It represents the lower bound of the graph's vertical range and determines how data points are mapped to pixel positions on the graph.
+<PropertyBox name="minValue" type="number" defaultValue="0">
 
-When `autoRange` is `false`, `minValue` works together with `maxValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
+The lower bound of the Y-axis scale. Values at or below `minValue` are clamped to the bottom of the graph. Used when `autoRange` is `false`.
 
 </PropertyBox>
 
-<PropertyBox name="maxValue" type="number" defaultValue="1.0">
+<PropertyBox name="maxValue" type="number" defaultValue="1">
 
-  The `maxValue` property defines the maximum value of the Y-axis scale for the area graph. It represents the upper bound of the graph's vertical range and determines how data points are mapped to pixel positions on the graph.
-
-When `autoRange` is `false`, `maxValue` works together with `minValue` to establish a fixed Y-axis scale. All data values are normalized within this range to determine their vertical positions on the graph.
+The upper bound of the Y-axis scale. Values at or above `maxValue` are clamped to the top of the graph. Used when `autoRange` is `false`.
 
 </PropertyBox>
 
 <PropertyBox name="autoRange" type="boolean" defaultValue="false">
 
-  The `autoRange` property controls whether the area graph automatically calculates the Y-axis range from the data or uses manually specified values.
+When `true`, the Y-axis scale is automatically calculated from the minimum and maximum values in the current `data` array. `minValue` and `maxValue` are ignored.
 
-When `autoRange` is `true`, the graph automatically determines the minimum and maximum values from the `data` array. When `autoRange` is `false`, the graph uses the values specified by `minValue` and `maxValue` to define a fixed Y-axis scale.
+When all data points are identical, the range expands by ±0.5 to avoid a zero-range division.
 
-</PropertyBox>
-
-<PropertyBox name="lineColor" type="string" defaultValue='"rgb(0, 180, 255)"'>
-  
-  The `lineColor` property defines the color or gradient applied to the top edge of the area graph. It controls the appearance of the stroke that connects each data point, forming the upper boundary of the filled area.
-
-The property supports multiple CSS color formats, including solid colors and gradients.
-</PropertyBox>
-
-<PropertyBox name="lineWidth" type="number" defaultValue="1.0">
-  
-  The `lineWidth` property controls the thickness of the stroke drawn along the top edge of the area graph. This line is rendered as a separate path above the filled area, connecting each data point in sequence.
-
-A thinner line provides a clean, precise appearance, while a thicker line creates a bolder and more prominent look that is easier to distinguish.
-</PropertyBox>
-
-<PropertyBox name="fillColor" type="string" defaultValue='"rgba(0, 180, 255, 0.196)"'>
-  
-  The `fillColor` property defines the color or gradient used to fill the area beneath the graph line down to the bottom edge of the graph. Since it covers the largest visible portion of the graph, it has the greatest impact on its overall appearance.
-
-Internally, the fill is rendered as a closed polygon that begins at the bottom-left of the graph, follows the line through each data point, extends to the bottom-right, and then closes back to the starting point. The entire enclosed area is filled using `fillColor`.
-
-The property supports the same color formats as `lineColor`, including named CSS colors, hexadecimal colors, `rgb()`/`rgba()` notation, linear gradients, and radial gradients.
-
-</PropertyBox>
-
-<PropertyBox name="lineWidth" type="number" defaultValue="1.0">
-  
-  The `lineWidth` property controls the thickness, in pixels, of the stroke drawn along the top edge of the area graph. This stroke connects all data points to form the graph's outline.
-
-It accepts any positive floating-point value. Values below `0.1` are automatically clamped to `0.1`.
-
-When `pixelHitTest` is enabled, the `lineWidth` value also affects the hit-test tolerance, making thicker lines easier to interact with.
+::: tip
+Use `autoRange: true` when you do not know the value range in advance. Use a fixed `minValue`/`maxValue` when the range is known (e.g. CPU percentage is always 0–100) for a stable, non-jumping graph.
+:::
 
 </PropertyBox>
 
 <PropertyBox name="maxPoints" type="number" defaultValue="0">
 
-  The `maxPoints` property controls the maximum number of data points that the area graph stores and displays at any time. When the number of data points exceeds this limit, only the most recent values are retained, while the oldest values are silently discarded from the beginning of the data array.
+Maximum number of data points stored and rendered at one time. When the data array exceeds this size, the oldest values are discarded.
 
-When set to `0`, no limit is applied, allowing all data points to be stored and rendered.
+`0` means no limit. Negative values are treated as `0`.
+
+Spacing between points is calculated from `maxPoints` when set, so the graph always fills the full width even while the data array is still filling up.
 
 </PropertyBox>
+
+## Line and Fill
+
+<PropertyBox name="lineColor" type="string" defaultValue='"rgb(0,180,255)"'>
+
+Color or gradient of the line drawn along the top edge of the filled area. Supports `rgb()`, `rgba()`, hex, `linearGradient()`, and `radialGradient()`.
+
+The line is always rendered at full opacity regardless of any alpha component in the color string.
+
+</PropertyBox>
+
+<PropertyBox name="lineWidth" type="number" defaultValue="1">
+
+Thickness of the top edge line in pixels. Values below `0.1` are clamped to `0.1`.
+
+A thicker line also increases the hit-test tolerance when `pixelHitTest` is enabled.
+
+</PropertyBox>
+
+<PropertyBox name="fillColor" type="string" defaultValue='"rgba(0,180,255,0.2)"'>
+
+Color or gradient of the filled area beneath the line. Supports `rgb()`, `rgba()`, hex, `linearGradient()`, and `radialGradient()`.
+
+The alpha component of the color string controls fill transparency. Set it to `0` or use a fully transparent color to draw only the line with no fill.
+
+```javascript
+fillColor: "rgba(0,180,255,0.15)"    // subtle fill
+fillColor: "rgba(0,180,255,0)"       // no fill — line only
+```
+
+</PropertyBox>
+
+## Grid
 
 <PropertyBox name="gridVisible" type="boolean" defaultValue="true">
 
-  The `gridVisible` property acts as the master switch for grid line rendering in the area graph. When set to `true`, horizontal and vertical grid lines are drawn behind the graph data according to the `gridX`, `gridY`, and `gridColor` settings, including their configured alpha values.
-
-When set to `false`, no grid lines are rendered, regardless of the values of any other grid-related properties.
+Master toggle for grid line rendering. When `false`, no grid lines are drawn regardless of `gridX`, `gridY`, or `gridColor` settings.
 
 </PropertyBox>
 
-<PropertyBox name="gridColor" type="string" defaultValue='"rgba(100, 100, 100, 0.39)"'>
+<PropertyBox name="gridColor" type="string" defaultValue='"rgba(100,100,100,0.4)"'>
 
-  The `gridColor` property defines the color or gradient applied to all grid lines in the area graph, including both vertical grid lines controlled by `gridX` and horizontal grid lines controlled by `gridY`.
+Color or gradient applied to all grid lines. Supports `rgb()`, `rgba()`, hex, `linearGradient()`, and `radialGradient()`.
 
-It supports the same color formats as `lineColor` and `fillColor`, including named CSS colors, hexadecimal colors, `rgb()`/`rgba()` notation, linear gradients, and radial gradients.
-
-Any alpha (transparency) value specified in the color string is extracted and stored separately as `gridAlpha`. This alpha value acts as a secondary visibility check: if `gridAlpha` evaluates to `0`, grid lines are not rendered even when `gridVisible` is `true`.
+If the resolved alpha of the color is `0`, grid lines are not rendered even when `gridVisible` is `true`.
 
 </PropertyBox>
 
 <PropertyBox name="gridX" type="number" defaultValue="20">
 
-  The `gridX` property defines the spacing, in pixels, between vertical grid lines in the area graph. Vertical grid lines run from the top to the bottom of the graph, dividing it into columns. For example, setting `gridX` to `40` draws one vertical grid line every 40 pixels across the graph's width.
-
-Setting `gridX` to `0` or a negative value disables vertical grid lines entirely. Horizontal grid lines controlled by `gridY` are unaffected.
+Pixel spacing between vertical grid lines. `0` or negative disables vertical grid lines.
 
 </PropertyBox>
 
 <PropertyBox name="gridY" type="number" defaultValue="20">
 
-  The `gridY` property defines the spacing, in pixels, between horizontal grid lines in the area graph. Horizontal grid lines run from the left to the right edge of the graph, dividing it into rows. For example, setting `gridY` to `50` draws one horizontal grid line every 50 pixels across the graph's height.
-
-Setting `gridY` to `0` or a negative value disables horizontal grid lines entirely. Vertical grid lines controlled by `gridX` are unaffected.
+Pixel spacing between horizontal grid lines. `0` or negative disables horizontal grid lines.
 
 </PropertyBox>
 
+## Layout and Orientation
 
-<PropertyBox name="graphStart" type="string" defaultValue='"right"'>
-  
-  The `graphStart` property controls which horizontal edge of the graph the newest data point is anchored to. It determines the direction in which data flows as new points are added, causing the graph to fill from right to left or from left to right.
+<PropertyBox name="graphStartLeft" type="boolean" defaultValue="false">
 
-This property does not determine where the graph begins drawing visually. Instead, it controls the position of the most recent data point. Older data points are always pushed toward the opposite edge.
+Controls which edge the newest data point anchors to.
 
-Valid values:
-
-| Value     | Behavior                                              |
-| --------- | ----------------------------------------------------- |
-| `"right"` | The newest data point appears on the right (default). |
-| `"left"`  | The newest data point appears on the left.            |
+- `false` — newest point on the right, older points scroll left (default)
+- `true` — newest point on the left, older points scroll right
 
 </PropertyBox>
-
 
 <PropertyBox name="flip" type="boolean" defaultValue="false">
 
-  The `flip` property inverts the vertical axis of the area graph. When set to `false`, high values are positioned toward the top of the graph and low values toward the bottom, following the standard chart convention. When set to `true`, this behavior is reversed: high values are positioned toward the bottom and low values toward the top.
-
-The fill area always follows the data line. When `flip` is `true`, the data line is inverted vertically, and the enclosed fill area is adjusted accordingly so that it remains correctly filled between the data line and the appropriate graph boundary.
+Inverts the vertical axis. When `false`, high values appear at the top. When `true`, high values appear at the bottom.
 
 </PropertyBox>
+
+## Practical Examples
+
+**Live CPU usage graph updated from IPC**
+
+```javascript
+// ui.js
+const CPU_HISTORY = 60;
+
+ui.addAreaGraph({
+  id: "cpu",
+  x: 16, y: 40,
+  width: 260, height: 60,
+  lineColor: "rgb(0,180,255)",
+  fillColor: "rgba(0,180,255,0.12)",
+  lineWidth: 1.5,
+  minValue: 0, maxValue: 100,
+  maxPoints: CPU_HISTORY,
+  gridX: 0, gridY: 25
+});
+
+ipcRenderer.on("cpu-update", (event, payload) => {
+  const data = ui.getElementProperty("cpu", "data") ?? [];
+  data.push(payload.usage);
+  ui.setElementProperties("cpu", { data });
+});
+```
+
+**Network graph with auto-scaling range**
+
+```javascript
+ui.addAreaGraph({
+  id: "net",
+  x: 16, y: 120,
+  width: 260, height: 50,
+  lineColor: "rgb(100,220,100)",
+  fillColor: "rgba(100,220,100,0.1)",
+  autoRange: true,
+  maxPoints: 60,
+  gridVisible: false
+});
+```
+
+**Line-only graph (no fill)**
+
+```javascript
+ui.addAreaGraph({
+  id: "temp",
+  x: 16, y: 80,
+  width: 260, height: 40,
+  lineColor: "rgb(255,140,0)",
+  fillColor: "rgba(0,0,0,0)",
+  lineWidth: 2,
+  minValue: 0, maxValue: 100,
+  gridX: 0, gridY: 0
+});
+```
+
+**Multiple graphs stacked in a layout**
+
+```javascript
+ui.beginUpdate();
+
+const graphProps = {
+  width: 260, height: 48,
+  lineWidth: 1.5,
+  minValue: 0, maxValue: 100,
+  maxPoints: 60,
+  gridX: 0, gridY: 25
+};
+
+ui.addAreaGraph({ ...graphProps, id: "cpu-graph", x: 16, y: 20,  lineColor: "rgb(0,180,255)",  fillColor: "rgba(0,180,255,0.12)"  });
+ui.addAreaGraph({ ...graphProps, id: "mem-graph", x: 16, y: 80,  lineColor: "rgb(100,220,100)", fillColor: "rgba(100,220,100,0.12)" });
+ui.addAreaGraph({ ...graphProps, id: "gpu-graph", x: 16, y: 140, lineColor: "rgb(255,140,0)",   fillColor: "rgba(255,140,0,0.12)"   });
+
+ui.endUpdate();
+```
