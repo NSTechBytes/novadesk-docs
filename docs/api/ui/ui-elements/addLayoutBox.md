@@ -1,649 +1,457 @@
 ﻿---
-title: ui.addLayoutBox(options)
+title: addLayoutBox
 ---
 
-# `ui.addLayoutBox(options)`
+# ui.addLayoutBox()
 
-Creates a `LayoutBox` container element and optionally adds nested child elements through `children`.
+Creates a container element that clips and groups child elements within its bounds. Children can be defined inline via the `children` array or added separately using the `container` property.
 
-`LayoutBox` supports direct properties (no `style` wrapper required).
+```javascript
+ui.addLayoutBox(options);
+```
+
+::: info
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) (visibility, tooltip, mouse events, rotation, etc.).
+
+`id` is required. Every layout box must have a unique `id` so children can reference it via `container`.
+:::
+
+::: warning One redraw on creation
+`ui.addLayoutBox` always triggers one redraw to finalize layout metadata, even when called inside a `beginUpdate` / `endUpdate` block. This is expected.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## Parameters
+## Quick Example
 
-<PropertyBox name="id" type="string" required>
+```javascript
+ui.addLayoutBox({
+  id: "card",
+  x: 16, y: 16,
+  width: 280, height: 80,
+  backgroundColor: "rgba(30,30,40,0.9)",
+  borderRadius: 8,
+  flexDirection: "column",
+  gap: 6,
+  padding: 12,
+  boxShadow: { x: 0, y: 4, blur: 12, color: "rgba(0,0,0,0.4)" },
+  children: [
+    { elementType: "text", id: "card-title", text: "CPU", fontSize: 13, fontColor: "rgb(180,180,180)" },
+    { elementType: "bar",  id: "card-bar",  value: 0.72, barColor: "rgb(0,180,255)", height: 6 }
+  ]
+});
+```
 
-The `id` property specifies the unique identifier for the layout box.
+## Children
 
-Every layout box must have a unique `id`. All elements created through the `children` property automatically have their `container` property set to this `id`, causing them to be clipped to the layout box's bounds and grouped as part of the layout.
+<PropertyBox name="id" type="string">
+
+Required. Unique identifier for the layout box. All elements in the `children` array are automatically assigned `container: id`, clipping and grouping them inside this box.
 
 </PropertyBox>
 
-<PropertyBox name="children" type="Array&lt;object&gt;" defaultValue="[]">
+<PropertyBox name="children" type="object[]" defaultValue="[]">
 
-The `children` property defines the elements that are automatically created inside the layout box.
-
-Each child object must include an `elementType` property that specifies which UI element to create. Child elements support all of their normal properties and are automatically assigned this layout box as their `container`, causing them to move, clip, and render together with the layout.
+Elements to create inside the layout box. Each object must include an `elementType` property. All other properties follow the same rules as the corresponding `ui.add*()` call.
 
 Supported `elementType` values:
 
-| Value         | Creates        |
-| ------------- | -------------- |
-| `"text"`      | `addText`      |
-| `"image"`     | `addImage`     |
-| `"shape"`     | `addShape`     |
-| `"button"`    | `addButton`    |
-| `"inputbox"`  | `addInputBox`  |
-| `"bitmap"`    | `addBitmap`    |
-| `"rotator"`   | `addRotator`   |
-| `"bar"`       | `addBar`       |
-| `"line"`      | `addLine`      |
+| Value | Creates |
+|---|---|
+| `"text"` | `addText` |
+| `"image"` | `addImage` |
+| `"shape"` | `addShape` |
+| `"button"` | `addButton` |
+| `"inputbox"` | `addInputBox` |
+| `"bitmap"` | `addBitmap` |
+| `"rotator"` | `addRotator` |
+| `"bar"` | `addBar` |
+| `"line"` | `addLine` |
 | `"histogram"` | `addHistogram` |
 | `"roundline"` | `addRoundLine` |
 | `"areagraph"` | `addAreaGraph` |
+| `"layoutbox"` | Nested layout box |
 
-Example:
+Nested `"layoutbox"` children are supported. Each nested layout box can have its own `children`, `flexDirection`, `gap`, `padding`, etc.
 
-```js
- ui.addLayoutBox({
-     id: "card",
-     x: 20,
-     y: 20,
-     width: 300,
-     height: 120,
-     children: [
-         {
-             elementType: "text",
-             id: "card-title",
-             text: "CPU Usage",
-             fontSize: 16,
-             fontColor: "#ffffff"
-         },
-         {
-             elementType: "bar",
-             id: "card-bar",
-             value: 0.65,
-             barColor: "#00b4ff",
-             height: 8
-         }
-     ]
- });
+::: warning Unknown elementType throws
+Passing an unrecognized `elementType` string throws a `TypeError`.
+:::
+
+```javascript
+children: [
+  { elementType: "text",  id: "label", text: "Memory", fontSize: 12, fontColor: "rgb(200,200,200)" },
+  { elementType: "bar",   id: "bar",   value: 0.5, barColor: "rgb(100,220,100)", height: 6 },
+  { elementType: "layoutbox", id: "nested", flexDirection: "row", gap: 4, children: [
+    { elementType: "text", id: "pct", text: "50%", fontSize: 11, fontColor: "rgb(160,160,160)" }
+  ]}
+]
 ```
 
 </PropertyBox>
 
-<PropertyBox name="backgroundColor" type="string" defaultValue="none">
+## Size
 
-The `backgroundColor` property specifies the background fill drawn behind all child elements in the layout box.
+`width` and `height` are optional. When omitted, the layout box auto-sizes to fit its children:
 
-It supports all Novadesk color formats, including named CSS colors, hexadecimal colors, `rgb()`, `rgba()`, `linearGradient()`, and `radialGradient()`. If omitted, the layout box background is transparent.
+- **Row layout:** width = sum of child widths + gaps, height = tallest child
+- **Column layout:** height = sum of child heights + gaps, width = widest child
 
-Example:
+Padding is added on top of the calculated content size. Set `width` or `height` explicitly to override auto-sizing.
 
-```js
- ui.addLayoutBox({
-     id: "panel",
-     backgroundColor: "rgba(30, 30, 40, 0.90)"
- });
+## Appearance
 
- ui.addLayoutBox({
-     id: "gradientPanel",
-     backgroundColor: "linearGradient(90, #1a1a2e, #16213e)"
- });
+<PropertyBox name="backgroundColor" type="string" defaultValue="transparent">
+
+Background fill drawn behind all children. Supports `rgb()`, `rgba()`, hex, `linearGradient()`, and `radialGradient()`.
+
+```javascript
+backgroundColor: "rgba(20,20,28,0.92)"
+backgroundColor: "linearGradient(180, rgba(30,30,50,1), rgba(15,15,30,1))"
 ```
 
 </PropertyBox>
 
-<PropertyBox name="fillColor" type="string" defaultValue="none">
+<PropertyBox name="fillColor" type="string" defaultValue="transparent">
 
-The `fillColor` property specifies an additional fill drawn inside the layout box's border.
+Secondary fill drawn inside the border (between the border and the children). Can be combined with `backgroundColor` for layered effects.
 
-It behaves similarly to CSS `background-color` when a border is present and can be used together with `backgroundColor` to create layered visual effects.
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "panel",
-     fillColor: "rgba(255,255,255,0.05)"
- });
+```javascript
+fillColor: "rgba(255,255,255,0.04)"
 ```
 
 </PropertyBox>
 
-<PropertyBox name="borderColor" type="string" defaultValue="none">
+<PropertyBox name="opacity" type="number" defaultValue="1">
 
-The `borderColor` property specifies the color of the layout box border.
+Overall transparency of the layout box, applied to the background, border, shadows, and all children. Values from `0.0` to `1.0` are treated as fractional opacity. Values greater than `1.0` are treated as a direct alpha value (`0–255`).
 
-The border is rendered only when `borderWidth` is greater than `0`. This property accepts standard color values but does not support gradients.
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "panel",
-     borderWidth: 1,
-     borderColor: "rgba(255,255,255,0.20)"
- });
-
- ui.addLayoutBox({
-     id: "darkPanel",
-     borderWidth: 2,
-     borderColor: "#444444"
- });
+```javascript
+opacity: 0.8      // 80% opacity
+opacity: 204      // same as 0.8 in 0–255 range
 ```
 
 </PropertyBox>
+
+## Border
 
 <PropertyBox name="borderWidth" type="number" defaultValue="0">
 
-The `borderWidth` property specifies the thickness of the layout box border in pixels.
-
-Set the value to `0` to disable the border entirely.
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "thinBorder",
-     borderWidth: 1
- });
-
- ui.addLayoutBox({
-     id: "standardBorder",
-     borderWidth: 2
- });
-```
+Border thickness in pixels. `0` hides the border. Accepts integer values.
 
 </PropertyBox>
 
 <PropertyBox name="borderRadius" type="number" defaultValue="0">
 
-The `borderRadius` property specifies the corner radius of the layout box.
+Corner radius in pixels, applied uniformly to all four corners of both the background and the border. Accepts integer values.
 
-The radius is applied uniformly to all four corners of both the background and the border. Larger values produce more rounded corners.
+</PropertyBox>
 
-Example:
+<PropertyBox name="borderColor" type="string" defaultValue='"rgb(0,0,0)"'>
 
-```js
- ui.addLayoutBox({
-     id: "square",
-     borderRadius: 0
- });
+Color of the border. Only visible when `borderWidth` is greater than `0`. Does not support gradients — use a solid color.
 
- ui.addLayoutBox({
-     id: "rounded",
-     borderRadius: 8
- });
-
- ui.addLayoutBox({
-     id: "pill",
-     borderRadius: 16
- });
+```javascript
+borderColor: "rgba(255,255,255,0.15)"
+borderColor: "#444"
 ```
 
 </PropertyBox>
 
-<PropertyBox name="borderStyle" type="string | Array&lt;string&gt;" defaultValue='"solid"'>
+<PropertyBox name="borderStyle" type="string | string[]" defaultValue='"solid"'>
 
-The `borderStyle` property controls the appearance of the layout box border.
+Appearance of the border. Accepts a single string (all sides) or an array following CSS shorthand order (top, right, bottom, left). Case-insensitive.
 
-It can be specified as a single value applied to all four sides or as an array following CSS border shorthand rules. When an array is used, values are assigned in the order **top**, **right**, **bottom**, **left**.
+Valid values: `"solid"`, `"none"`, `"hidden"`, `"dashed"`, `"dotted"`, `"double"`, `"inset"`, `"outset"`, `"groove"`, `"ridge"`
 
-Valid values:
+| Array length | Applied to |
+|---|---|
+| 1 | All sides |
+| 2 | Top/bottom, left/right |
+| 3 | Top, left/right, bottom |
+| 4 | Top, right, bottom, left |
 
-* `"solid"`
-* `"none"`
-* `"hidden"`
-* `"dashed"`
-* `"dotted"`
-* `"double"`
-* `"inset"`
-* `"outset"`
-* `"groove"`
-* `"ridge"`
-
-Array shorthand rules:
-
-| Values | Applied to               |
-| ------ | ------------------------ |
-| 1      | All sides                |
-| 2      | Top/Bottom, Left/Right   |
-| 3      | Top, Left/Right, Bottom  |
-| 4      | Top, Right, Bottom, Left |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "solid",
-     borderStyle: "solid"
- });
-
- ui.addLayoutBox({
-     id: "dashed",
-     borderStyle: "dashed"
- });
-
- ui.addLayoutBox({
-     id: "mixed1",
-     borderStyle: ["solid", "none"]
- });
-
- ui.addLayoutBox({
-     id: "mixed2",
-     borderStyle: ["solid", "dashed", "none", "solid"]
- });
+```javascript
+borderStyle: "solid"
+borderStyle: ["solid", "none"]               // top/bottom solid, left/right hidden
+borderStyle: ["solid", "dashed", "none", "solid"]
 ```
 
 </PropertyBox>
 
-<PropertyBox name="opacity" type="number" defaultValue="1.0">
+## Box Shadow
 
-The `opacity` property controls the overall transparency of the layout box.
+<PropertyBox name="boxShadow" type="object | object[]">
 
-It is applied to the entire element, including the background, border, shadows, and all child elements. Values between `0.0` and `1.0` are interpreted as a fractional opacity, while values greater than `1.0` are interpreted as an integer alpha value between `0` and `255`.
+One or more drop shadows rendered behind the layout box. Pass a single shadow object or an array of objects. String syntax (CSS-style) is not supported.
 
-Example:
+Each shadow object:
 
-```js
- ui.addLayoutBox({
-     id: "semiTransparent",
-     opacity: 0.8
- });
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `x` | `number` | `0` | Horizontal offset in pixels |
+| `y` | `number` | `0` | Vertical offset in pixels |
+| `blur` | `number` | `0` | Blur radius in pixels |
+| `spread` | `number` | `0` | Expansion radius in pixels |
+| `color` | `string` | `"rgb(0,0,0)"` | Shadow color |
+| `inset` | `boolean` | `false` | `true` renders an inner (inset) shadow |
 
- ui.addLayoutBox({
-     id: "hidden",
-     opacity: 0.0
- });
+```javascript
+// Single shadow
+boxShadow: { x: 0, y: 4, blur: 16, color: "rgba(0,0,0,0.5)" }
 
- ui.addLayoutBox({
-     id: "alphaValue",
-     opacity: 204
- });
+// Multiple layered shadows
+boxShadow: [
+  { x: 0, y: 2, blur: 4, color: "rgba(0,0,0,0.3)" },
+  { x: 0, y: 8, blur: 20, color: "rgba(0,0,0,0.2)" }
+]
+
+// Inset shadow
+boxShadow: { x: 0, y: 2, blur: 6, inset: true, color: "rgba(0,0,0,0.4)" }
 ```
 
 </PropertyBox>
 
-<PropertyBox name="boxShadow" type="object | Array&lt;object&gt;" defaultValue="none">
-
-The `boxShadow` property adds one or more drop shadows behind the layout box.
-
-A shadow may be specified as a single object or an array of objects. Shadows are rendered in the order they appear, allowing layered shadow effects. String syntax is not supported.
-
-Each shadow object supports the following properties:
-
-| Property | Type      |        Default | Description                               |
-| -------- | --------- | -------------: | ----------------------------------------- |
-| `x`      | `number`  |            `0` | Horizontal offset in pixels.              |
-| `y`      | `number`  |            `0` | Vertical offset in pixels.                |
-| `blur`   | `number`  |            `0` | Blur radius in pixels.                    |
-| `spread` | `number`  |            `0` | Expansion radius in pixels.               |
-| `color`  | `string`  | `"rgb(0,0,0)"` | Shadow color.                             |
-| `inset`  | `boolean` |        `false` | Reserved for future inner-shadow support. |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "shadow",
-     boxShadow: {
-         x: 0,
-         y: 4,
-         blur: 12,
-         spread: 0,
-         color: "rgba(0,0,0,0.50)"
-     }
- });
-
- ui.addLayoutBox({
-     id: "multiShadow",
-     boxShadow: [
-         {
-             x: 0,
-             y: 2,
-             blur: 4,
-             spread: 0,
-             color: "rgba(0,0,0,0.30)"
-         },
-         {
-             x: 0,
-             y: 8,
-             blur: 20,
-             spread: 0,
-             color: "rgba(0,0,0,0.20)"
-         }
-     ]
- });
-```
-
-</PropertyBox>
+## Layout
 
 <PropertyBox name="flexDirection" type="string" defaultValue='"row"'>
 
-The `flexDirection` property determines the main axis used to lay out child elements.
+Main axis for child layout. Case-insensitive.
 
-It controls whether children are arranged horizontally or vertically, and whether the order is normal or reversed. Values are case-insensitive.
-
-Valid values:
-
-| Value             | Description                               |
-| ----------------- | ----------------------------------------- |
-| `"row"`           | Children are laid out from left to right. |
-| `"column"`        | Children are stacked from top to bottom.  |
-| `"rowreverse"`    | Children are laid out from right to left. |
-| `"columnreverse"` | Children are stacked from bottom to top.  |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "horizontal",
-     flexDirection: "row"
- });
-
- ui.addLayoutBox({
-     id: "vertical",
-     flexDirection: "column"
- });
-```
+| Value | Behavior |
+|---|---|
+| `"row"` | Left to right (default) |
+| `"column"` | Top to bottom |
+| `"rowreverse"` | Right to left |
+| `"columnreverse"` | Bottom to top |
 
 </PropertyBox>
 
 <PropertyBox name="direction" type="string" defaultValue='"ltr"'>
 
-The `direction` property controls the layout direction used by the layout box.
-
-It determines whether horizontal layouts flow from left to right or from right to left. This primarily affects layouts using `flexDirection: "row"`.
-
-Valid values:
-
-| Value   | Description                     |
-| ------- | ------------------------------- |
-| `"ltr"` | Left-to-right layout (default). |
-| `"rtl"` | Right-to-left layout.           |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "leftToRight",
-     direction: "ltr"
- });
-
- ui.addLayoutBox({
-     id: "rightToLeft",
-     direction: "rtl"
- });
-```
+Reading direction for row layouts. Case-insensitive. Only `"ltr"` (left-to-right) and `"rtl"` (right-to-left) are valid.
 
 </PropertyBox>
 
 <PropertyBox name="gap" type="number" defaultValue="0">
 
-The `gap` property specifies the spacing between adjacent child elements along the main layout axis.
-
-The value is measured in pixels and is applied automatically between neighboring children without affecting the layout box's outer size.
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "compact",
-     gap: 0
- });
-
- ui.addLayoutBox({
-     id: "spaced",
-     gap: 8
- });
-
- ui.addLayoutBox({
-     id: "wideSpacing",
-     gap: 16
- });
-```
+Pixel gap between adjacent children along the main axis. Applied between items only, not before the first or after the last.
 
 </PropertyBox>
 
 <PropertyBox name="align / alignItems" type="string" defaultValue='"stretch"'>
 
-The `align` property controls how child elements are positioned along the cross axis.
+Cross-axis alignment of children. `align` and `alignItems` are both accepted. Case-insensitive.
 
-The `alignItems` property is accepted as an alias. Values are case-insensitive.
-
-Valid values:
-
-| Value                      | Description                                              |
-| -------------------------- | -------------------------------------------------------- |
-| `"start"` / `"flex-start"` | Align children to the start of the cross axis.           |
-| `"center"`                 | Center children along the cross axis.                    |
-| `"end"` / `"flex-end"`     | Align children to the end of the cross axis.             |
-| `"stretch"`                | Stretch children to fill the available cross-axis space. |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "centered",
-     align: "center"
- });
-
- ui.addLayoutBox({
-     id: "start",
-     align: "start"
- });
-
- ui.addLayoutBox({
-     id: "end",
-     alignItems: "end"
- });
-```
+| Value | Behavior |
+|---|---|
+| `"start"` / `"flex-start"` | Align to the cross-axis start |
+| `"center"` | Center on the cross axis |
+| `"end"` / `"flex-end"` | Align to the cross-axis end |
+| `"stretch"` | Stretch to fill cross-axis space (default) |
 
 </PropertyBox>
 
 <PropertyBox name="justify / justifyContent" type="string" defaultValue='"flex-start"'>
 
-The `justify` property controls how child elements are distributed along the main axis.
+Main-axis distribution of children. `justify` and `justifyContent` are both accepted. Case-insensitive.
 
-The `justifyContent` property is accepted as an alias. Values are case-insensitive.
+| Value | Behavior |
+|---|---|
+| `"start"` / `"flex-start"` | Pack at the start (default) |
+| `"center"` | Center along the main axis |
+| `"end"` / `"flex-end"` | Pack at the end |
+| `"space-between"` | Equal space between children |
+| `"space-around"` | Equal space around each child |
 
-Valid values:
+</PropertyBox>
 
-| Value                      | Description                                                    |
-| -------------------------- | -------------------------------------------------------------- |
-| `"start"` / `"flex-start"` | Place children at the beginning of the main axis.              |
-| `"center"`                 | Center children along the main axis.                           |
-| `"end"` / `"flex-end"`     | Place children at the end of the main axis.                    |
-| `"space-between"`          | Evenly distribute children with equal space between them.      |
-| `"space-around"`           | Evenly distribute children with equal space around each child. |
+<PropertyBox name="padding" type="number | number[]" defaultValue="0">
 
-Example:
+Inner spacing between the layout box edges and its children. Does not affect the outer size.
 
-```js
- ui.addLayoutBox({
-     id: "centered",
-     justify: "center"
- });
+| Form | Applied to |
+|---|---|
+| `padding: 12` | All sides |
+| `padding: [h, v]` | Left/right = h, top/bottom = v |
+| `padding: [l, t, r, b]` | Each side individually |
 
- ui.addLayoutBox({
-     id: "spread",
-     justify: "space-between"
- });
-
- ui.addLayoutBox({
-     id: "end",
-     justifyContent: "end"
- });
+```javascript
+padding: 12
+padding: [16, 8]
+padding: [8, 4, 8, 4]
 ```
 
 </PropertyBox>
 
-<PropertyBox name="padding" type="number | Array&lt;number&gt;" defaultValue="0">
-
-The `padding` property specifies the inner spacing between the layout box edges and its child elements.
-
-It does not affect the rendered outer size of the layout box. A single value applies to every side, while arrays follow CSS-style shorthand rules.
-
-Valid formats:
-
-| Value                   | Applied to               |
-| ----------------------- | ------------------------ |
-| `padding: 12`           | All sides                |
-| `padding: [16, 8]`      | Horizontal, Vertical     |
-| `padding: [8, 4, 8, 4]` | Left, Top, Right, Bottom |
-
-The padding values can also be provided through the `style` object using `padding`, `paddingX`, and `paddingY`.
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "uniform",
-     padding: 12
- });
-
- ui.addLayoutBox({
-     id: "horizontalVertical",
-     padding: [16, 8]
- });
-
- ui.addLayoutBox({
-     id: "individual",
-     padding: [8, 4, 8, 4]
- });
-
- ui.addLayoutBox({
-     id: "stylePadding",
-     style: {
-         padding: 12,
-         paddingX: 16,
-         paddingY: 8
-     }
- });
-```
-
-</PropertyBox>
+## Display and List
 
 <PropertyBox name="display" type="string" defaultValue='"flex"'>
 
-The `display` property controls how the layout box is rendered.
+Controls how the layout box is rendered. Case-insensitive.
 
-It can behave as a normal flex container, be hidden entirely, or display as a list item with a marker. Values are case-insensitive.
-
-Valid values:
-
-| Value         | Description                                                    |
-| ------------- | -------------------------------------------------------------- |
-| `"flex"`      | Displays the layout box as a standard flex container.          |
-| `"none"`      | Hides the layout box. Equivalent to setting `show: false`.     |
-| `"list-item"` | Displays the layout box with a list marker before its content. |
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "normal",
-     display: "flex"
- });
-
- ui.addLayoutBox({
-     id: "hidden",
-     display: "none"
- });
-
- ui.addLayoutBox({
-     id: "listItem",
-     display: "list-item"
- });
-```
+| Value | Behavior |
+|---|---|
+| `"flex"` | Normal flex container (default) |
+| `"none"` | Hidden — equivalent to `show: false` |
+| `"list-item"` | Renders a list marker before each child |
 
 </PropertyBox>
 
 <PropertyBox name="listStyleType" type="string" defaultValue='"disc"'>
 
-The `listStyleType` property specifies the marker style used when `display` is set to `"list-item"`.
+Marker style used when `display` is `"list-item"`. Case-insensitive. Marker size scales automatically with the child element's font size or height.
 
-Values are case-insensitive.
-
-Valid values:
-
-| Value           | Marker          |
-| --------------- | --------------- |
-| `"disc"`        | ● Filled circle |
-| `"circle"`      | ○ Hollow circle |
-| `"square"`      | ■ Filled square |
-| `"decimal"`     | 1, 2, 3, ...    |
-| `"lower-alpha"` | a, b, c, ...    |
-| `"upper-alpha"` | A, B, C, ...    |
+| Value | Marker |
+|---|---|
+| `"disc"` | Filled circle (default) |
+| `"circle"` | Hollow circle |
+| `"square"` | Filled square |
+| `"decimal"` | 1, 2, 3, ... |
+| `"lower-alpha"` | a, b, c, ... |
+| `"upper-alpha"` | A, B, C, ... |
 | `"lower-roman"` | i, ii, iii, ... |
 | `"upper-roman"` | I, II, III, ... |
-| `"none"`        | No marker       |
+| `"none"` | No marker |
 
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "bullet",
-     display: "list-item",
-     listStyleType: "disc"
- });
-
- ui.addLayoutBox({
-     id: "numbered",
-     display: "list-item",
-     listStyleType: "decimal"
- });
-
- ui.addLayoutBox({
-     id: "roman",
-     display: "list-item",
-     listStyleType: "upper-roman"
- });
-```
+Counter values continue automatically from sibling list items with the same `listStyleType`.
 
 </PropertyBox>
 
-<PropertyBox name="style" type="object">
+## style Object
 
-The `style` property provides an alternative way to specify layout-related properties using a nested object.
+Layout properties can also be provided inside a `style` object. Properties defined there are treated identically to their top-level equivalents.
 
-Properties defined inside `style` are treated the same as their top-level equivalents. This can make layout definitions easier to organize, especially when several layout properties are used together.
+Properties supported inside `style`: `direction`, `flexDirection`, `gap`, `alignItems`, `justifyContent`, `padding`, `paddingX`, `paddingY`, `display`, `listStyleType`.
 
-The following properties are supported inside the `style` object:
+`paddingX` and `paddingY` are only available inside the `style` object.
 
-* `direction`
-* `flexDirection`
-* `gap`
-* `align` / `alignItems`
-* `justify` / `justifyContent`
-* `padding`
-* `paddingX`
-* `paddingY`
-* `display`
-* `listStyleType`
-
-Example:
-
-```js
- ui.addLayoutBox({
-     id: "box",
-     style: {
-         flexDirection: "column",
-         gap: 12,
-         alignItems: "center",
-         padding: 16
-     },
-     children: [
-         {
-             elementType: "text",
-             id: "title",
-             text: "Novadesk"
-         }
-     ]
- });
+```javascript
+ui.addLayoutBox({
+  id: "box",
+  style: {
+    flexDirection: "column",
+    gap: 8,
+    alignItems: "center",
+    paddingX: 16,
+    paddingY: 12
+  },
+  children: [
+    { elementType: "text", id: "title", text: "Hello" }
+  ]
+});
 ```
 
-</PropertyBox>
+## Practical Examples
+
+**System monitor card**
+
+```javascript
+ui.addLayoutBox({
+  id: "cpu-card",
+  x: 16, y: 16,
+  width: 280,
+  backgroundColor: "rgba(24,24,32,0.95)",
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.08)",
+  boxShadow: { x: 0, y: 6, blur: 20, color: "rgba(0,0,0,0.5)" },
+  flexDirection: "column",
+  gap: 6,
+  padding: 14,
+  children: [
+    { elementType: "text", id: "cpu-label", text: "CPU",  fontSize: 12, fontColor: "rgba(180,180,180,1)" },
+    { elementType: "bar",  id: "cpu-bar",  value: 0,     barColor: "rgb(0,180,255)", height: 6, barCornerRadius: 3, backgroundColor: "rgba(255,255,255,0.07)", backgroundColorRadius: 3 },
+    { elementType: "text", id: "cpu-pct",  text: "0%",   fontSize: 11, fontColor: "rgba(120,180,255,1)" }
+  ]
+});
+
+ipcRenderer.on("stats", (event, payload) => {
+  ui.beginUpdate();
+  ui.setElementProperties("cpu-bar", { value: payload.cpu / 100 });
+  ui.setElementProperties("cpu-pct", { text: payload.cpu + "%" });
+  ui.endUpdate();
+});
+```
+
+**Row of icon buttons**
+
+```javascript
+ui.addLayoutBox({
+  id: "toolbar",
+  x: 0, y: 0,
+  width: 400, height: 40,
+  backgroundColor: "rgba(20,20,28,1)",
+  flexDirection: "row",
+  align: "center",
+  justify: "flex-end",
+  gap: 4,
+  padding: [0, 0, 8, 0],
+  children: [
+    { elementType: "button", id: "btn-min",   x: 0, y: 0, width: 24, height: 24, buttonImageName: "./assets/minimize.png",  buttonAction: () => ipcRenderer.send("minimize") },
+    { elementType: "button", id: "btn-max",   x: 0, y: 0, width: 24, height: 24, buttonImageName: "./assets/maximize.png",  buttonAction: () => ipcRenderer.send("maximize") },
+    { elementType: "button", id: "btn-close", x: 0, y: 0, width: 24, height: 24, buttonImageName: "./assets/close.png",     buttonAction: () => ipcRenderer.send("close") }
+  ]
+});
+```
+
+**Nested column inside a row**
+
+```javascript
+ui.addLayoutBox({
+  id: "stats-row",
+  x: 16, y: 60,
+  width: 360,
+  flexDirection: "row",
+  gap: 12,
+  padding: 0,
+  children: [
+    {
+      elementType: "layoutbox", id: "stat-cpu",
+      width: 110,
+      backgroundColor: "rgba(30,30,42,0.9)",
+      borderRadius: 8,
+      flexDirection: "column",
+      gap: 4,
+      padding: 10,
+      children: [
+        { elementType: "text", id: "stat-cpu-label", text: "CPU",  fontSize: 11, fontColor: "rgba(160,160,160,1)" },
+        { elementType: "text", id: "stat-cpu-value", text: "0%",   fontSize: 18, fontColor: "rgb(255,255,255)" }
+      ]
+    },
+    {
+      elementType: "layoutbox", id: "stat-ram",
+      width: 110,
+      backgroundColor: "rgba(30,30,42,0.9)",
+      borderRadius: 8,
+      flexDirection: "column",
+      gap: 4,
+      padding: 10,
+      children: [
+        { elementType: "text", id: "stat-ram-label", text: "RAM",  fontSize: 11, fontColor: "rgba(160,160,160,1)" },
+        { elementType: "text", id: "stat-ram-value", text: "0%",   fontSize: 18, fontColor: "rgb(255,255,255)" }
+      ]
+    }
+  ]
+});
+```
+
+**Bullet list**
+
+```javascript
+const items = ["Widget auto-launches on startup", "Uses Direct2D rendering", "Runs on any Windows 10+ PC"];
+
+items.forEach((item, i) => {
+  ui.addLayoutBox({
+    id: "list-item-" + i,
+    x: 16, y: 60 + i * 28,
+    width: 300,
+    display: "list-item",
+    listStyleType: "disc",
+    children: [
+      { elementType: "text", id: "list-text-" + i, text: item, fontSize: 13, fontColor: "rgb(200,200,200)" }
+    ]
+  });
+});
+```
