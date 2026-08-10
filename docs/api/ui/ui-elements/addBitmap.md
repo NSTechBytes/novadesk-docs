@@ -1,182 +1,286 @@
 ﻿---
-title: Bitmap element options and example usage.
+title: addBitmap
 ---
 
-# Bitmap Element
-The Bitmap element renders frame-based image strips for meters, digits, and sprite-like indicators.
+# ui.addBitmap()
 
-Create one with `ui.addBitmap()` and the shared [General Elements Options](/api/ui/ui-elements/general-options/general-elements-options), [General Element Options](/api/ui/ui-elements/general-options/general-elements-options), and [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
+Renders a single frame from a sprite sheet image, selected by a numeric `value`. Supports two modes: **standard mode** maps a value range to frames for progress indicators and gauges, and **extend mode** decomposes an integer into individual digit frames for odometer-style displays.
 
-```js
+```javascript
 ui.addBitmap(options);
 ```
+
+::: info
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) and [General Image Options](/api/ui/ui-elements/general-options/general-image-options) (`imageAlpha`, `grayscale`, `imageTint`, `imageFlip`, `colorMatrix`, `fallbackPath`).
+
+`imageCrop` is accepted but **ignored** by the bitmap element.
+:::
+
+::: warning Width and height are ignored
+`width` and `height` have no effect on this element. Size is always determined by the frame dimensions from the sprite sheet image. Setting them in `add*` or `setElementProperties` calls is silently ignored.
+:::
 
 #### Table of Contents
 [[toc]]
 
-## Bitmap Options
+## Quick Example
 
-<PropertyBox name="bitmapImageName" type="string" required>
-  The `bitmapImageName` property specifies the sprite sheet image that contains all bitmap frames. Relative paths are resolved from the script directory, while HTTP and HTTPS URLs are loaded asynchronously.
+```javascript
+// Standard mode — 10-frame progress indicator
+ui.addBitmap({
+  id: "progress",
+  x: 16, y: 40,
+  bitmapImageName: "./assets/progress-frames.png",
+  bitmapFrames: 10,
+  minValue: 0, maxValue: 100,
+  value: 72
+});
 
-  ```javascript
-  bitmapImageName: "./assets/progress.png"
-  bitmapImageName: "./assets/digits.png"
-  bitmapImageName: "https://example.com/assets/animation.png"
-  ```
-
-</PropertyBox>
-
-<PropertyBox name="value" type="number" defaultValue="0.0">
-  The `value` property specifies the current value used to determine which frame is displayed.
-
-  When `bitmapExtend` is `false`, the value is normalized between `minValue` and `maxValue` and then mapped to the corresponding frame index.
-
-  When `bitmapExtend` is `true`, the value is treated as an integer. Each digit is rendered as an individual frame from the sprite sheet, creating an odometer-style display.
-
-  ```javascript
-  // Standard: show frame 7 of 10 (70% through)
-  value: 70,
-  minValue: 0,
-  maxValue: 100,
-  bitmapFrames: 10
-
-  // Extend: show "42" using digit frames
-  value: 42,
+// Extend mode — odometer digit display
+ui.addBitmap({
+  id: "counter",
+  x: 16, y: 80,
+  bitmapImageName: "./assets/digits.png",
+  bitmapFrames: 10,
   bitmapExtend: true,
-  bitmapFrames: 10
-  ```
+  bitmapDigits: 4,
+  value: 0
+});
+```
+
+## Sprite Sheet
+
+<PropertyBox name="bitmapImageName" type="string">
+
+Path to the sprite sheet image containing all frames. Relative paths are resolved against the widget's script directory. HTTP/HTTPS URLs are also supported and loaded asynchronously.
+
+The image is divided into `bitmapFrames` equally sized frames, either horizontally or vertically based on `bitmapOrientation`.
+
+```javascript
+bitmapImageName: "./assets/digits.png"
+bitmapImageName: "./assets/progress-bar.png"
+bitmapImageName: "https://example.com/sprite.png"
+```
 
 </PropertyBox>
 
 <PropertyBox name="bitmapFrames" type="number" defaultValue="1">
-  The `bitmapFrames` property specifies the total number of frames contained in the sprite sheet. The image is divided into this many equally sized frames.
 
-  Values less than or equal to `0` are automatically clamped to `1`.
+Total number of frames in the sprite sheet. The image is divided into this many equal slices. Values of `0` or less are clamped to `1`.
 
-  ```javascript
-  bitmapFrames: 10    // 10-frame animation (0-9)
-  bitmapFrames: 60    // 60-frame clock seconds
-  bitmapFrames: 100   // 100-step progress bar
-  ```
-
-</PropertyBox>
-
-<PropertyBox name="minValue" type="number" defaultValue="0.0">
-  The `minValue` property defines the value that maps to the first frame (frame `0`).
-
-  This property is only used when `bitmapExtend` is `false`.
-
-  ```javascript
-  minValue: 0
-  maxValue: 100
-
-  minValue: -50
-  maxValue: 50
-  ```
-
-</PropertyBox>
-
-<PropertyBox name="maxValue" type="number" defaultValue="1.0">
-  The `maxValue` property defines the value that maps to the last frame in the sprite sheet. Together with `minValue`, it determines the complete value range.
-
-  If `maxValue` is less than or equal to `minValue`, it is automatically set to `minValue + 0.001` to ensure a valid range.
-
-</PropertyBox>
-
-<PropertyBox name="bitmapZeroFrame" type="boolean" defaultValue="false">
-  The `bitmapZeroFrame` property changes how frame `0` is used in standard mode.
-
-  When set to `false`, frame `0` represents values at or below `minValue`, and the remaining frames are distributed evenly across the value range.
-
-  When set to `true`, frame `0` is reserved as a dedicated zero or empty state that is displayed only when `value` equals `0`. The remaining `bitmapFrames - 1` frames represent the value range.
-
-  ```javascript
-  // Volume indicator with silent state
-  bitmapFrames: 5,
-  bitmapZeroFrame: true,
-  value: 0
-  ```
-
-</PropertyBox>
-
-<PropertyBox name="bitmapExtend" type="boolean" defaultValue="false">
-  The `bitmapExtend` property enables odometer mode when set to `true`.
-
-  In this mode, the `value` is treated as a non-negative integer and decomposed into individual digits. Each digit is rendered using a separate frame from the sprite sheet and displayed horizontally.
-
-  The digit base is determined by `bitmapFrames`. For example, `bitmapFrames: 10` displays decimal digits, `bitmapFrames: 16` displays hexadecimal digits, and `bitmapFrames: 2` displays binary digits. If `bitmapFrames` is `1`, a base of `2` is used.
-
-  ```text
-  value: 42, bitmapFrames: 10
-  Renders: frame[4] | frame[2]
-
-  value: 1234, bitmapFrames: 10
-  Renders: frame[1] | frame[2] | frame[3] | frame[4]
-  ```
-
-  ```javascript
-  bitmapImageName: "./assets/digits-0-9.png",
-  bitmapFrames: 10,
-  bitmapExtend: true,
-  value: 1337
-  ```
-
-</PropertyBox>
-
-<PropertyBox name="bitmapDigits" type="number" defaultValue="0">
-  The `bitmapDigits` property specifies the number of digit frames rendered in extend mode.
-
-  This property is only used when `bitmapExtend` is `true`.
-
-  A value of `0` automatically calculates the required number of digits based on the current value. Values greater than `0` always render the specified number of digits, padding with leading zero frames when necessary.
-
-  ```javascript
-  bitmapExtend: true,
-  bitmapDigits: 4,
-  value: 7
-  ```
+```javascript
+bitmapFrames: 10    // decimal digits 0–9
+bitmapFrames: 60    // clock seconds (0–59)
+bitmapFrames: 100   // 100-step progress indicator
+```
 
 </PropertyBox>
 
 <PropertyBox name="bitmapOrientation" type="string" defaultValue='"auto"'>
-  The `bitmapOrientation` property overrides the automatic frame layout detection.
 
-  Supported values are `"auto"`, `"horizontal"`, and `"vertical"`.
+Controls how frames are arranged in the sprite sheet.
 
-  When set to `"auto"`, tall images are treated as vertically stacked frames, while wide images are treated as horizontally arranged frames.
+| Value | Behavior |
+|---|---|
+| `"auto"` | Tall images use vertical frames, wide images use horizontal frames |
+| `"horizontal"` | Frames are arranged side by side left to right |
+| `"vertical"` | Frames are stacked top to bottom |
 
-  ```javascript
-  bitmapOrientation: "auto"
-  bitmapOrientation: "horizontal"
-  bitmapOrientation: "vertical"
-  ```
+In `"auto"` mode, the taller dimension determines the layout. A 100×1000 image is treated as 10 vertical frames of 100×100 each; a 1000×100 image is treated as 10 horizontal frames.
+
+</PropertyBox>
+
+## Standard Mode
+
+Standard mode (the default when `bitmapExtend` is `false`) maps a numeric value within a range to a single frame index.
+
+<PropertyBox name="value" type="number" defaultValue="0">
+
+The current value used to select which frame is displayed. Normalized against `minValue` and `maxValue` to pick a frame index.
+
+```javascript
+// Show frame 7 of 10 (value 72 out of 0–100)
+value: 72, minValue: 0, maxValue: 100, bitmapFrames: 10
+```
+
+</PropertyBox>
+
+<PropertyBox name="minValue" type="number" defaultValue="0">
+
+The value that maps to frame `0` (or frame `1` when `bitmapZeroFrame` is `true`). Used only in standard mode.
+
+</PropertyBox>
+
+<PropertyBox name="maxValue" type="number" defaultValue="1">
+
+The value that maps to the last frame. Must be greater than `minValue`. If `maxValue` is less than or equal to `minValue`, it is corrected to `minValue + 0.001` automatically.
+
+</PropertyBox>
+
+<PropertyBox name="bitmapZeroFrame" type="boolean" defaultValue="false">
+
+When `true`, frame `0` is reserved as a dedicated empty/zero state shown only when the normalized value is exactly `0`. The remaining `bitmapFrames - 1` frames cover the rest of the range.
+
+When `false`, all frames are distributed evenly across the full value range.
+
+```javascript
+// Volume meter with a muted state at frame 0
+ui.addBitmap({
+  id: "volume",
+  bitmapImageName: "./assets/volume-levels.png",
+  bitmapFrames: 5,
+  bitmapZeroFrame: true,
+  minValue: 0, maxValue: 100,
+  value: 0   // shows frame 0 (muted icon)
+});
+```
+
+</PropertyBox>
+
+## Extend Mode
+
+Extend mode (`bitmapExtend: true`) treats `value` as a non-negative integer and renders each digit as a separate frame, creating an odometer or number display.
+
+The numeric base is determined by `bitmapFrames`. `bitmapFrames: 10` produces decimal digits, `bitmapFrames: 16` produces hexadecimal, `bitmapFrames: 2` produces binary. When `bitmapFrames` is `1`, base 2 is used.
+
+Negative values are treated as `0`.
+
+<PropertyBox name="bitmapExtend" type="boolean" defaultValue="false">
+
+`true` enables extend (odometer digit) mode. `false` uses standard single-frame mode.
+
+```javascript
+ui.addBitmap({
+  id: "score",
+  x: 16, y: 40,
+  bitmapImageName: "./assets/digits.png",
+  bitmapFrames: 10,
+  bitmapExtend: true,
+  value: 1337
+  // renders: [1][3][3][7]
+});
+```
+
+</PropertyBox>
+
+<PropertyBox name="bitmapDigits" type="number" defaultValue="0">
+
+Number of digit frames to render in extend mode. `0` calculates the minimum digits needed for the current value automatically. Values greater than `0` always render exactly that many digits, padding with leading zero frames as needed. Negative values are clamped to `0`.
+
+```javascript
+// Always show 6 digits: 000042
+bitmapExtend: true,
+bitmapDigits: 6,
+value: 42
+```
 
 </PropertyBox>
 
 <PropertyBox name="bitmapAlign" type="string" defaultValue='"left"'>
-  The `bitmapAlign` property controls the horizontal alignment of the rendered digit group.
 
-  This property only applies when `bitmapExtend` is `true`.
+Horizontal alignment of the digit group in extend mode. The position `x` (plus any padding) is the anchor point.
 
-  Supported values are `"left"`, `"center"`, and `"right"`.
+| Value | Behavior |
+|---|---|
+| `"left"` | Digit group starts at `x` and extends right (default) |
+| `"center"` | Digit group is centered on `x` |
+| `"right"` | Digit group ends at `x` and extends left |
 
-  ```javascript
-  bitmapExtend: true,
-  bitmapAlign: "right",
-  x: 200
-  ```
+Only applies when `bitmapExtend` is `true`.
 
 </PropertyBox>
 
 <PropertyBox name="bitmapSeparation" type="number" defaultValue="0">
-  The `bitmapSeparation` property specifies the spacing, in pixels, between adjacent digit frames.
 
-  This property only applies when `bitmapExtend` is `true`.
+Pixel gap between adjacent digit frames in extend mode. Only applies when `bitmapExtend` is `true`.
 
-  ```javascript
-  bitmapExtend: true,
-  bitmapSeparation: 4
-  ```
+```javascript
+bitmapExtend: true,
+bitmapSeparation: 2   // 2px gap between each digit
+```
 
 </PropertyBox>
+
+## Sizing
+
+The bitmap element does not use `width` or `height` from the options. Size is calculated automatically from the frame dimensions:
+
+- **Frame width** = image width (horizontal layout) or image width (vertical layout, unchanged)
+- **Frame height** = image height ÷ `bitmapFrames` (vertical) or image height (horizontal, unchanged)
+
+In extend mode, the total rendered width is `frameWidth × digitCount + bitmapSeparation × (digitCount - 1)`.
+
+## Practical Examples
+
+**Progress indicator updated from IPC**
+
+```javascript
+// ui.js
+ui.addBitmap({
+  id: "progress",
+  x: 16, y: 40,
+  bitmapImageName: "./assets/progress-10.png",
+  bitmapFrames: 10,
+  minValue: 0, maxValue: 100,
+  value: 0
+});
+
+ipcRenderer.on("stats", (event, payload) => {
+  ui.setElementProperties("progress", { value: payload.cpu });
+});
+```
+
+**Clock seconds display**
+
+```javascript
+ui.addBitmap({
+  id: "seconds",
+  x: 80, y: 20,
+  bitmapImageName: "./assets/digits-60.png",
+  bitmapFrames: 60,
+  minValue: 0, maxValue: 59,
+  value: 0
+});
+
+ipcRenderer.on("time", (event, payload) => {
+  ui.setElementProperties("seconds", { value: payload.seconds });
+});
+```
+
+**Score counter with leading zeros**
+
+```javascript
+ui.addBitmap({
+  id: "score",
+  x: 200, y: 16,
+  bitmapImageName: "./assets/digits.png",
+  bitmapFrames: 10,
+  bitmapExtend: true,
+  bitmapDigits: 8,
+  bitmapAlign: "right",
+  bitmapSeparation: 1,
+  value: 0
+});
+
+ipcRenderer.on("score-update", (event, payload) => {
+  ui.setElementProperties("score", { value: payload.score });
+});
+```
+
+**Volume icon with muted state at frame 0**
+
+```javascript
+ui.addBitmap({
+  id: "vol-icon",
+  x: 16, y: 16,
+  bitmapImageName: "./assets/volume-5.png",
+  bitmapFrames: 5,
+  bitmapZeroFrame: true,
+  minValue: 0, maxValue: 100,
+  value: 0
+});
+
+ipcRenderer.on("volume-change", (event, payload) => {
+  ui.setElementProperties("vol-icon", { value: payload.volume });
+});
+```
