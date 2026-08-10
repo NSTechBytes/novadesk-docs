@@ -1,125 +1,242 @@
 ﻿---
-title: Image element options and supported formats.
+title: addImage
 ---
 
-# Image Element
-The Image element renders bitmap content inside a UI script via the shared element options.
+# ui.addImage()
 
-Use `ui.addImage()` in your UI script (`win` is the UI script's global object).
+Renders a bitmap image inside the widget. Supports local files, HTTP/HTTPS URLs, aspect ratio modes, tiling, and 9-slice scaling.
 
-```js
+```javascript
 ui.addImage(options);
 ```
+
+::: info
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) and [General Image Options](/api/ui/ui-elements/general-options/general-image-options) (`imageAlpha`, `grayscale`, `imageTint`, `imageFlip`, `imageCrop`, `colorMatrix`, `fallbackPath`).
+:::
 
 #### Table of Contents
 [[toc]]
 
-## Shared Options
-Refer to:
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for layout and interaction.
-- [General Image Options](/api/ui/ui-elements/general-options/general-image-options) for shared image processing fields.
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for tooltip appearance and behavior.
-- [General Element Options](/api/ui/ui-elements/general-options/general-elements-options) for mouse interaction and cursor settings.
+## Quick Example
 
-## Image Element Options
+```javascript
+ui.addImage({
+  id: "logo",
+  path: "./assets/logo.png",
+  x: 16, y: 16,
+  width: 120, height: 40,
+  preserveAspectRatio: "preserve"
+});
+```
 
-<PropertyBox name="path" type="string" required>
-  The `path` property specifies the image file to display. Relative paths are resolved from the script directory, while HTTP and HTTPS URLs are loaded asynchronously in the background.
+## Image Source
 
-  The image element remains empty until the image has finished loading, after which it updates automatically.
+<PropertyBox name="path" type="string">
 
-  ```javascript
-  path: "./assets/logo.png"
-  path: "../shared/icons/cpu.svg"
-  path: "https://example.com/banner.jpg"
-  ```
+Path to the image file to display. Relative paths are resolved against the widget's script directory. HTTP/HTTPS URLs are supported and loaded asynchronously — the element is empty while loading and updates automatically once the image is ready.
 
-  The image source can also be changed at runtime.
+Changing `path` via `setElementProperties` swaps the image at runtime.
 
-  ```javascript
-  ui.setElementProperties("my-image", {
-      path: "./assets/logo-dark.png"
-  });
-  ```
+```javascript
+path: "./assets/logo.png"
+path: "./assets/icons/cpu.svg"
+path: "https://example.com/banner.jpg"
+
+// Runtime swap
+ui.setElementProperties("banner", { path: "./assets/banner-dark.png" });
+```
 
 </PropertyBox>
+
+## Aspect Ratio
 
 <PropertyBox name="preserveAspectRatio" type="string" defaultValue='"stretch"'>
-  The `preserveAspectRatio` property controls how the image is scaled to fit the element's `width` and `height`.
 
-  Supported values are `"stretch"`, `"preserve"`, and `"crop"`.
+How the image is scaled to fill the element bounds.
 
-  When set to `"stretch"`, the image is resized to exactly match the element bounds, ignoring its original aspect ratio. This fills the entire element but may distort the image.
+| Value | Behavior |
+|---|---|
+| `"stretch"` | Fills the bounds exactly, ignoring the original aspect ratio (default) |
+| `"preserve"` | Scales uniformly to fit entirely within the bounds, centered, with empty space around it |
+| `"crop"` | Scales uniformly to fully fill the bounds, cropping the excess from the center |
 
-  ```text
-  Element: 300×100     Image: 200×200
-  Result:  300×100 (stretched)
-  ```
+```javascript
+// Fill and distort if needed (default)
+preserveAspectRatio: "stretch"
 
-  When set to `"preserve"`, the image is scaled down uniformly so it fits entirely within the element while maintaining its aspect ratio. The image is centered, and empty space may appear around it.
+// Fit inside bounds, centered, no crop
+preserveAspectRatio: "preserve"
 
-  ```text
-  Element: 300×100     Image: 200×200
-  Scale:   min(300/200, 100/200) = 0.5
-  Result:  100×100, centered
-  ```
+// Fill bounds, crop center
+preserveAspectRatio: "crop"
+```
 
-  When set to `"crop"`, the image is scaled uniformly to completely fill the element while preserving its aspect ratio. Any excess area is cropped from the edges.
-
-  ```text
-  Element: 300×100     Image: 200×200
-  Scale:   max(300/200, 100/200) = 1.5
-  Result:  300×300 image with the center 300×100 visible
-  ```
-
-  ```javascript
-  preserveAspectRatio: "crop"       // Fill bounds, crop excess
-  preserveAspectRatio: "preserve"   // Maintain aspect ratio
-  preserveAspectRatio: "stretch"    // Fill bounds (default)
-  ```
+::: tip
+Use `"preserve"` for logos or icons where distortion would be visible. Use `"crop"` for background images where filling the space matters more than showing the full image.
+:::
 
 </PropertyBox>
+
+## Tiling
 
 <PropertyBox name="tile" type="boolean" defaultValue="false">
-  The `tile` property specifies whether the image should repeat to fill the element.
 
-  When enabled, the entire image (or the cropped region when `imageCrop` is used) is tiled using `D2D1_EXTEND_MODE_WRAP`, creating a seamless repeating pattern.
+When `true`, the image repeats to fill the element bounds using wrap mode. The tile pattern starts from the top-left of the content area.
 
-  ```javascript
-  ui.addImage({
-      id: "background",
-      x: 0,
-      y: 0,
-      width: 1020,
-      height: 800,
-      path: "./textures/noise.png",
-      tile: true,
-      imageAlpha: 30,
-  });
-  ```
+When `imageCrop` is set alongside `tile`, the cropped region is the repeating unit.
 
-  `tile` is only supported when `preserveAspectRatio` is set to `"stretch"`. It cannot be used together with `"preserve"` or `"crop"`.
+::: warning Tiling requires stretch mode
+`tile` only works when `preserveAspectRatio` is `"stretch"`. Setting `tile: true` with `"preserve"` or `"crop"` has no effect.
+:::
+
+```javascript
+ui.addImage({
+  id: "bg-pattern",
+  x: 0, y: 0,
+  width: 400, height: 300,
+  path: "./assets/noise.png",
+  tile: true,
+  imageAlpha: 30
+});
+```
+
+</PropertyBox>
+
+## 9-Slice Scaling
+
+<PropertyBox name="scaleMargins" type="number[]">
+
+Enables 9-slice scaling (also called border-image or scale-9). Provide exactly **4 values** in `[left, top, right, bottom]` order, specifying the pixel margins of the fixed border zones in the source image.
+
+The image is divided into a 3×3 grid. The four corner patches render at their original size. The four edge patches stretch along one axis. The center patch stretches freely in both directions.
+
+Negative margin values are clamped to `0`. If the combined left and right margins exceed the image width, they are proportionally reduced to fit.
+
+::: warning Requirements for 9-slice
+`scaleMargins` is only applied when all three conditions are met:
+1. `preserveAspectRatio` is `"stretch"` (the default)
+2. `tile` is `false`
+3. No color-processing effects are active (`colorMatrix`, `imageTint`, `grayscale` disable 9-slice and fall back to normal stretch)
+
+If any of these conditions is not met, the image is rendered with normal stretch scaling instead.
+:::
+
+```javascript
+// Button background that stretches its center while keeping fixed rounded corners
+ui.addImage({
+  id: "btn-bg",
+  path: "./assets/button-9slice.png",
+  x: 16, y: 60,
+  width: 200, height: 40,
+  scaleMargins: [12, 12, 12, 12]
+});
+```
+
+For a button image that is 40×40 with 12px borders:
+- Corners: 12×12 each, drawn at original size
+- Top and bottom edges: 12px tall, stretched horizontally
+- Left and right edges: 12px wide, stretched vertically
+- Center: stretches in both directions
 
 </PropertyBox>
 
-<PropertyBox name="scaleMargins" type="array<number>">
-  The `scaleMargins` property enables 9-slice scaling (also known as scale-9 or border-image).
+## Hit Testing
 
-  The image is divided into a 3×3 grid using four margin values in the order `[left, top, right, bottom]`. The four corners remain at their original size, the edges stretch along a single axis, and the center stretches freely in both directions.
+By default, image hit testing uses the bounding box. When `pixelHitTest: true` is set, clicks on fully transparent pixels (alpha = 0) are ignored. This allows irregular shapes, circular icons, and PNG images with transparency to respond only to their visible area.
 
-  ```javascript
-  ui.addImage({
-      id: "button-bg",
-      path: "./assets/button.png",
-      width: 200,
-      height: 50,
-      scaleMargins: [10, 10, 10, 10],
-      preserveAspectRatio: "stretch",
+```javascript
+ui.addImage({
+  id: "round-icon",
+  path: "./assets/circle-icon.png",
+  x: 16, y: 16,
+  width: 48, height: 48,
+  pixelHitTest: true,   // transparent corners are not clickable
+  onLeftMouseUp: () => ipcRenderer.send("icon-clicked")
+});
+```
+
+## Practical Examples
+
+**Logo with preserved aspect ratio**
+
+```javascript
+ui.addImage({
+  id: "logo",
+  x: 16, y: 12,
+  width: 120, height: 32,
+  path: "./assets/logo.png",
+  preserveAspectRatio: "preserve"
+});
+```
+
+**Background that fills and crops to center**
+
+```javascript
+ui.addImage({
+  id: "wallpaper",
+  x: 0, y: 0,
+  width: 400, height: 300,
+  path: "./assets/bg.jpg",
+  preserveAspectRatio: "crop"
+});
+```
+
+**Tiled texture overlay**
+
+```javascript
+ui.addImage({
+  id: "grain",
+  x: 0, y: 0,
+  width: 400, height: 300,
+  path: "./assets/grain.png",
+  tile: true,
+  imageAlpha: 20
+});
+```
+
+**9-slice scalable panel background**
+
+```javascript
+ui.addImage({
+  id: "panel",
+  path: "./assets/panel.png",
+  x: 16, y: 40,
+  width: 300, height: 180,
+  scaleMargins: [16, 16, 16, 16]
+});
+```
+
+**Dynamic image updated from IPC**
+
+```javascript
+// ui.js
+ui.addImage({
+  id: "weather-icon",
+  x: 16, y: 20,
+  width: 48, height: 48,
+  path: "./assets/icons/clear.png",
+  preserveAspectRatio: "preserve"
+});
+
+ipcRenderer.on("weather-update", (event, payload) => {
+  ui.setElementProperties("weather-icon", {
+    path: "./assets/icons/" + payload.condition + ".png"
   });
-  ```
+});
+```
 
-  `scaleMargins` requires `tile` to be `false` and `preserveAspectRatio` to be `"stretch"`. If color matrix effects are applied, 9-slice scaling is disabled and the image is rendered normally.
+**Grayscale icon that highlights on hover**
 
-  All margin values are clamped to `0` or greater. If the combined left and right margins exceed the image width, they are reduced proportionally to fit the source image.
-
-</PropertyBox>
+```javascript
+ui.addImage({
+  id: "settings",
+  x: 360, y: 8,
+  width: 24, height: 24,
+  path: "./assets/settings.png",
+  grayscale: true,
+  pixelHitTest: true,
+  onMouseOver: () => ui.setElementProperties("settings", { grayscale: false }),
+  onMouseLeave: () => ui.setElementProperties("settings", { grayscale: true }),
+  onLeftMouseUp: () => ipcRenderer.send("open-settings")
+});
+```
