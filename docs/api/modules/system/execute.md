@@ -17,7 +17,7 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 #### Table of Contents
 [[toc]]
 
----
+## Methods
 
 <MethodBox
   name="execute(target [, parameters, workingDir, show])"
@@ -33,7 +33,7 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 >
 <template #returns><code>true</code> if the OS shell accepted the request, <code>false</code> otherwise.</template>
 
-Executes a target through the Windows shell — equivalent to double-clicking a file or typing a URL in the Run dialog. Throws a `TypeError` if `target` is missing.
+Executes a target through the Windows shell — equivalent to double-clicking a file or typing a URL in the Run dialog. Uses `ShellExecute` internally to launch files, applications, or URLs.
 
 **Common `show` values:**
 
@@ -42,6 +42,14 @@ Executes a target through the Windows shell — equivalent to double-clicking a 
 | `0` | `SW_HIDE` | Launch hidden (no window) |
 | `1` | `SW_SHOWNORMAL` | Normal window (default) |
 | `2` | `SW_SHOWMINIMIZED` | Start minimized |
+| `3` | `SW_SHOWMAXIMIZED` | Start maximized |
+
+::: warning Parameters
+All parameters except `target` are optional. When not provided:
+- `parameters` defaults to empty string
+- `workingDir` defaults to empty string (uses system default)  
+- `show` defaults to `1` (`SW_SHOWNORMAL`)
+:::
 
 <template #example>
 

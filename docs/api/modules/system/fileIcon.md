@@ -17,7 +17,7 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 #### Table of Contents
 [[toc]]
 
----
+## Methods
 
 <MethodBox
   name="fileIcon.extractIcon(filePath, outIcoPath [, size])"
@@ -32,7 +32,17 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 >
 <template #returns><code>true</code> if the icon was extracted and written successfully, <code>false</code> otherwise.</template>
 
-Extracts the shell icon associated with a file and writes it to an `.ico` file on disk.
+Extracts the shell icon associated with a file and writes it to an `.ico` file on disk. Uses Windows Shell APIs to retrieve the icon, supporting both embedded icons (like those in .exe/.dll files) and file type associations.
+
+::: tip Icon Sources
+- Executable files (.exe, .dll) may contain embedded icons
+- Other files use the icon associated with their file type registration in Windows
+- The function attempts to get the best quality icon available at the requested size
+:::
+
+::: warning File Paths
+Both `filePath` and `outIcoPath` should be absolute paths or relative to the current working directory. The output directory must exist before calling this function.
+:::
 
 <template #example>
 
@@ -49,8 +59,6 @@ console.log("Extracted:", ok);
 
 </template>
 </MethodBox>
-
----
 
 <MethodBox
   name="fileIcon.extractFileIcon(filePath, outIcoPath [, size])"

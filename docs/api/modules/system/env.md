@@ -17,7 +17,7 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 #### Table of Contents
 [[toc]]
 
----
+## Methods
 
 <MethodBox
   name="getEnv([name [, defaultValue]])"
@@ -33,12 +33,12 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 
 Returns environment variable data depending on how it is called:
 
-- `getEnv()` — returns an object with all environment variables as key/value pairs
-- `getEnv(name)` — returns the value of the named variable, or an empty string if missing
-- `getEnv(name, defaultValue)` — returns `defaultValue` when the variable is missing or empty
+- `getEnv()` — returns an object containing all environment variables as key/value pairs
+- `getEnv(name)` — returns the value of the named variable, or an empty string if missing or empty
+- `getEnv(name, defaultValue)` — returns the variable value, or `defaultValue` if the variable is missing or empty
 
-::: info
-On Windows, environment variable names are typically uppercase (`PATH`, `USERNAME`, `APPDATA`). Empty values are treated the same as missing when a `defaultValue` is provided.
+::: info Windows Environment Variables
+On Windows, environment variable names are case-insensitive but typically stored in uppercase (`PATH`, `USERNAME`, `APPDATA`). Empty values are treated the same as missing when a `defaultValue` is provided.
 :::
 
 <template #example>

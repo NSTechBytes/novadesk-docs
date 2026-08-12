@@ -14,14 +14,19 @@ import { disk } from "system";
 Available in the [Main script](/guides/script-types.html#main-script-the-brain) only.
 :::
 
-::: info Path argument
-For the space functions, `path` can be a drive root like `"C:\\"` or any path on the target volume. If omitted, the current working drive is used.
+::: info Path Argument Details
+For all disk space functions (`totalBytes`, `availableBytes`, `usedBytes`, `usagePercent`), the `path` parameter can be:
+- A drive root like `"C:\\"` or `"D:\\"` 
+- Any file or folder path on the target volume
+- If omitted or empty, defaults to the current working drive
+
+The function determines which volume contains the specified path and returns statistics for that entire volume.
 :::
 
 #### Table of Contents
 [[toc]]
 
----
+## Methods
 
 <MethodBox
   name="disk.totalBytes([path])"
@@ -48,8 +53,6 @@ console.log("Total:", total, "bytes");
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="disk.availableBytes([path])"
   badge="disk"
@@ -74,8 +77,6 @@ console.log("Free:", free, "bytes");
 
 </template>
 </MethodBox>
-
----
 
 <MethodBox
   name="disk.usedBytes([path])"
@@ -102,8 +103,6 @@ console.log("Used:", used, "bytes");
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="disk.usagePercent([path])"
   badge="disk"
@@ -129,8 +128,6 @@ console.log("Usage:", pct + "%");
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="disk.readSpeed()"
   badge="disk"
@@ -139,7 +136,11 @@ console.log("Usage:", pct + "%");
 >
 <template #returns>Current disk read throughput in bytes per second. Returns <code>0</code> if unavailable.</template>
 
-Returns the current disk read speed sampled from PDH `PhysicalDisk(_Total)` counters.
+Returns the current disk read speed sampled from Windows Performance Data Helper (PDH) `PhysicalDisk(_Total)` counters. The value is cached and updated every 400ms to reduce performance overhead.
+
+::: tip Performance Notes
+Both `readSpeed()` and `writeSpeed()` use the same cached measurement that updates every 400ms. Multiple calls within this window return the same cached value.
+:::
 
 <template #example>
 
@@ -153,8 +154,6 @@ console.log("Read:", readBps, "bytes/sec");
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="disk.writeSpeed()"
   badge="disk"
@@ -163,7 +162,7 @@ console.log("Read:", readBps, "bytes/sec");
 >
 <template #returns>Current disk write throughput in bytes per second. Returns <code>0</code> if unavailable.</template>
 
-Returns the current disk write speed sampled from PDH `PhysicalDisk(_Total)` counters.
+Returns the current disk write speed sampled from Windows Performance Data Helper (PDH) `PhysicalDisk(_Total)` counters. The value is cached and updated every 400ms to reduce performance overhead.
 
 <template #example>
 
@@ -176,8 +175,6 @@ console.log("Write:", writeBps, "bytes/sec");
 
 </template>
 </MethodBox>
-
----
 
 ## Full Example
 

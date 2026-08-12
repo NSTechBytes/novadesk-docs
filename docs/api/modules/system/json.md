@@ -17,7 +17,7 @@ Available in the [Main script](/guides/script-types.html#main-script-the-brain) 
 #### Table of Contents
 [[toc]]
 
----
+## Methods
 
 <MethodBox
   name="json.parse(text)"
@@ -44,8 +44,6 @@ console.log(obj.version); // 1
 
 </template>
 </MethodBox>
-
----
 
 <MethodBox
   name="json.stringify(value [, space])"
@@ -77,8 +75,6 @@ console.log(s);
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="json.read(path)"
   badge="json"
@@ -88,9 +84,13 @@ console.log(s);
     { name: 'path', type: 'string', description: 'Absolute path or path relative to the entry script directory.' }
   ]"
 >
-<template #returns>The parsed JSON value on success, <code>{}</code> for an empty file, or <code>null</code> if the file cannot be read.</template>
+<template #returns">The parsed JSON value on success, an empty object <code>{}</code> for empty/whitespace-only files, or <code>null</code> if the file cannot be read or does not exist.</template>
 
-Reads a JSON file from disk and parses it. Throws if the file exists but contains invalid JSON.
+Reads a JSON file from disk and parses it. If the file exists but contains only whitespace, returns an empty object `{}`. Throws if the file exists but contains invalid JSON.
+
+::: info Path Resolution
+Paths are resolved relative to the current script directory. If no current script directory is available, falls back to the entry script directory, and finally to the widgets directory.
+:::
 
 <template #example>
 
@@ -106,8 +106,6 @@ if (data !== null) {
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="json.write(path, value [, merge])"
   badge="json"
@@ -121,7 +119,15 @@ if (data !== null) {
 >
 <template #returns><code>true</code> on success, <code>false</code> on failure.</template>
 
-Writes a value as pretty-printed JSON to a file. When `merge` is `true`, the existing file is read first and a JSON merge-patch is applied — useful for updating a single field without overwriting others.
+Writes a value as pretty-printed JSON to a file (indented with 4 spaces). When `merge` is `true`, the existing file is read first and a JSON merge-patch is applied — useful for updating specific fields without overwriting others.
+
+::: info Path Resolution
+Paths are resolved relative to the current script directory. If no current script directory is available, falls back to the entry script directory, and finally to the widgets directory.
+:::
+
+::: tip JSON Merge Patch
+When using `merge: true`, the function performs [JSON Merge Patch (RFC 7396)](https://tools.ietf.org/html/rfc7396) to combine the existing file content with the new value. This allows selective updates of object properties.
+:::
 
 <template #example>
 
