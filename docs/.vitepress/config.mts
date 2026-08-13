@@ -191,6 +191,7 @@ export default defineConfig({
                 items: [
                   { text: "addon", link: "/api/modules/novadesk/addon" },
                   { text: "app", link: "/api/modules/novadesk/app" },
+                  { text: "dialog", link: "/api/modules/novadesk/dialog" },
                   { text: "toast", link: "/api/modules/novadesk/toast" },
                   { text: "tray", link: "/api/modules/novadesk/tray" },
                   {
