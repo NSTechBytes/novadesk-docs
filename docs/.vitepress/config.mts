@@ -169,6 +169,10 @@ export default defineConfig({
                     link: "/api/ui/ui-elements/addInputBox",
                   },
                   {
+                    text: "addColorPicker",
+                    link: "/api/ui/ui-elements/addColorPicker",
+                  },
+                  {
                     text: "addText",
                     link: "/api/ui/ui-elements/addText",
                   },
