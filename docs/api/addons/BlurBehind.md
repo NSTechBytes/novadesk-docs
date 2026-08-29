@@ -6,15 +6,58 @@ title: Apply blur/acrylic and rounded corners with the BlurBehind addon.
 
 Apply Windows blur/acrylic background effects and rounded corner styles to a widget window handle.
 
+## What is BlurBehind?
+
+The **BlurBehind** addon lets you make your NovaDesk widget windows look modern by adding:
+
+- **Blur Behind** — a standard translucent blur effect behind the window
+- **Acrylic** — a frosted-glass effect similar to Windows 11 settings panels
+- **Rounded Corners** — make window edges round, small-round, or sharp
+
+These effects only work on Windows 10 (build 17763+) and Windows 11.
+
+## Getting Started
+
+First, load the addon in your script:
+
 ```javascript
 import { addon } from "novadesk";
+
+// Load the BlurBehind addon DLL
 const blurBehind = addon.load("path/to/BlurBehind.dll");
 ```
+
+::: tip
+Replace `"path/to/BlurBehind.dll"` with the actual path to the `BlurBehind.dll` file on your system.
+:::
 
 #### Table of Contents
 [[toc]]
 
----
+## Quick Example
+
+Here is a minimal example that applies an acrylic effect to a widget window:
+
+```javascript
+import { addon, widgetWindow } from "novadesk";
+const blurBehind = addon.load("path/to/BlurBehind.dll");
+
+// Create a widget window
+const win = new widgetWindow({ id: "demo", width: 400, height: 300, script: "ui.js" });
+
+// Get the window handle (HWND) and apply the effect
+const hwnd = win.getHandle();
+blurBehind.apply(hwnd, "acrylic", "roundsmall");
+```
+
+## How Window Handles (HWND) Work
+
+Every window on Windows has a unique number called a **handle** (HWND). You need this handle to tell the addon which window to apply effects to.
+
+You can get a window handle from:
+- `widgetWindow.getHandle()` — returns the HWND of your NovaDesk widget
+- A number — e.g. `12345`
+- A hex string — e.g. `"0x1A2B3C"` or `"0000000000290386"`
 
 <MethodBox
   name="blurBehind.apply(hwnd [, type, corner])"
@@ -31,12 +74,16 @@ const blurBehind = addon.load("path/to/BlurBehind.dll");
 
 Applies a blur or acrylic background effect to the target window and optionally sets its corner style. Throws if the window handle is invalid.
 
+::: info
+The function first clears any existing effect, then applies the new one. This ensures a clean state.
+:::
+
 **Effect types:**
 
 | Value | Description |
 |---|---|
-| `blurbehind` | Standard blur-behind effect (default). |
-| `acrylic` | Acrylic/frosted glass effect. |
+| `blurbehind` | Standard blur-behind effect (default). Semi-transparent blur behind the window. |
+| `acrylic` | Acrylic/frosted-glass effect. More opaque and modern-looking. |
 | `none` / `disabled` | Removes any active effect. |
 
 **Corner styles:**
@@ -66,12 +113,13 @@ blurBehind.apply(hwnd, "acrylic", "roundsmall");
 
 // Standard blur, default corners
 blurBehind.apply(hwnd, "blurbehind");
+
+// Acrylic only (no corner change)
+blurBehind.apply(hwnd, "acrylic");
 ```
 
 </template>
 </MethodBox>
-
----
 
 <MethodBox
   name="blurBehind.disable(hwnd)"
@@ -95,8 +143,6 @@ blurBehind.disable(hwnd);
 </template>
 </MethodBox>
 
----
-
 <MethodBox
   name="blurBehind.setCorner(hwnd, corner)"
   badge="BlurBehind"
@@ -109,13 +155,38 @@ blurBehind.disable(hwnd);
 >
 <template #returns><code>true</code> on success, <code>false</code> otherwise.</template>
 
-Sets only the corner style of a window without changing the blur/acrylic state.
+Sets only the corner style of a window without changing the blur/acrylic state. This is useful when you want to adjust corners independently of the background effect.
 
 <template #example>
 
 ```javascript
+// Change corners without touching the blur effect
 blurBehind.setCorner(hwnd, "round");
 ```
 
 </template>
 </MethodBox>
+
+## Full Example
+
+Here is a complete example that creates a widget, applies effects, and demonstrates toggling:
+
+```javascript
+import { addon, widgetWindow } from "novadesk";
+const blurBehind = addon.load("path/to/BlurBehind.dll");
+
+const win = new widgetWindow({ id: "blur-demo", width: 400, height: 300, script: "ui.js" });
+const hwnd = win.getHandle();
+
+// Apply acrylic with small rounded corners
+blurBehind.apply(hwnd, "acrylic", "roundsmall");
+
+// Later, switch to just blur effect
+blurBehind.apply(hwnd, "blurbehind", "round");
+
+// Change corners only
+blurBehind.setCorner(hwnd, "roundsmall");
+
+// Remove all effects
+blurBehind.disable(hwnd);
+```
