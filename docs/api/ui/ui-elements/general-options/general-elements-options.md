@@ -172,6 +172,51 @@ Corner radius in pixels for the background fill. `0` produces square corners.
 
 </PropertyBox>
 
+<PropertyBox name="backdropFilter" type="object">
+
+Applies GPU-accelerated visual effects to the content **behind** the element — like frosted glass. The element itself stays sharp, but the background seen through it is modified.
+
+**Filter properties:**
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `blur` | `number` | `0` | Gaussian blur radius in pixels. Must be ≥ 0. |
+| `brightness` | `number` | `1.0` | Brightness multiplier. `1.0` = normal, `<1` = darker, `>1` = brighter. Must be ≥ 0. |
+| `contrast` | `number` | `1.0` | Contrast multiplier. Must be ≥ 0. |
+| `grayscale` | `number` | `0` | Grayscale intensity `0.0`–`1.0`. |
+| `saturate` | `number` | `1.0` | Saturation multiplier. `0` = no color, `>1` = vivid. Must be ≥ 0. |
+| `sepia` | `number` | `0` | Sepia tone intensity `0.0`–`1.0`. |
+| `hueRotate` | `number` | `0` | Hue rotation in degrees around the color wheel. |
+| `invert` | `number` | `0` | Color inversion intensity `0.0`–`1.0`. |
+| `opacity` | `number` | `1.0` | Opacity of the filtered backdrop `0.0`–`1.0`. |
+
+```javascript
+// Frosted glass effect
+ui.addShape({
+  id: "glass",
+  x: 16, y: 16,
+  width: 300, height: 150,
+  backgroundColor: "rgba(255, 255, 255, 0.1)",
+  borderRadius: 12,
+  backdropFilter: { blur: 10 }
+});
+
+// Darken and desaturate the background
+ui.addShape({
+  id: "overlay",
+  x: 0, y: 0,
+  width: 400, height: 300,
+  backgroundColor: "rgba(0, 0, 0, 0.3)",
+  backdropFilter: { brightness: 0.6, saturate: 0.3 }
+});
+```
+
+::: warning Performance
+Backdrop filters require a per-frame GPU readback. Heavy blur values or many filtered elements can impact performance. Keep blur under 20px for smooth animation.
+:::
+
+</PropertyBox>
+
 <PropertyBox name="bevelType" type="string" defaultValue='"none"'>
 
 Draws a decorative border effect around the element.

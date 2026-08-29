@@ -282,6 +282,7 @@ export default defineConfig({
           },
           { text: "Containers", link: "/guides/containers" },
           { text: "Colors", link: "/guides/colors" },
+          { text: "Backdrop Filter", link: "/guides/backdrop-filter" },
           { text: "Color Matrix Guide", link: "/guides/color-matrix-guide" },
           {
             text: "Transform Matrix Guide",

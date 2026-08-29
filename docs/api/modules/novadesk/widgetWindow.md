@@ -4,7 +4,7 @@ title: widgetWindow
 
 # widgetWindow
 
-Create desktop widget windows. Each window hosts a UI script and supports drag, snap, transparency, context menus, and events.
+Create and manage desktop widget windows. Each window hosts a UI script and supports drag, snap, transparency, background images, animations, context menus, and events.
 
 ```javascript
 import { widgetWindow } from "novadesk";
@@ -52,6 +52,10 @@ If `id` is provided and a widget with the same `id` already exists, the existing
 | `showInToolbar` | `boolean` | `false` | Show in the Windows taskbar. |
 | `toolbarIcon` | `string` | `""` | Path to the taskbar icon. |
 | `toolbarTitle` | `string` | `""` | Title shown in the Windows taskbar. |
+| `backgroundImage` | `string` | `""` | Path to a background image. Supports local files and HTTP/HTTPS URLs. |
+| `backgroundImageFallback` | `string` | `""` | Fallback image shown while the main image loads (or if it fails). |
+| `backgroundImageSize` | `string \| object` | `"cover"` | How the image fits. String: `"cover"`, `"contain"`, `"stretch"`. Object: `{ width, height }` for explicit sizing. |
+| `backgroundImagePosition` | `string \| object` | `"center"` | Image position. String: `"top-left"`, `"top"`, `"top-right"`, `"left"`, `"center"`, `"right"`, `"bottom-left"`, `"bottom"`, `"bottom-right"`. Object: `{ x, y }` for pixel offset. |
 | `zPos` | `string` | `"normal"` | Z-order position. See values below. |
 
 **`zPos` values** (case-insensitive):
@@ -305,6 +309,252 @@ Clears all UI elements and re-executes the widget's UI script. Stale `ipcRendere
 
 ```javascript
 win.refresh();
+```
+
+</template>
+</MethodBox>
+
+## Background Image
+
+<MethodBox
+  name="win.setBackgroundImage(path, size, position)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'path', type: 'string', description: 'Path to the image file. Supports local files and HTTP/HTTPS URLs.' },
+    { name: 'size', type: 'string | object', optional: true, description: 'Image fit mode: cover (default), contain, stretch, or { width, height } for explicit sizing.' },
+    { name: 'position', type: 'string | object', optional: true, description: 'Image position: center (default), or a keyword / { x, y } offset.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Sets the window background image. The image is drawn behind all UI elements but on top of `backgroundColor`.
+
+**Size modes:**
+
+| Mode | Behavior |
+|---|---|
+| `"cover"` | Image fills the window, cropping if needed to maintain aspect ratio (default). |
+| `"contain"` | Image fits inside the window, letterboxing if needed to maintain aspect ratio. |
+| `"stretch"` | Image stretches to fill the window exactly, ignoring aspect ratio. |
+| `{ width, height }` | Explicit pixel size. Omit one dimension to auto-scale while maintaining aspect ratio. |
+
+**Position keywords:**
+
+`"top-left"`, `"top"`, `"top-right"`, `"left"`, `"center"`, `"right"`, `"bottom-left"`, `"bottom"`, `"bottom-right"`
+
+<template #example>
+
+```javascript
+win.setBackgroundImage("./assets/wallpaper.jpg");
+win.setBackgroundImage("./assets/bg.png", "contain");
+win.setBackgroundImage("./assets/bg.png", "cover", "top-left");
+win.setBackgroundImage("./assets/bg.png", { width: 200 }, "center");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.getBackgroundImage()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="string"
+>
+<template #returns>The current background image path, or empty string if none.</template>
+
+Returns the current background image path.
+
+<template #example>
+
+```javascript
+console.log("BG image:", win.getBackgroundImage());
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.setBackgroundImageFallback(path)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'path', type: 'string', description: 'Fallback image path. Shown while the main image loads or if it fails to load.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Sets a fallback image that displays while the main `backgroundImage` is loading (or if it fails to load).
+
+<template #example>
+
+```javascript
+win.setBackgroundImageFallback("./assets/placeholder.png");
+win.setBackgroundImage("https://example.com/wallpaper.jpg");
+```
+
+</template>
+</MethodBox>
+
+## Window Animation
+
+<MethodBox
+  name="win.animate(options)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'options', type: 'object', description: 'Animation configuration object.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Animates the window's position, size, and opacity using either a simple A-to-B tween or a multi-stop keyframe timeline.
+
+Every call is **fire-and-forget** — there is no callback when the animation completes. Calling `animate()` on a window that is already animating immediately replaces the running animation.
+
+**Options:**
+
+| Property | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `duration` | `number` | No | `250` | Duration in milliseconds. |
+| `easing` | `string` | No | `"linear"` | Easing function name. See [easing reference](/api/ui/animate.html#easing-reference). |
+| `iterationCount` | `number` / `"infinite"` | No | `1` | How many times to play. Must be ≥ 1 or `"infinite"`. |
+| `to` | `object` | Tween only | — | Target values. See animatable properties below. |
+| `from` | `object` | No | Current state | Starting values. Omit to start from current state. Accepts the same properties as `to`. |
+| `keyframes` | `array` / `object` | Keyframe only | — | Multi-stop timeline. Cannot be combined with `to`/`from`. |
+
+**Animatable properties** (in `from`, `to`, and each keyframe):
+
+| Property | Type | Description |
+|---|---|---|
+| `x` | `number` / `string` | Horizontal position in pixels, or a screen keyword expression (see below). |
+| `y` | `number` / `string` | Vertical position in pixels, or a screen keyword expression (see below). |
+| `width` | `number` | Window width in pixels. Alias: `w`. |
+| `height` | `number` | Window height in pixels. Alias: `h`. |
+| `opacity` | `number` | Window opacity `0.0`–`1.0`. Alias: `alpha`. |
+| `backgroundColor` | `string` | Background color to animate to. Alias: `bgColor`. |
+| `position` | `string` | Screen position preset (see below). Alias: `align`. |
+| `offsetX` | `number` | Pixel offset applied after resolving `position`. |
+| `offsetY` | `number` | Pixel offset applied after resolving `position`. |
+
+**Screen position presets** (`position` / `align`):
+
+| Preset | Aliases | Resolves to |
+|---|---|---|
+| `"top-left"` | `"topleft"` | Top-left corner of the work area. |
+| `"top-center"` | `"top"` | Top center of the work area. |
+| `"top-right"` | `"topright"` | Top-right corner of the work area. |
+| `"center-left"` | `"left"` | Left edge, vertically centered. |
+| `"center"` | `"middle"` | Dead center of the work area. |
+| `"center-right"` | `"right"` | Right edge, vertically centered. |
+| `"bottom-left"` | `"bottomleft"` | Bottom-left corner of the work area. |
+| `"bottom-center"` | `"bottom"` | Bottom center of the work area. |
+| `"bottom-right"` | `"bottomright"` | Bottom-right corner of the work area. |
+
+::: tip Work area
+The "work area" is the portion of the screen excluding the taskbar. Position presets align the window's top-left corner to that screen location.
+:::
+
+**String expressions for `x` and `y`**:
+
+Instead of a number, `x` and `y` accept a string keyword with an optional pixel offset:
+
+| Keyword | X resolves to | Y resolves to |
+|---|---|---|
+| `"left"` | Left edge of work area | — |
+| `"center"` / `"middle"` | Horizontally centered | Vertically centered |
+| `"right"` | Right edge minus window width | — |
+| `"top"` | — | Top edge of work area |
+| `"bottom"` | — | Bottom edge minus window height |
+| `"offscreen-left"` | Left edge minus window width (hidden) | — |
+| `"offscreen-right"` | Right edge (hidden) | — |
+| `"offscreen-top"` | — | Top edge minus window height (hidden) |
+| `"offscreen-bottom"` | — | Bottom edge (hidden) |
+
+<template #example>
+
+```javascript
+// Slide the window in from off-screen
+win.animate({
+  duration: 500,
+  easing: "easeOutCubic",
+  from: { x: -400 },
+  to: { x: 100 }
+});
+
+// Fade in
+win.animate({
+  duration: 300,
+  from: { opacity: 0 },
+  to: { opacity: 1 }
+});
+
+// Infinite bounce
+win.animate({
+  duration: 700,
+  iterationCount: "infinite",
+  from: { y: 100 },
+  to: { y: 80 }
+});
+
+// Keyframe: slide in then settle
+win.animate({
+  duration: 800,
+  keyframes: [
+    { offset: 0, x: -400 },
+    { offset: 0.6, x: 120, easing: "easeOutBack" },
+    { offset: 1, x: 100 }
+  ]
+});
+
+// Animate to a screen position
+win.animate({
+  duration: 400,
+  easing: "easeOutCubic",
+  to: { position: "bottom-center" }
+});
+
+// Use position with an offset
+win.animate({
+  duration: 300,
+  to: { position: "top-right", offsetX: -20, offsetY: 20 }
+});
+
+// String expression for x/y
+win.animate({
+  duration: 500,
+  from: { x: "offscreen-left" },
+  to: { x: "left", y: "center" }
+});
+
+// Animate background color
+win.animate({
+  duration: 600,
+  from: { backgroundColor: "rgb(0,0,0)" },
+  to: { backgroundColor: "rgb(30,30,60)" }
+});
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.stopAnimation()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Stops all running window animations. The window stays at its current position/size/opacity.
+
+<template #example>
+
+```javascript
+win.stopAnimation();
 ```
 
 </template>
