@@ -229,7 +229,11 @@ export default defineConfig({
         text: "Property Guides",
         collapsed: false,
         items: [
+          { text: "Font Color", link: "/guides/font-color" },
+          { text: "Font Size", link: "/guides/font-size" },
+          { text: "Font Weight", link: "/guides/font-weight" },
           { text: "Text Align", link: "/guides/text-align" },
+          { text: "Text Clip", link: "/guides/text-clip" },
         ],
       },
 
