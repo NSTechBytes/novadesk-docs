@@ -45,6 +45,7 @@ If `id` is provided and a widget with the same `id` already exists, the existing
 | `backgroundColor` | `string` | `"rgba(0,0,0,0)"` | Window background color or gradient. Supports `rgb()`, `rgba()`, `linearGradient()`, `radialGradient()`. |
 | `opacity` | `number \| string` | `1` | Master window opacity. Accepts `0.0–1.0`, `0–100`, `0–255`, or a percentage string like `"75%"`. Scales the **entire window** including all drawn elements. |
 | `draggable` | `boolean` | `true` | Allow the user to drag the window. |
+| `resizable` | `boolean` | `false` | Allow the user to resize the window by dragging its edges. |
 | `clickThrough` | `boolean` | `false` | Mouse events pass through the window to whatever is behind it. |
 | `keepOnScreen` | `boolean` | `false` | Prevent dragging the window off-screen. |
 | `snapEdges` | `boolean` | `true` | Snap to screen edges and other widgets while dragging. |
@@ -87,6 +88,8 @@ const win = new widgetWindow({
   height: 300,
   script: "script.ui.js",
   backgroundColor: "rgb(10,10,10)",
+  draggable: true,
+  resizable: true,
   snapEdges: true,
   showInToolbar: true,
   toolbarTitle: "My Widget"
@@ -224,6 +227,52 @@ Returns whether the window has been destroyed. Safe to call even after the windo
 if (!win.isDestroyed()) {
   win.setProperties({ width: 500 });
 }
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.setResizable(enable)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'enable', type: 'boolean', description: 'true to allow the user to resize by dragging edges. false to disable.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Enables or disables window resizing by the user dragging the window edges. When enabled, a thin resize border appears around the window.
+
+::: warning Not persisted
+The `resizable` state is not saved to disk. The window will revert to `resizable: false` on the next launch unless you set it again in the constructor or via `setResizable()`.
+:::
+
+<template #example>
+
+```javascript
+win.setResizable(true);   // user can now drag edges to resize
+win.setResizable(false);  // lock the size
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.isResizable()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window is currently resizable.</template>
+
+Returns whether the user can resize the window by dragging its edges.
+
+<template #example>
+
+```javascript
+console.log("Resizable:", win.isResizable());
 ```
 
 </template>
@@ -902,6 +951,7 @@ Registers an event listener on the widget window. Mouse events pass a [Mouse Eve
 | `minimize` | Window was minimized |
 | `unMinimize` | Window was restored from minimized state |
 | `move` | Window position changed |
+| `resize` | Window was resized (width or height changed) |
 | `refresh` | UI script was refreshed |
 | `close` | Window is about to close (fired by `close()`, not by `destroy()`) |
 | `closed` | Window has been fully destroyed |
@@ -930,6 +980,11 @@ win.on("mouseMove", (e) => {
 win.on("close", () => {
   console.log("Window closing");
   cleanup();
+});
+
+win.on("resize", () => {
+  const { width, height } = win.getSize();
+  console.log("New size:", width, "x", height);
 });
 ```
 
