@@ -5,7 +5,7 @@ description: Show styled text input overlays with validation and callbacks.
 
 # InputBox Addon
 
-Show a styled text input overlay window anchored to a widget. Supports validation, multiline, password mode, and rich styling.
+Show a styled text input overlay window. For an inline text field, see [addInputBox](/api/ui/ui-elements/add-input-box) anchored to a widget. Supports validation, multiline, password mode, and rich styling.
 
 ## What is InputBox?
 

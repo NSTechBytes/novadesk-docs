@@ -67,10 +67,10 @@ File-system APIs for reading/writing files and managing directories.
 ### `novadesk` module
 Runtime and app-control APIs.
 
-- [app](/api/modules/novadesk/app.html): App lifecycle, logging, version and paths.
-- [tray](/api/modules/novadesk/tray.html): System tray constructor, menu control, and events.
-- [widgetWindow](/api/modules/novadesk/widgetWindow.html): Create and manage widget windows.
-- [addon](/api/modules/novadesk/addon.html): Load and manage native C++ DLL addons.
+- [app](/api/modules/novadesk/app): App lifecycle, logging, version and paths.
+- [tray](/api/modules/novadesk/tray): System tray constructor, menu control, and events.
+- [widgetWindow](/api/modules/novadesk/widgetWindow): Create and manage widget windows.
+- [addon](/api/modules/novadesk/addon): Load and manage native C++ DLL addons.
 
 ### `system` module
 Windows/system integration APIs.

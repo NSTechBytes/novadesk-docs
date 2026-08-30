@@ -6,6 +6,7 @@ description: Read disk space, usage, and I/O performance metrics.
 # disk Module
 
 Read disk space, usage percentages, and I/O speeds.
+nFor related system metrics, see [cpu](/api/modules/system/cpu) and [memory](/api/modules/system/memory).
 
 ```javascript
 import { disk } from "system";

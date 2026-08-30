@@ -5,7 +5,7 @@ description: App lifecycle, logging, version, and path management.
 
 # app
 
-Control the Novadesk runtime, manage settings and logging preferences, query paths, and persist widget state across sessions.
+Control the Novadesk runtime, manage [settings](/guides/settings-file) and [logging](/api/logging) preferences, query paths, and persist widget state across sessions.
 
 ```javascript
 import { app } from 'novadesk';

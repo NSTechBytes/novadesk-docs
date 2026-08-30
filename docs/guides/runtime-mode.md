@@ -1,6 +1,6 @@
 ---
 title: Runtime Mode
-description: Runtime mode configuration and behavior.
+description: Runtime mode configuration and behavior. See [Script Types](/guides/script-types) for Main vs UI script contexts.
 ---
 
 # Runtime Mode

@@ -5,7 +5,7 @@ description: Apply Windows blur, acrylic, and rounded corner effects to windows.
 
 # BlurBehind Addon
 
-Apply Windows blur/acrylic background effects and rounded corner styles to a widget window handle.
+Apply Windows blur/acrylic background effects and rounded corner styles to a [widget window](/api/modules/novadesk/widgetWindow) handle.
 
 ## What is BlurBehind?
 

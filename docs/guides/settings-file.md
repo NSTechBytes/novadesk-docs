@@ -1,6 +1,6 @@
 ---
 title: Settings File
-description: Novadesk settings file format and options.
+description: Novadesk settings file format and options. Managed by the [app module](/api/modules/novadesk/app).
 ---
 
 # Settings File

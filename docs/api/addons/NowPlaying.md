@@ -5,7 +5,7 @@ description: Read media session metadata and control playback.
 
 # NowPlaying Addon
 
-Read active media session metadata and control playback — play, pause, skip, seek, shuffle, and repeat.
+Read active media session metadata and control playback. For volume control, see [audio](/api/modules/system/audio) and [AppVolume](/api/addons/AppVolume) — play, pause, skip, seek, shuffle, and repeat.
 
 ## What is NowPlaying?
 

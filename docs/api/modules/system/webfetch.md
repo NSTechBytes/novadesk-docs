@@ -6,6 +6,7 @@ description: Asynchronously fetch text content from URLs and local files.
 # webFetch
 
 Asynchronously fetch text content from HTTP/HTTPS URLs or local files. Returns a `Promise` that resolves with the response body as a string.
+nParse responses with the [json module](/api/modules/system/json).
 
 ```javascript
 import { webFetch } from "system";

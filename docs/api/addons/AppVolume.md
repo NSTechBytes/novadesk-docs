@@ -5,7 +5,7 @@ description: Control per-application audio sessions: volume, mute, and peak leve
 
 # AppVolume Addon
 
-Read and control Windows audio sessions per application — ideal for per-app volume sliders and mute toggles.
+Read and control Windows audio sessions per application. For system-wide volume, see the [audio module](/api/modules/system/audio) — ideal for per-app volume sliders and mute toggles.
 
 ## What is AppVolume?
 

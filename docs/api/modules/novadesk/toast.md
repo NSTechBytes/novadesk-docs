@@ -5,7 +5,7 @@ description: Show Windows toast notifications with action buttons and callbacks.
 
 # toast
 
-Show Windows toast notifications from your Novadesk widget. Supports titles, messages, images, action buttons, reply input, custom sounds, and callbacks for every interaction.
+Show Windows toast notifications from your Novadesk widget. For blocking modal dialogs, see the [dialog](/api/modules/novadesk/dialog) API. Supports titles, messages, images, action buttons, reply input, custom sounds, and callbacks for every interaction.
 
 ```javascript
 import { toast } from "novadesk";

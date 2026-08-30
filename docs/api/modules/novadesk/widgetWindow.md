@@ -5,7 +5,7 @@ description: Create and manage desktop widget windows with drag, snap, and trans
 
 # widgetWindow
 
-Create and manage desktop widget windows. Each window hosts a UI script and supports drag, snap, transparency, background images, animations, context menus, and events.
+Create and manage desktop widget windows. Each window hosts a UI script and supports drag, snap, transparency, background images, [animations](/api/ui/animate), context menus, and events. UI scripts communicate via [IPC](/api/ipc).
 
 ```javascript
 import { widgetWindow } from "novadesk";

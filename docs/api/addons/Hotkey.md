@@ -1,6 +1,6 @@
 ---
 title: Register global keyboard hotkeys with the Hotkey addon.
-description: Register global keyboard shortcuts that work system-wide.
+description: Register global keyboard shortcuts that work system-wide. Common use: toggle [widgetWindow](/api/modules/novadesk/widgetWindow) visibility.
 ---
 
 # Hotkey Addon

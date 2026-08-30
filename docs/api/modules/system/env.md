@@ -6,6 +6,7 @@ description: Read process environment variables.
 # Environment Variables
 
 Read process environment variables.
+nSee [Global Variables](/api/global-variables) for `__filename` and `__dirname`.
 
 ```javascript
 import { getEnv } from "system";

@@ -1,11 +1,11 @@
 ---
 title: Read and set display brightness with the Brightness addon.
-description: Read and set display brightness on supported systems.
+description: Read and set display brightness on supported systems. Combine with [Hotkey](/api/addons/Hotkey) for keyboard brightness control.
 ---
 
 # Brightness Addon
 
-Read and set display brightness on supported systems. Use it for brightness sliders, hotkeys, or ambient-light widgets.
+Read and set display brightness on supported systems. Combine with [Hotkey](/api/addons/Hotkey) for keyboard brightness control. Use it for brightness sliders, hotkeys, or ambient-light widgets.
 
 ## What is Brightness?
 

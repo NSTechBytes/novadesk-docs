@@ -1,6 +1,6 @@
 ---
 title: CLI Commands
-description: Command-line interface for nwm and novadesk executables.
+description: Command-line interface. See [Widget Build Command-line interface Installer](/guides/widget-build-and-installer) for packaging and distribution for nwm and novadesk executables.
 ---
 
 # CLI Commands

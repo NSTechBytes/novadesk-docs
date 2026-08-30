@@ -295,3 +295,9 @@ ipcRenderer.send("ui-ready", { ts: Date.now() });
 ipcRenderer.send("ui-ping", { msg: "hello from UI" });
 ```
 :::
+
+## Related Pages
+
+- [Script Types](/guides/script-types) — how Main and UI scripts communicate
+- [widgetWindow](/api/modules/novadesk/widgetWindow) — creating widget windows
+- [UI Object](/api/ui/ui-object) — UI elements that receive IPC messages

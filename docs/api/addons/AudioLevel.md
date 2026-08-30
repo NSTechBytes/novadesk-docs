@@ -1,6 +1,6 @@
 ---
 title: Read system audio levels with the AudioLevel addon.
-description: Read system-wide audio levels for VU meters and visualizations.
+description: Read system-wide audio levels. For per-app volume control, see [AppVolume](/api/addons/AppVolume) for VU meters and visualizations.
 ---
 
 # AudioLevel Addon
