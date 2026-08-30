@@ -1,5 +1,6 @@
 ---
 title: Widget Build And Installer
+description: Build, package, and distribute widgets with nwm.
 ---
 
 # Widget Build And Installer

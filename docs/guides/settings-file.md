@@ -1,5 +1,6 @@
 ---
 title: Settings File
+description: Novadesk settings file format and options.
 ---
 
 # Settings File

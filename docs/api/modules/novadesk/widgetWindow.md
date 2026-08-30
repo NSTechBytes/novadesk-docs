@@ -1,5 +1,6 @@
 ---
 title: widgetWindow
+description: Create and manage desktop widget windows with drag, snap, and transparency.
 ---
 
 # widgetWindow

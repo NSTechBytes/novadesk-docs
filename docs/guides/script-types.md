@@ -1,5 +1,6 @@
 ---
 title: Script Types
+description: Understand Main scripts vs UI scripts and their capabilities.
 ---
 
 # Script Types

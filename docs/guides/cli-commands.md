@@ -1,5 +1,6 @@
 ---
 title: CLI Commands
+description: Command-line interface for nwm and novadesk executables.
 ---
 
 # CLI Commands

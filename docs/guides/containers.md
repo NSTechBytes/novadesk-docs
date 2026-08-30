@@ -1,5 +1,6 @@
 ---
 title: Containers Guide
+description: Layout containers for organizing and clipping child elements.
 ---
 
 # Containers Guide

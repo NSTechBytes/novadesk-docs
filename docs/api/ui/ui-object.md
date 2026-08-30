@@ -1,5 +1,6 @@
 ---
 title: ui Object
+description: UI object methods for creating and managing widget elements.
 ---
 
 # ui Object
@@ -77,7 +78,7 @@ All `add*` methods take a single options object. Passing no argument or a non-ob
   badgeType="ui"
 >
 
-Creates a text element. See [addText Options](/api/ui/ui-elements/addText) for all available properties.
+Creates a text element. See [addText Options](/api/ui/ui-elements/add-text) for all available properties.
 
 <template #example>
 
@@ -101,7 +102,7 @@ ui.addText({
   badgeType="ui"
 >
 
-Adds an image element. Supports local files, HTTP/HTTPS URLs, and 9-slice scaling. See [addImage Options](/api/ui/ui-elements/addImage).
+Adds an image element. Supports local files, HTTP/HTTPS URLs, and 9-slice scaling. See [addImage Options](/api/ui/ui-elements/add-image).
 
 <template #example>
 
@@ -123,7 +124,7 @@ ui.addImage({
   badgeType="ui"
 >
 
-Adds a 2D vector shape. Supported shape types are `"rectangle"`, `"ellipse"`, `"line"`, `"arc"`, `"curve"`, and `"path"`. See [addShape Options](/api/ui/ui-elements/addShape).
+Adds a 2D vector shape. Supported shape types are `"rectangle"`, `"ellipse"`, `"line"`, `"arc"`, `"curve"`, and `"path"`. See [addShape Options](/api/ui/ui-elements/add-shape).
 
 <template #example>
 
@@ -149,7 +150,7 @@ ui.addShape({
   badgeType="ui"
 >
 
-Adds an image-based button element with a click callback. See [addButton Options](/api/ui/ui-elements/addButton).
+Adds an image-based button element with a click callback. See [addButton Options](/api/ui/ui-elements/add-button).
 
 <template #example>
 
@@ -172,7 +173,7 @@ ui.addButton({
   badgeType="ui"
 >
 
-Creates an interactive text input field. See [addInputBox Options](/api/ui/ui-elements/addInputBox) for all available properties.
+Creates an interactive text input field. See [addInputBox Options](/api/ui/ui-elements/add-input-box) for all available properties.
 
 <template #example>
 
@@ -194,7 +195,7 @@ ui.addInputBox({
   badgeType="ui"
 >
 
-Adds a progress bar element. The `value` property accepts a normalized `0.0–1.0` range. See [addBar Options](/api/ui/ui-elements/addBar).
+Adds a progress bar element. The `value` property accepts a normalized `0.0–1.0` range. See [addBar Options](/api/ui/ui-elements/add-bar).
 
 <template #example>
 
@@ -218,7 +219,7 @@ ui.addBar({
   badgeType="ui"
 >
 
-Adds a rounded arc element for circular progress indicators. See [addRoundLine Options](/api/ui/ui-elements/addRoundLine).
+Adds a rounded arc element for circular progress indicators. See [addRoundLine Options](/api/ui/ui-elements/add-round-line).
 
 <template #example>
 
@@ -246,7 +247,7 @@ ui.addRoundLine({
   badgeType="ui"
 >
 
-Adds a scrolling line graph supporting multiple overlaid data series. See [addLine Options](/api/ui/ui-elements/addLine).
+Adds a scrolling line graph supporting multiple overlaid data series. See [addLine Options](/api/ui/ui-elements/add-line).
 
 <template #example>
 
@@ -269,7 +270,7 @@ ui.addLine({
   badgeType="ui"
 >
 
-Adds a filled area graph element. See [addAreaGraph Options](/api/ui/ui-elements/addAreaGraph).
+Adds a filled area graph element. See [addAreaGraph Options](/api/ui/ui-elements/add-area-graph).
 
 <template #example>
 
@@ -292,7 +293,7 @@ ui.addAreaGraph({
   badgeType="ui"
 >
 
-Adds a bar-by-bar histogram supporting dual-channel data. See [addHistogram Options](/api/ui/ui-elements/addHistogram).
+Adds a bar-by-bar histogram supporting dual-channel data. See [addHistogram Options](/api/ui/ui-elements/add-histogram).
 
 <template #example>
 
@@ -314,7 +315,7 @@ ui.addHistogram({
   badgeType="ui"
 >
 
-Adds a frame-based sprite sheet element for meters, digit displays, and sprite animations. See [addBitmap Options](/api/ui/ui-elements/addBitmap).
+Adds a frame-based sprite sheet element for meters, digit displays, and sprite animations. See [addBitmap Options](/api/ui/ui-elements/add-bitmap).
 
 <template #example>
 
@@ -337,7 +338,7 @@ ui.addBitmap({
   badgeType="ui"
 >
 
-Adds an image-based rotator element for gauge needles and dials. See [addRotator Options](/api/ui/ui-elements/addRotator).
+Adds an image-based rotator element for gauge needles and dials. See [addRotator Options](/api/ui/ui-elements/add-rotator).
 
 <template #example>
 
@@ -362,7 +363,7 @@ ui.addRotator({
   badgeType="ui"
 >
 
-Adds a flex layout container that positions and clips child elements. The `id` property is required. See [addLayoutBox Options](/api/ui/ui-elements/addLayoutBox).
+Adds a flex layout container that positions and clips child elements. The `id` property is required. See [addLayoutBox Options](/api/ui/ui-elements/add-layout-box).
 
 Children are defined as plain objects with an `elementType` property set to the element type name (e.g. `"text"`, `"image"`, `"shape"`, `"bar"`, `"layoutbox"`). Nested layout boxes are supported.
 

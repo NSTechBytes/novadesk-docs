@@ -1,5 +1,6 @@
 ---
 title: Register global keyboard hotkeys with the Hotkey addon.
+description: Register global keyboard shortcuts that work system-wide.
 ---
 
 # Hotkey Addon

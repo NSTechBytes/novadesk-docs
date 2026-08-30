@@ -1,5 +1,6 @@
 ﻿---
 title: IPC
+description: Inter-process communication between Main and UI scripts.
 ---
 
 # IPC

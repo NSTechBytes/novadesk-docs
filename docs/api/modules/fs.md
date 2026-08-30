@@ -1,5 +1,6 @@
 ﻿---
 title: fs
+description: File system APIs for reading, writing, copying, and managing files.
 ---
 
 # fs Module

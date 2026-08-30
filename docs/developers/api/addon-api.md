@@ -1,5 +1,6 @@
 ---
 title: Addon API (Native)
+description: Technical guide for building native C++ addons for Novadesk.
 ---
 
 # Addon API (Native)

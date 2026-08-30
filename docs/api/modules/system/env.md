@@ -1,5 +1,6 @@
 ---
 title: Read environment variables with getEnv from the system module.
+description: Read process environment variables.
 ---
 
 # Environment Variables

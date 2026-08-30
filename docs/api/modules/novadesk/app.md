@@ -1,5 +1,6 @@
 ---
 title: app
+description: App lifecycle, logging, version, and path management.
 ---
 
 # app

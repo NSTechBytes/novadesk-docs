@@ -1,5 +1,6 @@
 ---
 title: Transform Matrix Guide
+description: Affine transformation matrix for element rotation and shearing.
 ---
 
 # Transform Matrix Guide

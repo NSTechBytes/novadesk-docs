@@ -1,5 +1,6 @@
 ---
 title: addon
+description: Load and manage native C++ DLL addons.
 ---
 
 # addon

@@ -1,5 +1,6 @@
 ---
 title: toast
+description: Show Windows toast notifications with action buttons and callbacks.
 ---
 
 # toast

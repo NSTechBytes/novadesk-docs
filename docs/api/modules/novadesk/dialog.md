@@ -1,5 +1,6 @@
 ---
 title: dialog
+description: Show native Windows modal message boxes from JavaScript.
 ---
 
 # dialog

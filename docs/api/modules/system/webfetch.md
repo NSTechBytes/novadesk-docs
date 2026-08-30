@@ -1,5 +1,6 @@
 ---
-title: Fetch text content from URLs or local files with webFetch.
+title: webFetch
+description: Asynchronously fetch text content from URLs and local files.
 ---
 
 # webFetch

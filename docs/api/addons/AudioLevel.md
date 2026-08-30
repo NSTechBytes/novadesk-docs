@@ -1,5 +1,6 @@
 ---
 title: Read system audio levels with the AudioLevel addon.
+description: Read system-wide audio levels for VU meters and visualizations.
 ---
 
 # AudioLevel Addon

@@ -1,5 +1,6 @@
 ---
 title: Read and set display brightness with the Brightness addon.
+description: Read and set display brightness on supported systems.
 ---
 
 # Brightness Addon

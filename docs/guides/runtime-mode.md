@@ -1,5 +1,6 @@
 ---
 title: Runtime Mode
+description: Runtime mode configuration and behavior.
 ---
 
 # Runtime Mode

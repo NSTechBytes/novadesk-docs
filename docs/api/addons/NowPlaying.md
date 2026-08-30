@@ -1,5 +1,6 @@
 ---
 title: Read and control media sessions with the NowPlaying addon.
+description: Read media session metadata and control playback.
 ---
 
 # NowPlaying Addon

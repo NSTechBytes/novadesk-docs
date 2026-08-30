@@ -1,5 +1,6 @@
 ---
 title: Installation
+description: Step-by-step guide to installing Novadesk on Windows.
 ---
 
 # Installation

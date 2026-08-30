@@ -1,5 +1,6 @@
 ---
 title: Global Variables
+description: Built-in global variables available in Novadesk scripts.
 ---
 
 # Global Variables

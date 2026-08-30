@@ -1,5 +1,6 @@
 ---
 title: Color Matrix Guide
+description: Direct2D 5x4 color transformation matrix reference.
 ---
 
 # Color Matrix Guide

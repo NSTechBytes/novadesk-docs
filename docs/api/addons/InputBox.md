@@ -1,5 +1,6 @@
 ---
 title: Show styled text input overlays with the InputBox addon.
+description: Show styled text input overlays with validation and callbacks.
 ---
 
 # InputBox Addon

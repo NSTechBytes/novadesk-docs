@@ -1,5 +1,6 @@
 ---
 title: Read disk usage metrics with the disk module.
+description: Read disk space, usage, and I/O performance metrics.
 ---
 
 # disk Module

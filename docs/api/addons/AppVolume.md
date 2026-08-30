@@ -1,5 +1,6 @@
 ---
 title: Control per-application audio sessions with the AppVolume addon.
+description: Control per-application audio sessions: volume, mute, and peak levels.
 ---
 
 # AppVolume Addon

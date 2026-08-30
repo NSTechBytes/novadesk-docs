@@ -1,5 +1,6 @@
 ---
 title: cpu
+description: Read CPU usage, core count, and uptime metrics.
 ---
 
 # cpu

@@ -1,5 +1,6 @@
 ---
 title: addColorPicker
+description: Add an interactive color picker element.
 ---
 
 # ui.addColorPicker()
@@ -11,7 +12,7 @@ ui.addColorPicker(options);
 ```
 
 ::: info
-Also accepts all [General Element Options](/api/ui/ui-elements/general-options/general-elements-options).
+Also accepts all [General Element Options](/api/ui/ui-elements/general-options).
 :::
 
 #### Table of Contents

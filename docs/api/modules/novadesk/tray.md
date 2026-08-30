@@ -1,5 +1,6 @@
 ﻿---
 title: tray
+description: System tray constructor, menu control, and events.
 ---
 
 # tray

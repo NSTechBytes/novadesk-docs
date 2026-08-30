@@ -1,5 +1,6 @@
 ---
 title: Time And Date (Quick JS)
+description: Time and date handling in QuickJS and the system.time module.
 ---
 
 # Time And Date (Quick JS)

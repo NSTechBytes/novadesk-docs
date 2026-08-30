@@ -1,5 +1,6 @@
 ---
 title: Apply blur/acrylic and rounded corners with the BlurBehind addon.
+description: Apply Windows blur, acrylic, and rounded corner effects to windows.
 ---
 
 # BlurBehind Addon

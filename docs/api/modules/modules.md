@@ -1,5 +1,6 @@
 ---
 title: Modules Overview
+description: Overview of all Novadesk modules: novadesk, system, and fs.
 ---
 
 # Modules
@@ -78,19 +79,19 @@ Windows/system integration APIs.
 - [clipboard](/api/modules/system/clipboard.html): Read and write clipboard text.
 - [cpu](/api/modules/system/cpu.html): Read CPU usage metrics.
 - [disk](/api/modules/system/disk.html): Read disk usage information.
-- [displayMetrics](/api/modules/system/displayMetrics.html): Read monitor and desktop bounds.
+- [displayMetrics](/api/modules/system/display-metrics.html): Read monitor and desktop bounds.
 - [env](/api/modules/system/env.html): Read environment variables.
 - [execute](/api/modules/system/execute.html): Launch files, apps, and URLs.
-- [fileIcon](/api/modules/system/fileIcon.html): Extract file icons to `.ico`.
+- [fileIcon](/api/modules/system/file-icon.html): Extract file icons to `.ico`.
 - [json](/api/modules/system/json.html): Parse/stringify plus JSON file helpers.
 - [memory](/api/modules/system/memory.html): Read RAM usage metrics.
 - [network](/api/modules/system/network.html): Read network throughput and totals.
 - [power](/api/modules/system/power.html): Read battery and power state.
-- [recycleBin](/api/modules/system/recycleBin.html): Open, empty, and inspect Recycle Bin.
+- [recycleBin](/api/modules/system/recycle-bin.html): Open, empty, and inspect Recycle Bin.
 - [registry](/api/modules/system/registry.html): Read and write Windows registry values.
 - [time](/api/modules/system/time.html): Format time and work with timestamps.
 - [wallpaper](/api/modules/system/wallpaper.html): Get/set desktop wallpaper.
-- [webFetch](/api/modules/system/webfetch.html): Fetch text from web URLs and files (Promise-based).
+- [webFetch](/api/modules/system/webFetch.html): Fetch text from web URLs and files (Promise-based).
 
 ## Notes and Best Practices
 
