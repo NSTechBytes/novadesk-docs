@@ -221,10 +221,15 @@ export default defineConfig({
           { text: "Containers", link: "/guides/containers" },
           { text: "Colors", link: "/guides/colors" },
           { text: "Color Matrix Guide", link: "/guides/color-matrix-guide" },
-          {
-            text: "Transform Matrix Guide",
-            link: "/guides/transform-matrix-guide",
-          },
+          { text: "Transform Matrix Guide", link: "/guides/transform-matrix-guide" },
+        ],
+      },
+
+      {
+        text: "Property Guides",
+        collapsed: false,
+        items: [
+          { text: "Text Align", link: "/guides/text-align" },
         ],
       },
 
