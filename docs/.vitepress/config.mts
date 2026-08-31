@@ -230,6 +230,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: "Font Color", link: "/guides/font-color" },
+          { text: "Font Face", link: "/guides/font-face" },
           { text: "Font Size", link: "/guides/font-size" },
           { text: "Font Weight", link: "/guides/font-weight" },
           { text: "Text Align", link: "/guides/text-align" },
