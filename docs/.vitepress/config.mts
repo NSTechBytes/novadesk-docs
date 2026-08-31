@@ -233,6 +233,7 @@ export default defineConfig({
           { text: "Font Face", link: "/guides/font-face" },
           { text: "Font Size", link: "/guides/font-size" },
           { text: "Font Weight", link: "/guides/font-weight" },
+          { text: "Letter Spacing", link: "/guides/letter-spacing" },
           { text: "Text Align", link: "/guides/text-align" },
           { text: "Text Clip", link: "/guides/text-clip" },
         ],
