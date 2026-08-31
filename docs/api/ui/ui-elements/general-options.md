@@ -1,6 +1,6 @@
 ---
 title: General Options
-description: Shared options for all UI elements: layout, visibility, tooltips, and mouse events.
+description: "Shared options for all UI elements: layout, visibility, tooltips, and mouse events."
 ---
 
 # General Options

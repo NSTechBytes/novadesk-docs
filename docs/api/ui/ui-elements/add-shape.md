@@ -1,6 +1,6 @@
 ﻿---
 title: addShape
-description: Add a 2D vector shape: rectangle, ellipse, line, arc, curve, or path.
+description: "Add a 2D vector shape: rectangle, ellipse, line, arc, curve, or path."
 ---
 
 # ui.addShape()

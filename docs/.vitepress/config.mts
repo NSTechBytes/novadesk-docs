@@ -112,7 +112,7 @@ export default defineConfig({
               },
               {
                 text: "UI Elements",
-                collapsed: true,
+                collapsed: false,
                 items: [
                   { text: "addAreaGraph", link: "/api/ui/ui-elements/add-area-graph" },
                   { text: "addBar", link: "/api/ui/ui-elements/add-bar" },

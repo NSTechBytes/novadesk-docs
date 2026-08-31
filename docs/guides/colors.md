@@ -1,6 +1,6 @@
 ---
 title: Color Formats
-description: Color formats: RGB, RGBA, hex, named colors, and gradients.
+description: "Color formats: RGB, RGBA, hex, named colors, and gradients."
 ---
 
 # Color Formats
