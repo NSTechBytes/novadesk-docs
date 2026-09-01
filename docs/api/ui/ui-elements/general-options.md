@@ -528,7 +528,93 @@ Fired on horizontal scroll right over the element.
 
 </CallbackBox>
 
-## Drag Events
+## Drag & Drop
+
+Drag and drop properties control whether an element can be dragged or act as a drop target. Drag callbacks fire when the user holds a mouse button on the element and moves the mouse.
+
+<PropertyBox name="dragArea" type="boolean" defaultValue="false">
+
+`true` makes this element draggable. The user can click and drag the element to move it. The element does not snap or reposition automatically — use the `onDrag` callback to update the element position or send drag data via IPC.
+
+```javascript
+ui.addShape({
+  id: "handle",
+  dragArea: true,
+  onDrag: (e) => {
+    ui.setElementProperties("handle", {
+      x: e.__screenX - e.__offsetX,
+      y: e.__screenY - e.__offsetY
+    });
+  }
+});
+```
+
+</PropertyBox>
+
+<PropertyBox name="dropTarget" type="boolean" defaultValue="false">
+
+`true` registers this element as a drop target. When another element is dragged over it, the drop-related callbacks fire. Use this for file drop zones, reordering lists, or any drag-and-drop interaction.
+
+```javascript
+ui.addShape({
+  id: "drop-zone",
+  dropTarget: true,
+  backgroundColor: "rgba(0,180,255,0.1)",
+  onDragEnter: () => {
+    ui.setElementProperties("drop-zone", { backgroundColor: "rgba(0,180,255,0.3)" });
+  },
+  onDragLeave: () => {
+    ui.setElementProperties("drop-zone", { backgroundColor: "rgba(0,180,255,0.1)" });
+  },
+  onDrop: (e) => {
+    console.log("Dropped at:", e.__offsetX, e.__offsetY);
+  }
+});
+```
+
+</PropertyBox>
+
+<CallbackBox
+  name="onDrop"
+  signature="onDrop(event): void"
+  :optional="true"
+>
+
+Fired when the user releases a drag over this drop target element.
+
+</CallbackBox>
+
+<CallbackBox
+  name="onDragEnter"
+  signature="onDragEnter(event): void"
+  :optional="true"
+>
+
+Fired when a dragged element enters the bounds of this drop target.
+
+</CallbackBox>
+
+<CallbackBox
+  name="onDragOver"
+  signature="onDragOver(event): void"
+  :optional="true"
+>
+
+Fired continuously while a dragged element is over this drop target.
+
+</CallbackBox>
+
+<CallbackBox
+  name="onDragLeave"
+  signature="onDragLeave(event): void"
+  :optional="true"
+>
+
+Fired when a dragged element leaves the bounds of this drop target.
+
+</CallbackBox>
+
+### Drag Events (on element being dragged)
 
 Drag callbacks fire when the user holds a mouse button on the element and moves the mouse. They are useful for sliders, handles, and custom drag interactions.
 
@@ -581,6 +667,195 @@ onDragEnd: (e) => {
 ```
 
 </CallbackBox>
+
+## Scroll & Overflow
+
+When child elements extend beyond the bounds of a container (or `addLayoutBox`), scroll and overflow properties control whether scrollbars appear and how content is clipped.
+
+<PropertyBox name="overflow" type="string" defaultValue='"visible"'>
+
+Shorthand that sets both `overflowX` and `overflowY` at once. Case-insensitive.
+
+| Value | Behavior |
+|---|---|
+| `"visible"` | Content overflows the element bounds and is not clipped (default) |
+| `"hidden"` | Content is clipped at the element bounds, no scrollbar |
+| `"scroll"` | Content is clipped and scrollbars appear when needed |
+| `"auto"` | Scrollbars appear only when content overflows |
+
+</PropertyBox>
+
+<PropertyBox name="overflowX" type="string" defaultValue='"visible"'>
+
+Horizontal overflow mode. Same values as `overflow`. Overrides `overflow` for the horizontal axis.
+
+</PropertyBox>
+
+<PropertyBox name="overflowY" type="string" defaultValue='"visible"'>
+
+Vertical overflow mode. Same values as `overflow`. Overrides `overflow` for the vertical axis.
+
+</PropertyBox>
+
+<PropertyBox name="scrollX" type="number" defaultValue="0">
+
+Initial horizontal scroll offset in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollY" type="number" defaultValue="0">
+
+Initial vertical scroll offset in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollStep" type="number" defaultValue="24">
+
+Number of pixels scrolled per mouse wheel notch.
+
+</PropertyBox>
+
+<PropertyBox name="showScrollbar" type="boolean" defaultValue="true">
+
+Shorthand that sets both `showScrollbarX` and `showScrollbarY` at once.
+
+</PropertyBox>
+
+<PropertyBox name="showScrollbarX" type="boolean" defaultValue="true">
+
+Show the horizontal scrollbar when horizontal content overflows.
+
+</PropertyBox>
+
+<PropertyBox name="showScrollbarY" type="boolean" defaultValue="true">
+
+Show the vertical scrollbar when vertical content overflows.
+
+</PropertyBox>
+
+### Scrollbar Styling
+
+<PropertyBox name="scrollbarWidth" type="number" defaultValue="6">
+
+Scrollbar thickness in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarHoverWidth" type="number" defaultValue="-1">
+
+Scrollbar thickness when hovered. `-1` keeps the normal width.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarRadius" type="number" defaultValue="3">
+
+Corner radius of the scrollbar thumb.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarTrackRadius" type="number" defaultValue="-1">
+
+Corner radius of the scrollbar track. `-1` uses the default.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarInset" type="number" defaultValue="2">
+
+Spacing between the scrollbar and the element edge in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarMinThumbLength" type="number" defaultValue="20">
+
+Minimum thumb length in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarColor" type="string" defaultValue='"rgba(255,255,255,100)"'>
+
+Scrollbar thumb color. Supports `rgb()`, `rgba()`, and hex.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarHoverColor" type="string" defaultValue='"rgba(255,255,255,180)"'>
+
+Scrollbar thumb color when hovered.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarActiveColor" type="string" defaultValue='"rgba(255,255,255,240)"'>
+
+Scrollbar thumb color when actively dragged.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarTrackColor" type="string" defaultValue='"rgba(0,0,0,0)"'>
+
+Scrollbar track background color.
+
+</PropertyBox>
+
+<PropertyBox name="showScrollbarButtons" type="boolean" defaultValue="false">
+
+Show arrow buttons at the ends of the scrollbar.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarButtonSize" type="number" defaultValue="14">
+
+Size of the scrollbar arrow buttons in pixels.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarButtonRadius" type="number" defaultValue="2">
+
+Corner radius of the scrollbar arrow buttons.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarArrowColor" type="string" defaultValue='"rgba(255,255,255,150)"'>
+
+Color of the scrollbar arrow icons.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarArrowHoverColor" type="string" defaultValue='"rgba(255,255,255,220)"'>
+
+Color of the scrollbar arrow icons when hovered.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarArrowActiveColor" type="string" defaultValue='"rgba(255,255,255,255)"'>
+
+Color of the scrollbar arrow icons when pressed.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarButtonBgColor" type="string" defaultValue='"rgba(0,0,0,0)"'>
+
+Background color of the scrollbar arrow buttons.
+
+</PropertyBox>
+
+<PropertyBox name="scrollbarButtonHoverBgColor" type="string" defaultValue='"rgba(255,255,255,30)"'>
+
+Background color of the scrollbar arrow buttons when hovered.
+
+</PropertyBox>
+
+```javascript
+// Scrollable container with custom scrollbar
+ui.addLayoutBox({
+  id: "scroll-area",
+  x: 16, y: 16,
+  width: 300, height: 200,
+  overflow: "scroll",
+  scrollbarWidth: 8,
+  scrollbarColor: "rgba(255,255,255,80)",
+  scrollbarHoverColor: "rgba(255,255,255,160)",
+  scrollbarRadius: 4
+});
+```
 
 ## Practical Examples
 

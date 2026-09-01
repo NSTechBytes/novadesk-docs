@@ -47,6 +47,8 @@ If `id` is provided and a widget with the same `id` already exists, the existing
 | `opacity` | `number \| string` | `1` | Master window opacity. Accepts `0.0–1.0`, `0–100`, `0–255`, or a percentage string like `"75%"`. Scales the **entire window** including all drawn elements. |
 | `draggable` | `boolean` | `true` | Allow the user to drag the window. |
 | `resizable` | `boolean` | `false` | Allow the user to resize the window by dragging its edges. |
+| `minWidth` | `number` | `0` | Minimum window width in pixels when resizing. |
+| `minHeight` | `number` | `0` | Minimum window height in pixels when resizing. |
 | `clickThrough` | `boolean` | `false` | Mouse events pass through the window to whatever is behind it. |
 | `keepOnScreen` | `boolean` | `false` | Prevent dragging the window off-screen. |
 | `snapEdges` | `boolean` | `true` | Snap to screen edges and other widgets while dragging. |
