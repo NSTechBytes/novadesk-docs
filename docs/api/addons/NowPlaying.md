@@ -305,25 +305,6 @@ nowPlaying.setShuffle(false); // Disable shuffle
 </MethodBox>
 
 <MethodBox
-  name="nowPlaying.toggleShuffle()"
-  badge="NowPlaying"
-  badgeType="core"
-  returns="boolean"
->
-<template #returns><code>true</code> if the command was sent.</template>
-
-Toggles shuffle on the active media session.
-
-<template #example>
-
-```javascript
-nowPlaying.toggleShuffle();
-```
-
-</template>
-</MethodBox>
-
-<MethodBox
   name="nowPlaying.setRepeat(mode)"
   badge="NowPlaying"
   badgeType="core"

@@ -14,6 +14,8 @@ The **BlurBehind** addon lets you make your NovaDesk widget windows look modern 
 - **Blur Behind** — a standard translucent blur effect behind the window
 - **Acrylic** — a frosted-glass effect similar to Windows 11 settings panels
 - **Rounded Corners** — make window edges round, small-round, or sharp
+- **Stroke** — add a visible border around the window (Win11+)
+- **Toggle** — easily toggle effects on/off
 
 These effects only work on Windows 10 (build 17763+) and Windows 11.
 
@@ -167,6 +169,120 @@ blurBehind.setCorner(hwnd, "round");
 
 </template>
 </MethodBox>
+
+<MethodBox
+  name="blurBehind.setEffect(hwnd, effect)"
+  badge="BlurBehind"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'hwnd', type: 'number | string', description: 'Target window handle.' },
+    { name: 'effect', type: 'string', description: 'Effect type: default, none, or disabled.' }
+  ]"
+>
+<template #returns><code>true</code> on success, <code>false</code> otherwise.</template>
+
+Sets the visual effect of a window without changing the accent type. This allows you to control the effect independently.
+
+<template #example>
+
+```javascript
+// Change the effect style
+blurBehind.setEffect(hwnd, "none");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="blurBehind.setStroke(hwnd, color)"
+  badge="BlurBehind"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'hwnd', type: 'number | string', description: 'Target window handle.' },
+    { name: 'color', type: 'string', description: 'Stroke style: visible, hidden, or a color string.' }
+  ]"
+>
+<template #returns><code>true</code> on success, <code>false</code> otherwise.</template>
+
+Sets the stroke/border style of a window. Requires Windows 11 or later.
+
+<template #example>
+
+```javascript
+// Show a visible border
+blurBehind.setStroke(hwnd, "visible");
+
+// Hide the border
+blurBehind.setStroke(hwnd, "hidden");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="blurBehind.toggle(hwnd)"
+  badge="BlurBehind"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'hwnd', type: 'number | string', description: 'Target window handle.' }
+  ]"
+>
+<template #returns><code>true</code> if blur is now ON, <code>false</code> if it was turned OFF.</template>
+
+Toggles blur on/off for a window. Stores and restores the previous configuration per HWND.
+
+<template #example>
+
+```javascript
+// Toggle blur effect
+const isOn = blurBehind.toggle(hwnd);
+console.log("Blur is now", isOn ? "ON" : "OFF");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="blurBehind.isSupported(feature)"
+  badge="BlurBehind"
+  badgeType="core"
+  returns="boolean"
+  :parameters="[
+    { name: 'feature', type: 'string', description: 'Feature to check: blur, blurbehind, acrylic, corner, stroke, or border.' }
+  ]"
+>
+<template #returns><code>true</code> if the feature is supported on this system, <code>false</code> otherwise.</template>
+
+Checks if a specific feature is supported on the current Windows version.
+
+<template #example>
+
+```javascript
+if (blurBehind.isSupported("acrylic")) {
+  console.log("Acrylic effects are available");
+}
+```
+
+</template>
+</MethodBox>
+
+The addon also exposes a `supports` object with boolean properties for each feature:
+
+| Property | Type | Description |
+|---|---|---|
+| `blur` | `boolean` | `true` on Windows 10+ |
+| `acrylic` | `boolean` | `true` on Windows 11+ |
+| `corner` | `boolean` | `true` on Windows 11+ |
+| `stroke` | `boolean` | `true` on Windows 11+ |
+
+```javascript
+const blurBehind = addon.load("path/to/BlurBehind.dll");
+console.log("Acrylic supported:", blurBehind.supports.acrylic);
+console.log("Stroke supported:", blurBehind.supports.stroke);
+```
 
 ## Full Example
 
