@@ -158,6 +158,7 @@ export default defineConfig({
                 items: [
                   { text: "audio", link: "/api/modules/system/audio" },
                   { text: "clipboard", link: "/api/modules/system/clipboard" },
+                  { text: "colors", link: "/api/modules/system/colors" },
                   { text: "cpu", link: "/api/modules/system/cpu" },
                   { text: "disk", link: "/api/modules/system/disk" },
                   { text: "displayMetrics", link: "/api/modules/system/display-metrics" },
@@ -229,7 +230,6 @@ export default defineConfig({
         text: "Property Guides",
         collapsed: false,
         items: [
-          { text: "Backdrop Filter", link: "/guides/backdrop-filter" },
           { text: "Font Color", link: "/guides/font-color" },
           { text: "Font Face", link: "/guides/font-face" },
           { text: "Font Size", link: "/guides/font-size" },

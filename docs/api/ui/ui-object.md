@@ -616,7 +616,7 @@ if (!removed) {
   badge="ui"
   badgeType="ui"
   :parameters="[
-    { name: 'ids', type: 'string | string[] | null', optional: true, description: 'A single ID string, an array of ID strings, or omitted/null to remove all elements.' }
+    { name: 'ids', type: 'string or string array', optional: true, description: 'A single ID string, an array of ID strings, or omitted to remove all elements.' }
   ]"
 >
 
@@ -663,6 +663,580 @@ Removes all elements that share the given `group` value. Throws `TypeError` if n
 
 ```javascript
 ui.removeElementsByGroup("stats");
+```
+
+</template>
+</MethodBox>
+
+## Scrolling
+
+<MethodBox
+  name="ui.scrollTo(id, position)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Element identifier.' },
+    { name: 'position', type: 'object', description: 'Object with optional x and y properties specifying the scroll position.' }
+  ]"
+>
+
+Scrolls an element to the specified position. Only works on elements with overflow enabled.
+
+<template #example>
+
+```javascript
+// Scroll an element to position (0, 100)
+ui.scrollTo("scrollable-panel", { x: 0, y: 100 });
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.getScroll(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="object | null"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Element identifier.' }
+  ]"
+>
+<template #returns>An object with scroll position info, or <code>null</code> if element not found.</template>
+
+Returns scroll position information for an element.
+
+**Return value properties:**
+
+| Property | Type | Description |
+|---|---|---|
+| `scrollX` | `number` | Current horizontal scroll position |
+| `scrollY` | `number` | Current vertical scroll position |
+| `maxScrollX` | `number` | Maximum horizontal scroll position |
+| `maxScrollY` | `number` | Maximum vertical scroll position |
+| `contentWidth` | `number` | Total content width |
+| `contentHeight` | `number` | Total content height |
+
+<template #example>
+
+```javascript
+const scroll = ui.getScroll("scrollable-panel");
+if (scroll) {
+  console.log("Scroll Y:", scroll.scrollY, "/", scroll.maxScrollY);
+}
+```
+
+</template>
+</MethodBox>
+
+## Window State and Bounds
+
+<MethodBox
+  name="ui.getSize()"
+  badge="ui"
+  badgeType="ui"
+  returns="object"
+>
+<template #returns>An object with <code>width</code> and <code>height</code> in pixels.</template>
+
+Returns the current dimensions of the widget window.
+
+<template #example>
+
+```javascript
+const { width, height } = ui.getSize();
+console.log("Widget size:", width, "x", height);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.getBounds()"
+  badge="ui"
+  badgeType="ui"
+  returns="object"
+>
+<template #returns>An object with <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> in pixels.</template>
+
+Returns the current screen position and dimensions of the widget window.
+
+<template #example>
+
+```javascript
+const bounds = ui.getBounds();
+console.log("Widget bounds:", bounds.x, bounds.y, bounds.width, bounds.height);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.isMaximized()"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the widget window is currently maximized.</template>
+
+Returns whether the widget window is maximized.
+
+<template #example>
+
+```javascript
+if (ui.isMaximized()) {
+  console.log("Widget window is maximized");
+}
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.isMinimized()"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the widget window is currently minimized.</template>
+
+Returns whether the widget window is minimized.
+
+<template #example>
+
+```javascript
+if (ui.isMinimized()) {
+  console.log("Widget window is minimized");
+}
+```
+
+</template>
+</MethodBox>
+
+## Color Picker
+
+<MethodBox
+  name="ui.openColorPicker(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Color picker element identifier.' }
+  ]"
+>
+
+Opens the color picker popup for the specified color picker element.
+
+<template #example>
+
+```javascript
+ui.openColorPicker("color-btn");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.closeColorPicker()"
+  badge="ui"
+  badgeType="ui"
+>
+
+Closes the currently open color picker popup.
+
+<template #example>
+
+```javascript
+ui.closeColorPicker();
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.isColorPickerOpen(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Color picker element identifier.' }
+  ]"
+>
+<template #returns><code>true</code> if the color picker popup is open.</template>
+
+Checks whether the color picker popup is currently open.
+
+<template #example>
+
+```javascript
+if (!ui.isColorPickerOpen("color-btn")) {
+  ui.openColorPicker("color-btn");
+}
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.setColorPickerColor(id, color)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Color picker element identifier.' },
+    { name: 'color', type: 'string', description: 'Color string in hex format (e.g. #FF0000) or rgb/rgba format.' }
+  ]"
+>
+
+Sets the color of a color picker element.
+
+<template #example>
+
+```javascript
+ui.setColorPickerColor("color-btn", "#FF5733");
+ui.setColorPickerColor("color-btn", "rgb(0,180,255)");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.getColorPickerColor(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="string"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Color picker element identifier.' }
+  ]"
+>
+<template #returns>Hex color string (e.g., "#FF0000").</template>
+
+Returns the current color of a color picker element as a hex string.
+
+<template #example>
+
+```javascript
+const color = ui.getColorPickerColor("color-btn");
+console.log("Current color:", color);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.openColorPickerEyedropper(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Color picker element identifier.' }
+  ]"
+>
+
+Opens the eyedropper tool for the specified color picker element. The eyedropper allows the user to pick a color from anywhere on the screen.
+
+<template #example>
+
+```javascript
+ui.openColorPickerEyedropper("color-btn");
+```
+
+</template>
+</MethodBox>
+
+## Input Box
+
+<MethodBox
+  name="ui.focusInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Gives keyboard focus to an input box element.
+
+<template #example>
+
+```javascript
+ui.focusInputBox("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.blurInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Removes keyboard focus from an input box element.
+
+<template #example>
+
+```javascript
+ui.blurInputBox("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.isInputBoxFocused(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+<template #returns><code>true</code> if the input box currently has keyboard focus.</template>
+
+Checks whether an input box element has keyboard focus.
+
+<template #example>
+
+```javascript
+if (ui.isInputBoxFocused("search")) {
+  console.log("Search box is focused");
+}
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.setInputBoxText(id, text)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' },
+    { name: 'text', type: 'string', description: 'Text to set.' }
+  ]"
+>
+
+Sets the text content of an input box element.
+
+<template #example>
+
+```javascript
+ui.setInputBoxText("search", "hello world");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.getInputBoxText(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="string"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+<template #returns>The current text content of the input box.</template>
+
+Returns the current text content of an input box element.
+
+<template #example>
+
+```javascript
+const text = ui.getInputBoxText("search");
+console.log("Input:", text);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.clearInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Clears all text from an input box element.
+
+<template #example>
+
+```javascript
+ui.clearInputBox("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.selectInputBoxText(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Selects all text in an input box element.
+
+<template #example>
+
+```javascript
+ui.selectInputBoxText("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.clearInputBoxSelection(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Clears the current text selection in an input box element.
+
+<template #example>
+
+```javascript
+ui.clearInputBoxSelection("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.getInputBoxSelectedText(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="string"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+<template #returns>The currently selected text.</template>
+
+Returns the currently selected text in an input box element.
+
+<template #example>
+
+```javascript
+const selected = ui.getInputBoxSelectedText("search");
+console.log("Selected:", selected);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.replaceInputBoxSelection(id, text)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' },
+    { name: 'text', type: 'string', description: 'Replacement text.' }
+  ]"
+>
+
+Replaces the current text selection in an input box with the specified text.
+
+<template #example>
+
+```javascript
+ui.replaceInputBoxSelection("search", "replacement");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.undoInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Undoes the last edit in an input box element.
+
+<template #example>
+
+```javascript
+ui.undoInputBox("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.redoInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+
+Redoes the last undone edit in an input box element.
+
+<template #example>
+
+```javascript
+ui.redoInputBox("search");
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.canUndoInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+<template #returns><code>true</code> if undo is available.</template>
+
+Checks whether an undo operation is available for an input box element.
+
+<template #example>
+
+```javascript
+if (ui.canUndoInputBox("search")) {
+  ui.undoInputBox("search");
+}
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="ui.canRedoInputBox(id)"
+  badge="ui"
+  badgeType="ui"
+  returns="boolean"
+  :parameters="[
+    { name: 'id', type: 'string', description: 'Input box element identifier.' }
+  ]"
+>
+<template #returns><code>true</code> if redo is available.</template>
+
+Checks whether a redo operation is available for an input box element.
+
+<template #example>
+
+```javascript
+if (ui.canRedoInputBox("search")) {
+  ui.redoInputBox("search");
+}
 ```
 
 </template>

@@ -282,6 +282,154 @@ console.log("Resizable:", win.isResizable());
 </MethodBox>
 
 <MethodBox
+  name="win.isResizing()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window is currently being resized by the user.</template>
+
+Returns whether the window is in the process of being resized (user is dragging an edge).
+
+<template #example>
+
+```javascript
+win.on("resize", () => {
+  if (win.isResizing()) {
+    console.log("User is resizing...");
+  }
+});
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.setMinWidth(width)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'width', type: 'number', description: 'Minimum width in pixels.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Sets the minimum width the window can be resized to.
+
+<template #example>
+
+```javascript
+win.setMinWidth(200);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.getMinWidth()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>The minimum width in pixels.</template>
+
+Returns the current minimum width.
+
+<template #example>
+
+```javascript
+console.log("Min width:", win.getMinWidth());
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.setMinHeight(height)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'height', type: 'number', description: 'Minimum height in pixels.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Sets the minimum height the window can be resized to.
+
+<template #example>
+
+```javascript
+win.setMinHeight(150);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.getMinHeight()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="number"
+>
+<template #returns>The minimum height in pixels.</template>
+
+Returns the current minimum height.
+
+<template #example>
+
+```javascript
+console.log("Min height:", win.getMinHeight());
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.setMinSize(width, height)"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="widgetWindow"
+  :parameters="[
+    { name: 'width', type: 'number', description: 'Minimum width in pixels.' },
+    { name: 'height', type: 'number', description: 'Minimum height in pixels.' }
+  ]"
+>
+<template #returns>The widget instance (chainable).</template>
+
+Sets both minimum width and height in one call.
+
+<template #example>
+
+```javascript
+win.setMinSize(200, 150);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.getMinSize()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="object"
+>
+<template #returns>An object with <code>width</code> and <code>height</code>.</template>
+
+Returns the current minimum size.
+
+<template #example>
+
+```javascript
+const min = win.getMinSize();
+console.log("Min size:", min.width, "x", min.height);
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
   name="win.minimize()"
   badge="widgetWindow"
   badgeType="core"
@@ -310,6 +458,99 @@ Restores a minimized widget window. Fires the `unMinimize` event.
 
 ```javascript
 win.unMinimize();
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.isMinimized()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window is currently minimized.</template>
+
+Returns whether the window is minimized.
+
+<template #example>
+
+```javascript
+if (win.isMinimized()) {
+  win.unMinimize();
+}
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.maximize()"
+  badge="widgetWindow"
+  badgeType="core"
+>
+
+Maximizes the widget window to fill the work area.
+
+<template #example>
+
+```javascript
+win.maximize();
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.restore()"
+  badge="widgetWindow"
+  badgeType="core"
+>
+
+Restores a maximized window to its previous size and position.
+
+<template #example>
+
+```javascript
+win.restore();
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.toggleMaximize()"
+  badge="widgetWindow"
+  badgeType="core"
+>
+
+Toggles between maximized and normal window state.
+
+<template #example>
+
+```javascript
+win.toggleMaximize();
+```
+
+</template>
+</MethodBox>
+
+<MethodBox
+  name="win.isMaximized()"
+  badge="widgetWindow"
+  badgeType="core"
+  returns="boolean"
+>
+<template #returns><code>true</code> if the window is currently maximized.</template>
+
+Returns whether the window is maximized.
+
+<template #example>
+
+```javascript
+if (!win.isMaximized()) {
+  win.maximize();
+}
 ```
 
 </template>
@@ -955,6 +1196,8 @@ Registers an event listener on the widget window. Mouse events pass a [Mouse Eve
 | `unMinimize` | Window was restored from minimized state |
 | `move` | Window position changed |
 | `resize` | Window was resized (width or height changed) |
+| `resizeStart` | Window resize operation started (user began dragging an edge). Alias: `resize-start` |
+| `resizeEnd` | Window resize operation ended (user released the edge). Alias: `resize-end` |
 | `refresh` | UI script was refreshed |
 | `close` | Window is about to close (fired by `close()`, not by `destroy()`) |
 | `closed` | Window has been fully destroyed |
@@ -988,6 +1231,16 @@ win.on("close", () => {
 win.on("resize", () => {
   const { width, height } = win.getSize();
   console.log("New size:", width, "x", height);
+});
+
+win.on("resizeStart", () => {
+  console.log("User started resizing");
+});
+
+win.on("resizeEnd", () => {
+  console.log("User finished resizing");
+  const { width, height } = win.getSize();
+  console.log("Final size:", width, "x", height);
 });
 ```
 

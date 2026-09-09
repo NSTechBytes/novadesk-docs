@@ -60,9 +60,9 @@ console.log("Used RAM:", formatBytes(used));
 ## Module Families
 
 ### `fs` module
-File-system APIs for reading/writing files and managing directories.
+File-system APIs for reading/writing files, managing directories, and working with zip archives.
 
-- [fs](/api/modules/fs.html): Read, write, copy, rename, list, and inspect files/directories.
+- [fs](/api/modules/fs.html): Read, write, copy, rename, list, inspect files/directories, and zip/unzip operations.
 
 ### `novadesk` module
 Runtime and app-control APIs.
@@ -71,12 +71,15 @@ Runtime and app-control APIs.
 - [tray](/api/modules/novadesk/tray): System tray constructor, menu control, and events.
 - [widgetWindow](/api/modules/novadesk/widgetWindow): Create and manage widget windows.
 - [addon](/api/modules/novadesk/addon): Load and manage native C++ DLL addons.
+- [toast](/api/modules/novadesk/toast): Show Windows toast notifications.
+- [dialog](/api/modules/novadesk/dialog): Show message boxes and file dialogs.
 
 ### `system` module
 Windows/system integration APIs.
 
 - [audio](/api/modules/system/audio.html): Master volume and WAV playback.
 - [clipboard](/api/modules/system/clipboard.html): Read and write clipboard text.
+- [colors](/api/modules/system/colors.html): Read system colors, dark mode, and accent color.
 - [cpu](/api/modules/system/cpu.html): Read CPU usage metrics.
 - [disk](/api/modules/system/disk.html): Read disk usage information.
 - [displayMetrics](/api/modules/system/display-metrics.html): Read monitor and desktop bounds.
