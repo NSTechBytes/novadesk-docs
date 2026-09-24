@@ -78,19 +78,18 @@
 }
 
 /**
- * Dark mode: Novadesk-www background and surface colors
- * Background: #071B30 — exact match with novadesk-www .page background
+ * Dark mode: background #0C1329 (rgb 12, 19, 41)
  * -------------------------------------------------------------------------- */
 
 .dark {
-  --vp-c-bg: #071B30;
-  --vp-c-bg-alt: #081f38;
-  --vp-c-bg-elv: #0c2540;
+  --vp-c-bg: #0C1329;
+  --vp-c-bg-alt: #0f1733;
+  --vp-c-bg-elv: #131d3d;
   --vp-c-bg-soft: rgba(255, 255, 255, 0.03);
 
   /* Dividers / borders */
   --vp-c-divider: rgba(255, 255, 255, 0.08);
-  --vp-c-gutter: #071B30;
+  --vp-c-gutter: #0C1329;
 
   /* Text colors matching novadesk-www */
   --vp-c-text-1: #f4f4f7;
@@ -98,9 +97,9 @@
   --vp-c-text-3: #9fa2b8;
 
   /* Nav / sidebar surfaces */
-  --vp-nav-bg-color: rgba(7, 27, 48, 0.88);
-  --vp-sidebar-bg-color: #071B30;
-  --vp-local-nav-bg-color: rgba(7, 27, 48, 0.92);
+  --vp-nav-bg-color: rgba(12, 19, 41, 0.88);
+  --vp-sidebar-bg-color: #0C1329;
+  --vp-local-nav-bg-color: rgba(12, 19, 41, 0.92);
 }
 
 /**
@@ -160,7 +159,7 @@
  * -------------------------------------------------------------------------- */
 
 .dark .VPNav {
-  background: rgba(7, 27, 48, 0.85);
+  background: rgba(12, 19, 41, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -176,7 +175,7 @@
  * -------------------------------------------------------------------------- */
 
 .dark .VPSidebar {
-  background: #071B30 !important;
+  background: #0C1329 !important;
   border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
 }
 
@@ -303,7 +302,7 @@
 
 .dark .vp-code-group .tabs,
 .dark div[class*='language-'] {
-  background: #081f38 !important;
+  background: #0f1733 !important;
 }
 
 .dark :not(pre) > code {
@@ -333,7 +332,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #071B30;
+  background: #0C1329;
   border-radius: 999px;
 }
 
@@ -352,13 +351,13 @@
 }
 
 ::-webkit-scrollbar-corner {
-  background: #071B30;
+  background: #0C1329;
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(41, 209, 250, 0.28) #071B30;
+  scrollbar-color: rgba(41, 209, 250, 0.28) #0C1329;
 }
 
 /* VitePress sidebar inner scroll */
