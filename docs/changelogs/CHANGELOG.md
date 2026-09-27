@@ -5,8 +5,8 @@ description: Release history and changelog for all Novadesk versions.
 
 # Changelog
 
-## [0.9.12.0-beta] - 2026-09-26
-###### 📅 26th September, 2026
+## [0.9.12.0-beta] - 2026-09-27
+###### 📅 27th September, 2026
 
 ### Added
 
